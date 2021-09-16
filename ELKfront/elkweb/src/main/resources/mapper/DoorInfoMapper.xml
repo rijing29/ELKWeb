@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.EPYMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.DoorInfo" >
+    <result column="XH" property="xh" jdbcType="DECIMAL" />
+    <result column="FX" property="fx" jdbcType="DECIMAL" />
+    <result column="JL_SJ" property="jlSj" jdbcType="TIMESTAMP" />
+    <result column="USER_NO" property="userNo" jdbcType="OTHER" />
+    <result column="USER_LNAME" property="userLname" jdbcType="OTHER" />
+    <result column="USER_DEPNAME" property="userDepname" jdbcType="OTHER" />
+    <result column="DEP_NAME" property="depName" jdbcType="OTHER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.DoorInfo" >
+    insert into DOOR_INFO (XH, FX, JL_SJ, 
+      USER_NO, USER_LNAME, USER_DEPNAME, 
+      DEP_NAME)
+    values (#{xh,jdbcType=DECIMAL}, #{fx,jdbcType=DECIMAL}, #{jlSj,jdbcType=TIMESTAMP}, 
+      #{userNo,jdbcType=OTHER}, #{userLname,jdbcType=OTHER}, #{userDepname,jdbcType=OTHER}, 
+      #{depName,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.DoorInfo" >
+    insert into DOOR_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="xh != null" >
+        XH,
+      </if>
+      <if test="fx != null" >
+        FX,
+      </if>
+      <if test="jlSj != null" >
+        JL_SJ,
+      </if>
+      <if test="userNo != null" >
+        USER_NO,
+      </if>
+      <if test="userLname != null" >
+        USER_LNAME,
+      </if>
+      <if test="userDepname != null" >
+        USER_DEPNAME,
+      </if>
+      <if test="depName != null" >
+        DEP_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="xh != null" >
+        #{xh,jdbcType=DECIMAL},
+      </if>
+      <if test="fx != null" >
+        #{fx,jdbcType=DECIMAL},
+      </if>
+      <if test="jlSj != null" >
+        #{jlSj,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userNo != null" >
+        #{userNo,jdbcType=OTHER},
+      </if>
+      <if test="userLname != null" >
+        #{userLname,jdbcType=OTHER},
+      </if>
+      <if test="userDepname != null" >
+        #{userDepname,jdbcType=OTHER},
+      </if>
+      <if test="depName != null" >
+        #{depName,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+
+  <!--  根据姓名查询员工刷卡信息  -->
+  <select id="getEpyCardInfo" resultType="map">
+    select user_lname, jl_sj,dep_name from DOOR_INFO t
+    where user_lname like concat(concat('%',#{user_lname,jdbcType=VARCHAR}),'%')
+    and rownum <![CDATA[<=]]> 30
+    order by jl_sj desc
+  </select>
+
+
+  <!--  根据姓名查询员工统计数据  -->
+  <select id="getEpyCardData" resultType="map">
+    select *
+    from DOOR_INFO_FOR_ONEMAN t
+    where personname like concat(concat('%',#{personname,jdbcType=VARCHAR}),'%')
+    and rownum <![CDATA[<=]]> 1
+    order by time desc
+  </select>
+</mapper>

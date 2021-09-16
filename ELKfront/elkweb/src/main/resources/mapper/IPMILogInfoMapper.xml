@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="IPMI_LOG_INFO" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.IPMILogInfo" >
+    <result column="IP" property="ip" jdbcType="OTHER" />
+    <result column="INFO" property="info" jdbcType="OTHER" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.IPMILogInfo" >
+    insert into IPMI_LOG_INFO (IP, INFO, TIME)
+    values (#{ip,jdbcType=OTHER}, #{info,jdbcType=OTHER}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.IPMILogInfo" >
+    insert into IPMI_LOG_INFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="info != null" >
+        INFO,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        #{ip,jdbcType=OTHER},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=OTHER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

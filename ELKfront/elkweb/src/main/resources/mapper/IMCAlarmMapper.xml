@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.IMCMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.IMCAlarm" >
+    <result column="ID" property="id" jdbcType="OTHER" />
+    <result column="DEVICEID" property="deviceid" jdbcType="OTHER" />
+    <result column="DEVICEIP" property="deviceip" jdbcType="OTHER" />
+    <result column="ALARMLEVEL" property="alarmlevel" jdbcType="OTHER" />
+    <result column="ALARMCATEGORYDESC" property="alarmcategorydesc" jdbcType="OTHER" />
+    <result column="RECSTATUS" property="recstatus" jdbcType="OTHER" />
+    <result column="ALARMDESC" property="alarmdesc" jdbcType="OTHER" />
+    <result column="RECTIMEDESC" property="rectimedesc" jdbcType="OTHER" />
+    <result column="FAULTTIMEDESC" property="faulttimedesc" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.IMCAlarm" >
+    insert into IMC_ALARM (ID, DEVICEID, DEVICEIP, 
+      ALARMLEVEL, ALARMCATEGORYDESC, RECSTATUS, 
+      ALARMDESC, RECTIMEDESC, FAULTTIMEDESC
+      )
+    values (#{id,jdbcType=OTHER}, #{deviceid,jdbcType=OTHER}, #{deviceip,jdbcType=OTHER}, 
+      #{alarmlevel,jdbcType=OTHER}, #{alarmcategorydesc,jdbcType=OTHER}, #{recstatus,jdbcType=OTHER}, 
+      #{alarmdesc,jdbcType=OTHER}, #{rectimedesc,jdbcType=OTHER}, #{faulttimedesc,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.IMCAlarm" >
+    insert into IMC_ALARM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="deviceid != null" >
+        DEVICEID,
+      </if>
+      <if test="deviceip != null" >
+        DEVICEIP,
+      </if>
+      <if test="alarmlevel != null" >
+        ALARMLEVEL,
+      </if>
+      <if test="alarmcategorydesc != null" >
+        ALARMCATEGORYDESC,
+      </if>
+      <if test="recstatus != null" >
+        RECSTATUS,
+      </if>
+      <if test="alarmdesc != null" >
+        ALARMDESC,
+      </if>
+      <if test="rectimedesc != null" >
+        RECTIMEDESC,
+      </if>
+      <if test="faulttimedesc != null" >
+        FAULTTIMEDESC,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=OTHER},
+      </if>
+      <if test="deviceid != null" >
+        #{deviceid,jdbcType=OTHER},
+      </if>
+      <if test="deviceip != null" >
+        #{deviceip,jdbcType=OTHER},
+      </if>
+      <if test="alarmlevel != null" >
+        #{alarmlevel,jdbcType=OTHER},
+      </if>
+      <if test="alarmcategorydesc != null" >
+        #{alarmcategorydesc,jdbcType=OTHER},
+      </if>
+      <if test="recstatus != null" >
+        #{recstatus,jdbcType=OTHER},
+      </if>
+      <if test="alarmdesc != null" >
+        #{alarmdesc,jdbcType=OTHER},
+      </if>
+      <if test="rectimedesc != null" >
+        #{rectimedesc,jdbcType=OTHER},
+      </if>
+      <if test="faulttimedesc != null" >
+        #{faulttimedesc,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!--  查询IMC的IP信息  -->
+  <select id="getIMCIP" resultType="map">
+    select distinct deviceip from IMC_ALARM t
+    order by deviceip ASC
+  </select>
+
+  <!--  根据ip查询IMC信息  -->
+  <select id="getIMCInfo" resultType="map">
+    select * from IMC_ALARM t
+    where 1=1
+    <if test="filtration != '' and filtration=='true'">
+      and alarmlevel <![CDATA[>=]]> 2
+    </if>
+    <if test="ip != '' and ip!=null">
+      and deviceip=#{ip,jdbcType=VARCHAR}
+    </if>
+    order by faulttimedesc desc
+  </select>
+
+</mapper>

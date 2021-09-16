@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MDS_LOG_FOR_ONEMAN" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.MDSLogOneMan" >
+    <result column="PERSONNAME" property="personname" jdbcType="VARCHAR" />
+    <result column="CLASSNO" property="classno" jdbcType="DECIMAL" />
+    <result column="AVGDAYS" property="avgdays" jdbcType="DECIMAL" />
+    <result column="COUNTONEDAY" property="countoneday" jdbcType="DECIMAL" />
+    <result column="JB" property="jb" jdbcType="DECIMAL" />
+    <result column="ONETYPE" property="onetype" jdbcType="DECIMAL" />
+    <result column="TWOTYPE" property="twotype" jdbcType="DECIMAL" />
+    <result column="THRTYPE" property="thrtype" jdbcType="DECIMAL" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.MDSLogOneMan" >
+    insert into MDS_LOG_FOR_ONEMAN (PERSONNAME, CLASSNO, AVGDAYS,
+      COUNTONEDAY, JB, ONETYPE,
+      TWOTYPE, THRTYPE, TIME
+      )
+    values (#{personname,jdbcType=VARCHAR}, #{classno,jdbcType=DECIMAL}, #{avgdays,jdbcType=DECIMAL},
+      #{countoneday,jdbcType=DECIMAL}, #{jb,jdbcType=DECIMAL}, #{onetype,jdbcType=DECIMAL},
+      #{twotype,jdbcType=DECIMAL}, #{thrtype,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.MDSLogOneMan" >
+    insert into MDS_LOG_FOR_ONEMAN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="personname != null" >
+        PERSONNAME,
+      </if>
+      <if test="classno != null" >
+        CLASSNO,
+      </if>
+      <if test="avgdays != null" >
+        AVGDAYS,
+      </if>
+      <if test="countoneday != null" >
+        COUNTONEDAY,
+      </if>
+      <if test="jb != null" >
+        JB,
+      </if>
+      <if test="onetype != null" >
+        ONETYPE,
+      </if>
+      <if test="twotype != null" >
+        TWOTYPE,
+      </if>
+      <if test="thrtype != null" >
+        THRTYPE,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="personname != null" >
+        #{personname,jdbcType=VARCHAR},
+      </if>
+      <if test="classno != null" >
+        #{classno,jdbcType=DECIMAL},
+      </if>
+      <if test="avgdays != null" >
+        #{avgdays,jdbcType=DECIMAL},
+      </if>
+      <if test="countoneday != null" >
+        #{countoneday,jdbcType=DECIMAL},
+      </if>
+      <if test="jb != null" >
+        #{jb,jdbcType=DECIMAL},
+      </if>
+      <if test="onetype != null" >
+        #{onetype,jdbcType=DECIMAL},
+      </if>
+      <if test="twotype != null" >
+        #{twotype,jdbcType=DECIMAL},
+      </if>
+      <if test="thrtype != null" >
+        #{thrtype,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

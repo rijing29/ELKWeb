@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="MDS_LOG" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.MDSLog" >
+    <result column="USERID" property="userid" jdbcType="OTHER" />
+    <result column="USERNAME" property="username" jdbcType="OTHER" />
+    <result column="OPERATION" property="operation" jdbcType="OTHER" />
+    <result column="OPERATIONCODE" property="operationcode" jdbcType="OTHER" />
+    <result column="DESCRIPTION" property="description" jdbcType="OTHER" />
+    <result column="OPERATIONTIME" property="operationtime" jdbcType="TIMESTAMP" />
+    <result column="HOST" property="host" jdbcType="OTHER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.MDSLog" >
+    insert into MDS_LOG (USERID, USERNAME, OPERATION, 
+      OPERATIONCODE, DESCRIPTION, OPERATIONTIME, 
+      HOST)
+    values (#{userid,jdbcType=OTHER}, #{username,jdbcType=OTHER}, #{operation,jdbcType=OTHER}, 
+      #{operationcode,jdbcType=OTHER}, #{description,jdbcType=OTHER}, #{operationtime,jdbcType=TIMESTAMP}, 
+      #{host,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.MDSLog" >
+    insert into MDS_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="operation != null" >
+        OPERATION,
+      </if>
+      <if test="operationcode != null" >
+        OPERATIONCODE,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="operationtime != null" >
+        OPERATIONTIME,
+      </if>
+      <if test="host != null" >
+        HOST,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userid != null" >
+        #{userid,jdbcType=OTHER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=OTHER},
+      </if>
+      <if test="operation != null" >
+        #{operation,jdbcType=OTHER},
+      </if>
+      <if test="operationcode != null" >
+        #{operationcode,jdbcType=OTHER},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=OTHER},
+      </if>
+      <if test="operationtime != null" >
+        #{operationtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="host != null" >
+        #{host,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

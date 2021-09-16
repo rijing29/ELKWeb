@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.elk.elkweb.mapper.FireWallMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.FireWallInfo" >
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+    <result column="SRCZONENAME" property="srczonename" jdbcType="VARCHAR" />
+    <result column="DSTZONENAME" property="dstzonename" jdbcType="VARCHAR" />
+    <result column="PROTOCOL" property="protocol" jdbcType="VARCHAR" />
+    <result column="SRCIPADDR" property="srcipaddr" jdbcType="VARCHAR" />
+    <result column="SRCPORT" property="srcport" jdbcType="VARCHAR" />
+    <result column="DSTIPADDR" property="dstipaddr" jdbcType="VARCHAR" />
+    <result column="DSTPORT" property="dstport" jdbcType="VARCHAR" />
+    <result column="EVENT" property="event" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.FireWallInfo" >
+    insert into T_FIREWALL_PACKAGE (TIME, SRCZONENAME, DSTZONENAME,
+                                    PROTOCOL, SRCIPADDR, SRCPORT,
+                                    DSTIPADDR, DSTPORT, EVENT
+    )
+    values (#{time,jdbcType=TIMESTAMP}, #{srczonename,jdbcType=VARCHAR}, #{dstzonename,jdbcType=VARCHAR},
+            #{protocol,jdbcType=VARCHAR}, #{srcipaddr,jdbcType=VARCHAR}, #{srcport,jdbcType=VARCHAR},
+            #{dstipaddr,jdbcType=VARCHAR}, #{dstport,jdbcType=VARCHAR}, #{event,jdbcType=VARCHAR}
+           )
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.FireWallInfo" >
+    insert into T_FIREWALL_PACKAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="srczonename != null" >
+        SRCZONENAME,
+      </if>
+      <if test="dstzonename != null" >
+        DSTZONENAME,
+      </if>
+      <if test="protocol != null" >
+        PROTOCOL,
+      </if>
+      <if test="srcipaddr != null" >
+        SRCIPADDR,
+      </if>
+      <if test="srcport != null" >
+        SRCPORT,
+      </if>
+      <if test="dstipaddr != null" >
+        DSTIPADDR,
+      </if>
+      <if test="dstport != null" >
+        DSTPORT,
+      </if>
+      <if test="event != null" >
+        EVENT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="srczonename != null" >
+        #{srczonename,jdbcType=VARCHAR},
+      </if>
+      <if test="dstzonename != null" >
+        #{dstzonename,jdbcType=VARCHAR},
+      </if>
+      <if test="protocol != null" >
+        #{protocol,jdbcType=VARCHAR},
+      </if>
+      <if test="srcipaddr != null" >
+        #{srcipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="srcport != null" >
+        #{srcport,jdbcType=VARCHAR},
+      </if>
+      <if test="dstipaddr != null" >
+        #{dstipaddr,jdbcType=VARCHAR},
+      </if>
+      <if test="dstport != null" >
+        #{dstport,jdbcType=VARCHAR},
+      </if>
+      <if test="event != null" >
+        #{event,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <!--  查询下拉框值begin  -->
+  <select id="getSrczonename" resultType="map">
+    select distinct srczonename from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+  </select>
+  <select id="getDstzonename" resultType="map">
+    select distinct dstzonename from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+  </select>
+  <select id="getProtocol" resultType="map">
+    select distinct protocol from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+  </select>
+  <select id="getEvent" resultType="map">
+    select distinct event from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+  </select>
+  <!--  查询下拉框值end  -->
+
+  <!--查询所选择的信息 begin-->
+  <select id="getSelection" resultType="map">
+    select* from(select
+      <if test="sourceIP != '' and sourceIP=='true'">
+          srcipaddr,
+      </if>
+      <if test="sourcePort != '' and sourcePort=='true'">
+          srcport,
+      </if>
+      <if test="destinationIP != '' and destinationIP=='true'">
+          dstipaddr,
+      </if>
+      <if test="destinationPort != '' and destinationPort=='true'">
+          dstport,
+      </if>
+      count(*) as count
+      from T_FIREWALL_PACKAGE t
+      where 1=1
+      <if test="sourceDomain != '' and sourceDomain!=null">
+          and srczonename=#{sourceDomain,jdbcType=VARCHAR}
+      </if>
+      <if test="destinationDomain != '' and destinationDomain!=null">
+          and dstzonename=#{destinationDomain,jdbcType=VARCHAR}
+      </if>
+      <if test="protocol != '' and protocol!=null">
+          and protocol=#{protocol,jdbcType=VARCHAR}
+      </if>
+      <if test="event != '' and event!=null">
+          and event=#{event,jdbcType=VARCHAR}
+      </if>
+      <if test="srcIp != '' and srcIp!=null">
+          and srcipaddr=#{srcIp,jdbcType=VARCHAR}
+      </if>
+      <if test="dstIp != '' and dstIp!=null">
+          and dstipaddr=#{dstIp,jdbcType=VARCHAR}
+      </if>
+      and TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss') /*and rownum <![CDATA[<=]]> 50*/
+      <if test="(sourceIP != '' and sourceIP=='true') or (sourcePort != '' and sourcePort=='true')       or (destinationIP != '' and destinationIP=='true') or (destinationPort != '' and destinationPort=='true')">
+          group by
+      </if>
+      <if test="sourceIP != '' and sourceIP=='true'">
+          srcipaddr
+      </if>
+      <if test="sourcePort != '' and sourcePort=='true'">
+          ,srcport
+      </if>
+      <if test="destinationIP != '' and destinationIP=='true'">
+          <if test="sourceIP != '' and sourceIP=='true'">
+              ,
+          </if>
+          dstipaddr
+      </if>
+      <if test="destinationPort != '' and destinationPort=='true'">
+          ,dstport
+      </if>) order by count desc
+  </select>
+  <!--查询所选择的信息 end-->
+
+  <!--查询所有信息 begin-->
+  <select id="getInfo" resultMap="BaseResultMap">
+    select * from T_FIREWALL_PACKAGE
+    where 1=1
+    <if test="SRCIPADDR != '' and SRCIPADDR != null">
+      and SRCIPADDR=#{SRCIPADDR,jdbcType=VARCHAR}
+    </if>
+    <if test="SRCPORT != '' and SRCPORT != null">
+      and SRCPORT=#{SRCPORT,jdbcType=VARCHAR}
+    </if>
+    <if test="DSTIPADDR != '' and DSTIPADDR != null">
+      and DSTIPADDR=#{DSTIPADDR,jdbcType=VARCHAR}
+    </if>
+    <if test="DSTPORT != '' and DSTPORT != null">
+      and DSTPORT=#{DSTPORT,jdbcType=VARCHAR}
+    </if>
+    <if test="SRCZONENAME != '' and SRCZONENAME != null">
+      and SRCZONENAME=#{SRCZONENAME,jdbcType=VARCHAR}
+    </if>
+    <if test="DSTZONENAME != '' and DSTZONENAME != null">
+      and DSTZONENAME=#{DSTZONENAME,jdbcType=VARCHAR}
+    </if>
+    <if test="PROTOCOL != '' and PROTOCOL != null">
+      and PROTOCOL=#{PROTOCOL,jdbcType=VARCHAR}
+    </if>
+    <if test="EVENT != '' and EVENT != null">
+      and EVENT=#{EVENT,jdbcType=VARCHAR}
+    </if>
+    and TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+  </select>
+  <!--查询所有信息 end-->
+</mapper>

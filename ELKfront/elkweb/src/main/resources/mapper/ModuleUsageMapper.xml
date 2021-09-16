@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="JK_LOGANALYIZE_MODULEUSAGE">
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.ModuleUsage">
+    <result column="SOFTWARENAME" jdbcType="VARCHAR" property="softwarename" />
+    <result column="MODULENAME" jdbcType="VARCHAR" property="modulename" />
+    <result column="USERCOUNT" jdbcType="DECIMAL" property="usercount" />
+    <result column="USEMINTUE" jdbcType="DECIMAL" property="usemintue" />
+    <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.ModuleUsage">
+    insert into JK_LOGANALYIZE_MODULEUSAGE (SOFTWARENAME, MODULENAME, USERCOUNT,
+                                            USEMINTUE, TIME)
+    values (#{softwarename,jdbcType=VARCHAR}, #{modulename,jdbcType=VARCHAR}, #{usercount,jdbcType=DECIMAL},
+            #{usemintue,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.ModuleUsage">
+    insert into JK_LOGANALYIZE_MODULEUSAGE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="softwarename != null">
+        SOFTWARENAME,
+      </if>
+      <if test="modulename != null">
+        MODULENAME,
+      </if>
+      <if test="usercount != null">
+        USERCOUNT,
+      </if>
+      <if test="usemintue != null">
+        USEMINTUE,
+      </if>
+      <if test="time != null">
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="softwarename != null">
+        #{softwarename,jdbcType=VARCHAR},
+      </if>
+      <if test="modulename != null">
+        #{modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="usercount != null">
+        #{usercount,jdbcType=DECIMAL},
+      </if>
+      <if test="usemintue != null">
+        #{usemintue,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null">
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

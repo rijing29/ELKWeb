@@ -1,0 +1,192 @@
+<template>
+    <el-container>
+        <el-main>
+            <el-row>
+                <el-col :span="24" align="left">
+                    <div class="title">
+                        单位员工刷卡统计
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <!--————表格区域 begin————-->
+                <el-col :span="24">
+                    <el-row >
+                        <el-col :span="24" class="border_top">
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">最近一周内信息</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24" style="padding: 0">
+                            <div class="table-wrapper">
+                                <!-- 外表格 begin-->
+                                <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;">
+                                    <el-table-column prop="NAME" label="单位名称" align="center"></el-table-column>
+                                    <el-table-column prop="PLACECOUNT" label="人均刷卡地点" align="center"></el-table-column>
+                                    <el-table-column prop="CQ" label="人均出勤率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="JB" label="人均加班率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="ZS" label="人均准时率(%)" align="center"></el-table-column>
+                                </el-table>
+                                <!-- 外表格 end-->
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row class="border_bottom">
+                        <el-col >
+                            <div style="height: 50px"></div>
+                        </el-col>
+                    </el-row>
+                </el-col>
+                <!--————表格区域 end————-->
+            </el-row>
+        </el-main>
+    </el-container>
+</template>
+
+<script>
+export default {
+    name: "epyCardDPM",
+    data(){
+        return{
+            haveData:true,
+            Time:'',//日期选择器
+            date:'',//日期变量
+            expands: [],
+            ip:'',
+            time:'',
+            tableData:[
+                {NAME:'综合办公室',PLACECOUNT:'5',CQ:'96',JB:'32',ZS:'87'},
+                {NAME:'科技管理部',PLACECOUNT:'3',CQ:'94',JB:'21',ZS:'95'},
+                {NAME:'人事部（党委组织部）',PLACECOUNT:'4',CQ:'97',JB:'32',ZS:'86'},
+                {NAME:'财务资产部',PLACECOUNT:'2',CQ:'96',JB:'38',ZS:'88'},
+                {NAME:'经营管理部',PLACECOUNT:'3',CQ:'96',JB:'23',ZS:'89'},
+                {NAME:'群团工作部（工会、团委）',PLACECOUNT:'2',CQ:'96',JB:'31',ZS:'85'},
+                {NAME:'企业级技术专家',PLACECOUNT:'2',CQ:'97',JB:'21',ZS:'86'},
+                {NAME:'勘探规划研究室',PLACECOUNT:'3',CQ:'98',JB:'21',ZS:'84'},
+                {NAME:'松辽勘探研究室',PLACECOUNT:'3',CQ:'95',JB:'23',ZS:'86'},
+                {NAME:'非常规勘探研究室',PLACECOUNT:'2',CQ:'92',JB:'24',ZS:'96'},
+                {NAME:'天然气研究室',PLACECOUNT:'2',CQ:'91',JB:'34',ZS:'86'},
+                {NAME:'地质试验研究室',PLACECOUNT:'4',CQ:'94',JB:'26',ZS:'87'},
+                {NAME:'有机地球化学研究室',PLACECOUNT:'2',CQ:'94',JB:'26',ZS:'86'},
+            ],
+        }
+    },
+    // created(){//自动渲染数据
+    //     this.getDate()
+    //     this.getIPMIAlarm()
+    //     this.Time=this.time
+    // },
+    methods: {
+        getRowKeys: function (row) {//控制表格只能展开一行
+            return row.time + row.ip + row.info
+            //  将row.time、row.ip、row.info的拼接作为行的唯一id,解决行id唯一问题
+        },
+
+        selectStartTime(val) {//日期选择器
+            //开始时间
+            this.Time = val;
+            this.date=this.Time;
+            // this.getIPMIAlarm();
+            console.log(this.time)
+        },
+        formatter (thistime, fmt) {//js格式化时间
+            let $this = new Date(thistime)
+            let o = {
+                'M+': $this.getMonth() + 1,
+                'd+': $this.getDate(),
+                'h+': $this.getHours(),
+                'm+': $this.getMinutes(),
+                's+': $this.getSeconds(),
+                'q+': Math.floor(($this.getMonth() + 3) / 3),
+                'S': $this.getMilliseconds()
+            }
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
+            }
+            for (var k in o) {
+                if (new RegExp('(' + k + ')').test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+                }
+            }
+            return fmt
+        },
+        getDate(){//获取当前时间
+            var date = this.formatter(new Date(), 'yyyy/MM/dd hh:mm:ss')
+            this.date=date.toLocaleString()
+        },
+    },
+}
+</script>
+
+<style scoped>
+.el-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.el-main {
+    color: #ffffff;
+    text-align: center;
+    height: 90vh;
+    z-index: 1;
+}
+.area{
+    width: 600px;
+    height: 500px;
+    background: #ffffff;
+    background: url("../../assets/bg_data.png");
+    background-size: 100% 100%;
+    padding: 40px;
+    margin-left: 60px;
+
+}
+.title{
+    width: 243px;
+    height: 75px;
+    font-size: 18px;
+    color: #17caf0;
+    background: url("../../assets/border_label.png") no-repeat;
+    line-height: 75px;
+    font-weight: bold;
+    text-align: center;
+}
+.border_top{
+    background:url("../../assets/border_top2.png");
+    background-size: 100% 100%;
+    text-align: left;
+}
+.border_bottom{
+    background:url("../../assets/border_bottom2.png");
+    background-size: 100% 100%;
+}
+.el-table{
+    header-align: center;
+    border-radius: 4px;
+    margin: 1% auto 0;
+    width: 90%;
+}
+.el-pagination {
+    /*分页*/
+    margin-left: 50%;
+}
+/*————表格背景透明 begin————*/
+.table-wrapper /deep/  .el-table,
+.el-table__expanded-cell {
+    background-color: transparent !important;
+}
+.table-wrapper /deep/ tr, .table-wrapper /deep/ th, .table-wrapper /deep/ td {
+    background: none !important;
+    color: #ffffff;
+    border-color: #18256f;
+}
+.table-wrapper /deep/ .el-table__row {
+    background: none !important;
+    color: #46d4ff;
+}
+/*————表格背景透明 end————*/
+.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row>td {
+    color: #ffffff;
+    background-color: #17b3f0 !important;
+    background-size: 100% 100%;
+    opacity: 0.7;
+}/*高亮选中行*/
+</style>

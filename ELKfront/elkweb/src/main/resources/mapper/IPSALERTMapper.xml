@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FW_IPSALERT" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.IPSALERT" >
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+    <result column="SRCZONENAME" property="srczonename" jdbcType="OTHER" />
+    <result column="DSTZONENAME" property="dstzonename" jdbcType="OTHER" />
+    <result column="PROTOCOL" property="protocol" jdbcType="OTHER" />
+    <result column="SRCIPADDR" property="srcipaddr" jdbcType="OTHER" />
+    <result column="SRCPORT" property="srcport" jdbcType="OTHER" />
+    <result column="DSTIPADDR" property="dstipaddr" jdbcType="OTHER" />
+    <result column="DSTPORT" property="dstport" jdbcType="OTHER" />
+    <result column="ATTACKNAME" property="attackname" jdbcType="OTHER" />
+    <result column="CATEGORY" property="category" jdbcType="OTHER" />
+    <result column="PROTECTION" property="protection" jdbcType="OTHER" />
+    <result column="SEVERITY" property="severity" jdbcType="OTHER" />
+    <result column="SUBCATEGORY" property="subcategory" jdbcType="OTHER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.IPSALERT" >
+    insert into FW_IPSALERT (TIME, SRCZONENAME, DSTZONENAME, 
+      PROTOCOL, SRCIPADDR, SRCPORT, 
+      DSTIPADDR, DSTPORT, ATTACKNAME, 
+      CATEGORY, PROTECTION, SEVERITY, 
+      SUBCATEGORY)
+    values (#{time,jdbcType=TIMESTAMP}, #{srczonename,jdbcType=OTHER}, #{dstzonename,jdbcType=OTHER}, 
+      #{protocol,jdbcType=OTHER}, #{srcipaddr,jdbcType=OTHER}, #{srcport,jdbcType=OTHER}, 
+      #{dstipaddr,jdbcType=OTHER}, #{dstport,jdbcType=OTHER}, #{attackname,jdbcType=OTHER}, 
+      #{category,jdbcType=OTHER}, #{protection,jdbcType=OTHER}, #{severity,jdbcType=OTHER}, 
+      #{subcategory,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.IPSALERT" >
+    insert into FW_IPSALERT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="srczonename != null" >
+        SRCZONENAME,
+      </if>
+      <if test="dstzonename != null" >
+        DSTZONENAME,
+      </if>
+      <if test="protocol != null" >
+        PROTOCOL,
+      </if>
+      <if test="srcipaddr != null" >
+        SRCIPADDR,
+      </if>
+      <if test="srcport != null" >
+        SRCPORT,
+      </if>
+      <if test="dstipaddr != null" >
+        DSTIPADDR,
+      </if>
+      <if test="dstport != null" >
+        DSTPORT,
+      </if>
+      <if test="attackname != null" >
+        ATTACKNAME,
+      </if>
+      <if test="category != null" >
+        CATEGORY,
+      </if>
+      <if test="protection != null" >
+        PROTECTION,
+      </if>
+      <if test="severity != null" >
+        SEVERITY,
+      </if>
+      <if test="subcategory != null" >
+        SUBCATEGORY,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="srczonename != null" >
+        #{srczonename,jdbcType=OTHER},
+      </if>
+      <if test="dstzonename != null" >
+        #{dstzonename,jdbcType=OTHER},
+      </if>
+      <if test="protocol != null" >
+        #{protocol,jdbcType=OTHER},
+      </if>
+      <if test="srcipaddr != null" >
+        #{srcipaddr,jdbcType=OTHER},
+      </if>
+      <if test="srcport != null" >
+        #{srcport,jdbcType=OTHER},
+      </if>
+      <if test="dstipaddr != null" >
+        #{dstipaddr,jdbcType=OTHER},
+      </if>
+      <if test="dstport != null" >
+        #{dstport,jdbcType=OTHER},
+      </if>
+      <if test="attackname != null" >
+        #{attackname,jdbcType=OTHER},
+      </if>
+      <if test="category != null" >
+        #{category,jdbcType=OTHER},
+      </if>
+      <if test="protection != null" >
+        #{protection,jdbcType=OTHER},
+      </if>
+      <if test="severity != null" >
+        #{severity,jdbcType=OTHER},
+      </if>
+      <if test="subcategory != null" >
+        #{subcategory,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

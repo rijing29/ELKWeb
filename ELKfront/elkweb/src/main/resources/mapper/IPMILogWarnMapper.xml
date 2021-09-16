@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.IPMIMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.IPMILogWarn" >
+    <result column="IP" property="ip" jdbcType="OTHER" />
+    <result column="INFO" property="info" jdbcType="OTHER" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.IPMILogWarn" >
+    insert into IPMI_LOG_WARN (IP, INFO, TIME)
+    values (#{ip,jdbcType=OTHER}, #{info,jdbcType=OTHER}, #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.IPMILogWarn" >
+    insert into IPMI_LOG_WARN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="info != null" >
+        INFO,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        #{ip,jdbcType=OTHER},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=OTHER},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+
+  <!--  查询IPMI告警信息  -->
+  <select id="getIPMIAlarm" resultMap="BaseResultMap">
+    select * from IPMI_LOG_WARN t
+    where time between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+    order by time desc
+  </select>
+
+  <!--  查询IPMI详细信息  -->
+  <select id="getIPMIInfo" resultMap="BaseResultMap">
+    select * from IPMI_LOG_INFO t
+    where ip=#{ip,jdbcType=VARCHAR}
+    and rownum <![CDATA[<=]]> 50
+    order by time desc
+  </select>
+
+  <!--  查询IPMI的IP信息  -->
+  <select id="getIPSelection" resultType="map">
+    select distinct ip from IPMI_LOG_INFO t
+    order by ip ASC
+  </select>
+
+  <!--  根据ip查询IPMI的详细信息  -->
+  <select id="getIPMIInfo1" resultType="map">
+    select * from IPMI_LOG_INFO t
+    where ip=#{ip,jdbcType=VARCHAR}
+    order by time desc
+  </select>
+
+  <!--  根据ip查询IPMI的告警信息  -->
+  <select id="getIPMIAlarm1" resultType="map">
+    select time,info from IPMI_LOG_WARN t
+    where ip=#{ip,jdbcType=VARCHAR}
+    order by time desc
+  </select>
+</mapper>
