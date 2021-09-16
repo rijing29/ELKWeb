@@ -69,7 +69,7 @@
   </select>
   <!--各节点工作量之和-->
   <select id="sumWorkLoad" resultType="java.lang.Integer">
-    select SUM(WORK_LOAD) from T_NODE_SOFT_MAP
+    select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_SOFT_MAP
     where 1=1
     <if test="nodeType != '' and nodeType!=null" >
       and NODE_TYPE=#{nodeType,jdbcType=VARCHAR}
@@ -84,12 +84,11 @@
   <!--nodeType效率-->
   <select id="nodeTypeEfficiency" resultType="java.lang.Integer">
     select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_WORK_DETAIL where NODE_TYPE=#{nodeType,jdbcType=VARCHAR} and NODE_ID=#{nodeId,jdbcType=DECIMAL} and TIME between
-      to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
-                                                                        and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+      to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
   </select>
   <!--nodeType各节点工作之和-->
   <select id="sumNodeTypeWorkLoad" resultType="java.lang.Integer">
-    select SUM(WORK_LOAD) from T_NODE_SOFT_MAP
+    select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_SOFT_MAP
     where 1=1
     <if test="nodeType != '' and nodeType!=null" >
       and NODE_TYPE=#{nodeType,jdbcType=VARCHAR}

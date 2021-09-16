@@ -10,18 +10,14 @@
             </el-row>
             <el-row>
                 <el-col :span="24" align="left">
-                    <!--起始日期下拉框-->
-                    日期：
-                    <el-date-picker
-                            default-value
-                            v-model="Time"
-                            type="date"
-                            placeholder="请选择日期"
-                            format="yyyy/MM/dd"
-                            value-format="yyyy/MM/dd HH:mm:ss"
-                            style="margin-right: 1%; width: 11%;"
-                            @change="selectStartTime">
-                    </el-date-picker>
+                    <!--员工查询输入框 -->
+                    <span class="span_area">
+                        <el-input v-model="username" placeholder="请输入员工姓名" style="margin-right: 1%;width: 10%;"></el-input>
+                    </span>
+                    <!-- 查询按钮 -->
+                    <span class="span_area">
+                        <el-button icon="el-icon-search" type="primary">查询</el-button>
+                    </span>
                 </el-col>
             </el-row>
             <el-row>
@@ -29,7 +25,7 @@
                 <el-col :span="24">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">员工 - XXX  (一周内信息)</div>
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">员工 - 张三  (一周内信息)</div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -69,6 +65,7 @@ export default {
             Time:'',//日期选择器
             date:'',//日期变量
             expands: [],
+            username:'',
             ip:'',
             time:'',
             tableData:[

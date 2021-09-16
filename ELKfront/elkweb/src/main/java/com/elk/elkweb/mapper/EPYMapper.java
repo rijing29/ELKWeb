@@ -15,4 +15,10 @@ public interface EPYMapper {
 
     //    查询员工统计数据
     List<Map< String, Object >> getEpyCardData(@Param("personname")String user_lname);
+
+    //    查询员工DQMDA信息
+    List<Map< String, Object >> getEpyDQMSInfo(@Param("username")String username);
+
+    //    查询员工DQMDS数据
+    List<Map< String, Object >> getEpyDQMDSData(@Param("personname")String personname);
 }

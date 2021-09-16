@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.LogWinMapper">
+    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.LogWinWarning">
+        <result column="IP" property="ip" jdbcType="VARCHAR"/>
+        <result column="TIME" property="time" jdbcType="TIMESTAMP"/>
+        <result column="WARNTYPE" property="warntype" jdbcType="VARCHAR"/>
+        <result column="WARNINFO" property="warninfo" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <resultMap id="WinLoginMap" type="com.elk.elkweb.entity.LogWinLogin">
+        <result column="IP" property="ip" jdbcType="VARCHAR"/>
+        <result column="TYPE2" property="type2" jdbcType="DECIMAL"/>
+        <result column="TYPE3" property="type3" jdbcType="DECIMAL"/>
+        <result column="TYPE5" property="type5" jdbcType="DECIMAL"/>
+        <result column="TYPE10" property="type10" jdbcType="DECIMAL"/>
+        <result column="TIME" property="time" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <insert id="insert" parameterType="com.elk.elkweb.entity.LogWinWarning">
+        insert into LOG_WIN_SYSTEMLOG_WARNING (IP, TIME, WARNTYPE,
+                                               WARNINFO)
+        values (#{ip,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{warntype,jdbcType=VARCHAR},
+                #{warninfo,jdbcType=VARCHAR})
+    </insert>
+    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.LogWinWarning">
+        insert into LOG_WIN_SYSTEMLOG_WARNING
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ip != null">
+                IP,
+            </if>
+            <if test="time != null">
+                TIME,
+            </if>
+            <if test="warntype != null">
+                WARNTYPE,
+            </if>
+            <if test="warninfo != null">
+                WARNINFO,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ip != null">
+                #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+            <if test="warntype != null">
+                #{warntype,jdbcType=VARCHAR},
+            </if>
+            <if test="warninfo != null">
+                #{warninfo,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <!--查询Windows服务器日志告警信息-->
+    <select id="getWinWaring" resultType="map">
+        select time, ip, warninfo
+        from LOG_WIN_SYSTEMLOG_WARNING
+        order by time desc
+    </select>
+
+    <!--Windows服务信息-->
+    <select id="getWinServiceInfo" resultType="map">
+        select *
+        from LOG_WIN_LOGIN
+        where TIME in ( select max ( time) from LOG_WIN_LOGIN)
+        order by type5 desc
+    </select>
+
+    <!--Windows服务器任务增长信息-->
+    <select id="getWinServiceJobInc" resultType="map">
+        select time, ip, inc_value
+        from Log_Win_Systemlog_JobInc
+        where TIME in ( select max ( time) from LOG_WIN_LOGIN)
+        order by time desc
+    </select>
+
+    <!--Windows服务器负载统计-->
+    <select id="getWinLoad" resultType="map">
+        select *
+        from (
+                 select count(*) as AllCount
+                 from (
+                          select * from LOG_WIN_LOGIN where TIME in ( select max ( time) from LOG_WIN_LOGIN)
+                      )
+             ),
+             (
+                 select count(*) as HighCount
+                 from (
+                          select * from LOG_WIN_LOGIN where TIME in ( select max ( time) from LOG_WIN_LOGIN) and type5>600
+                      )
+             )
+    </select>
+</mapper>

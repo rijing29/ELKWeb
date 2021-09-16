@@ -309,16 +309,16 @@ export default {
             this.$http.get(url, {params}).then(res => {
                 console.log(res.data.option[0], "option")
                 var i;
-                while (this.sourceDomain_options.length != 0) {
+                while (this.sourceDomain_options.length !== 0) {
                     this.sourceDomain_options.pop()
                 }
-                while (this.destinationDomain_options.length != 0) {
+                while (this.destinationDomain_options.length !== 0) {
                     this.destinationDomain_options.pop()
                 }
-                while (this.protocol_option.length != 0) {
+                while (this.protocol_option.length !== 0) {
                     this.protocol_option.pop()
                 }
-                while (this.event_options.length != 0) {
+                while (this.event_options.length !== 0) {
                     this.event_options.pop()
                 }
                 for (i = 0; i < res.data.sourceDomain.length; i++) {
@@ -352,19 +352,19 @@ export default {
             //控制多选框并查询外表数据
 
             /*————多选框控制外表列属性 begin————*/
-            while (this.cols.length != 0) {
+            while (this.cols.length !== 0) {
                 this.cols.pop()
             }
-            if (this.sourceIP == true) {
+            if (this.sourceIP === true) {
                 this.cols.push({prop: 'SRCIPADDR', label: '源IP'})
             }
-            if (this.sourcePort == true) {
+            if (this.sourcePort === true) {
                 this.cols.push({prop: 'SRCPORT', label: '源端口'})
             }
-            if (this.destinationIP == true) {
+            if (this.destinationIP === true) {
                 this.cols.push({prop: 'DSTIPADDR', label: '目的IP'})
             }
-            if (this.destinationPort == true) {
+            if (this.destinationPort === true) {
                 this.cols.push({prop: 'DSTPORT', label: '目的端口'})
             }
             this.cols.push({prop: 'COUNT', label: '包个数'})

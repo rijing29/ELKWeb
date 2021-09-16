@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LOG_WIN_SYSTEMLOG_JOBINC" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.LogWinJobInc" >
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+    <result column="TYPE" property="type" jdbcType="VARCHAR" />
+    <result column="INC_VALUE" property="incValue" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.LogWinJobInc" >
+    insert into LOG_WIN_SYSTEMLOG_JOBINC (IP, TIME, TYPE, 
+      INC_VALUE)
+    values (#{ip,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR}, 
+      #{incValue,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.LogWinJobInc" >
+    insert into LOG_WIN_SYSTEMLOG_JOBINC
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="type != null" >
+        TYPE,
+      </if>
+      <if test="incValue != null" >
+        INC_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="incValue != null" >
+        #{incValue,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

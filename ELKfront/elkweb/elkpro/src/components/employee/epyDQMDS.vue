@@ -12,11 +12,11 @@
                 <el-col :span="24" align="left">
                     <!--员工查询输入框 -->
                     <span class="span_area">
-                        <el-input v-model="personname" placeholder="请输入员工姓名" style="margin-right: 1%;width: 10%;"></el-input>
+                        <el-input v-model="username" placeholder="请输入员工姓名" style="margin-right: 1%;width: 10%;"></el-input>
                     </span>
                     <!-- 查询按钮 -->
                     <span class="span_area">
-                        <el-button icon="el-icon-search" type="primary" @click="getSelection">查询</el-button>
+                        <el-button icon="el-icon-search" type="primary" @click="getEpyDQMSInfo">查询</el-button>
                     </span>
                 </el-col>
             </el-row>
@@ -25,7 +25,7 @@
                 <el-col :span="10" style="margin-top: 8px">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px"></div>
+                            <div class="tableSubTitle">员工 - {{this.name}}</div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -37,8 +37,8 @@
                                         ref="singleTable"
                                         :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="operationtime" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="function" label="刷卡地点" align="center"></el-table-column>
+                                    <el-table-column prop="OPERATIONTIME" label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="DESCRIPTION" label="使用功能" align="center" width="380"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -105,30 +105,19 @@ export default {
                     currentPage: 1,
                 },
             ],
-            personname: '',//员工姓名
-            tableData: [
-                {operationtime:"2021-08-20 14:31:25",function:"研究院公告"},
-                {operationtime:"2021-08-20 13:41:15",function:"项目注册"},
-                {operationtime:"2021-08-20 10:41:51",function:"常见问题"},
-                {operationtime:"2021-08-19 13:41:15",function:"方案编写"},
-                {operationtime:"2021-08-19 10:41:51",function:"待办任务"},
-                {operationtime:"2021-08-18 13:41:15",function:"项目注册"},
-                {operationtime:"2021-08-17 10:41:51",function:"待办任务"},
-                {operationtime:"2021-08-17 10:41:51",function:"项目注册"},
-                {operationtime:"2021-08-16 13:41:15",function:"常见问题"},
-                {operationtime:"2021-08-16 10:41:51",function:"待办任务"}
-            ],//分析表格数据
+            username: '',//员工姓名
+            tableData: [],//表格数据
             currentRow: null,//存储当前点击行信息
             /*————饼状图数据 begin————*/
             option: {
                 title: {
-                    text: '信息数据统计',
+                    text: 'DQMDS行为统计',
                     // subtext: '时间：',
                     textStyle:{
                         color:"#17caf0"//标题文字颜色
                     },
                     subtextStyle:{
-                        color:"#17caf0"//副标题文字颜色
+                        color:"#ffffff"//副标题文字颜色
                     },
                 },
                 tooltip: {
@@ -140,8 +129,8 @@ export default {
                         fontSize: 9
                     },
                     // icon: "circle",
-                    left: "20%",//距离左边距离
-                    data: ['工作日使用率', '日常功能使用率','加班时间使用率','管理功能使用率','平均每天使用次数','专业功能使用率']
+                    left: "25%",//距离左边距离
+                    data: ['工作日使用率', '日常功能使用率','加班时间使用率','管理功能使用率','专业功能使用率']
                 },
                 grid: {left: '2%',right: '4%',bottom: '3%',containLabel: true},
                 toolbox: {
@@ -181,9 +170,14 @@ export default {
                 yAxis: [
                     {
                         inverse: true,//翻转坐标轴
-                        axisLabel:{color:"#ffffff"},//Y轴底部标签颜色
+                        axisLabel:{
+                            color:"#ffffff",//坐标轴标签文字颜色
+                            rotate: 90,//坐标轴标签文字旋转角度
+                            margin: 14,//坐标轴标签文字与轴线距离
+                            fontWeight: "lighter",//坐标轴标签文字粗细
+                        },
                         type: 'category',
-                        data: ['13-08-2021','13-08-2021','13-08-2021','13-08-2021']
+                        data: ['员工近期DQMDS行为统计']
                     }
                 ],
                 series: [
@@ -208,11 +202,6 @@ export default {
                         data: [1.70 ,100.00, 91.18,100.00]
                     },
                     {
-                        name: '平均每天使用次数',
-                        type: 'bar',
-                        data: [96.02, 0.00, 0.00,0.00]
-                    },
-                    {
                         name: '专业功能使用率',
                         type: 'bar',
                         data: [2.27, 0.00, 8.82,0.00]
@@ -223,43 +212,27 @@ export default {
         }
     },
     methods:{
-
-        getIPSAnalysis(){//渲染数据
-            var url="/getIPSAnalysis"
-            var params={
-                'time':this.date,
+        getEpyDQMSInfo(){//获取表格以及柱状图数据并渲染
+            if(this.username!==''){
+                var url="/getEpyDQMSInfo"
+                var params={
+                    'username':this.username,
+                }
+                this.$http.get(url,{params}).then(res=>{
+                    this.tableData=res.data
+                    this.name=res.data[0].USERNAME
+                })
+                var url2="/getEpyDQMDSData"
+                this.$http.get(url2,{params}).then(res=>{
+                    console.log(res.data[0].CQ)
+                    this.option.series[0].data=[res.data[0].AVGDAYS]
+                    this.option.series[1].data=[res.data[0].ONETYPE]
+                    this.option.series[2].data=[res.data[0].JB]
+                    this.option.series[3].data=[res.data[0].TWOTYPE]
+                    this.option.series[4].data=[res.data[0].THRTYPE]
+                    this.option.title.subtext="平均每天使用次数： "+res.data[0].COUNTONEDAY+' 次'
+                })
             }
-            this.$http.get(url,{params}).then(res=>{
-                /*————渲染分析表格数据 begin————*/
-                while (this.tableData.length !== 0) {
-                    this.tableData.pop()
-                }
-                var i;
-                for (i = 0; i < res.data.time.length; i++) {
-                    this.tableData.push(
-                            {
-                                time: res.data.time[i],
-                                dstipaddr: res.data.dstipaddr[i],
-                                dangervalue: res.data.dangervalue[i],
-                            })
-                }
-                /*————渲染分析表格数据 end————*/
-                /*————渲染饼状图数据 begin————*/
-                while(this.option.series[0].data.length!==0) {
-                    this.option.series[0].data.pop()
-                }
-                if(res.data.low!==0){
-                    this.option.series[0].data.push({value: res.data.low, name: '低'})
-                }
-                if(res.data.middle!==0){
-                    this.option.series[0].data.push({value: res.data.middle, name: '中'})
-                }
-                if(res.data.high!==0){
-                    this.option.series[0].data.push({value: res.data.high, name: '高'})
-                }
-
-                /*————渲染饼状图数据 end————*/
-            })
         },
     }
 }
@@ -323,6 +296,13 @@ export default {
     border-radius: 4px;
     margin: 1% auto 0;
     width: 90%;
+}
+.tableSubTitle{
+    height: 50px;
+    line-height: 70px;
+    padding-left: 20px;
+    color: #17caf0;
+    font-weight: bold;
 }
 .el-pagination {
     /*分页*/

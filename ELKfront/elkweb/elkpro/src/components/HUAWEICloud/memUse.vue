@@ -4,16 +4,16 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        员工使用软件行为
+                        公共服务器性能数据
                     </div>
                 </el-col>
             </el-row>
             <el-row>
-                <!--————近期（一个月）Windows服务器提供服务统计 begin————-->
-                <el-col :span="12" style="margin-top: 8px">
+                <!--————表格区域 begin————-->
+                <el-col :span="11" style="margin-top: 8px">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div class="tableSubTitle">员工近期使用软件信息</div>
+                            <div class="tableSubTitle">华为云存储使用情况</div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -21,15 +21,14 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table
+                                        height="540"
                                         ref="singleTable"
-                                        :data="tableDataInfo"
+                                        :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="SOFTWARENAME" label="软件"align="center"></el-table-column>
-                                    <el-table-column prop="MODULENAME" label="模块" align="center"></el-table-column>
-                                    <el-table-column prop="USEMINTUE" label="总时间(分钟)" align="center"></el-table-column>
-                                    <el-table-column prop="WORKUSEMINTUE" label="上班使用时间(分钟)" align="center"></el-table-column>
-                                    <el-table-column prop="SPAREUSEMINTUE" label="加班使用时间(分钟)" align="center"></el-table-column>
+                                    <el-table-column prop="USER" label="用户" align="center"></el-table-column>
+                                    <el-table-column prop="MEMTOTAL" label="总容量(T)" align="center"></el-table-column>
+                                    <el-table-column prop="MEMUSED" label="使用(T)" align="center"></el-table-column>
+                                    <el-table-column prop="MEMUSERATE" label="使用率(T)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -41,36 +40,18 @@
                         </el-col>
                     </el-row>
                 </el-col>
-                <!--————近期（一个月）Windows服务器提供服务统计 end————-->
-                <!--————Windows服务器日志告警信息 begin————-->
-                <el-col :span="11" style="margin-top: 8px;margin-left: 40px">
-                    <el-row >
-                        <el-col :span="24" class="border_top">
-                            <div class="tableSubTitle">员工近期加班使用软件统计</div>
-                        </el-col>
-                    </el-row>
+                <!--————表格区域 end————-->
+                <!--————饼状图区域 begin————-->
+                <el-col :span="13">
                     <el-row>
-                        <el-col :span="24" style="padding: 0;">
-                            <div class="table-wrapper">
-                                <!--————表格 begin————-->
-                                <el-table
-                                        ref="singleTable"
-                                        :data="tableDataSum"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="WORKSUM" label="加班时间(分钟)" align="center"></el-table-column>
-                                </el-table>
-                                <!--————表格 end————-->
-                            </div>
-                        </el-col>
-                    </el-row>
-                    <el-row class="border_bottom">
-                        <el-col >
-                            <div style="height: 50px"></div>
+                        <el-col :span="24" class="area" align="center">
+                            <!--————柱状图 begin————-->
+                            <v-chart class="echarts" :option="option" />
+                            <!--————柱状图 end————-->
                         </el-col>
                     </el-row>
                 </el-col>
-                <!--————Windows服务器日志告警信息 end————-->
+                <!--————饼状图区域 end————-->
             </el-row>
         </el-main>
     </el-container>
@@ -79,22 +60,25 @@
 <script>
 import * as echarts from 'echarts/core';
 import {
+    TitleComponent,
+    ToolboxComponent,
     TooltipComponent,
+    GridComponent,
     LegendComponent
 } from 'echarts/components';
 import {
-    PieChart
+    LineChart
 } from 'echarts/charts';
 import {
     CanvasRenderer
 } from 'echarts/renderers';
 
 echarts.use(
-        [TooltipComponent, LegendComponent, PieChart, CanvasRenderer]
+        [TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent, LineChart, CanvasRenderer]
 );
 import VChart, { THEME_KEY } from "vue-echarts";
 export default {
-    name: "epySoftware",
+    name: "menUse",
     components: {
         VChart
     },
@@ -111,26 +95,120 @@ export default {
             ],
             time: '',//根据此时间查询分析表
             currentRow: null,//存储当前点击行信息
-            tableDataInfo:[
-                {TIME:'2021-08-27',SOFTWARENAME:'GeoEast-处理',MODULENAME:'dqzhangxg',USEMINTUE:'200',WORKUSEMINTUE:'120',SPAREUSEMINTUE:'80'},
-                {TIME:'2021-08-26',SOFTWARENAME:'Paradigm',MODULENAME:'duchangpeng',USEMINTUE:'90',WORKUSEMINTUE:'20',SPAREUSEMINTUE:'70'},
-                {TIME:'2021-08-25',SOFTWARENAME:'ECLIPSE',MODULENAME:'duchangpeng',USEMINTUE:'120',WORKUSEMINTUE:'120',SPAREUSEMINTUE:'0'},
-                {TIME:'2021-08-24',SOFTWARENAME:'GeoEast-处理',MODULENAME:'dz',USEMINTUE:'100',WORKUSEMINTUE:'20',SPAREUSEMINTUE:'80'},
-                {TIME:'2021-08-23',SOFTWARENAME:'GeoEast-处理',MODULENAME:'dzdtfhw',USEMINTUE:'290',WORKUSEMINTUE:'220',SPAREUSEMINTUE:'70'},
-                {TIME:'2021-08-22',SOFTWARENAME:'Paradigm',MODULENAME:'fangkerong',USEMINTUE:'100',WORKUSEMINTUE:'20',SPAREUSEMINTUE:'80'},
-                {TIME:'2021-08-21',SOFTWARENAME:'ECLIPSE',MODULENAME:'fdfdsfs',USEMINTUE:'240',WORKUSEMINTUE:'200',SPAREUSEMINTUE:'40'},
-                {TIME:'2021-08-20',SOFTWARENAME:'Paradigm',MODULENAME:'fuxiandi',USEMINTUE:'150',WORKUSEMINTUE:'120',SPAREUSEMINTUE:'30'},
-            ],
-            tableDataSum:[
-                {TIME:'2021-08-27',WORKSUM:'80'},
-                {TIME:'2021-08-26',WORKSUM:'55'},
-                {TIME:'2021-08-25',WORKSUM:'25'},
-                {TIME:'2021-08-24',WORKSUM:'70'},
-                {TIME:'2021-08-23',WORKSUM:'55'},
-                {TIME:'2021-08-22',WORKSUM:'26'},
-                {TIME:'2021-08-21',WORKSUM:'72'},
-                {TIME:'2021-08-20',WORKSUM:'54'},
-            ],
+            tableData:[
+                {USER:'dxzb', MEMTOTAL:'500T',MEMUSED:'229T',MEMUSERATE:'46'},
+                {USER:'cydzcl', MEMTOTAL:'230T',MEMUSED:'203T',MEMUSERATE:'88'},
+                {USER:'dzcxxff', MEMTOTAL:'500T',MEMUSED:'473T',MEMUSERATE:'95'},
+                {USER:'fzgz', MEMTOTAL:'600T',MEMUSED:'578T',MEMUSERATE:'97'},
+                {USER:'gfblcl', MEMTOTAL:'500T',MEMUSED:'229T',MEMUSERATE:'46'},
+                {USER:'gfblxff', MEMTOTAL:'230T',MEMUSED:'203T',MEMUSERATE:'88'},
+                {USER:'kyglxi', MEMTOTAL:'500T',MEMUSED:'473T',MEMUSERATE:'95'},
+                {USER:'dzyssj', MEMTOTAL:'500T',MEMUSED:'480',MEMUSERATE:'96'},
+                {USER:'ksifs', MEMTOTAL:'600T',MEMUSED:'560',MEMUSERATE:'93'},
+                {USER:'all', MEMTOTAL:'5409T',MEMUSED:'4395T',MEMUSERATE:'78'},
+
+            ],//表格数据
+            /*————折线图图数据 begin————*/
+            option:{
+                title: {
+                    text: '存储使用情况图',
+                    subtext:'用户： dxzb',
+                    textStyle:{
+                        color:"#17caf0"//标题文字颜色
+                    },
+                    subtextStyle:{
+                        color:"#ffffff"//副标题文字颜色
+                    },
+                },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                legend: {
+                    textStyle:{
+                        color:"#ffffff"//顶部控制区域文字颜色
+                    },
+                    left: "40%",//距离左边距离
+                    data: ['存储使用情况']
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: false},
+                        dataView: {show: false, readOnly: false},
+                        restore: {show: false},
+                        saveAsImage: {
+                            //下载图标
+                            show: true,
+                            emphasis: {
+                                iconStyle: {
+                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
+                                }
+                            }
+                        },
+                    },
+                    iconStyle:{
+                        //工具栏图标样式
+                        borderColor:"#ffffff",//icon边框颜色
+                        borderWidth: 1,//icon边框大小
+                    },
+                    left: "90%",//工具栏距离左边距离
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: [
+                    {
+                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        type: 'category',
+                        boundaryGap: false,
+                        data: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15]
+                    }
+                ],
+                yAxis: [
+                    {
+                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        type: 'value'
+                    }
+                ],
+                series: [
+                    {
+                        name: '存储使用情况',
+                        type: 'line',
+                        stack: '总量',
+                        areaStyle: {},
+                        emphasis: {
+                            focus: 'series'
+                        },
+                        itemStyle: {
+                            normal: {
+                                //柱状图颜色(渐变)
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                    offset: 0,
+                                    color: "rgb(246,102,81)" // 0% 处的颜色
+                                }, {
+                                    offset: 0.6,
+                                    color: "rgb(236,53,53)" // 60% 处的颜色
+                                }, {
+                                    offset: 1,
+                                    color: "rgb(245,59,74)" // 100% 处的颜色
+                                }], false)
+                            },
+                        },
+                        data: [340, 320, 350, 330, 360, 350, 330,365,336,372,365,300,280,290,229]
+                    }
+                ]
+            },
+
+            /*————折线图数据 end————*/
         }
     },
     created(){//自动渲染数据
@@ -262,8 +340,8 @@ export default {
     z-index: 1;
 }
 .area{
-    width: 72vh;
-    height: 67vh;
+    width: 80vh;
+    height: 70vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
@@ -311,16 +389,12 @@ export default {
     background-size: 100% 100%;
 }
 .el-table{
-    height: 500px;
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;
     width: 90%;
 }
-.el-pagination {
-    /*分页*/
-    margin-left: 50%;
-}
+
 /*————表格背景透明 begin————*/
 .table-wrapper /deep/  .el-table,
 .el-table__expanded-cell {
@@ -336,10 +410,4 @@ export default {
     color: #46d4ff;
 }
 /*————表格背景透明 end————*/
-.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row>td {
-    color: #ffffff;
-    background-color: #17b3f0 !important;
-    background-size: 100% 100%;
-    opacity: 0.7;
-}/*高亮选中行*/
 </style>

@@ -85,4 +85,21 @@
     and rownum <![CDATA[<=]]> 1
     order by time desc
   </select>
+
+  <!--  根据姓名查询员工DQMDS信息  -->
+  <select id="getEpyDQMSInfo" resultType="map">
+    select username,operationtime,description from MDS_LOG t
+    where username like concat(concat('%',#{username,jdbcType=VARCHAR}),'%')
+      and rownum <![CDATA[<=]]> 30
+    order by operationtime desc
+  </select>
+
+  <!--  根据姓名查询员工统计数据  -->
+  <select id="getEpyDQMDSData" resultType="map">
+    select *
+    from MDS_LOG_FOR_ONEMAN t
+    where personname like concat(concat('%',#{personname,jdbcType=VARCHAR}),'%')
+      and rownum <![CDATA[<=]]> 1
+    order by time desc
+  </select>
 </mapper>

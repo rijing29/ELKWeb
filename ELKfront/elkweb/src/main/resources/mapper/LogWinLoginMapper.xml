@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LOG_WIN_LOGIN" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.LogWinLogin" >
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="TYPE2" property="type2" jdbcType="DECIMAL" />
+    <result column="TYPE3" property="type3" jdbcType="DECIMAL" />
+    <result column="TYPE5" property="type5" jdbcType="DECIMAL" />
+    <result column="TYPE10" property="type10" jdbcType="DECIMAL" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.LogWinLogin" >
+    insert into LOG_WIN_LOGIN (IP, TYPE2, TYPE3, 
+      TYPE5, TYPE10, TIME
+      )
+    values (#{ip,jdbcType=VARCHAR}, #{type2,jdbcType=DECIMAL}, #{type3,jdbcType=DECIMAL}, 
+      #{type5,jdbcType=DECIMAL}, #{type10,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.LogWinLogin" >
+    insert into LOG_WIN_LOGIN
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        IP,
+      </if>
+      <if test="type2 != null" >
+        TYPE2,
+      </if>
+      <if test="type3 != null" >
+        TYPE3,
+      </if>
+      <if test="type5 != null" >
+        TYPE5,
+      </if>
+      <if test="type10 != null" >
+        TYPE10,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ip != null" >
+        #{ip,jdbcType=VARCHAR},
+      </if>
+      <if test="type2 != null" >
+        #{type2,jdbcType=DECIMAL},
+      </if>
+      <if test="type3 != null" >
+        #{type3,jdbcType=DECIMAL},
+      </if>
+      <if test="type5 != null" >
+        #{type5,jdbcType=DECIMAL},
+      </if>
+      <if test="type10 != null" >
+        #{type10,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

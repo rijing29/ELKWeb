@@ -114,7 +114,7 @@ export default {
                         color:"#17caf0"//标题文字颜色
                     },
                     subtextStyle:{
-                        color:"#17caf0"//副标题文字颜色
+                        color:"#ffffff"//副标题文字颜色
                     },
                 },
                 tooltip: {

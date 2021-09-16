@@ -110,12 +110,14 @@
                     <!-- 分页 begin-->
                     <el-pagination
                             v-if="haveData"
-                            v-for="item in pages"
+                            v-for="(item,index) in pages"
                             background layout="prev, pager, next"
                             @current-change="currentPage"
                             :page-size="item.pageSize"
                             :current-page="item.currentPage"
-                            :total="item.total">
+                            :total="item.total"
+                            :key="index"
+                    >
                     </el-pagination>
                     <!-- 分页 end-->
                 </el-col>
@@ -212,7 +214,7 @@ export default {
                         avoidLabelOverlap: false,
                         itemStyle: {
                             borderRadius: 10,
-                            borderColor: '#fff',
+                            borderColor: '#ffffff',
                             borderWidth: 2
                         },
                         label: {
@@ -269,15 +271,9 @@ export default {
                 while(this.option.series[0].data.length!==0) {
                     this.option.series[0].data.pop()
                 }
-                if(res.data.low!==0){
-                    this.option.series[0].data.push({value: res.data.low, name: '低'})
-                }
-                if(res.data.middle!==0){
-                    this.option.series[0].data.push({value: res.data.middle, name: '中'})
-                }
-                if(res.data.high!==0){
-                    this.option.series[0].data.push({value: res.data.high, name: '高'})
-                }
+                this.option.series[0].data.push({value: res.data.low, name: '低'})
+                this.option.series[0].data.push({value: res.data.middle, name: '中'})
+                this.option.series[0].data.push({value: res.data.high, name: '高'})
                 /*————渲染饼状图数据 end————*/
             })
         },
@@ -287,7 +283,7 @@ export default {
                 this.getDate()
                 this.getIPSAnalysis()
             }
-            else if(this.time!==null){
+            else if(true){
                 this.date=this.time
                 this.getIPSAnalysis()
             }//if
@@ -353,14 +349,9 @@ export default {
 </script>
 
 <style scoped>
-.el-container {
-    display: flex;
-    flex-wrap: nowrap;
-}
 .el-main {
     color: #ffffff;
     text-align: center;
-
     z-index: 1;
 }
 .area{

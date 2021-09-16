@@ -4,7 +4,6 @@
       <el-row class="grid-content bg-purple-dark">
         <el-col :span="24">
           <!--选择软件名/节点下拉框-->
-
           选择查询方式：
           <el-select v-model="selectMethod_value" placeholder="请选择" @change="SelectChange">
             <el-option v-for="item in selectMethod_options" :key="item.selectMethod_value" :label="item.label" :value="item.label"></el-option>

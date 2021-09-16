@@ -166,7 +166,7 @@ export default {
                         inverse: true,//翻转坐标轴
                         axisLabel:{
                             color:"#ffffff",//坐标轴标签文字颜色
-                            rotate: 90,//坐标轴标签文字选装角度
+                            rotate: 90,//坐标轴标签文字旋转角度
                             margin: 14,//坐标轴标签文字与轴线距离
                             fontWeight: "lighter",//坐标轴标签文字粗细
                         },
@@ -226,7 +226,6 @@ export default {
                 })
                 var url2="/getEpyCardData"
                 this.$http.get(url2,{params}).then(res=>{
-
                     console.log(res.data[0].CQ)
                     this.option.series[0].data=[res.data[0].CQ]
                     this.option.series[1].data=[res.data[0].ZS]

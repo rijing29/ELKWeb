@@ -21,12 +21,12 @@
                         <el-col :span="24"class="time_area" align="left">
                             <el-row>
                                 <el-col :span="6"align="center">
-                                        <el-row class="text_big"><el-col>17:27</el-col></el-row>
-                                        <el-row class="text_small"><el-col>星期五</el-col></el-row>
+                                        <el-row class="text_big"><el-col>{{this.hours}}:{{this.minutes}}</el-col></el-row>
+                                        <el-row class="text_small"><el-col>{{this.week}}</el-col></el-row>
                                 </el-col>
                                 <el-col :span="1"><div  class="center bg_line"></div></el-col>
-                                <el-col :span="9" style="margin-left: 20px;line-height: 7vh"class="text_light_blue text_blod">2021年09月10日</el-col>
-                                <el-col :span="8"><el-button type="primary" round icon="el-icon-menu">主 页</el-button></el-col>
+                                <el-col :span="9" style="margin-left: 20px;line-height: 7vh"class="text_light_blue text_blod">{{this.date}}</el-col>
+                                <el-col :span="8"><el-button type="primary" round icon="el-icon-menu" @click="Home">主 页</el-button></el-col>
                             </el-row>
                         </el-col>
                     </el-row>
@@ -36,16 +36,21 @@
                                 <el-col :span="24" align="left" class="text_blod text_light_blue text_title left">告警/任务信息</el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="12" align="center">
+                                <el-col :span="8" align="center">
                                     <div class="bg_num">2</div>
                                 </el-col>
-                                <el-col :span="12" align="center">
+                                <el-col :span="8" align="center">
                                     <div class="bg_num">4.2</div>
+                                </el-col>
+                                <el-col :span="8" align="center">
+                                    <div class="bg_num">2</div>
                                 </el-col>
                             </el-row>
                             <el-row>
-                                <el-col :span="12" align="center" class="text_light_blue text_blod">IPMI告警台数</el-col>
-                                <el-col :span="12" align="center" class="text_light_blue text_blod">平均执行任务个数</el-col>
+                                <el-col :span="8" align="center" class="text_light_blue text_blod">IPMI告警台数</el-col>
+                                <el-col :span="8" align="center" class="text_light_blue text_blod">平均执行任务个数</el-col>
+                                <el-col :span="8" align="center" class="text_light_blue text_blod">
+                                    Agent故障个数<br><div class="text_small text_white text_lighter text_thin" >(部署Agent 352 个)</div></el-col>
                             </el-row>
                         </el-col>
                     </el-row>
@@ -78,7 +83,7 @@
                                             <el-col class="text_blod text_light_blue text_title">{{item.title}}</el-col>
                                         </el-row>
                                         <el-row>
-                                            <el-col v-for="items in item.data" style="line-height: 20px;margin-top: 15px;color: #2ac0fa" class="text_small">{{ items }}</el-col>
+                                            <el-col v-for="(items,index) in item.data" :key="index" style="line-height: 20px;margin-top: 15px;" class="text_title">{{items}}</el-col>
                                         </el-row>
                                     </el-carousel-item>
                                 </el-carousel>
@@ -137,6 +142,10 @@ export default {
     },
     data(){
         return{
+            data:'',
+            hours:'',
+            minutes:'',
+            week:'',
             dataWord:[
                 {
                     title:'日志采集量统计',
@@ -473,8 +482,8 @@ export default {
                     textStyle:{
                         color:"#ffffff"//顶部控制区域文字颜色
                     },
-                    left: "25%",//距离左边距离
-                    data: ['开发研究三室', '地震处理研究室', '人事部', '计算机网络研究室', '院领导']
+                    left: "30%",//距离左边距离
+                    data: ['开发研究三室', '地震处理研究室', '计算机网络研究室', '院领导']
                 },
                 toolbox: {
                     show: true,
@@ -513,16 +522,21 @@ export default {
                 ],
                 series: [
                     {
+                        label: {
+                            show: true,
+                            formatter: function (params) {
+                                return params.value;
+                            }
+                        },
                         type: 'radar',
                         tooltip: {
                             trigger: 'item'
                         },
                         areaStyle: {},
                         data: [
-                            {value: [73, 54, 32], name: '开发研究三室'},
+                            {value: [73, 54, 52], name: '开发研究三室'},
                             {value: [76, 88, 34], name: '地震处理研究室'},
                             {value: [80, 54, 42], name: '计算机网络研究室'},
-                            {value: [98, 75, 15], name: '人事部'},
                         ]
                     }
                 ]
@@ -530,30 +544,59 @@ export default {
             /*————雷达图数据 end————*/
         }
     },
+    created(){
+        this.getDate()
+    },
+    mounted() {
+        let that= this;
+        this.timer = setInterval(function() {
+            that.hours = new Date().getHours();
+            that.minutes=new Date().getMinutes();
+        });
+    },
+    beforeDestroy: function() {
+        if (this.time) {
+            clearInterval(this.time);
+        }
+    },
     methods:{
-        getEpyCardInfo(){//获取表格以及柱状图数据并渲染
-            if(this.user_lname!==''){
-                var url="/getEpyCardInfo"
-                var params={
-                    'user_lname':this.user_lname,
-                }
-                this.$http.get(url,{params}).then(res=>{
-                    this.tableData=res.data
-                    this.name=res.data[0].USER_LNAME
-                    this.personname=this.user_lname
-                })
-                var url2="/getEpyCardData"
-                this.$http.get(url2,{params}).then(res=>{
-
-                    console.log(res.data[0].CQ)
-                    this.option.series[0].data=[res.data[0].CQ]
-                    this.option.series[1].data=[res.data[0].ZS]
-                    this.option.series[2].data=[res.data[0].JB]
-                    this.option.title.subtext="员工刷卡地点： "+res.data[0].PLACECOUNT+' 个'
-                })
-            }
+        Home(){
+            this.$router.push({name:'home',params:{isVisible:'true'}})//向home页面传递isVisible,控制背景icon显示
         },
-    }
+        getDate(){
+            var vWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
+            var DATE = this.formatter(new Date(), 'yyyy年MM月dd日')
+            var TIME = this.formatter(new Date(), 'hh:mm:ss')
+            var WEEK = new Date()
+            this.date=DATE.toLocaleString()
+            this.time=setInterval(TIME.toLocaleString())
+            this.week=vWeek[WEEK.getDay()]
+            console.log(this.week)
+        },
+
+        formatter (thistime, fmt) {//js格式化时间
+            let $this = new Date(thistime)
+            let o = {
+                'M+': $this.getMonth() + 1,
+                'd+': $this.getDate(),
+                'h+': $this.getHours(),
+                'm+': $this.getMinutes(),
+                's+': $this.getSeconds(),
+                'q+': Math.floor(($this.getMonth() + 3) / 3),
+                'S': $this.getMilliseconds()
+            }
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
+            }
+            for (var k in o) {
+                if (new RegExp('(' + k + ')').test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+                }
+            }
+            return fmt
+        },
+    },
+
 }
 </script>
 
@@ -662,14 +705,20 @@ export default {
     font-size: 36px;
     font-weight: bold;
 }
-.text_small{
-    font-size: 14px;
-}
 .text_title{
     font-size: 18px;
 }
+.text_small{
+    font-size: 12px;
+}
 .text_light_blue{
     color: #17b3f0;
+}
+.text_white{
+    color: #ffffff;
+}
+.text_thin{
+    font-weight: lighter;
 }
 .text_blod{
     font-weight: bold;
@@ -722,7 +771,7 @@ export default {
     line-height: 150px;
 }
 .el-carousel{
-    width: 55vh;
+    width: 60vh;
     height: 20vh;
     position: absolute;
     margin: auto;

@@ -13,12 +13,12 @@
     <result column="TIME" property="time" jdbcType="TIMESTAMP" />
   </resultMap>
   <insert id="insert" parameterType="com.elk.elkweb.entity.MDSLogOneMan" >
-    insert into MDS_LOG_FOR_ONEMAN (PERSONNAME, CLASSNO, AVGDAYS,
-      COUNTONEDAY, JB, ONETYPE,
+    insert into MDS_LOG_FOR_ONEMAN (PERSONNAME, CLASSNO, AVGDAYS, 
+      COUNTONEDAY, JB, ONETYPE, 
       TWOTYPE, THRTYPE, TIME
       )
-    values (#{personname,jdbcType=VARCHAR}, #{classno,jdbcType=DECIMAL}, #{avgdays,jdbcType=DECIMAL},
-      #{countoneday,jdbcType=DECIMAL}, #{jb,jdbcType=DECIMAL}, #{onetype,jdbcType=DECIMAL},
+    values (#{personname,jdbcType=VARCHAR}, #{classno,jdbcType=DECIMAL}, #{avgdays,jdbcType=DECIMAL}, 
+      #{countoneday,jdbcType=DECIMAL}, #{jb,jdbcType=DECIMAL}, #{onetype,jdbcType=DECIMAL}, 
       #{twotype,jdbcType=DECIMAL}, #{thrtype,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP}
       )
   </insert>
