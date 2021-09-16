@@ -24,11 +24,12 @@
                                         height="540"
                                         ref="singleTable"
                                         :data="tableData"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="IP" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="CPURATEFORWORKTIME" label="CPU负载(%)" align="center"></el-table-column>
-                                    <el-table-column prop="MEMRATEFORWORKTIME" label="内存负载(%)" align="center"></el-table-column>
-                                    <el-table-column prop="NETFLOATFORWORKTIME" label="网络负载(%)" align="center"></el-table-column>
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
+                                        @current-change="handleCurrentChange">
+                                    <el-table-column prop="ip" label="IP" align="center"></el-table-column>
+                                    <el-table-column prop="cpurateforworktime" label="CPU负载" align="center"></el-table-column>
+                                    <el-table-column prop="memrateforworktime" label="内存负载" align="center"></el-table-column>
+                                    <el-table-column prop="netfloatforworktime" label="网络负载" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -90,56 +91,14 @@ export default {
                     currentPage: 1,
                 },
             ],
+            //饼图的分类
+            cpu:0,
+            memra:0,
+            highMemra:0,
+            lowMemra:0,
             time: '',//根据此时间查询分析表
             currentRow: null,//存储当前点击行信息
-            tableData:[
-                {
-                    IP:'10.65.64.10',
-                    CPURATEFORWORKTIME:12.1,
-                    MEMRATEFORWORKTIME:11.3,
-                    NETFLOATFORWORKTIME:1,
-                },{
-                    IP:'10.65.64.11',
-                    CPURATEFORWORKTIME:10.1,
-                    MEMRATEFORWORKTIME:9.1,
-                    NETFLOATFORWORKTIME:23.5,
-                },{
-                    IP:'10.65.64.12',
-                    CPURATEFORWORKTIME:2.1,
-                    MEMRATEFORWORKTIME:1,
-                    NETFLOATFORWORKTIME:1,
-                },{
-                    IP:'10.65.64.13',
-                    CPURATEFORWORKTIME:2.1,
-                    MEMRATEFORWORKTIME:1,
-                    NETFLOATFORWORKTIME:1,
-                },{
-                    IP:'10.65.64.14',
-                    CPURATEFORWORKTIME:2.1,
-                    MEMRATEFORWORKTIME:1,
-                    NETFLOATFORWORKTIME:1,
-                },{
-                    IP:'10.65.64.15',
-                    CPURATEFORWORKTIME:2.1,
-                    MEMRATEFORWORKTIME:1,
-                    NETFLOATFORWORKTIME:1,
-                },{
-                    IP:'10.65.64.16',
-                    CPURATEFORWORKTIME:2.1,
-                    MEMRATEFORWORKTIME:1,
-                    NETFLOATFORWORKTIME:1,
-                },{
-                    IP:'10.65.64.17',
-                    CPURATEFORWORKTIME:2.1,
-                    MEMRATEFORWORKTIME:1,
-                    NETFLOATFORWORKTIME:1,
-                },{
-                    IP:'10.65.64.18',
-                    CPURATEFORWORKTIME:2.1,
-                    MEMRATEFORWORKTIME:1,
-                    NETFLOATFORWORKTIME:1,
-                },
-            ],//表格数据
+            tableData:[],//表格数据
             /*————饼状图数据 begin————*/
             option : {
                 title: {
@@ -187,11 +146,11 @@ export default {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['50%', '80%'],
+                        radius: ['60%', '80%'],
                         avoidLabelOverlap: false,
                         itemStyle: {
                             borderRadius: 10,
-                            borderColor: '#ffffff',
+                            borderColor: '#fff',
                             borderWidth: 2
                         },
                         label: {
@@ -208,10 +167,10 @@ export default {
                         labelLine: {show: true},
                         cursor: "pointer",
                         data: [
-                            {value: 80, name: '低负载均衡'},
-                            {value: 17, name: 'CPU负载高'},
-                            {value: 12, name: '内存负载高'},
-                            {value: 21, name: '高负载均衡'},
+                            {value: 50, name: 'CPU负载高'},
+                            {value: 17, name: '内存负载高'},
+                            {value: 12, name: '高负载均衡'},
+                            {value: 11, name: '低负载均衡'},
                         ],
                     }
                 ]
@@ -222,6 +181,7 @@ export default {
     created(){//自动渲染数据
         // this.getDate()
         // this.getIPSAnalysis()
+        this.getPublicServer()
     },
     methods:{
         getDate(){//获取当前时间
@@ -276,37 +236,6 @@ export default {
                 this.getIPSAnalysis()
             }//if
         },
-        handleCurrentChange(val) {//表格点击事件
-            if(val!==null){
-                this.currentRow = val;
-                var url="/getIPSInfo"
-                var params={
-                    'time':this.currentRow.time,
-                    'dstipaddr':this.currentRow.dstipaddr,
-                    'pageNum': this.pages[0].currentPage,
-                    'pageSize': this.pages[0].pageSize,
-                }
-                console.log(this.currentRow.time, this.currentRow.dstipaddr)
-                this.$http.get(url,{params}).then(res=> {
-                    /*————渲染详细表格数据 begin————*/
-                    this.pages[0].total = res.data.total//向分页传递总数据
-                    while (this.tableData1.length !== 0) {
-                        this.tableData1.pop()
-                    }
-                    var k;
-                    for (k = 0; k < res.data.time.length; k++) {
-                        this.tableData1.push(
-                                {
-                                    time: res.data.time[k],
-                                    attackname: res.data.attackname[k],
-                                    severity: res.data.dangervalue[k],
-                                    srcipaddr:res.data.srcipaddr[k]
-                                })
-                    }
-                    /*————渲染详细表格数据 end————*/
-                })
-            }
-        },
         currentPage: function (row) {//分页控制部分
             this.pages[0].currentPage = row//取当前页码
             this.handleCurrentChange(this.currentRow)//根据当前页码渲染数据
@@ -332,6 +261,47 @@ export default {
             }
             return fmt
         },
+        getPublicServer(){
+            var url="/getPublicServer"
+            //获取到表格的数据
+            var length=0;
+            this.$http.get(url).then(res=>{
+                res.data.forEach(item=>{
+                    if(item.netfloatforworktime>100000)
+                        item.netfloatforworktime=100
+                    else
+                        item.netfloatforworktime=item.netfloatforworktime/10000
+                    length++;
+                })
+                /**
+                 * 对饼图进行划分
+                 * 0 cpu负载高
+                 * 1 内存负载高
+                 * 2 高负载均衡
+                 * 3 低负载均衡
+                 */
+                this.cpu=0;
+                this.memra=0;
+                this.highMemra=0;
+                this.lowMemra=0;
+                res.data.forEach(item=>{
+                    if(item.cpurateforworktime>=20)
+                        this.cpu++;
+                    else if(item.cpurateforworktime<20 && item.memrateforworktime>=15)
+                        this.memra++;
+                    else if(item.cpurateforworktime<20 && item.memrateforworktime<15)
+                        this.highMemra++;
+                    else
+                        this.lowMemra=length-this.cpu-this.memra-this.highMemra;
+                })
+                console.log(this.cpu+"--"+this.memra+"--"+this.highMemra+"--"+this.lowMemra)
+                this.tableData=res.data
+                this.option.series[0].data[0].value=this.cpu;
+                this.option.series[0].data[1].value=this.memra;
+                this.option.series[0].data[2].value=this.highMemra;
+                this.option.series[0].data[3].value=this.lowMemra;
+            })
+        }
     }
 }
 </script>

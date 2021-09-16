@@ -8,9 +8,22 @@
                     </div>
                 </el-col>
             </el-row>
+            <!--查询部分-->
+            <el-row>
+                <el-col :span="24" align="left">
+                    <!--员工查询输入框 -->
+                    <span class="span_area">
+                        <el-input v-model="username" placeholder="请输入员工姓名" style="margin-right: 1%;width:20%;"></el-input>
+                    </span>
+                    <!-- 查询按钮 -->
+                    <span class="span_area">
+                        <el-button icon="el-icon-search" type="primary" @click="getEpyCardInfo">查询</el-button>
+                    </span>
+                </el-col>
+            </el-row>
             <el-row>
                 <!--————近期（一个月）Windows服务器提供服务统计 begin————-->
-                <el-col :span="12" style="margin-top: 8px">
+                <el-col :span="12" style="margin-top: 8px" v-if="haveData">
                     <el-row >
                         <el-col :span="24" class="border_top">
                             <div class="tableSubTitle">员工近期使用软件信息</div>
@@ -21,15 +34,15 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table
+                                        height="500"
                                         ref="singleTable"
                                         :data="tableDataInfo"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="SOFTWARENAME" label="软件"align="center"></el-table-column>
-                                    <el-table-column prop="MODULENAME" label="模块" align="center"></el-table-column>
-                                    <el-table-column prop="USEMINTUE" label="总时间(分钟)" align="center"></el-table-column>
-                                    <el-table-column prop="WORKUSEMINTUE" label="上班使用时间(分钟)" align="center"></el-table-column>
-                                    <el-table-column prop="SPAREUSEMINTUE" label="加班使用时间(分钟)" align="center"></el-table-column>
+                                    <el-table-column prop="time" label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="username" label="用户名" align="center"></el-table-column>
+                                    <el-table-column prop="softwarename" label="软件系统的名称"align="center"></el-table-column>
+                                    <el-table-column prop="modulename" label="软件系统模块名称" align="center"></el-table-column>
+                                    <el-table-column prop="usemintue" label="用户使用模块的总时间" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -43,7 +56,7 @@
                 </el-col>
                 <!--————近期（一个月）Windows服务器提供服务统计 end————-->
                 <!--————Windows服务器日志告警信息 begin————-->
-                <el-col :span="11" style="margin-top: 8px;margin-left: 40px">
+                <el-col :span="11" style="margin-top: 8px;margin-left: 40px" v-if="haveData1">
                     <el-row >
                         <el-col :span="24" class="border_top">
                             <div class="tableSubTitle">员工近期加班使用软件统计</div>
@@ -58,20 +71,32 @@
                                         :data="tableDataSum"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="WORKSUM" label="加班时间(分钟)" align="center"></el-table-column>
+                                    <el-table-column prop="SUM(WORKUSEMINTUE)" label="加班时间(分钟)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
                         </el-col>
                     </el-row>
-                    <el-row class="border_bottom">
-                        <el-col >
-                            <div style="height: 50px"></div>
-                        </el-col>
-                    </el-row>
+
                 </el-col>
                 <!--————Windows服务器日志告警信息 end————-->
             </el-row>
+            <!--&lt;!&ndash;分页部分&ndash;&gt;-->
+            <!--<el-row>-->
+            <!--<el-col>-->
+            <!--&lt;!&ndash; 分页 begin&ndash;&gt;-->
+            <!--<el-pagination-->
+            <!--@size-change="handleSizeChange"-->
+            <!--@current-change="handleCurrentChange"-->
+            <!--:current-page="paginations.currentPage"-->
+            <!--:page-sizes="paginations.pageSizes"-->
+            <!--:page-size="paginations.PageSize"-->
+            <!--layout="total, sizes, prev, pager, next, jumper"-->
+            <!--:total="tableDataInfo.length">-->
+            <!--</el-pagination>-->
+            <!--&lt;!&ndash; 分页 end&ndash;&gt;-->
+            <!--</el-col>-->
+            <!--</el-row>-->
         </el-main>
     </el-container>
 </template>
@@ -100,42 +125,30 @@ export default {
     },
     data(){
         return{
-            haveData: true,
+            haveData: false,
+            haveData1:false,
             date:'',//日期变量
-            pages: [//分页信息
-                {
-                    pageSize: 20,
-                    total: 1000,
-                    currentPage: 1,
-                },
-            ],
+            username:'',
+            paginations:{
+                // 默认显示第几页
+                currentPage:1,
+                // 个数选择器（可修改）
+                // pageSizes:[1,2,3],
+                // 默认每页显示的条数（可修改）
+                PageSize:10,
+            },
             time: '',//根据此时间查询分析表
             currentRow: null,//存储当前点击行信息
-            tableDataInfo:[
-                {TIME:'2021-08-27',SOFTWARENAME:'GeoEast-处理',MODULENAME:'dqzhangxg',USEMINTUE:'200',WORKUSEMINTUE:'120',SPAREUSEMINTUE:'80'},
-                {TIME:'2021-08-26',SOFTWARENAME:'Paradigm',MODULENAME:'duchangpeng',USEMINTUE:'90',WORKUSEMINTUE:'20',SPAREUSEMINTUE:'70'},
-                {TIME:'2021-08-25',SOFTWARENAME:'ECLIPSE',MODULENAME:'duchangpeng',USEMINTUE:'120',WORKUSEMINTUE:'120',SPAREUSEMINTUE:'0'},
-                {TIME:'2021-08-24',SOFTWARENAME:'GeoEast-处理',MODULENAME:'dz',USEMINTUE:'100',WORKUSEMINTUE:'20',SPAREUSEMINTUE:'80'},
-                {TIME:'2021-08-23',SOFTWARENAME:'GeoEast-处理',MODULENAME:'dzdtfhw',USEMINTUE:'290',WORKUSEMINTUE:'220',SPAREUSEMINTUE:'70'},
-                {TIME:'2021-08-22',SOFTWARENAME:'Paradigm',MODULENAME:'fangkerong',USEMINTUE:'100',WORKUSEMINTUE:'20',SPAREUSEMINTUE:'80'},
-                {TIME:'2021-08-21',SOFTWARENAME:'ECLIPSE',MODULENAME:'fdfdsfs',USEMINTUE:'240',WORKUSEMINTUE:'200',SPAREUSEMINTUE:'40'},
-                {TIME:'2021-08-20',SOFTWARENAME:'Paradigm',MODULENAME:'fuxiandi',USEMINTUE:'150',WORKUSEMINTUE:'120',SPAREUSEMINTUE:'30'},
-            ],
-            tableDataSum:[
-                {TIME:'2021-08-27',WORKSUM:'80'},
-                {TIME:'2021-08-26',WORKSUM:'55'},
-                {TIME:'2021-08-25',WORKSUM:'25'},
-                {TIME:'2021-08-24',WORKSUM:'70'},
-                {TIME:'2021-08-23',WORKSUM:'55'},
-                {TIME:'2021-08-22',WORKSUM:'26'},
-                {TIME:'2021-08-21',WORKSUM:'72'},
-                {TIME:'2021-08-20',WORKSUM:'54'},
-            ],
+            //员工近期使用软件信息
+            tableDataInfo:[],
+            //员工近期加班使用软件统计
+            tableDataSum:[],
         }
     },
     created(){//自动渲染数据
         // this.getDate()
         // this.getIPSAnalysis()
+        this.getEpySoftWareUsage()
     },
     methods:{
         getDate(){//获取当前时间
@@ -188,42 +201,18 @@ export default {
             else if(this.time!==null){
                 this.date=this.time
                 this.getIPSAnalysis()
-            }//if
-        },
-        handleCurrentChange(val) {//表格点击事件
-            if(val!==null){
-                this.currentRow = val;
-                var url="/getIPSInfo"
-                var params={
-                    'time':this.currentRow.time,
-                    'dstipaddr':this.currentRow.dstipaddr,
-                    'pageNum': this.pages[0].currentPage,
-                    'pageSize': this.pages[0].pageSize,
-                }
-                console.log(this.currentRow.time, this.currentRow.dstipaddr)
-                this.$http.get(url,{params}).then(res=> {
-                    /*————渲染详细表格数据 begin————*/
-                    this.pages[0].total = res.data.total//向分页传递总数据
-                    while (this.tableData1.length !== 0) {
-                        this.tableData1.pop()
-                    }
-                    var k;
-                    for (k = 0; k < res.data.time.length; k++) {
-                        this.tableData1.push(
-                                {
-                                    time: res.data.time[k],
-                                    attackname: res.data.attackname[k],
-                                    severity: res.data.dangervalue[k],
-                                    srcipaddr:res.data.srcipaddr[k]
-                                })
-                    }
-                    /*————渲染详细表格数据 end————*/
-                })
             }
         },
-        currentPage: function (row) {//分页控制部分
-            this.pages[0].currentPage = row//取当前页码
-            this.handleCurrentChange(this.currentRow)//根据当前页码渲染数据
+        handleSizeChange(val) {
+            // 改变每页显示的条数
+            this.paginations.PageSize=val
+            // 注意：在改变每页显示的条数时，要将页码显示到第一页
+            this.paginations.currentPage=1
+        },
+        // 现在显示当前页的第几页
+        handleCurrentChange(val) {
+            // 改变默认的页数
+            this.paginations.currentPage=val
         },
         formatter (thistime, fmt) {//js格式化时间
             let $this = new Date(thistime)
@@ -246,6 +235,39 @@ export default {
             }
             return fmt
         },
+        // getEpySoftWareUsage(){
+        //     var url="/getEpySoftWareUsage"
+        //     this.$http.get(url).then(res=>{
+        //         console.log(res)
+        //         this.tableDataInfo=res.data
+        //         console.log(this.tableDataInfo)
+        //     })
+        // },
+        //模糊查询
+        getEpyCardInfo(){
+            this.haveData=true;
+            this.haveData1=true;
+            //员工近期使用软件信息
+            var url="/getEpySoftWareUsage"
+            var params={
+                'username':this.username,
+            }
+            this.$http.get(url,{params}).then(res=>{
+                console.log(res)
+                this.tableDataInfo=res.data
+                console.log(this.tableDataInfo)
+            })
+            //员工近期加班使用软件统计
+            var url="/getEpySoftWareUsageCount"
+            var params={
+                'username':this.username,
+            }
+            this.$http.get(url,{params}).then(res=>{
+                console.log(res)
+                this.tableDataSum=res.data
+                console.log(this.tableDataSum)
+            })
+        }
     }
 }
 </script>
@@ -273,7 +295,7 @@ export default {
 }
 .span_area {
     /*区域*/
-    margin-left: 40px;
+    margin-left: 1px;
 }
 .title{
     width: 243px;
@@ -311,7 +333,6 @@ export default {
     background-size: 100% 100%;
 }
 .el-table{
-    height: 500px;
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;
@@ -319,7 +340,7 @@ export default {
 }
 .el-pagination {
     /*分页*/
-    margin-left: 50%;
+    margin-right: 50%;
 }
 /*————表格背景透明 begin————*/
 .table-wrapper /deep/  .el-table,

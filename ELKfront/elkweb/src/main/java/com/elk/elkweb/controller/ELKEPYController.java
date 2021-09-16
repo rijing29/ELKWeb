@@ -1,8 +1,10 @@
 package com.elk.elkweb.controller;
 
+import com.elk.elkweb.mapper.EpySoftWareUsageMapper;
 import com.elk.elkweb.service.EPYService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,6 +16,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/elk")
 public class ELKEPYController {
+    @Qualifier("EPYService")
     @Autowired
     private EPYService epyService;
 
@@ -72,4 +75,29 @@ public class ELKEPYController {
         epyDQMDSData.forEach(System.out::println);
         return epyDQMDSData;
     }
+    /**
+     * Description:
+     * date: 2021/9/11 17:10
+     * @author: whj
+     * @method:员工使用软件行为
+     */
+    @RequestMapping(value = "/getEpySoftWareUsage",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List showEpySoftWareUsage(@Param("username")String username){
+        List<EpySoftWareUsageMapper> epySoftWareUsageMapperList = epyService.showEpySoftWareUsage(username);
+        return epySoftWareUsageMapperList;
+    }
+    /**
+     * Description:
+     * date: 2021/9/13 19:58
+     * @author: whj
+     * @method:员工近期使用软件统计
+     */
+    @RequestMapping(value = "/getEpySoftWareUsageCount",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List showEpySoftWareUsageCount(@Param("username")String username){
+        List<Map<String, Object>> showEpySoftWareUsageCount = epyService.showEpySoftWareUsageCount(username);
+        return showEpySoftWareUsageCount;
+    }
+
 }

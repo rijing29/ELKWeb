@@ -1,5 +1,6 @@
 package com.elk.elkweb.service;
 
+import com.elk.elkweb.mapper.EpySoftWareUsageMapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
@@ -19,4 +20,8 @@ public interface EPYService {
 
     //    查询员工DQMDS数据
     List<Map< String, Object >> getEpyDQMDSData(String personname);
+    //     查询员工使用软件行为
+    List<EpySoftWareUsageMapper> showEpySoftWareUsage(String username);
+    //    员工近期加班使用软件统计
+    List<Map< String, Object >> showEpySoftWareUsageCount(String username);
 }
