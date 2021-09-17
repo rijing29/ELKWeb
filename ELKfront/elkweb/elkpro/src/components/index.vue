@@ -15,6 +15,7 @@
                 </el-col>
                 <!--————雷达图区域 end————-->
                 <el-col :span="8"></el-col>
+
                 <!--————右上角区域 begin————-->
                 <el-col :span="8" style="float: right;">
                     <el-row>
