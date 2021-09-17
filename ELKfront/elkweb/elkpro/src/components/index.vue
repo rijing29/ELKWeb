@@ -566,10 +566,8 @@ export default {
         getDate(){
             var vWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
             var DATE = this.formatter(new Date(), 'yyyy年MM月dd日')
-            var TIME = this.formatter(new Date(), 'hh:mm:ss')
             var WEEK = new Date()
             this.date=DATE.toLocaleString()
-            this.time=setInterval(TIME.toLocaleString())
             this.week=vWeek[WEEK.getDay()]
             console.log(this.week)
         },
