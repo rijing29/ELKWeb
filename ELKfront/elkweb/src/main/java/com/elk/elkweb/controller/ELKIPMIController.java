@@ -6,6 +6,7 @@ import com.elk.elkweb.entity.IPSAnalysis;
 import com.elk.elkweb.service.IPMIService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +23,7 @@ public class ELKIPMIController {
      * 查询IPMI告警日志信息
      *
      * */
+    @Qualifier("IPMIServiceImpl")
     @Autowired
     private IPMIService ipmiService;
     @RequestMapping(value = "/getIPMIAlarm",produces = "application/json;charset=utf-8" )

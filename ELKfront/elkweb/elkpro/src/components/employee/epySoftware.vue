@@ -81,22 +81,6 @@
                 </el-col>
                 <!--————Windows服务器日志告警信息 end————-->
             </el-row>
-            <!--&lt;!&ndash;分页部分&ndash;&gt;-->
-            <!--<el-row>-->
-            <!--<el-col>-->
-            <!--&lt;!&ndash; 分页 begin&ndash;&gt;-->
-            <!--<el-pagination-->
-            <!--@size-change="handleSizeChange"-->
-            <!--@current-change="handleCurrentChange"-->
-            <!--:current-page="paginations.currentPage"-->
-            <!--:page-sizes="paginations.pageSizes"-->
-            <!--:page-size="paginations.PageSize"-->
-            <!--layout="total, sizes, prev, pager, next, jumper"-->
-            <!--:total="tableDataInfo.length">-->
-            <!--</el-pagination>-->
-            <!--&lt;!&ndash; 分页 end&ndash;&gt;-->
-            <!--</el-col>-->
-            <!--</el-row>-->
         </el-main>
     </el-container>
 </template>

@@ -16,10 +16,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/elk")
 public class ELKEPYController {
-    @Qualifier("EPYService")
+    @Qualifier("EPYServiceImpl")
     @Autowired
     private EPYService epyService;
-
     /**
      *
      * 查询员工刷卡信息

@@ -41,13 +41,16 @@ public class EPYServiceImpl implements EPYService{
         List<Map<String, Object>> epyDQMDSData =epyMapper.getEpyDQMDSData(personname);
         return epyDQMDSData;
     }
+
     //    查询软件使用行为
+    @Override
     public List<EpySoftWareUsageMapper> showEpySoftWareUsage(String username) {
         List<EpySoftWareUsageMapper> epySoftWareUsageMapperList = epySoftWareUsageMapper.showEpySoftWareUsage(username);
         return epySoftWareUsageMapperList;
     }
 
     //    员工近期加班使用软件统计
+    @Override
     public List<Map<String, Object>> showEpySoftWareUsageCount(String username) {
         List<Map<String, Object>> softWareUsageCount = epySoftWareUsageMapper.showEpySoftWareUsageCount(username);
         return softWareUsageCount;

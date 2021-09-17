@@ -7,6 +7,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -23,6 +24,7 @@ public class ELKIPSController {
      * 查询IPS告警分析信息
      *
      * */
+    @Qualifier("IPSServiceImpl")
     @Autowired
     private IPSService ipsService;
     @RequestMapping(value = "/getIPSAnalysis",produces = "application/json;charset=utf-8" )

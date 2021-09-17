@@ -18,6 +18,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/elk")
 public class ELKSLAController {
+    @Qualifier("SLAServiceImpl")
     @Autowired
     private SLAService sLAService;
     /**
