@@ -6,15 +6,18 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="ELKWeb" />
         <module name="elkweb" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="elkweb" target="11" />
+      <module name="ELKWeb" target="1.8" />
+      <module name="elkweb" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="ELKWeb" options="-parameters" />
       <module name="elkweb" options="-parameters" />
     </option>
   </component>
