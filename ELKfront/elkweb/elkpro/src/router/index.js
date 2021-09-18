@@ -37,6 +37,7 @@ Vue.use(VueRouter)
 
 const routes = [
     {path: '/test', name: 'test', component: test},
+    {path: '/test2', name: 'test2', component: test2},
     {path: '/css', name: 'css', component: css},
     {path: '/', name: 'index', component: index},
     {path: '/home', name: 'home', component: home,
