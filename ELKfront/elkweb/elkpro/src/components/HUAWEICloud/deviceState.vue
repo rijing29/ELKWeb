@@ -387,16 +387,6 @@ export default {
                 calculable: true,
                 xAxis: [
                     {
-                        position: "top",//X轴标签位置(顶部或底部)
-                        axisLabel: {color: "#ffffff"},//X轴底部标签颜色
-                        type: 'value',
-                        boundaryGap: [0, 0.01],
-                        // max:100,//最大刻度值
-
-                    }
-                ],
-                yAxis: [
-                    {
                         inverse: true,//翻转坐标轴
                         axisLabel: {
                             color: "#ffffff",//坐标轴标签文字颜色
@@ -410,6 +400,17 @@ export default {
                             type: "line"//坐标轴指示器(line\shadow\none)
                         }
                     },
+                ],
+                yAxis: [
+                    {
+                        position: "top",//X轴标签位置(顶部或底部)
+                        axisLabel: {color: "#ffffff"},//X轴底部标签颜色
+                        type: 'value',
+                        boundaryGap: [0, 0.01],
+                        // max:100,//最大刻度值
+
+                    }
+
 
                 ],
                 series: [

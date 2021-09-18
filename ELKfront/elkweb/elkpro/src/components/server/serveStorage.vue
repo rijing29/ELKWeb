@@ -333,7 +333,7 @@ export default {
 .el-main {
     color: #ffffff;
     text-align: center;
-    height: 90vh;
+    height: 100vh;
     z-index: 1;
 }
 .area{
