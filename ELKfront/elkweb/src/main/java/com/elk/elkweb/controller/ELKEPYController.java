@@ -1,6 +1,8 @@
 package com.elk.elkweb.controller;
 
 import com.elk.elkweb.mapper.EpySoftWareUsageMapper;
+import com.elk.elkweb.service.EPYDEPDQMDS;
+import com.elk.elkweb.service.EPYDEPService;
 import com.elk.elkweb.service.EPYService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,10 @@ public class ELKEPYController {
     @Qualifier("EPYServiceImpl")
     @Autowired
     private EPYService epyService;
+    @Autowired
+    private EPYDEPService epydepService;
+    @Autowired
+    private EPYDEPDQMDS epydepdqmds;
     /**
      *
      * 查询员工刷卡信息
@@ -98,5 +104,37 @@ public class ELKEPYController {
         List<Map<String, Object>> showEpySoftWareUsageCount = epyService.showEpySoftWareUsageCount(username);
         return showEpySoftWareUsageCount;
     }
+   /**
+   *@Author:whj
+   *@date:2021-09-209:28
+   *@Method:员工外网浏览
+   */
+   public List showEpyNet(@Param("username")String username){
+       List epyServiceEpyNet = epyService.getEpyNet(username);
+       return epyServiceEpyNet;
+   }
+
+   /**
+   *@Author:whj
+   *@date:2021-09-2010:59
+   *@Method:单位员工刷卡统计
+   */
+   @RequestMapping(value = "/getCardDEP",produces = "application/json;charset=utf-8" )
+   @ResponseBody
+   public List getCardDEP(){
+       List cardDEP = epydepService.getCardDEP();
+       return cardDEP;
+   }
+   /**
+   *@Author:whj
+   *@date:2021-09-2011:50
+   *@Method:单位DQMDS日志统计
+   */
+   @RequestMapping(value = "/getDQMDSDEP",produces = "application/json;charset=utf-8" )
+   @ResponseBody
+   public List getDQMDSDEP(){
+       List depdqmds = epydepdqmds.getDEPDQMDS();
+       return depdqmds;
+   }
 
 }

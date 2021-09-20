@@ -78,8 +78,13 @@
 <!--        enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 <!--        <table tableName="JK_LOGANALYIZE_USERUSAGE" domainObjectName="EpySoftWareUsage" enableCountByExample="false" enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--                <table tableName="JK_CC_USEAGE" domainObjectName="ServerUseage" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+<!--            <table tableName="MAIL_WEBPAGE_TJ" domainObjectName="EpyNet" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+<!--            <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="EpyCard" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+            <table tableName="MDS_LOG_FOR_DEPARTMENT" domainObjectName="EPYDEPDQMDS" enableCountByExample="false" enableUpdateByExample="false"
+                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+
     </context>
 </generatorConfiguration>
 

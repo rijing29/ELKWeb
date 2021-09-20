@@ -21,11 +21,12 @@
                             <div class="table-wrapper">
                                 <!-- 外表格 begin-->
                                 <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;">
-                                    <el-table-column prop="NAME" label="单位名称" align="center"></el-table-column>
-                                    <el-table-column prop="PLACECOUNT" label="人均刷卡地点" align="center"></el-table-column>
-                                    <el-table-column prop="CQ" label="人均出勤率(%)" align="center"></el-table-column>
-                                    <el-table-column prop="JB" label="人均加班率(%)" align="center"></el-table-column>
-                                    <el-table-column prop="ZS" label="人均准时率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="name" label="单位名称" align="center"></el-table-column>
+                                    <el-table-column prop="counts" label="单位统计涉及人数" align="center"></el-table-column>
+                                    <el-table-column prop="placecount" label="人均刷卡地点" align="center"></el-table-column>
+                                    <el-table-column prop="cq" label="人均出勤率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="jb" label="人均加班率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="zs" label="人均准时率(%)" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 外表格 end-->
                             </div>
@@ -54,28 +55,12 @@ export default {
             expands: [],
             ip:'',
             time:'',
-            tableData:[
-                {NAME:'综合办公室',PLACECOUNT:'5',CQ:'96',JB:'32',ZS:'87'},
-                {NAME:'科技管理部',PLACECOUNT:'3',CQ:'94',JB:'21',ZS:'95'},
-                {NAME:'人事部（党委组织部）',PLACECOUNT:'4',CQ:'97',JB:'32',ZS:'86'},
-                {NAME:'财务资产部',PLACECOUNT:'2',CQ:'96',JB:'38',ZS:'88'},
-                {NAME:'经营管理部',PLACECOUNT:'3',CQ:'96',JB:'23',ZS:'89'},
-                {NAME:'群团工作部（工会、团委）',PLACECOUNT:'2',CQ:'96',JB:'31',ZS:'85'},
-                {NAME:'企业级技术专家',PLACECOUNT:'2',CQ:'97',JB:'21',ZS:'86'},
-                {NAME:'勘探规划研究室',PLACECOUNT:'3',CQ:'98',JB:'21',ZS:'84'},
-                {NAME:'松辽勘探研究室',PLACECOUNT:'3',CQ:'95',JB:'23',ZS:'86'},
-                {NAME:'非常规勘探研究室',PLACECOUNT:'2',CQ:'92',JB:'24',ZS:'96'},
-                {NAME:'天然气研究室',PLACECOUNT:'2',CQ:'91',JB:'34',ZS:'86'},
-                {NAME:'地质试验研究室',PLACECOUNT:'4',CQ:'94',JB:'26',ZS:'87'},
-                {NAME:'有机地球化学研究室',PLACECOUNT:'2',CQ:'94',JB:'26',ZS:'86'},
-            ],
+            tableData:[],
         }
     },
-    // created(){//自动渲染数据
-    //     this.getDate()
-    //     this.getIPMIAlarm()
-    //     this.Time=this.time
-    // },
+    created(){//自动渲染数据
+        this.getCardDEP()
+    },
     methods: {
         getRowKeys: function (row) {//控制表格只能展开一行
             return row.time + row.ip + row.info
@@ -114,6 +99,14 @@ export default {
             var date = this.formatter(new Date(), 'yyyy/MM/dd hh:mm:ss')
             this.date=date.toLocaleString()
         },
+        //单位刷卡信息统计
+        getCardDEP(){
+          var url="/getCardDEP"
+          this.$http.get(url).then(res=>{
+            console.log(res)
+            this.tableData=res.data
+          })
+        }
     },
 }
 </script>
