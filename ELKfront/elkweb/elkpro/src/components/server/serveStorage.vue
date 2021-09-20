@@ -24,9 +24,11 @@
                                         height="540"
                                         ref="singleTable"
                                         :data="tableData"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="CONTENTS" label="存储目录" align="center"></el-table-column>
-                                    <el-table-column prop="USAGEAMOUNT" label="使用量" align="center"></el-table-column>
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
+                                        highlight-current-row
+                                        @current-change="handleCurrentChange">
+                                    <el-table-column prop="DIRNAME" label="存储目录" align="center"></el-table-column>
+                                    <el-table-column prop="INFO" label="使用量" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -83,28 +85,9 @@ export default {
     data(){
         return{
             haveData: true,
-            date:'',//日期变量
-            pages: [//分页信息
-                {
-                    pageSize: 20,
-                    total: 1000,
-                    currentPage: 1,
-                },
-            ],
-            time: '',//根据此时间查询分析表
+            time: '',//根据此时间查询15天内当前选择目录的存储信息
             currentRow: null,//存储当前点击行信息
-            tableData:[
-                {CONTENTS:'/datapool', USAGEAMOUNT:'170T'},
-                {CONTENTS:'/datapool/vmbk1', USAGEAMOUNT:'47T'},
-                {CONTENTS:'/datapool/信息研究室/19216864132', USAGEAMOUNT:'24T'},
-                {CONTENTS:'/datapool/kfdzyjs', USAGEAMOUNT:'5.1T'},
-                {CONTENTS:'/datapool/disk', USAGEAMOUNT:'5.1T'},
-                {CONTENTS:'/datapool/dzjs2s/chenghunguo', USAGEAMOUNT:'995T'},
-                {CONTENTS:'/datapool/kyglxi', USAGEAMOUNT:'36T'},
-                {CONTENTS:'/datapool/oracle1', USAGEAMOUNT:'42T'},
-                {CONTENTS:'/datapool/dqazqm', USAGEAMOUNT:'68.8T'},
-                {CONTENTS:'/datapool/dqazqm1', USAGEAMOUNT:'35.5T'},
-            ],//表格数据
+            tableData:[],//表格数据
             /*————折线图图数据 begin————*/
             option:{
                 title: {
@@ -200,7 +183,7 @@ export default {
                                 }], false)
                             },
                         },
-                        data: [25, 34, 32, 36, 47, 46, 52,50,58,55,60,65,60,66,68]
+                        data: []
                     }
                 ]
             },
@@ -209,117 +192,37 @@ export default {
         }
     },
     created(){//自动渲染数据
-        // this.getDate()
-        // this.getIPSAnalysis()
+        this.getStorage()
     },
     methods:{
-        getDate(){//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
-            this.date=date.toLocaleString()
-        },
-        getIPSAnalysis(){//渲染数据
-            var url="/getIPSAnalysis"
-            var params={
-                'time':this.date,
-            }
-            this.$http.get(url,{params}).then(res=>{
-                /*————渲染分析表格数据 begin————*/
-                while (this.tableData.length !== 0) {
-                    this.tableData.pop()
-                }
-                var i;
-                for (i = 0; i < res.data.time.length; i++) {
-                    this.tableData.push(
-                            {
-                                time: res.data.time[i],
-                                dstipaddr: res.data.dstipaddr[i],
-                                dangervalue: res.data.dangervalue[i],
-                            })
-                }
-                /*————渲染分析表格数据 end————*/
-                /*————渲染饼状图数据 begin————*/
-                while(this.option.series[0].data.length!==0) {
-                    this.option.series[0].data.pop()
-                }
-                if(res.data.low!==0){
-                    this.option.series[0].data.push({value: res.data.low, name: '低'})
-                }
-                if(res.data.middle!==0){
-                    this.option.series[0].data.push({value: res.data.middle, name: '中'})
-                }
-                if(res.data.high!==0){
-                    this.option.series[0].data.push({value: res.data.high, name: '高'})
-                }
+        getStorage(){
+            var url="/getStorage"
+            this.$http.get(url).then(res=> {
+                this.tableData=res.data
 
-                /*————渲染饼状图数据 end————*/
             })
         },
-        selectStartTime(val) {//日期选择器
-            this.time = val;
-            if (this.time==null){
-                this.getDate()
-                this.getIPSAnalysis()
-            }
-            else if(this.time!==null){
-                this.date=this.time
-                this.getIPSAnalysis()
-            }//if
-        },
+
         handleCurrentChange(val) {//表格点击事件
             if(val!==null){
                 this.currentRow = val;
-                var url="/getIPSInfo"
+                var url="/getStorageInfo"
                 var params={
-                    'time':this.currentRow.time,
-                    'dstipaddr':this.currentRow.dstipaddr,
-                    'pageNum': this.pages[0].currentPage,
-                    'pageSize': this.pages[0].pageSize,
+                    'time':this.time,
+                    'DIRNAME':this.currentRow.DIRNAME,
                 }
-                console.log(this.currentRow.time, this.currentRow.dstipaddr)
+                console.log(this.currentRow.DIRNAME, this.currentRow.INFO)
                 this.$http.get(url,{params}).then(res=> {
-                    /*————渲染详细表格数据 begin————*/
-                    this.pages[0].total = res.data.total//向分页传递总数据
-                    while (this.tableData1.length !== 0) {
-                        this.tableData1.pop()
+                    console.log(res.data[0].USE,"2222222")
+                    while (this.option.series[0].data.length!==0){
+                        this.option.series[0].data.pop()
                     }
-                    var k;
-                    for (k = 0; k < res.data.time.length; k++) {
-                        this.tableData1.push(
-                                {
-                                    time: res.data.time[k],
-                                    attackname: res.data.attackname[k],
-                                    severity: res.data.dangervalue[k],
-                                    srcipaddr:res.data.srcipaddr[k]
-                                })
+                    var i;
+                    for(i=0;i<res.data.length;i++){
+                        this.option.series[0].data.push(res.data[i].USE)
                     }
-                    /*————渲染详细表格数据 end————*/
                 })
             }
-        },
-        currentPage: function (row) {//分页控制部分
-            this.pages[0].currentPage = row//取当前页码
-            this.handleCurrentChange(this.currentRow)//根据当前页码渲染数据
-        },
-        formatter (thistime, fmt) {//js格式化时间
-            let $this = new Date(thistime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
         },
     }
 }
@@ -333,7 +236,7 @@ export default {
 .el-main {
     color: #ffffff;
     text-align: center;
-    height: 100vh;
+    /*height: 100vh;*/
     z-index: 1;
 }
 .area{

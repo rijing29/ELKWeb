@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="JK_CC_USEAGE" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.ServerUseage" >
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+    <result column="DIRNAME" property="dirname" jdbcType="VARCHAR" />
+    <result column="INFO" property="info" jdbcType="VARCHAR" />
+    <result column="DW" property="dw" jdbcType="DECIMAL" />
+    <result column="USE" property="use" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.ServerUseage" >
+    insert into JK_CC_USEAGE (TIME, DIRNAME, INFO, 
+      DW, USE)
+    values (#{time,jdbcType=TIMESTAMP}, #{dirname,jdbcType=VARCHAR}, #{info,jdbcType=VARCHAR}, 
+      #{dw,jdbcType=DECIMAL}, #{use,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.ServerUseage" >
+    insert into JK_CC_USEAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="dirname != null" >
+        DIRNAME,
+      </if>
+      <if test="info != null" >
+        INFO,
+      </if>
+      <if test="dw != null" >
+        DW,
+      </if>
+      <if test="use != null" >
+        USE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="dirname != null" >
+        #{dirname,jdbcType=VARCHAR},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="dw != null" >
+        #{dw,jdbcType=DECIMAL},
+      </if>
+      <if test="use != null" >
+        #{use,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+</mapper>

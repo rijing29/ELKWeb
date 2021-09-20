@@ -79,4 +79,15 @@
   <select id="showServerPublic" resultMap="BaseResultMap" parameterType="com.elk.elkweb.entity.ServerPublic">
     select * from JK_SERVERRUNNINGDATA where time in (select max(time) from JK_SERVERRUNNINGDATA)
   </select>
+
+  <select id="getStorage" resultType="map">
+    select time,dirname,info from JK_CC_USEAGE where time in (select max(time) from JK_CC_USEAGE)
+  </select>
+
+  <select id="getStorageInfo" resultType="map">
+    select time,use from JK_CC_USEAGE
+    where DIRNAME=#{DIRNAME,jdbcType=VARCHAR}
+    and rownum <![CDATA[<=]]> 15
+    order by time desc
+  </select>
 </mapper>

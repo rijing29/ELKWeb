@@ -78,6 +78,8 @@
 <!--        enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 <!--        <table tableName="JK_LOGANALYIZE_USERUSAGE" domainObjectName="EpySoftWareUsage" enableCountByExample="false" enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+<!--                <table tableName="JK_CC_USEAGE" domainObjectName="ServerUseage" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
     </context>
 </generatorConfiguration>
 
