@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.EPYDEPMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.EpyCard" >
+    <result column="NAME" property="name" jdbcType="VARCHAR" />
+    <result column="COUNTS" property="counts" jdbcType="DECIMAL" />
+    <result column="PLACECOUNT" property="placecount" jdbcType="DECIMAL" />
+    <result column="CQ" property="cq" jdbcType="DECIMAL" />
+    <result column="JB" property="jb" jdbcType="DECIMAL" />
+    <result column="ZS" property="zs" jdbcType="DECIMAL" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.EpyCard" >
+    insert into DOOR_INFO_FOR_DEPARTMENT (NAME, COUNTS, PLACECOUNT, 
+      CQ, JB, ZS, TIME
+      )
+    values (#{name,jdbcType=VARCHAR}, #{counts,jdbcType=DECIMAL}, #{placecount,jdbcType=DECIMAL}, 
+      #{cq,jdbcType=DECIMAL}, #{jb,jdbcType=DECIMAL}, #{zs,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.EpyCard" >
+    insert into DOOR_INFO_FOR_DEPARTMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        NAME,
+      </if>
+      <if test="counts != null" >
+        COUNTS,
+      </if>
+      <if test="placecount != null" >
+        PLACECOUNT,
+      </if>
+      <if test="cq != null" >
+        CQ,
+      </if>
+      <if test="jb != null" >
+        JB,
+      </if>
+      <if test="zs != null" >
+        ZS,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="counts != null" >
+        #{counts,jdbcType=DECIMAL},
+      </if>
+      <if test="placecount != null" >
+        #{placecount,jdbcType=DECIMAL},
+      </if>
+      <if test="cq != null" >
+        #{cq,jdbcType=DECIMAL},
+      </if>
+      <if test="jb != null" >
+        #{jb,jdbcType=DECIMAL},
+      </if>
+      <if test="zs != null" >
+        #{zs,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="getCardDEP" resultMap="BaseResultMap" parameterType="com.elk.elkweb.entity.EpyCard">
+    select * from DOOR_INFO_FOR_DEPARTMENT where time in (select max(time) from DOOR_INFO_FOR_DEPARTMENT) order by COUNTS desc
+  </select>
+
+</mapper>
