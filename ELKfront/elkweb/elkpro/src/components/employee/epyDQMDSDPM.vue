@@ -37,13 +37,13 @@
                             <div class="table-wrapper">
                                 <!-- 外表格 begin-->
                                 <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;">
-                                    <el-table-column prop="NAME" label="单位名称" align="center"></el-table-column>
-                                    <el-table-column prop="AVGDAYS" label="工作日使用率" align="center"></el-table-column>
-                                    <el-table-column prop="COUNTONEDAY" label="平均每天使用次数" align="center"></el-table-column>
-                                    <el-table-column prop="JB" label="加班时间使用率" align="center"></el-table-column>
-                                    <el-table-column prop="ONETYPE" label="日常功能使用率" align="center"></el-table-column>
-                                    <el-table-column prop="TWOTYPE" label="管理功能使用率" align="center"></el-table-column>
-                                    <el-table-column prop="THRTYPE" label="专业功能使用率" align="center"></el-table-column>
+                                    <el-table-column prop="name" label="单位名称" align="center"></el-table-column>
+                                    <el-table-column prop="avgdays" label="工作日使用率" align="center"></el-table-column>
+                                    <el-table-column prop="countoneday" label="平均每天使用次数" align="center"></el-table-column>
+                                    <el-table-column prop="jb" label="加班时间使用率" align="center"></el-table-column>
+                                    <el-table-column prop="onetype" label="日常功能使用率" align="center"></el-table-column>
+                                    <el-table-column prop="twotype" label="管理功能使用率" align="center"></el-table-column>
+                                    <el-table-column prop="thrtype" label="专业功能使用率" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 外表格 end-->
                             </div>
@@ -72,28 +72,12 @@ export default {
             expands: [],
             ip:'',
             time:'',
-            tableData:[
-                {NAME:'综合办公室',AVGDAYS:'98.3',COUNTONEDAY:'95',JB:'28.3',ONETYPE:'76.2',TWOTYPE:'67.2',THRTYPE:'83.3'},
-                {NAME:'科技管理部',AVGDAYS:'95.6',COUNTONEDAY:'86',JB:'22.2',ONETYPE:'76.8',TWOTYPE:'52.2',THRTYPE:'82.4'},
-                {NAME:'人事部（党委组织部）',AVGDAYS:'94.4',COUNTONEDAY:'83',JB:'23.7',ONETYPE:'76.9',TWOTYPE:'76.0',THRTYPE:'81.4'},
-                {NAME:'财务资产部',AVGDAYS:'91.6',COUNTONEDAY:'80',JB:'25.7',ONETYPE:'76.8',TWOTYPE:'56.4',THRTYPE:'85.3'},
-                {NAME:'经营管理部',AVGDAYS:'90.2',COUNTONEDAY:'83',JB:'21.3',ONETYPE:'76.2',TWOTYPE:'53.4',THRTYPE:'86.6'},
-                {NAME:'群团工作部（工会、团委）',AVGDAYS:'93.5',COUNTONEDAY:'85',JB:'20.2',ONETYPE:'76.4',TWOTYPE:'45.5',THRTYPE:'89.4'},
-                {NAME:'企业级技术专家',AVGDAYS:'95.8',COUNTONEDAY:'86',JB:'19.0',ONETYPE:'76.3',TWOTYPE:'65.5',THRTYPE:'83.6'},
-                {NAME:'勘探规划研究室',AVGDAYS:'97.0',COUNTONEDAY:'85',JB:'23.3',ONETYPE:'76.4',TWOTYPE:'86.4',THRTYPE:'86.4'},
-                {NAME:'松辽勘探研究室',AVGDAYS:'98.8',COUNTONEDAY:'82',JB:'22.5',ONETYPE:'76.0',TWOTYPE:'85.8',THRTYPE:'86.2'},
-                {NAME:'非常规勘探研究室',AVGDAYS:'92.7',COUNTONEDAY:'87',JB:'24.0',ONETYPE:'76.0',TWOTYPE:'64.8',THRTYPE:'86.3'},
-                {NAME:'天然气研究室',AVGDAYS:'98.3',COUNTONEDAY:'88',JB:'25.3',ONETYPE:'76.0',TWOTYPE:'52.9',THRTYPE:'86.2'},
-                {NAME:'地质试验研究室',AVGDAYS:'92.5',COUNTONEDAY:'83',JB:'21.5',ONETYPE:'76.5',TWOTYPE:'73.7',THRTYPE:'86.3'},
-                {NAME:'有机地球化学研究室',AVGDAYS:'95.5',COUNTONEDAY:'84',JB:'22.5',ONETYPE:'76.7',TWOTYPE:'61.8',THRTYPE:'86.7'},
-            ],
+            tableData:[],
         }
     },
-    // created(){//自动渲染数据
-    //     this.getDate()
-    //     this.getIPMIAlarm()
-    //     this.Time=this.time
-    // },
+    created(){//自动渲染数据
+        this.getDQMDSDEP()
+    },
     methods: {
         getRowKeys: function (row) {//控制表格只能展开一行
             return row.time + row.ip + row.info
@@ -132,6 +116,13 @@ export default {
             var date = this.formatter(new Date(), 'yyyy/MM/dd hh:mm:ss')
             this.date=date.toLocaleString()
         },
+        getDQMDSDEP(){
+          var url="/getDQMDSDEP"
+          this.$http.get(url).then(res=>{
+            console.log(res)
+            this.tableData=res.data
+          })
+        }
     },
 }
 </script>

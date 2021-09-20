@@ -55,4 +55,10 @@ public class EPYServiceImpl implements EPYService{
         List<Map<String, Object>> softWareUsageCount = epySoftWareUsageMapper.showEpySoftWareUsageCount(username);
         return softWareUsageCount;
     }
+    //员工外网浏览信息
+    public List getEpyNet(String username) {
+        List epyMapperEpyNet = epyMapper.getEpyNet(username);
+        return epyMapperEpyNet;
+    }
+
 }

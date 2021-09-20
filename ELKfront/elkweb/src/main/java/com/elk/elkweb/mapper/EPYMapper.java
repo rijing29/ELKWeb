@@ -21,4 +21,8 @@ public interface EPYMapper {
 
     //    查询员工DQMDS数据
     List<Map< String, Object >> getEpyDQMDSData(@Param("personname")String personname);
+
+    //查询员工外网浏览信息
+    List getEpyNet(@Param("username")String username);
+
 }
