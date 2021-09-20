@@ -21,6 +21,13 @@
                     </span>
                 </el-col>
             </el-row>
+            <!--无数据时的渲染提示-->
+            <el-row v-if="haveData3" class="noData_Con">
+              <div style="line-height: 500px">
+                查询框输入员工姓名即可进行信息展示。
+                例如：输入“wuying”
+              </div>
+            </el-row>
             <el-row>
                 <!--————近期（一个月）Windows服务器提供服务统计 begin————-->
                 <el-col :span="12" style="margin-top: 8px" v-if="haveData">
@@ -111,6 +118,8 @@ export default {
         return{
             haveData: false,
             haveData1:false,
+            //一开始无数据时的数据展示提示
+            haveData3:true,
             date:'',//日期变量
             username:'',
             paginations:{
@@ -219,18 +228,11 @@ export default {
             }
             return fmt
         },
-        // getEpySoftWareUsage(){
-        //     var url="/getEpySoftWareUsage"
-        //     this.$http.get(url).then(res=>{
-        //         console.log(res)
-        //         this.tableDataInfo=res.data
-        //         console.log(this.tableDataInfo)
-        //     })
-        // },
-        //模糊查询
+        //员工姓名模糊查询
         getEpyCardInfo(){
             this.haveData=true;
             this.haveData1=true;
+            this.haveData3=false;
             //员工近期使用软件信息
             var url="/getEpySoftWareUsage"
             var params={
@@ -347,4 +349,12 @@ export default {
     background-size: 100% 100%;
     opacity: 0.7;
 }/*高亮选中行*/
+.noData_Con{
+  border: 1px dashed white ;
+  width: 100%;
+  height: 500px;
+  margin: 0 auto;
+  margin-top: 1%;
+}
+
 </style>
