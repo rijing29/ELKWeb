@@ -102,6 +102,10 @@
                             <el-menu-item index="/showSoftNameTable">软件报表导出</el-menu-item>
                         </el-submenu>
                     </el-submenu>
+                    <el-menu-item index="/siteDeviceInfo">
+                        <i class="el-icon-s-help icon_color"></i>
+                        <span slot="title">场地设备监控信息</span>
+                    </el-menu-item>
                 </el-menu>
             </el-aside>
             <el-main>
@@ -175,7 +179,7 @@ export default {
     color: #ffffff;
     text-align: center;
     padding: 0;
-    height: 90vh;
+    height: 95vh;
 }
 
 .title {

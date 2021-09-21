@@ -13,9 +13,9 @@
                 <el-col :span="11">
                     <el-row>
                         <el-col :span="24" class="area" align="center">
-                            <!--————雷达图 begin————-->
+                            <!--————饼状图 begin————-->
                             <v-chart class="echarts" :option="option1"/>
-                            <!--————雷达图 end————-->
+                            <!--————饼状图 end————-->
                         </el-col>
                     </el-row>
                 </el-col>
@@ -24,9 +24,9 @@
                 <el-col :span="11">
                     <el-row>
                         <el-col :span="24" class="area" align="center">
-                            <!--————雷达图 begin————-->
+                            <!--————饼状图 begin————-->
                             <v-chart class="echarts" :option="option2"/>
-                            <!--————雷达图 end————-->
+                            <!--————饼状图 end————-->
                         </el-col>
                     </el-row>
                 </el-col>
@@ -37,9 +37,9 @@
                 <el-col :span="11">
                     <el-row>
                         <el-col :span="24" class="area" align="center">
-                            <!--————雷达图 begin————-->
+                            <!--————饼状图 begin————-->
                             <v-chart class="echarts" :option="option3"/>
-                            <!--————雷达图 end————-->
+                            <!--————饼状图 end————-->
                         </el-col>
                     </el-row>
                 </el-col>

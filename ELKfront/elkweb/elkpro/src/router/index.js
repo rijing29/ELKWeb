@@ -7,13 +7,13 @@ import test from '../components/test.vue'
 import dataInfo from '../components/HUAWEICloud/dataInfo.vue'
 import showSoftNameTable from '../components/HUAWEICloud/showSoftNameTable.vue'
 import showNodeTypeTable from '../components/HUAWEICloud/showNodeTypeTable.vue'
-import deviceState from '../components/HUAWEICloud/deviceState.vue'
 import userUseRate from '../components/HUAWEICloud/userUseRate.vue'
 import softwareLicense from '../components/HUAWEICloud/softwareLicense.vue'
+import deviceState from '../components/HUAWEICloud/deviceState.vue'
 import memUse from '../components/HUAWEICloud/memUse.vue'
+import nodeDeploy from "../components/HUAWEICloud/nodeDeploy.vue";
 import firewallInfo from '../components/netData/firewallInfo.vue'
 import test2 from "../components/css.vue";
-import nodeDeploy from "../components/HUAWEICloud/nodeDeploy.vue";
 import useFrequencyAll from "../components/dataDisplay/useFrequencyAll.vue";
 import useTimeAll from "../components/dataDisplay/useTimeAll.vue";
 import useFrequencyOne from "../components/dataDisplay/useFrequencyOne";
@@ -31,6 +31,7 @@ import epySoftware from "../components/employee/epySoftware";
 import serverPublic from "../components/server/serverPublic";
 import serverWin from "../components/server/serverWin";
 import serveStorage from "../components/server/serveStorage";
+import siteDeviceInfo from "../components/siteDevice/siteDeviceInfo";
 import App from "@/App";
 
 Vue.use(VueRouter)
@@ -68,6 +69,7 @@ const routes = [
             {path: '/userUseRate', name: 'userUseRate', component: userUseRate},
             {path: '/softwareLicense', name: 'softwareLicense', component: softwareLicense},
             {path: '/memUse', name: 'memUse', component: memUse},
+            {path: '/siteDeviceInfo', name: 'siteDeviceInfo', component: siteDeviceInfo},
         ]
     },
 ]

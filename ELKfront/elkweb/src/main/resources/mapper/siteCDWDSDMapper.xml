@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="FR_CD_WDSD" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.siteCDWDSD" >
+    <result column="PLACENAME" property="placename" jdbcType="OTHER" />
+    <result column="WD" property="wd" jdbcType="DECIMAL" />
+    <result column="SD" property="sd" jdbcType="DECIMAL" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.siteCDWDSD" >
+    insert into FR_CD_WDSD (PLACENAME, WD, SD, 
+      TIME)
+    values (#{placename,jdbcType=OTHER}, #{wd,jdbcType=DECIMAL}, #{sd,jdbcType=DECIMAL}, 
+      #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.siteCDWDSD" >
+    insert into FR_CD_WDSD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="placename != null" >
+        PLACENAME,
+      </if>
+      <if test="wd != null" >
+        WD,
+      </if>
+      <if test="sd != null" >
+        SD,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="placename != null" >
+        #{placename,jdbcType=OTHER},
+      </if>
+      <if test="wd != null" >
+        #{wd,jdbcType=DECIMAL},
+      </if>
+      <if test="sd != null" >
+        #{sd,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

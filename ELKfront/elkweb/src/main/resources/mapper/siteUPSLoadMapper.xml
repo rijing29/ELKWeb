@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.SiteDeviceMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.siteUPSLoad" >
+    <result column="UPSNAME" property="upsname" jdbcType="OTHER" />
+    <result column="ITEMNAME" property="itemname" jdbcType="OTHER" />
+    <result column="VALUE" property="value" jdbcType="DECIMAL" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.siteUPSLoad" >
+    insert into FR_UPS_LOAD (UPSNAME, ITEMNAME, VALUE, 
+      TIME)
+    values (#{upsname,jdbcType=OTHER}, #{itemname,jdbcType=OTHER}, #{value,jdbcType=DECIMAL}, 
+      #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.siteUPSLoad" >
+    insert into FR_UPS_LOAD
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="upsname != null" >
+        UPSNAME,
+      </if>
+      <if test="itemname != null" >
+        ITEMNAME,
+      </if>
+      <if test="value != null" >
+        VALUE,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="upsname != null" >
+        #{upsname,jdbcType=OTHER},
+      </if>
+      <if test="itemname != null" >
+        #{itemname,jdbcType=OTHER},
+      </if>
+      <if test="value != null" >
+        #{value,jdbcType=DECIMAL},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="getUPSInfo" resultType="map">
+    select * from FR_UPS_LOAD t where time in (select max(time) from FR_UPS_LOAD)
+  </select>
+  <select id="getEnvironmentInfo" resultType="map">
+    (select * from (select placename,wd,sd,time from FR_CD_WDSD t where t.placename = '2楼'  order by time desc) where rownum<![CDATA[<=]]>12)
+    union
+    (select * from (select placename,wd,sd,time from FR_CD_WDSD t where t.placename = '3楼'  order by time desc) where rownum<![CDATA[<=]]>12)
+  </select>
+</mapper>
