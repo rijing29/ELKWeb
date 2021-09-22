@@ -168,12 +168,7 @@ export default {
             ],
             haveData: true,
             date:'',//日期变量
-            user_lname: '',//员工姓名
-            personname:'',
-            name:'',//表格标题区域
-            tableData: [],//分析表格数据
-            /*————柱状图数据 begin————*/
-            option: {
+            option: {//全院刷卡平均信息
                 title: {
                     text: '全院刷卡平均信息',
                     subtext:'',
@@ -196,30 +191,6 @@ export default {
                     data: ['出勤率', '准时率','加班率']
                 },
                 grid: {left: '2%',right: '4%',bottom: '3%',containLabel: true},
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataView: {show: false, readOnly: false},
-                        magicType: {show: false, type: ['line', 'bar']},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
-
-                    },
-                    iconStyle:{
-                        //工具栏图标样式
-                        borderColor:"#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
-                },
                 calculable: true,
                 xAxis: [
                     {
@@ -318,7 +289,7 @@ export default {
                     },
                 ]
             },
-            option2: {
+            option2: {//服务器平均负载信息
                 title: {
                     text: '服务器平均负载',
                     subtext:'',
@@ -341,30 +312,6 @@ export default {
                     data: ['网络负载', '内存负载','CPU负载']
                 },
                 grid: {left: '2%',right: '4%',bottom: '3%',containLabel: true},
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataView: {show: false, readOnly: false},
-                        magicType: {show: false, type: ['line', 'bar']},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
-
-                    },
-                    iconStyle:{
-                        //工具栏图标样式
-                        borderColor:"#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
-                },
                 calculable: true,
                 xAxis: [
                     {
@@ -463,7 +410,6 @@ export default {
                     },
                 ]
             },
-            /*————柱状图数据 end————*/
             /*————雷达图数据 begin————*/
             option3:{
                 title: {
@@ -482,32 +428,8 @@ export default {
                     textStyle:{
                         color:"#ffffff"//顶部控制区域文字颜色
                     },
-                    left: "30%",//距离左边距离
+                    left: "25%",//距离左边距离
                     data: ['开发研究三室', '地震处理研究室', '计算机网络研究室', '院领导']
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        dataView: {show: false, readOnly: false},
-                        magicType: {show: false, type: ['line', 'bar']},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
-
-                    },
-                    iconStyle:{
-                        //工具栏图标样式
-                        borderColor:"#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
                 },
                 radar: [
                     {
@@ -546,6 +468,9 @@ export default {
     },
     created(){
         this.getDate()
+        this.getCardDPMInfo()
+        this.getCardDPMAvg()
+        this.getServerStateAvg()
     },
     mounted() {
         let that= this;
@@ -563,7 +488,7 @@ export default {
         Home(){
             this.$router.push({name:'home',params:{isVisible:'true'}})//向home页面传递isVisible,控制背景icon显示
         },
-        getDate(){
+        getDate(){//获取时间
             var vWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
             var DATE = this.formatter(new Date(), 'yyyy年MM月dd日')
             var WEEK = new Date()
@@ -571,7 +496,6 @@ export default {
             this.week=vWeek[WEEK.getDay()]
             console.log(this.week)
         },
-
         formatter (thistime, fmt) {//js格式化时间
             let $this = new Date(thistime)
             let o = {
@@ -593,6 +517,53 @@ export default {
             }
             return fmt
         },
+        getCardDPMInfo(){//获取全院刷卡信息
+            var url='/getCardDPMInfo'
+            this.$http.get(url).then(res => {
+                console.log(res.data,'左上角数据')
+                while (this.option3.legend.data.length!==0){
+                    this.option3.legend.data.pop()
+                }
+                while (this.option3.series[0].data[0].value.length!==0){
+                    this.option3.series[0].data[0].value.pop()
+                }
+                for(var i=0;i<res.data.length;i++){
+                    this.option3.legend.data.push(res.data[i].NAME)
+                    this.option3.series[0].data[i].value[0]=res.data[i].CQ
+                    this.option3.series[0].data[i].value[1]=res.data[i].ZS
+                    this.option3.series[0].data[i].value[2]=res.data[i].JB
+                    this.option3.series[0].data[i].name=res.data[i].NAME
+                }
+            })
+        },
+        getCardDPMAvg(){//获取全院刷卡平均信息
+            var url = '/getCardDPMAvg'
+            this.$http.get(url).then(res => {
+                console.log(res.data,'左下角数据')
+                for(var j=0;j<this.option.series.length;j++){
+                    while (this.option.series[j].data.length!==0){
+                        this.option.series[j].data.pop()
+                    }
+                }
+                this.option.series[0].data[0]=res.data[0].AVGCQ
+                this.option.series[1].data[0]=res.data[0].AVGZS
+                this.option.series[2].data[0]=res.data[0].AVGJB
+            })
+        },
+        getServerStateAvg(){//获取服务器平均负载
+            var url = '/getServerStateAvg'
+            this.$http.get(url).then(res => {
+                console.log(res.data,'右下角数据')
+                for(var j=0;j<this.option2.series.length;j++){
+                    while (this.option2.series[j].data.length!==0){
+                        this.option2.series[j].data.pop()
+                    }
+                }
+                this.option2.series[0].data[0]=res.data[0].NET
+                this.option2.series[1].data[0]=res.data[0].MEM
+                this.option2.series[2].data[0]=res.data[0].CPU
+            })
+        }
     },
 
 }
