@@ -70,28 +70,15 @@ import VChart, {THEME_KEY} from "vue-echarts";
 export default {
     name: "siteDeviceInfo",
     components: {
-        VChart
+        VChart,
+        THEME_KEY
     },
     data() {
         return {
-            haveData: true,
-            date: '',//日期变量
-            pages: [//分页信息
-                {
-                    pageSize: 20,
-                    total: 1000,
-                    currentPage: 1,
-                },
-            ],
-            time: '',//根据此时间查询分析表
-            currentRow: null,//存储当前点击行信息
-            tableDataService: [],//表格数据
-            tableDataLog: [],
-            tableDataTask: [],
             /*————图表数据 begin————*/
             option1: {
                 title: {
-                    text: '场地温湿度',
+                    text: 'UPS监控信息',
                     subtext: '',
                     // subtext: '时间：',
                     textStyle: {
@@ -168,7 +155,7 @@ export default {
                     {
                         name: 'ups1',
                         type: 'bar',
-                        data: [45.6],
+                        data: [1,2,3],
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -191,7 +178,7 @@ export default {
                     }, {
                         name: 'ups2',
                         type: 'bar',
-                        data: [35.8],
+                        data: [4,5,6],
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -214,7 +201,7 @@ export default {
                     }, {
                         name: 'ups3',
                         type: 'bar',
-                        data: [85.2],
+                        data: [7,8,9],
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -360,29 +347,6 @@ export default {
                         name: '3楼',
                         type: 'line',
                         data: [1, -2, 10, 5, 3, 2, 0],
-                        // markPoint: {
-                        //     data: [
-                        //         {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
-                        //     ]
-                        // },
-                        // markLine: {
-                        //     data: [
-                        //         {type: 'average', name: '平均值'},
-                        //         [{
-                        //             symbol: 'none',
-                        //             x: '90%',
-                        //             yAxis: 'max'
-                        //         }, {
-                        //             symbol: 'circle',
-                        //             label: {
-                        //                 position: 'start',
-                        //                 formatter: '最大值'
-                        //             },
-                        //             type: 'max',
-                        //             name: '最高点'
-                        //         }]
-                        //     ]
-                        // }
                     }
                 ]
             },
@@ -544,8 +508,9 @@ export default {
     methods: {
         getUPSInfo() {//渲染数据
             var url = "/getUPSInfo"
-            this.$http.get(url).then(res => {//渲染Windows服务器告警表格数据
+            this.$http.get(url).then(res => {//渲染ups柱状图数据(如果数据未更新,看data数组是否清空,清空才能更新成功)
                 console.log(res.data)
+                /*————清空data数组，以更新柱状图数据 begin————*/
                 while (this.option1.series[0].data.length!==0){
                     this.option1.series[0].data.pop()
                 }
@@ -555,18 +520,44 @@ export default {
                 while (this.option1.series[2].data.length!==0){
                     this.option1.series[2].data.pop()
                 }
-                for(var i=0;i<res.data.length;i++){
+                /*————清空data数组，以更新柱状图数据 end————*/
+                for(var i=0;i<res.data.length;i++){//
                     if(res.data[i].UPSNAME==='ups1'){
-                        this.option1.series[0].data.push(res.data[i].VALUE)
+                        if(res.data[i].ITEMNAME==='in'){
+                            this.option1.series[0].data[0]=res.data[i].VALUE
+                        }
+                        if(res.data[i].ITEMNAME==='out'){
+                            this.option1.series[0].data[1]=res.data[i].VALUE
+                        }
+                        if(res.data[i].ITEMNAME==='load'){
+                            this.option1.series[0].data[2]=res.data[i].VALUE
+                        }
                     }
                     if(res.data[i].UPSNAME==='ups2'){
-                        this.option1.series[1].data.push(res.data[i].VALUE)
+                        if(res.data[i].ITEMNAME==='in'){
+                            this.option1.series[1].data[0]=res.data[i].VALUE
+                        }
+                        if(res.data[i].ITEMNAME==='out'){
+                            this.option1.series[1].data[1]=res.data[i].VALUE
+                        }
+                        if(res.data[i].ITEMNAME==='load'){
+                            this.option1.series[1].data[2]=res.data[i].VALUE
+                        }
                     }
                     if(res.data[i].UPSNAME==='ups3'){
-                        this.option1.series[2].data.push(res.data[i].VALUE)
+                        if(res.data[i].ITEMNAME==='in'){
+                            this.option1.series[2].data[0]=res.data[i].VALUE
+                        }
+                        if(res.data[i].ITEMNAME==='out'){
+                            this.option1.series[2].data[1]=res.data[i].VALUE
+                        }
+                        if(res.data[i].ITEMNAME==='load'){
+                            this.option1.series[2].data[2]=res.data[i].VALUE
+                        }
                     }
-                }
 
+                }
+                console.log(this.option1.series,'0000000')
             })
         },
         getEnvironmentInfo(){
