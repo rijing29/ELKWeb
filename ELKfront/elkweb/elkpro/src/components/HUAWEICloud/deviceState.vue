@@ -99,10 +99,10 @@ export default {
             tableDataService: [],//表格数据
             tableDataLog: [],
             tableDataTask: [],
-            /*————饼状图数据 begin————*/
+            /*————华为CPU节点负载变化 begin————*/
             option1: {
                 title: {
-                    text: 'Node节点状态',
+                    text: '华为CPU节点负载变化',
                     textStyle: {
                         color: "#17caf0"//标题文字颜色
                     },
@@ -110,153 +110,53 @@ export default {
                         color: "#17caf0"//副标题文字颜色
                     },
                 },
-                legend: {
-                    top: 'bottom',
-                    textStyle: {
-                        color: "#ffffff"//顶部控制区域文字颜色
-                    },
-                },
-                tooltip: {
-                    trigger: 'item'
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: false},
-                        dataView: {show: false, readOnly: false},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
-                    },
-                    iconStyle: {
-                        //工具栏图标样式
-                        borderColor: "#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
-                },
-                series: [
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['40%', '80%'],
-                        avoidLabelOverlap: false,
-                        itemStyle: {
-                            borderRadius: 10,
-                            borderColor: '#ffffff',
-                            borderWidth: 2
-                        },
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '40',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        labelLine: {show: true,},
-                        cursor: "pointer",
-                        data: [
-                            {value: 92, name: '正常'},
-                            {value: 8, name: '异常'},
-                        ],
-                    }
-                ],
-                labelLine: {
-                    show: true
-                },
-                label: {
-                    alignTo: "labelLine"
-                }
+              xAxis: {
+                type: 'category',
+                data: []
+              },
+              yAxis: {
+                type: 'value'
+              },
+              series: [{
+                data: [],
+                type: 'line'
+              }],
+              grid: {
+                left: '0%',//设置图表距离左边界的距离
+                right: '0%',//设置图表距离右边界的距离
+                top:'9%',//设置图表距离上边界的距离
+                bottom: '0%',//设置图表距离下边界的距离
+                containLabel: true
+              }
             },
             option2: {
-                title: {
-                    text: 'GPU节点状态',
-                    textStyle: {
-                        color: "#17caf0"//标题文字颜色
-                    },
-                    subtextStyle: {
-                        color: "#17caf0"//副标题文字颜色
-                    },
+              title: {
+                text: '华为GPU节点负载变化',
+                textStyle: {
+                  color: "#17caf0"//标题文字颜色
                 },
-                legend: {
-                    top: 'bottom',
-                    textStyle: {
-                        color: "#ffffff"//顶部控制区域文字颜色
-                    },
+                subtextStyle: {
+                  color: "#17caf0"//副标题文字颜色
                 },
-                tooltip: {
-                    trigger: 'item'
-                },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: false},
-                        dataView: {show: false, readOnly: false},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
-                    },
-                    iconStyle: {
-                        //工具栏图标样式
-                        borderColor: "#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
-                },
-                series: [
-                    {
-                        name: '访问来源',
-                        type: 'pie',
-                        radius: ['40%', '80%'],
-                        avoidLabelOverlap: false,
-                        itemStyle: {
-                            borderRadius: 10,
-                            borderColor: '#ffffff',
-                            borderWidth: 2
-                        },
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
-                        emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '40',
-                                fontWeight: 'bold'
-                            }
-                        },
-                        labelLine: {show: true,},
-                        cursor: "pointer",
-                        data: [
-                            {value: 95, name: '正常'},
-                            {value: 5, name: '异常'},
-                        ],
-                    }
-                ],
-                labelLine: {
-                    show: true
-                },
-                label: {
-                    alignTo: "labelLine"
-                }
+              },
+              xAxis: {
+                type: 'category',
+                data: []
+              },
+              yAxis: {
+                type: 'value'
+              },
+              series: [{
+                data: [],
+                type: 'line'
+              }],
+              grid: {
+                left: '0%',//设置图表距离左边界的距离
+                right: '0%',//设置图表距离右边界的距离
+                top:'9%',//设置图表距离上边界的距离
+                bottom: '0%',//设置图表距离下边界的距离
+                containLabel: true
+              }
             },
             option3: {
                 title: {
@@ -357,7 +257,7 @@ export default {
                         color: "#ffffff"//顶部控制区域文字颜色
                     },
                     left: "35%",//距离左边距离
-                    data: ['PSBN', 'Paradlag', 'GeoEast处理']
+                    data: ['GEOEAST', 'ES360', 'QPSTM']
                 },
                 grid: {left: '2%', right: '4%', bottom: '3%', containLabel: true},
                 toolbox: {
@@ -410,14 +310,12 @@ export default {
                         // max:100,//最大刻度值
 
                     }
-
-
                 ],
                 series: [
                     {
-                        name: 'PSBN',
+                        name: 'GEOEAST',
                         type: 'bar',
-                        data: [45.6],
+                        data: [90],
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -438,7 +336,7 @@ export default {
                         },
                         barGap: "60%"//不同系列的柱间距离
                     }, {
-                        name: 'Paradlag',
+                        name: 'ES360',
                         type: 'bar',
                         data: [35.8],
                         itemStyle: {
@@ -461,7 +359,7 @@ export default {
                         },
                         barGap: "60%"//不同系列的柱间距离
                     }, {
-                        name: 'GeoEast处理',
+                        name: 'QPSTM',
                         type: 'bar',
                         data: [85.2],
                         itemStyle: {
@@ -490,7 +388,7 @@ export default {
         }
     },
     created() {//自动渲染数据
-        this.getWinWaring()
+        this.getEquipState()
     },
     methods: {
         dateForma: function (row, column) {//表格行格式化时间
@@ -527,6 +425,33 @@ export default {
                 this.option.series[0].data[1].value = res.data[0].ALLCOUNT - res.data[0].HIGHCOUNT
             })
         },
+        getEquipState(){
+          //获取cpu
+          var url="/getCPU"
+          this.$http.get(url).then(res=>{
+            this.option1.series[0].data=res.data.name
+            this.option1.xAxis.data=res.data.time
+          })
+          //获取gpu
+          var url="/getGPU"
+          this.$http.get(url).then(res=>{
+            this.option2.series[0].data=res.data.name
+            this.option2.xAxis.data=res.data.time
+          })
+          //获取软件使用效率
+          var url="/getSoftWareEfficiency"
+          this.$http.get(url).then(res=>{
+            this.option4.series[0].data=res.data[0];
+            this.option4.series[1].data=res.data[1];
+            this.option4.series[2].data=res.data[2];
+          })
+          //获取存储系统使用
+          var url="/getCCUsage"
+          this.$http.get(url).then(res=>{
+            this.option3.series[0].data[0].value=res.data[0].HWYZX_USED;
+            this.option3.series[0].data[1].value=res.data[0].HWYZX_FREE;
+          })
+        }
     }
 }
 </script>

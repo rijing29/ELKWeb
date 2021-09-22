@@ -308,6 +308,7 @@ export default {
                 'stopTime': this.stopTime
             }
             this.$http.get(url, {params}).then(res => {
+              console.log(res)
                 //设置横轴
                 this.option.series[0].name = "节点效率"
                 this.option.series[0].data = res.data.value

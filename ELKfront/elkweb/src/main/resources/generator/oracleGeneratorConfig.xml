@@ -82,8 +82,14 @@
 <!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 <!--            <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="EpyCard" enableCountByExample="false" enableUpdateByExample="false"-->
 <!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-            <table tableName="MDS_LOG_FOR_DEPARTMENT" domainObjectName="EPYDEPDQMDS" enableCountByExample="false" enableUpdateByExample="false"
-                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+<!--            <table tableName="MDS_LOG_FOR_DEPARTMENT" domainObjectName="EPYDEPDQMDS" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+<!--            <table tableName="FR_HW_NODEUSAGE" domainObjectName="EquipState" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+<!--            <table tableName="FR_HW_SOFTWAREUSAGE" domainObjectName="SoftWareEfficiency" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <table tableName="FR_CC_USAGE" domainObjectName="CCUsage" enableCountByExample="false" enableUpdateByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
     </context>
 </generatorConfiguration>
