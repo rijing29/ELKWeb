@@ -24,11 +24,13 @@
                                         height="540"
                                         ref="singleTable"
                                         :data="tableData"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="USER" label="用户" align="center"></el-table-column>
-                                    <el-table-column prop="MEMTOTAL" label="总容量(T)" align="center"></el-table-column>
-                                    <el-table-column prop="MEMUSED" label="使用(T)" align="center"></el-table-column>
-                                    <el-table-column prop="MEMUSERATE" label="使用率(T)" align="center"></el-table-column>
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
+                                        highlight-current-row
+                                        @current-change="handleCurrentChange">
+                                    <el-table-column prop="CCNAME" label="用户" align="center"></el-table-column>
+                                    <el-table-column prop="TOTAL" label="总容量(T)" align="center"></el-table-column>
+                                    <el-table-column prop="USE" label="使用(T)" align="center"></el-table-column>
+                                    <el-table-column prop="USERATE" label="使用率(%)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -95,24 +97,12 @@ export default {
             ],
             time: '',//根据此时间查询分析表
             currentRow: null,//存储当前点击行信息
-            tableData:[
-                {USER:'dxzb', MEMTOTAL:'500T',MEMUSED:'229T',MEMUSERATE:'46'},
-                {USER:'cydzcl', MEMTOTAL:'230T',MEMUSED:'203T',MEMUSERATE:'88'},
-                {USER:'dzcxxff', MEMTOTAL:'500T',MEMUSED:'473T',MEMUSERATE:'95'},
-                {USER:'fzgz', MEMTOTAL:'600T',MEMUSED:'578T',MEMUSERATE:'97'},
-                {USER:'gfblcl', MEMTOTAL:'500T',MEMUSED:'229T',MEMUSERATE:'46'},
-                {USER:'gfblxff', MEMTOTAL:'230T',MEMUSED:'203T',MEMUSERATE:'88'},
-                {USER:'kyglxi', MEMTOTAL:'500T',MEMUSED:'473T',MEMUSERATE:'95'},
-                {USER:'dzyssj', MEMTOTAL:'500T',MEMUSED:'480',MEMUSERATE:'96'},
-                {USER:'ksifs', MEMTOTAL:'600T',MEMUSED:'560',MEMUSERATE:'93'},
-                {USER:'all', MEMTOTAL:'5409T',MEMUSED:'4395T',MEMUSERATE:'78'},
-
-            ],//表格数据
+            tableData:[],//表格数据
             /*————折线图图数据 begin————*/
             option:{
                 title: {
                     text: '存储使用情况图',
-                    subtext:'用户： dxzb',
+                    subtext:'',
                     textStyle:{
                         color:"#17caf0"//标题文字颜色
                     },
@@ -133,7 +123,7 @@ export default {
                     textStyle:{
                         color:"#ffffff"//顶部控制区域文字颜色
                     },
-                    left: "40%",//距离左边距离
+                    // left: "40%",//距离左边距离
                     data: ['存储使用情况']
                 },
                 toolbox: {
@@ -167,15 +157,15 @@ export default {
                 },
                 xAxis: [
                     {
-                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        // axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                         type: 'category',
                         boundaryGap: false,
-                        data: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15]
+                        data: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
                     }
                 ],
                 yAxis: [
                     {
-                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        // axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                         type: 'value'
                     }
                 ],
@@ -184,7 +174,6 @@ export default {
                         name: '存储使用情况',
                         type: 'line',
                         stack: '总量',
-                        areaStyle: {},
                         emphasis: {
                             focus: 'series'
                         },
@@ -203,7 +192,7 @@ export default {
                                 }], false)
                             },
                         },
-                        data: [340, 320, 350, 330, 360, 350, 330,365,336,372,365,300,280,290,229]
+                        data: []
                     }
                 ]
             },
@@ -212,117 +201,34 @@ export default {
         }
     },
     created(){//自动渲染数据
-        // this.getDate()
-        // this.getIPSAnalysis()
+        this.getHWCCUseage()
     },
     methods:{
-        getDate(){//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
-            this.date=date.toLocaleString()
-        },
-        getIPSAnalysis(){//渲染数据
-            var url="/getIPSAnalysis"
-            var params={
-                'time':this.date,
-            }
-            this.$http.get(url,{params}).then(res=>{
-                /*————渲染分析表格数据 begin————*/
-                while (this.tableData.length !== 0) {
-                    this.tableData.pop()
-                }
-                var i;
-                for (i = 0; i < res.data.time.length; i++) {
-                    this.tableData.push(
-                            {
-                                time: res.data.time[i],
-                                dstipaddr: res.data.dstipaddr[i],
-                                dangervalue: res.data.dangervalue[i],
-                            })
-                }
-                /*————渲染分析表格数据 end————*/
-                /*————渲染饼状图数据 begin————*/
-                while(this.option.series[0].data.length!==0) {
-                    this.option.series[0].data.pop()
-                }
-                if(res.data.low!==0){
-                    this.option.series[0].data.push({value: res.data.low, name: '低'})
-                }
-                if(res.data.middle!==0){
-                    this.option.series[0].data.push({value: res.data.middle, name: '中'})
-                }
-                if(res.data.high!==0){
-                    this.option.series[0].data.push({value: res.data.high, name: '高'})
-                }
 
-                /*————渲染饼状图数据 end————*/
+        getHWCCUseage(){//渲染数据
+            var url="/getHWCCUseage"
+            this.$http.get(url).then(res=>{
+               this.tableData=res.data
             })
-        },
-        selectStartTime(val) {//日期选择器
-            this.time = val;
-            if (this.time==null){
-                this.getDate()
-                this.getIPSAnalysis()
-            }
-            else if(this.time!==null){
-                this.date=this.time
-                this.getIPSAnalysis()
-            }//if
         },
         handleCurrentChange(val) {//表格点击事件
             if(val!==null){
                 this.currentRow = val;
-                var url="/getIPSInfo"
+                var url="/getMemUseInfo"
                 var params={
-                    'time':this.currentRow.time,
-                    'dstipaddr':this.currentRow.dstipaddr,
-                    'pageNum': this.pages[0].currentPage,
-                    'pageSize': this.pages[0].pageSize,
+                    'CCNAME':this.currentRow.CCNAME,
                 }
-                console.log(this.currentRow.time, this.currentRow.dstipaddr)
                 this.$http.get(url,{params}).then(res=> {
-                    /*————渲染详细表格数据 begin————*/
-                    this.pages[0].total = res.data.total//向分页传递总数据
-                    while (this.tableData1.length !== 0) {
-                        this.tableData1.pop()
+                  console.log(res.data)
+                    this.option.title.subtext="用户： "+ this.currentRow.CCNAME
+                    while (this.option.series[0].data.length!==0){
+                        this.option.series[0].data.pop()
                     }
-                    var k;
-                    for (k = 0; k < res.data.time.length; k++) {
-                        this.tableData1.push(
-                                {
-                                    time: res.data.time[k],
-                                    attackname: res.data.attackname[k],
-                                    severity: res.data.dangervalue[k],
-                                    srcipaddr:res.data.srcipaddr[k]
-                                })
+                    for(var i=0;i<res.data.length;i++){
+                        this.option.series[0].data.push(res.data[i].USE)
                     }
-                    /*————渲染详细表格数据 end————*/
                 })
             }
-        },
-        currentPage: function (row) {//分页控制部分
-            this.pages[0].currentPage = row//取当前页码
-            this.handleCurrentChange(this.currentRow)//根据当前页码渲染数据
-        },
-        formatter (thistime, fmt) {//js格式化时间
-            let $this = new Date(thistime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
         },
     }
 }
@@ -410,4 +316,11 @@ export default {
     color: #46d4ff;
 }
 /*————表格背景透明 end————*/
+
+.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row>td {
+    color: #ffffff;
+    background-color: #17b3f0 !important;
+    background-size: 100% 100%;
+    opacity: 0.7;
+}/*高亮选中行*/
 </style>

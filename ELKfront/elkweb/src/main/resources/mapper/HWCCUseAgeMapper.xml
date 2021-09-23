@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.HWCCUsageMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.HWCCUseAge" >
+    <result column="CCNAME" property="ccname" jdbcType="VARCHAR" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+    <result column="TOTAL" property="total" jdbcType="DECIMAL" />
+    <result column="USE" property="use" jdbcType="DECIMAL" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.HWCCUseAge" >
+    insert into HW_CC_USEAGE (CCNAME, TIME, TOTAL, 
+      USE)
+    values (#{ccname,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, #{total,jdbcType=DECIMAL}, 
+      #{use,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.HWCCUseAge" >
+    insert into HW_CC_USEAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ccname != null" >
+        CCNAME,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+      <if test="total != null" >
+        TOTAL,
+      </if>
+      <if test="use != null" >
+        USE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ccname != null" >
+        #{ccname,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="total != null" >
+        #{total,jdbcType=DECIMAL},
+      </if>
+      <if test="use != null" >
+        #{use,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <!--获取用户存储使用信息-->
+  <select id="getHWCCUseage" resultType="map">
+    select ccname,time,total,use,use/total as userate
+    from HW_CC_USEAGE t
+    where time in (select max(time) from HW_CC_USEAGE)
+  </select>
+
+  <!--获取某个用户存储使用记录-->
+  <select id="getMemUseInfo" resultType="map">
+    select use from (
+        select * from HW_CC_USEAGE t
+        where ccname = #{CCNAME,jdbcType=VARCHAR}
+        order by time desc
+    )
+    where rownum<![CDATA[<=]]>12
+  </select>
+</mapper>

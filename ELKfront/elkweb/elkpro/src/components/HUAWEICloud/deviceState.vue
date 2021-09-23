@@ -290,7 +290,7 @@ export default {
             inverse: true,//翻转坐标轴
             axisLabel: {
               color: "#ffffff",//坐标轴标签文字颜色
-              rotate: 90,//坐标轴标签文字选装角度
+              rotate: 0,//坐标轴标签文字选装角度
               margin: 14,//坐标轴标签文字与轴线距离
               fontWeight: "lighter",//坐标轴标签文字粗细
             },
