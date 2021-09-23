@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.elk.elkweb.mapper.EquipStateMapper">
+    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.EquipState">
+        <result column="CPU" jdbcType="DECIMAL" property="cpu" />
+        <result column="GPU" jdbcType="DECIMAL" property="gpu" />
+        <result column="TIME" jdbcType="TIMESTAMP" property="time" />
+    </resultMap>
+    <insert id="insert" parameterType="com.elk.elkweb.entity.EquipState">
+        insert into FR_HW_NODEUSAGE (CPU, GPU, TIME
+        )
+        values (#{cpu,jdbcType=DECIMAL}, #{gpu,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP}
+               )
+    </insert>
+    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.EquipState">
+        insert into FR_HW_NODEUSAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="cpu != null">
+                CPU,
+            </if>
+            <if test="gpu != null">
+                GPU,
+            </if>
+            <if test="time != null">
+                TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="cpu != null">
+                #{cpu,jdbcType=DECIMAL},
+            </if>
+            <if test="gpu != null">
+                #{gpu,jdbcType=DECIMAL},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="getCPU" resultType="map">
+        select cpu,time from (select cpu,time from FR_HW_NODEUSAGE order by time desc) where rownum <![CDATA[<=]]> 12
+    </select>
+    <select id="getGPU" resultType="map">
+        select gpu,time from (select gpu,time from FR_HW_NODEUSAGE order by time desc) where rownum <![CDATA[<=]]> 12
+    </select>
+</mapper>
