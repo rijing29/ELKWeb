@@ -2,7 +2,9 @@ package com.elk.elkweb.controller;
 
 import com.elk.elkweb.entity.CpuGpuResults;
 import com.elk.elkweb.service.EquipStateService;
+import com.elk.elkweb.service.HWLienceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -16,6 +18,9 @@ import java.util.Map;
 public class ELKHWController {
     @Autowired
     private EquipStateService equipStateService;
+    @Qualifier("HWLienceServiceImpl")
+    @Autowired
+    private HWLienceService hwLienceService;
     //    获取cpu
     @RequestMapping(value = "/getCPU",produces = "application/json;charset=utf-8" )
     @ResponseBody
@@ -93,5 +98,16 @@ public class ELKHWController {
     public List getCCUsage(){
         List<Map<String, Object>> ccUsage = equipStateService.getCCUsage();
         return ccUsage;
+    }
+    /**
+    *@Author:whj
+    *@date:2021-09-2313:23
+    *@Method:软件许可日志
+    */
+    @RequestMapping(value = "/getLience",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getLience(){
+        List showHWLience = hwLienceService.showHWLience();
+        return showHWLience;
     }
 }

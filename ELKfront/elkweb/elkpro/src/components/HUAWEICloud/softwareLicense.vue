@@ -13,7 +13,7 @@
                     <el-row class="area">
                         <el-row>
                             <el-col :span="24" class="border_top">
-                                <div class="tableSubTitle">Paradigm软件许可信息</div>
+                                <div class="tableSubTitle">华为云软件许可信息</div>
                             </el-col>
                         </el-row>
                         <el-row>
@@ -21,11 +21,11 @@
                                 <div class="table-wrapper">
                                     <el-table :data="tableData"
                                               :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                        <el-table-column prop="USER" label="用户" align="center"></el-table-column>
-                                        <el-table-column prop="NODE" label="节点" align="center"></el-table-column>
-                                        <el-table-column prop="ACTION" label="许可动作" align="center"></el-table-column>
-                                        <el-table-column prop="MODULE" label="软件模块名" align="center"></el-table-column>
-                                        <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
+                                        <el-table-column prop="userName" label="用户" align="center"></el-table-column>
+                                        <el-table-column prop="licenceServer" label="节点" align="center"></el-table-column>
+                                        <el-table-column prop="userAction" label="许可动作" align="center"></el-table-column>
+                                        <el-table-column prop="moduleName" label="软件模块名" align="center"></el-table-column>
+                                        <el-table-column prop="inputTime" label="时间" align="center"></el-table-column>
                                     </el-table>
                                 </div>
                             </el-col>
@@ -62,20 +62,11 @@ export default {
             year: '',
             month: '',
             softName: '',
-            tableData: [
-                {USER:'zhangct',NODE:'wnode240',ACTION:'OUT',MODULE:'Power2D3D',TIME:'09:09:12'},
-                {USER:'zhangct',NODE:'wnode240',ACTION:'OUT',MODULE:'Power2D3D',TIME:'09:11:32'},
-                {USER:'zhangct',NODE:'wnode240',ACTION:'OUT',MODULE:'ES360_VIS',TIME:'09:14:25'},
-                {USER:'zhangct',NODE:'wnode240',ACTION:'IN',MODULE:'ES360_VIS',TIME:'10:21:37'},
-                {USER:'zhangct',NODE:'wnode240',ACTION:'IN',MODULE:'ES360_VIS',TIME:'10:34:15'},
-                {USER:'zhangct',NODE:'wnode240',ACTION:'IN',MODULE:'ES360_VIS',TIME:'10:34:18'},
-                {USER:'zhangct',NODE:'wnode240',ACTION:'OUT',MODULE:'ES360_Imager',TIME:'11:04:51'},
-                {USER:'zhangct',NODE:'wnode240',ACTION:'IN',MODULE:'ES360_Imager',TIME:'12:20:20'},
-            ],
+            tableData: [],
         }
     },
     created() {
-        // this.getSoftName();
+        this.getLience();
     },
     methods: {
         getNodeTypeEffi() {
@@ -120,8 +111,14 @@ export default {
         },
         formatJson(filterVal, jsonData) {
             return jsonData.map(v => filterVal.map(j => v[j]));
+        },
+        getLience(){
+          var url="/getLience"
+          this.$http.get(url).then(res=>{
+            console.log(res)
+            this.tableData=res.data
+          })
         }
-
     },
 }
 </script>

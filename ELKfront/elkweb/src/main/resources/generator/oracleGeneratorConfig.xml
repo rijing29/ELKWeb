@@ -88,7 +88,9 @@
 <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 <!--        <table tableName="FR_CD_WDSD" domainObjectName="siteCDWDSD" enableCountByExample="false" enableUpdateByExample="false"-->
 <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-            <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="FrontCardDPMInfo" enableCountByExample="false" enableUpdateByExample="false"
+<!--            <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="FrontCardDPMInfo" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
+            <table tableName="LOG_LICENCEDATA_HW" domainObjectName="HWLicence" enableCountByExample="false" enableUpdateByExample="false"
                    enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
     </context>
