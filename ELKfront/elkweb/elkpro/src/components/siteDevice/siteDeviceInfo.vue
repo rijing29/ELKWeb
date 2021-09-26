@@ -602,13 +602,13 @@ export default {
 .area1 {
     width: 70vh;
     height: 80vh;
-    /*background: url("../../assets/bg-border-high.png");*/
+    background: url("../../assets/bg-border-high.png");
     background-size: 100% 100%;
 }
 .area2 {
     width: 70vh;
     height: 40vh;
-    /*background: url("../../assets/bg_border-low.png");*/
+    background: url("../../assets/bg_border-low.png");
     background-size: 100% 100%;
 }
 .area_public{
