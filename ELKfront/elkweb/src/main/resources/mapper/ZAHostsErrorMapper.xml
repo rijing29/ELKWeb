@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.ZAHostsErrorMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.ZAHostsError" >
+    <result column="HOST" property="host" jdbcType="VARCHAR" />
+    <result column="ERRORS_FROM" property="errorsFrom" jdbcType="TIMESTAMP" />
+    <result column="ERROR" property="error" jdbcType="VARCHAR" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.ZAHostsError" >
+    insert into ZA_HOSTS_ERROR (HOST, ERRORS_FROM, ERROR, 
+      TIME)
+    values (#{host,jdbcType=VARCHAR}, #{errorsFrom,jdbcType=TIMESTAMP}, #{error,jdbcType=VARCHAR}, 
+      #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.ZAHostsError" >
+    insert into ZA_HOSTS_ERROR
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="host != null" >
+        HOST,
+      </if>
+      <if test="errorsFrom != null" >
+        ERRORS_FROM,
+      </if>
+      <if test="error != null" >
+        ERROR,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="host != null" >
+        #{host,jdbcType=VARCHAR},
+      </if>
+      <if test="errorsFrom != null" >
+        #{errorsFrom,jdbcType=TIMESTAMP},
+      </if>
+      <if test="error != null" >
+        #{error,jdbcType=VARCHAR},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="serachZAError" resultType="map">
+    select host,errors_from,error from ZA_HOSTS_ERROR where errors_from in (select max(errors_from) from ZA_HOSTS_ERROR) order by host
+  </select>
+</mapper>

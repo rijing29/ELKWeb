@@ -4,11 +4,13 @@ import com.elk.elkweb.mapper.EpySoftWareUsageMapper;
 import com.elk.elkweb.service.EPYDEPDQMDS;
 import com.elk.elkweb.service.EPYDEPService;
 import com.elk.elkweb.service.EPYService;
+import com.elk.elkweb.service.PersonActionLogService;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.text.ParseException;
@@ -25,6 +27,8 @@ public class ELKEPYController {
     private EPYDEPService epydepService;
     @Autowired
     private EPYDEPDQMDS epydepdqmds;
+    @Autowired
+    private PersonActionLogService personActionLogService;
     /**
      *
      * 查询员工刷卡信息
@@ -135,6 +139,19 @@ public class ELKEPYController {
    public List getDQMDSDEP(){
        List depdqmds = epydepdqmds.getDEPDQMDS();
        return depdqmds;
+   }
+   /**
+   *@Author:whj
+   *@date:2021-09-2615:42
+   *@Method:员工行为画像分析
+   */
+   @RequestMapping(value = "/searchBehaveProfile",produces = "application/json;charset=utf-8" )
+   @ResponseBody
+   public List searchBehaveProfile(@RequestParam("startTime") String startTime,
+                                   @RequestParam("stopTime") String stopTime,
+                                   @RequestParam("userName") String userName){
+       List epyProfile = personActionLogService.searchEpyProfile(startTime,stopTime,userName);
+       return epyProfile;
    }
 
 }

@@ -30,6 +30,7 @@
                             <el-menu-item index="/epyNet">员工外网浏览信息</el-menu-item>
                             <el-menu-item index="/epyDQMDS">员工DQMDS行为</el-menu-item>
                             <el-menu-item index="/epySoftware">员工使用软件行为</el-menu-item>
+                            <el-menu-item index="/epyBehaviorProfile">员工行为画像</el-menu-item>
                         </el-submenu>
                         <el-submenu index="1-2">
                             <template slot="title">单位</template>
@@ -105,6 +106,11 @@
                     <el-menu-item index="/siteDeviceInfo">
                         <i class="el-icon-s-help icon_color"></i>
                         <span slot="title">场地设备监控信息</span>
+                    </el-menu-item>
+                    <!--       故障zabbix Agent查询           -->
+                    <el-menu-item index="/searchZabbixAgent">
+                      <i class="el-icon-s-home icon_color"></i>
+                      <span slot="title">故障Zabbix Agent查询</span>
                     </el-menu-item>
                 </el-menu>
             </el-aside>

@@ -32,6 +32,11 @@ import serverPublic from "../components/server/serverPublic";
 import serverWin from "../components/server/serverWin";
 import serveStorage from "../components/server/serveStorage";
 import siteDeviceInfo from "../components/siteDevice/siteDeviceInfo";
+import searchZabbixAgent from "@/components/TroubleSearch/searchZabbixAgent";
+import epyBehaviorProfile from "@/components/employee/epyBehaviorProfile";
+
+// import searchZabbixAgent from "../components/TroubleSearch/searchZabbixAgent";
+
 import App from "@/App";
 
 Vue.use(VueRouter)
@@ -56,6 +61,7 @@ const routes = [
             {path: '/epyDQMDS', name: 'epyDQMDS', component: epyDQMDS},
             {path: '/epyNet', name: 'epyNet', component: epyNet},
             {path: '/epySoftware', name: 'epySoftware', component: epySoftware},
+            {path: '/epyBehaviorProfile', name: 'epyBehaviorProfile', component: epyBehaviorProfile},
             {path: '/serverPublic', name: 'serverPublic', component: serverPublic},
             {path: '/serverWin', name: 'serverWin', component: serverWin},
             {path: '/epyCardDPM', name: 'epyCardDPM', component: epyCardDPM},
@@ -70,6 +76,7 @@ const routes = [
             {path: '/softwareLicense', name: 'softwareLicense', component: softwareLicense},
             {path: '/memUse', name: 'memUse', component: memUse},
             {path: '/siteDeviceInfo', name: 'siteDeviceInfo', component: siteDeviceInfo},
+            {path: '/searchZabbixAgent',name:'searchZabbixAgent',component: searchZabbixAgent}
         ]
     },
 ]

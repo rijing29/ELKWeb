@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.elk.elkweb.mapper.PersonActionLogMapper" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.PersonActionLog" >
+    <result column="USERNAME" property="username" jdbcType="OTHER" />
+    <result column="ACTION" property="action" jdbcType="OTHER" />
+    <result column="ACTIONTIME" property="actiontime" jdbcType="TIMESTAMP" />
+    <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.PersonActionLog" >
+    insert into PERSON_ACTION_LOG (USERNAME, ACTION, ACTIONTIME, 
+      TIME)
+    values (#{username,jdbcType=OTHER}, #{action,jdbcType=OTHER}, #{actiontime,jdbcType=TIMESTAMP}, 
+      #{time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.PersonActionLog" >
+    insert into PERSON_ACTION_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="action != null" >
+        ACTION,
+      </if>
+      <if test="actiontime != null" >
+        ACTIONTIME,
+      </if>
+      <if test="time != null" >
+        TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=OTHER},
+      </if>
+      <if test="action != null" >
+        #{action,jdbcType=OTHER},
+      </if>
+      <if test="actiontime != null" >
+        #{actiontime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="time != null" >
+        #{time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="searchEpyBehavProfile" resultMap="BaseResultMap">
+    select * from PERSON_ACTION_LOG  where actiontime between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
+      and to_date(#{stopTime},'yyyy-MM-dd hh24:mi:ss') and username=#{userName,jdbcType=OTHER}
+  </select>
+</mapper>
