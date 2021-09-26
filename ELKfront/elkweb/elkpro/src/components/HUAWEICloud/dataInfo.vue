@@ -101,7 +101,8 @@ import VChart, {THEME_KEY} from "vue-echarts";
 export default {
     name: 'datainfo',
     components: {
-        VChart
+        VChart,
+        THEME_KEY
     },
     watch: {
         software_value: function (newV, oldV) {

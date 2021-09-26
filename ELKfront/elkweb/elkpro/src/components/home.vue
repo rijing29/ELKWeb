@@ -109,7 +109,7 @@
                     </el-menu-item>
                     <!--       故障zabbix Agent查询           -->
                     <el-menu-item index="/searchZabbixAgent">
-                      <i class="el-icon-s-home icon_color"></i>
+                      <i class="el-icon-s-release icon_color"></i>
                       <span slot="title">故障Zabbix Agent查询</span>
                     </el-menu-item>
                 </el-menu>

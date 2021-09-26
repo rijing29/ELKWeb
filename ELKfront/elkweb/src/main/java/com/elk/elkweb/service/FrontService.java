@@ -1,5 +1,6 @@
 package com.elk.elkweb.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,4 +17,15 @@ public interface FrontService {
     //    服务器平均负载查询
     List<Map<String,Object>> getServerStateAvg();
 
+    //    IPMI告警数查询
+    int getIPMIAlertNum(String time);
+
+    //    平均任务数量查询
+    float getTaskAvg();
+
+    //    agent故障数量查询
+    List<Map<String,Object>>getAgentNum();
+
+    //    轮播图信息汇总
+    List<Map<String,Object>>getGetherInfo();
 }

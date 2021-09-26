@@ -9,42 +9,42 @@
         </el-col>
       </el-row>
       <el-row>
-        <!--————近期（一个月）Windows服务器提供服务统计 begin————-->
+        <!--————华为CPU节点负载变化 begin————-->
         <el-col :span="11">
           <el-row>
             <el-col :span="24" class="area" align="center">
-              <!--————雷达图 begin————-->
+              <!--————折线图 begin————-->
               <v-chart class="echarts" :option="option1"/>
-              <!--————雷达图 end————-->
+              <!--————折线图 end————-->
             </el-col>
           </el-row>
         </el-col>
-        <!--————近期（一个月）Windows服务器提供服务统计 end————-->
-        <!--————Windows服务器日志告警信息 begin————-->
+        <!--————华为CPU节点负载变化 end————-->
+        <!--————华为GPU节点负载变化 begin————-->
         <el-col :span="11">
           <el-row>
             <el-col :span="24" class="area" align="center">
-              <!--————雷达图 begin————-->
+              <!--————折线图 begin————-->
               <v-chart class="echarts" :option="option2"/>
-              <!--————雷达图 end————-->
+              <!--————折线图 end————-->
             </el-col>
           </el-row>
         </el-col>
-        <!--————Windows服务器日志告警信息 end————-->
+        <!--————华为GPU节点负载变化 end————-->
       </el-row>
       <el-row>
-        <!--————近期（一个月）Windows服务器提供服务统计 begin————-->
+        <!--————存储系统使用 begin————-->
         <el-col :span="11">
           <el-row>
             <el-col :span="24" class="area" align="center">
-              <!--————雷达图 begin————-->
+              <!--————饼状图 begin————-->
               <v-chart class="echarts" :option="option3"/>
-              <!--————雷达图 end————-->
+              <!--————饼状图 end————-->
             </el-col>
           </el-row>
         </el-col>
-        <!--————近期（一个月）Windows服务器提供服务统计 end————-->
-        <!--————Windows服务器日志告警信息 begin————-->
+        <!--————存储系统使用 end————-->
+        <!--————软件使用率 begin————-->
         <el-col :span="11">
           <el-row>
             <el-col :span="24" class="area" align="center">
@@ -54,7 +54,7 @@
             </el-col>
           </el-row>
         </el-col>
-        <!--————Windows服务器日志告警信息 end————-->
+        <!--————软件使用率 end————-->
       </el-row>
     </el-main>
   </el-container>

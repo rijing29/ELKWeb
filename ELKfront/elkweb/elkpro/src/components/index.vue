@@ -37,20 +37,21 @@
                             </el-row>
                             <el-row>
                                 <el-col :span="8" align="center">
-                                    <div class="bg_num">2</div>
+                                    <div class="bg_num">{{ this.IPMIAlertNum }}</div>
                                 </el-col>
                                 <el-col :span="8" align="center">
-                                    <div class="bg_num">4.2</div>
+                                    <div class="bg_num">{{ this.taskAvg }}</div>
                                 </el-col>
                                 <el-col :span="8" align="center">
-                                    <div class="bg_num">2</div>
+                                    <div class="bg_num">{{ this.HOSTS_ERROR }}</div>
                                 </el-col>
                             </el-row>
                             <el-row>
                                 <el-col :span="8" align="center" class="text_light_blue text_blod">IPMI告警台数</el-col>
                                 <el-col :span="8" align="center" class="text_light_blue text_blod">平均执行任务个数</el-col>
                                 <el-col :span="8" align="center" class="text_light_blue text_blod">
-                                    Agent故障个数<br><div class="text_small text_white text_lighter text_thin" >(部署Agent 352 个)</div></el-col>
+                                    Agent故障个数<br><div class="text_small text_white text_lighter text_thin" >(部署Agent
+                                    {{ this.HOSTS_ALL }} 个)</div></el-col>
                             </el-row>
                         </el-col>
                     </el-row>
@@ -142,6 +143,11 @@ export default {
     },
     data(){
         return{
+            time:'',//IPMI查询所需时间
+            IPMIAlertNum:'',//IPMI告警台数
+            taskAvg:'',//平均执行任务个数
+            HOSTS_ALL:'',//agent总数
+            HOSTS_ERROR:'',//agent故障数
             data:'',
             hours:'',
             minutes:'',
@@ -467,10 +473,14 @@ export default {
         }
     },
     created(){
-        this.getDate()
-        this.getCardDPMInfo()
-        this.getCardDPMAvg()
-        this.getServerStateAvg()
+        this.getDate()//时钟
+        this.getCardDPMInfo()//获取全院刷卡信息
+        this.getCardDPMAvg()//获取全院刷卡平均信息
+        this.getServerStateAvg()//获取服务器平均负载
+        this.getIPMIAlertNum()//获取IPMI告警台数
+        this.getTaskAvg()//获取平均任务数量
+        this.getAgentNum()//获取agent故障数量
+        this.getGetherInfo()//轮播图信息汇总
     },
     mounted() {
         let that= this;
@@ -492,8 +502,10 @@ export default {
             var vWeek = ["星期日", "星期一", "星期二", "星期三", "星期四", "星期五", "星期六"]
             var DATE = this.formatter(new Date(), 'yyyy年MM月dd日')
             var WEEK = new Date()
+            var TIME = this.formatter(new Date(),'yyyy/MM/dd')
             this.date=DATE.toLocaleString()
             this.week=vWeek[WEEK.getDay()]
+            this.time=TIME.toLocaleString()
             console.log(this.week)
         },
         formatter (thistime, fmt) {//js格式化时间
@@ -562,6 +574,49 @@ export default {
                 this.option2.series[0].data[0]=res.data[0].NET
                 this.option2.series[1].data[0]=res.data[0].MEM
                 this.option2.series[2].data[0]=res.data[0].CPU
+            })
+        },
+        getIPMIAlertNum(){//获取IPMI告警台数
+            var url = '/getIPMIAlertNum'
+            var params={'Time':this.time}
+            this.$http.get(url,{params}).then(res =>{
+                console.log(res.data,'ipmi告警台数')
+                this.IPMIAlertNum=res.data
+            })
+        },
+        getTaskAvg(){//获取平均任务数量
+            var url='/getTaskAvg'
+            this.$http.get(url).then(res =>{
+                console.log(res.data,'平均任务数')
+                this.taskAvg=res.data
+            })
+        },
+        getAgentNum(){//获取agent故障数量
+            var url='/getAgentNum'
+            this.$http.get(url).then(res =>{
+                console.log(res.data,'agent故障个数')
+                this.HOSTS_ALL=res.data[0].HOSTS_ALL
+                this.HOSTS_ERROR=res.data[0].HOSTS_ERROR
+            })
+        },
+        getGetherInfo(){
+            var url='/getGetherInfo'
+            this.$http.get(url).then(res =>{
+                console.log(res.data,'数据汇总')
+                while (this.dataWord[0].data.length!==0){
+                    this.dataWord[0].data.pop()
+                }
+                while (this.dataWord[1].data.length!==0){
+                    this.dataWord[1].data.pop()
+                }
+                this.dataWord[0].data[0] = '服务器：'+res.data[0].SERVERNUM+'台，状态采集'+res.data[0].SERVERSTATENUM+'项'
+                this.dataWord[0].data[1] = 'DQMDS日志：员工'+res.data[0].DQMDSPERSONNUM+'人，访问日志'+res.data[0].DQMDSLOGNUM+'项'
+                this.dataWord[0].data[2] = '门禁刷卡：员工'+res.data[0].DOORPERSONNUM+'人，刷卡'+res.data[0].DOORLOGNUM+'次'
+                this.dataWord[0].data[3] = '软件许可：'+res.data[0].SOFTNUM+'个软件，'+res.data[0].SOFTPERSONNUM+'个用户，'+res.data[0].SOFTLOGNUM+'次使用'
+                this.dataWord[1].data[0] = '网络交换机'+res.data[0].SWITCHNUM+'台，防火墙1个'
+                this.dataWord[1].data[1] = '网络包：今日'+res.data[0].NETBAGNUM+'万，涉及'+res.data[0].NETBAGIPNUM+'个IP'
+                this.dataWord[1].data[2] = 'IPS告警：'+res.data[0].IPSWARNNUM+'万项，涉及'+res.data[0].IPSWARNIPNUM+'个服务器'
+                this.dataWord[1].data[3] = '交换机告警：'+res.data[0].SWITCHWARNNUM+'万项，涉及'+res.data[0].SWITCHWARNIPNUM+'个交换机'
             })
         }
     },
@@ -653,7 +708,7 @@ export default {
     line-height: 20vh;
     text-align: center;
     color: #fa916c;
-    font-size: 48px;
+    font-size: 40px;
     font-weight: bold;
 }
 .num_ares{
@@ -671,14 +726,14 @@ export default {
     height: 25vh;
 }
 .text_big{
-    font-size: 36px;
+    font-size: 250%;
     font-weight: bold;
 }
 .text_title{
-    font-size: 18px;
+    font-size: large;
 }
 .text_small{
-    font-size: 12px;
+    font-size: small;
 }
 .text_light_blue{
     color: #17b3f0;
@@ -717,7 +772,7 @@ export default {
 .title{
     width: 243px;
     height: 75px;
-    font-size: 18px;
+    font-size: large;
     color: #17caf0;
     background: url("../assets/border_label.png") no-repeat;
     line-height: 75px;

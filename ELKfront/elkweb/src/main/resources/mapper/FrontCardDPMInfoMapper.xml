@@ -92,6 +92,36 @@
     select * from FR_SERVER_AVG t
     where time in (select max(time) from FR_SERVER_AVG)
   </select>
+  <!--  IPMI告警台数  -->
+  <select id="getIPMIAlertNum" resultType="java.lang.Integer">
+    select count(distinct ip) from IPMI_LOG_WARN t where time <![CDATA[>=]]>to_date(#{time},'yyyy-MM-dd hh24:mi:ss')
+  </select>
+  <!--  平均任务数  -->
+  <select id="getTaskAvg" resultType="java.lang.Float">
+    select round( t1.fenzi/t2.fenmu,1) as
+    from (
+        select type2+type3+type5+type10 as fenzi
+        from (
+            select sum(type2) as type2,sum(type3) as type3,sum(type5) as type5,sum(type10) as type10
+            from LOG_WIN_LOGIN
+            where time in (select max(time) from LOG_WIN_LOGIN)
+        )
+    ) t1,
+    (
+        select count(distinct ip) as fenmu
+        from LOG_WIN_LOGIN
+        where time in (select max(time) from LOG_WIN_LOGIN)
+    ) t2
+  </select>
+  <!--  agent故障数量  -->
+  <select id="getAgentNum" resultType="map">
+    select t.hosts_all,t.hosts_error from ZA_HOSTS_STATE t where time in (select max(time) from ZA_HOSTS_STATE )
+  </select>
+  <!--  轮播图信息汇总  -->
+  <select id="getGetherInfo" resultType="map">
+    select * from TJ_Gether_INFO_NUM t where time in (select max(time) from TJ_Gether_INFO_NUM )
+  </select>
+
   <!--  ————首页相关查询 end————  -->
 
 </mapper>

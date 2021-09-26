@@ -27,4 +27,28 @@ public class FrontServiceImpl implements FrontService{
         List<Map<String, Object>> serverStateAvg = frontMapper.getServerStateAvg();
         return serverStateAvg;
     }
+
+    @Override
+    public int getIPMIAlertNum(String time) {
+        int ipmiAlertNum = frontMapper.getIPMIAlertNum(time);
+        return ipmiAlertNum;
+    }
+
+    @Override
+    public float getTaskAvg() {
+        float taskAvg = frontMapper.getTaskAvg();
+        return taskAvg;
+    }
+
+    @Override
+    public List<Map<String, Object>> getAgentNum() {
+        List<Map<String, Object>> agentNum = frontMapper.getAgentNum();
+        return agentNum;
+    }
+
+    @Override
+    public List<Map<String, Object>> getGetherInfo() {
+        List<Map<String, Object>> getherInfo = frontMapper.getGetherInfo();
+        return getherInfo;
+    }
 }

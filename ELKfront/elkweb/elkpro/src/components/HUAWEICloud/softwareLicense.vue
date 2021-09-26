@@ -13,7 +13,7 @@
                     <el-row class="area">
                         <el-row>
                             <el-col :span="24" class="border_top">
-                                <div class="tableSubTitle">华为云软件许可信息</div>
+                                <div class="tableSubTitle">华为云软件许可日志</div>
                             </el-col>
                         </el-row>
                         <el-row>
