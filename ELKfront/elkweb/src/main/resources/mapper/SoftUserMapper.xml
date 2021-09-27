@@ -67,11 +67,9 @@
     </select>
     <!--根据软件名查询一周内用户数据-->
     <select id="getSoft_userInfo" resultType="map">
-        select t1.user_name, sum(t1.work_load)/10 as useTime
-        from T_NODE_WORK_DETAIL t1,T_NODE_SOFT_MAP t2
-        where t2.soft_name=#{softName,jdbcType=VARCHAR}
-        and t2.node_type=t1.node_type
-        and t2.node_id=t1.node_id
+        select user_name,sum(work_load)/10 as useTime from T_NODE_WORK_DETAIL
+        where node_type in(select distinct(node_type) from T_NODE_SOFT_MAP where soft_name=#{softName,jdbcType=VARCHAR})
+        and node_id in(select node_id from T_NODE_SOFT_MAP where soft_name=#{softName,jdbcType=VARCHAR})
         and time between (select max(time) from T_NODE_WORK_DETAIL)-7 and (select max(time) from T_NODE_WORK_DETAIL)
         group by user_name
     </select>
