@@ -12,6 +12,7 @@ import softwareLicense from '../components/HUAWEICloud/softwareLicense.vue'
 import deviceState from '../components/HUAWEICloud/deviceState.vue'
 import memUse from '../components/HUAWEICloud/memUse.vue'
 import nodeDeploy from "../components/HUAWEICloud/nodeDeploy.vue";
+import softOfUser from "../components/HUAWEICloud/softOfUser.vue";
 import firewallInfo from '../components/netData/firewallInfo.vue'
 import test2 from "../components/css.vue";
 import useFrequencyAll from "../components/dataDisplay/useFrequencyAll.vue";
@@ -76,7 +77,8 @@ const routes = [
             {path: '/softwareLicense', name: 'softwareLicense', component: softwareLicense},
             {path: '/memUse', name: 'memUse', component: memUse},
             {path: '/siteDeviceInfo', name: 'siteDeviceInfo', component: siteDeviceInfo},
-            {path: '/searchZabbixAgent',name:'searchZabbixAgent',component: searchZabbixAgent}
+            {path: '/searchZabbixAgent',name:'searchZabbixAgent',component: searchZabbixAgent},
+            {path: '/softOfUser',name:'softOfUser',component: softOfUser},
         ]
     },
 ]

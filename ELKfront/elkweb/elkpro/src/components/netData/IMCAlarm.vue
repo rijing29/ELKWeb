@@ -147,7 +147,7 @@ export default {
 
 }
 .span_area {
-    /*多选框区域*/
+    /*按钮边距区域*/
     margin-left: 40px;
 }
 .title{
