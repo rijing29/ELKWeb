@@ -128,15 +128,15 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                     offset: 0,
                                     color: "#26b2ea" // 0% 处的颜色
                                 }, {
                                     offset: 0.6,
-                                    color: "#35b8ec" // 60% 处的颜色
+                                    color: "#35c7ec" // 60% 处的颜色
                                 }, {
                                     offset: 1,
-                                    color: "#46c8fc" // 100% 处的颜色
+                                    color: "#46fcfc" // 100% 处的颜色
                                 }], false)
                             },
                             color: null,
