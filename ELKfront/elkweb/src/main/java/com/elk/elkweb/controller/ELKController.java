@@ -77,6 +77,7 @@ public class ELKController {
     @ResponseBody
     public dataResults softNameEfficiency(@RequestParam("softName") String softName,
                                           @RequestParam("Time") String Time) throws ParseException {
+        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!时间!!!!!!!!!!!!!!!!!!!!!!!!!!!!"+Time);
         List dateList = calDate(Time);
         String startTime =(String) dateList.get(0)+" 00:00:00";
         String stopTime =(String) dateList.get(1)+" 00:00:00";
@@ -125,14 +126,16 @@ public class ELKController {
         double aveEffici = 0;
         String[] months = new String[12];
         double[] efficicy = new double[12];
+        int j=1;
+        Date addThreeDay=null;
+        addThreeDay=transferDate(startTime);
         for(int i=0;i<12;i++) {
-            StringBuilder sb = new StringBuilder(startTime);
-            sb.replace(6,7, String.valueOf(i));
-            aveEffici = calSoftNameAveEfficiMonth(startTime, stopTime, 30, softName, EfficiencyMap);
-            int j=1;
+            String startTimeTwo = transferString(addThreeDay);
+            aveEffici = calSoftNameAveEfficiMonth(startTimeTwo, stopTime, 30, softName, EfficiencyMap);
             months[i]=Time+"-"+j+"月";
             j++;
             efficicy[i]=aveEffici;
+            addThreeDay= addThirstyDay(addThreeDay);
         }
         dataResults results = new dataResults();
         results.setKey(months);
@@ -153,14 +156,14 @@ public class ELKController {
         List dateList = calDate(Time);
         String startTime =(String) dateList.get(0)+" 00:00:00";
         String stopTime =(String) dateList.get(1)+" 00:00:00";
-        System.out.println(startTime+"-----"+stopTime);
+        System.out.println(startTime+"askdhkadka"+stopTime);
         LinkedHashMap<String, Double> EfficiencyMap = new LinkedHashMap<String, Double>();
         double aveEffici = 0;
         String[] months = new String[12];
         double[] efficicy = new double[12];
+        int j=1;
         for(int i=0;i<12;i++) {
             aveEffici =  calNodeTypeAveEffici(startTime, stopTime, 30, nodeType, nodeId, EfficiencyMap);
-            int j=1;
             months[i]=Time+"-"+j+"月";
             j++;
             efficicy[i]=aveEffici;
@@ -506,6 +509,19 @@ public class ELKController {
         date=calendar.getTime(); //这个时间就是日期往后推一天的结果
         return date;
     }
+    /**
+    *@Author:whj
+    *@date:2021-09-2817:15
+    *@Method:日期+30天
+    */
+    public Date addThirstyDay(Date date){
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.add(calendar.DATE,30); //把日期往后增加一天,整数  往后推,负数往前移动
+        date=calendar.getTime(); //这个时间就是日期往后推一天的结果
+        return date;
+    }
+
     /**
      * Description:
      * date: 2021/7/15 14:50
