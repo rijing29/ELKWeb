@@ -335,7 +335,7 @@ export default {
                 this.fullscreenLoading = false;
             }, 2000);
             //传入哪个时间
-            if (this.year_value.length !== 0) {
+            if (this.year_value !== null) {
                 console.log(this.year_value, "nian")
                 this.Time = this.year_value;
                 var url = "/calNodeTypeYear"
@@ -353,7 +353,7 @@ export default {
                     this.option.xAxis.data = res.data.key
                     //
                 })
-            } else if (this.month_value.length !== 0) {
+            } else if (this.month_value !== null) {
                 console.log(this.Time)
                 this.Time = this.month_value;
                 var url = "/calNodeType"
