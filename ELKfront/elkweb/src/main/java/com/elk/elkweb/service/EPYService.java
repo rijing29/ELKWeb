@@ -24,7 +24,7 @@ public interface EPYService {
     List<EpySoftWareUsageMapper> showEpySoftWareUsage(String username);
     //    员工近期加班使用软件统计
     List<Map< String, Object >> showEpySoftWareUsageCount(String username);
-//    员工外网浏览数据
-    List getEpyNet(String username);
+    //    员工外网浏览数据
+    List<Map< String, Object >> getEpyNetInfo(String username);
 
 }

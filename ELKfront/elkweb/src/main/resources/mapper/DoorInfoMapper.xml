@@ -86,6 +86,14 @@
     order by time desc
   </select>
 
+  <!--  根据姓名查询员工外网浏览信息  -->
+  <select id="getEpyNetInfo" resultType="map">
+    select * from MAIL_WEBPAGE_TJ t
+    where username=#{username,jdbcType=VARCHAR}
+    and time between (select max(time)-7 from MAIL_WEBPAGE_TJ) and (select max(time) from MAIL_WEBPAGE_TJ)
+    order by time desc
+  </select>
+
   <!--  根据姓名查询员工DQMDS信息  -->
   <select id="getEpyDQMSInfo" resultType="map">
     select username,operationtime,description from MDS_LOG t
