@@ -298,34 +298,40 @@ export default {
             console.log("年：",this.year_value,"月：",this.month_value)
             if (this.year_value!==null) {
                 this.Time = this.year_value;
-                var url = "/calSoftNameYear"
-                var params = {
-                    'softName': this.softName,
-                    'Time': this.Time,
+                if(this.Time.length!==0){
+                    var url = "/calSoftNameYear"
+                    var params = {
+                        'softName': this.softName,
+                        'Time': this.Time,
+                    }
+                    this.$http.get(url, {params}).then(res => {
+                        //设置横轴
+                        this.option.series[0].name = "软件效率"
+                        this.option.series[0].data = res.data.value
+                        //设置纵轴
+                        this.option.xAxis.data = res.data.key
+                    })
                 }
-                this.$http.get(url, {params}).then(res => {
-                    //设置横轴
-                    this.option.series[0].name = "软件效率"
-                    this.option.series[0].data = res.data.value
-                    //设置纵轴
-                    this.option.xAxis.data = res.data.key
-                })
+
             } else if (this.month_value !== null) {
                 this.Time = this.month_value;
-                var url = "/calSoftName"
-                var params = {
-                    'softName': this.softName,
-                    'Time': this.Time,
+                if(this.Time.length!==0){
+                    var url = "/calSoftName"
+                    var params = {
+                        'softName': this.softName,
+                        'Time': this.Time,
+                    }
+                    this.$http.get(url, {params}).then(res => {
+                        console.log(res)
+                        //设置横轴
+                        this.option.series[0].name = "软件效率"
+                        this.option.series[0].data = res.data.value
+                        //设置纵轴
+                        this.option.xAxis.data = res.data.key
+                        // this.option.title.subtext='平均效率：'+res.data.ave
+                    })
                 }
-                this.$http.get(url, {params}).then(res => {
-                    console.log(res)
-                    //设置横轴
-                    this.option.series[0].name = "软件效率"
-                    this.option.series[0].data = res.data.value
-                    //设置纵轴
-                    this.option.xAxis.data = res.data.key
-                    // this.option.title.subtext='平均效率：'+res.data.ave
-                })
+
             }
         },
         //  根据节点名查效率
@@ -338,39 +344,45 @@ export default {
             if (this.year_value !== null) {
                 console.log(this.year_value, "nian")
                 this.Time = this.year_value;
-                var url = "/calNodeTypeYear"
-                var params = {
-                    'nodeType': this.nodeType,
-                    'nodeId': this.nodeId,
-                    'Time': this.Time,
+                if(this.Time.length!==0){
+                    var url = "/calNodeTypeYear"
+                    var params = {
+                        'nodeType': this.nodeType,
+                        'nodeId': this.nodeId,
+                        'Time': this.Time,
+                    }
+                    this.$http.get(url, {params}).then(res => {
+                        console.log(res)
+                        //设置横轴
+                        this.option.series[0].name = "软件效率"
+                        this.option.series[0].data = res.data.value
+                        //设置纵轴
+                        this.option.xAxis.data = res.data.key
+                        //
+                    })
                 }
-                this.$http.get(url, {params}).then(res => {
-                    console.log(res)
-                    //设置横轴
-                    this.option.series[0].name = "软件效率"
-                    this.option.series[0].data = res.data.value
-                    //设置纵轴
-                    this.option.xAxis.data = res.data.key
-                    //
-                })
+
             } else if (this.month_value !== null) {
                 console.log(this.Time)
                 this.Time = this.month_value;
-                var url = "/calNodeType"
-                var params = {
-                    'nodeType': this.nodeType,
-                    'nodeId': this.nodeId,
-                    'Time': this.Time,
+                if(this.Time.length!==0){
+                    var url = "/calNodeType"
+                    var params = {
+                        'nodeType': this.nodeType,
+                        'nodeId': this.nodeId,
+                        'Time': this.Time,
+                    }
+                    this.$http.get(url, {params}).then(res => {
+                        console.log(res)
+                        //设置横轴
+                        this.option.series[0].name = "节点效率"
+                        this.option.series[0].data = res.data.value
+                        //设置纵轴
+                        this.option.xAxis.data = res.data.key
+                        // this.option.title.subtext='平均效率：'+res.data.ave
+                    })
                 }
-                this.$http.get(url, {params}).then(res => {
-                    console.log(res)
-                    //设置横轴
-                    this.option.series[0].name = "节点效率"
-                    this.option.series[0].data = res.data.value
-                    //设置纵轴
-                    this.option.xAxis.data = res.data.key
-                    // this.option.title.subtext='平均效率：'+res.data.ave
-                })
+
             }
         }
     },
