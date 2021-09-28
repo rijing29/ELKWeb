@@ -16,7 +16,7 @@
                     </span>
                     <!-- 查询按钮 -->
                     <span class="span_area">
-                        <el-button icon="el-icon-search" type="primary">查询</el-button>
+                        <el-button icon="el-icon-search" type="primary" @click="getEpyNetInfo">查询</el-button>
                     </span>
                 </el-col>
             </el-row>
@@ -25,7 +25,7 @@
                 <el-col :span="24">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">员工 - 张三  (一周内信息)</div>
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">员工 - {{this.username}}  (一周内外网浏览信息)</div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -62,58 +62,21 @@ export default {
     data(){
         return{
             haveData:true,
-            Time:'',//日期选择器
-            date:'',//日期变量
-            expands: [],
             username:'',
-            ip:'',
-            time:'',
             tableData:[],
         }
     },
-    // created(){//自动渲染数据
-    //     this.getDate()
-    //     this.getIPMIAlarm()
-    //     this.Time=this.time
-    // },
-    methods: {
-        getRowKeys: function (row) {//控制表格只能展开一行
-            return row.time + row.ip + row.info
-            //  将row.time、row.ip、row.info的拼接作为行的唯一id,解决行id唯一问题
-        },
 
-        selectStartTime(val) {//日期选择器
-            //开始时间
-            this.Time = val;
-            this.date=this.Time;
-            // this.getIPMIAlarm();
-            console.log(this.time)
-        },
-        formatter (thistime, fmt) {//js格式化时间
-            let $this = new Date(thistime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
-        },
-        getDate(){//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy/MM/dd hh:mm:ss')
-            this.date=date.toLocaleString()
-        },
+    methods: {
+        getEpyNetInfo(){
+            var url = '/getEpyNetInfo'
+            var params={'username':this.username}
+            this.$http.get(url,{params}).then(res =>{
+                console.log(res.data)
+                this.tableData=res.data
+            })
+        }
+
     },
 }
 </script>

@@ -84,6 +84,20 @@ public class ELKEPYController {
         epyDQMDSData.forEach(System.out::println);
         return epyDQMDSData;
     }
+
+    /**
+     * Time 2021/09/28 15:43
+     * DaPingKuoLuo
+     * 查询员工外网浏览信息
+     * */
+    @RequestMapping(value = "/getEpyNetInfo",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List<Map<String, Object>> getEpyNetInfo(@Param("username")String username) throws ParseException {
+        List<Map<String, Object>> epyNetInfo = epyService.getEpyNetInfo(username);
+        epyNetInfo.forEach(System.out::println);
+        return epyNetInfo;
+    }
+
     /**
      * Description:
      * date: 2021/9/11 17:10
@@ -108,15 +122,6 @@ public class ELKEPYController {
         List<Map<String, Object>> showEpySoftWareUsageCount = epyService.showEpySoftWareUsageCount(username);
         return showEpySoftWareUsageCount;
     }
-   /**
-   *@Author:whj
-   *@date:2021-09-209:28
-   *@Method:员工外网浏览
-   */
-   public List showEpyNet(@Param("username")String username){
-       List epyServiceEpyNet = epyService.getEpyNet(username);
-       return epyServiceEpyNet;
-   }
 
    /**
    *@Author:whj
