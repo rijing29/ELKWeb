@@ -14,7 +14,7 @@
                     选择查询方式：
                     <el-select v-model="selectMethod_value" placeholder="请选择" @change="SelectChange">
                         <el-option v-for="item in selectMethod_options" :key="item.selectMethod_value"
-                                   :label="item.label" :value="item.label"></el-option>
+                                   :label="item.label" :value="item.label" style="margin-right: 2%"></el-option>
                     </el-select>
                     <!--软件名下拉框-->
                     <span v-if="isSoftNameSelect">软件名：</span>
@@ -31,33 +31,36 @@
                     <!--节点ID下拉框-->
                     <span v-if="isNodeTypeSelect">节点ID：</span>
                     <el-select v-model="nodeID_value" placeholder="请选择" v-if="isNodeTypeSelect">
-                        <el-option v-for="item in nodeID_options" :key="item.nodeID_value" :label="item.label"
-                                   :value="item.label"></el-option>
+                        <el-option v-for="item in nodeID_options" :key="item.nodeID_value" :label="item.label" :value="item.label"></el-option>
                     </el-select>
-                    <!--起始日期下拉框-->
-                    起始日期：
-                    <el-date-picker
-                            v-model="begin"
-                            type="date"
-                            placeholder="选择起始日期"
-                            format="yyyy/MM/dd"
-                            value-format="yyyy/MM/dd HH:mm:ss"
-                            style="margin-right: 1%; width: 10%;"
-                            @change="selectStartTime">
+                    <!--         年         -->
+                    <span class="demonstration">年</span>
+                    <el-date-picker v-model="year_value" type="year" placeholder="选择年" style="width: 15%;margin-right: 2%" :disabled="year_disabled" value-format="yyyy"></el-date-picker>
+                    <!--         月         -->
+                    <span class="demonstration">月</span>
+                    <el-date-picker  v-model="month_value" type="month" placeholder="选择月" style="width: 15%" :disabled="month_disabled" value-format="yyyy-MM"></el-date-picker>
+<!--                    起始日期：-->
+<!--                    <el-date-picker-->
+<!--                            v-model="begin"-->
+<!--                            type="date"-->
+<!--                            placeholder="选择起始日期"-->
+<!--                            format="yyyy/MM/dd"-->
+<!--                            value-format="yyyy/MM/dd HH:mm:ss"-->
+<!--                            style="margin-right: 1%; width: 10%;"-->
+<!--                            @change="selectStartTime">-->
 
-                    </el-date-picker>
-                    <!--终止日期下拉框-->
-                    终止日期：
-                    <el-date-picker
-                            v-model="end"
-                            type="date"
-                            placeholder="选择终止日期"
-                            format="yyyy/MM/dd"
-                            value-format="yyyy/MM/dd HH:mm:ss"
-                            style="margin-right: 1%; width: 10%;"
-                            @change="selectStopTime">
+<!--                    </el-date-picker>-->
+<!--                    终止日期：-->
+<!--                    <el-date-picker-->
+<!--                            v-model="end"-->
+<!--                            type="date"-->
+<!--                            placeholder="选择终止日期"-->
+<!--                            format="yyyy/MM/dd"-->
+<!--                            value-format="yyyy/MM/dd HH:mm:ss"-->
+<!--                            style="margin-right: 1%; width: 10%;"-->
+<!--                            @change="selectStopTime">-->
 
-                    </el-date-picker>
+<!--                    </el-date-picker>-->
                     <!--按钮-->
                     <el-button v-if="isSoftNameSelect" icon="el-icon-search" type="primary"
                                @click="getSoftNameEfficiency" v-loading.fullscreen.lock="fullscreenLoading">软件效率
@@ -113,19 +116,38 @@ export default {
         },
         nodeID_value: function (newV, oldV) {
             this.nodeId = newV
+        },
+        year_value: function (newV, oldV) {
+            this.year_value = newV
+          if(this.year_value!=null){
+            this.month_disabled=true;
+          }else{
+            this.month_disabled=false;
+          }
+        },
+        month_value: function (newV, oldV) {
+            this.month_value = newV
+          if(this.month_value!=null){
+            this.year_disabled=true;
+          }else{
+            this.year_disabled=false;
+          }
         }
     },
     data() {
         return {
             fullscreenLoading: false,
             softName: '',
-            startTime: '',
-            stopTime: '',
             nodeType: '',
             nodeId: '',
+            month_value:'',
+            year_value:'',
             isSoftNameSelect: false,
             isNodeTypeSelect: false,
             tableData: [],
+            Time:'',
+            year_disabled:false,
+            month_disabled:false,
             selectMethod_options: [
                 {selectMethod_value: '选项1', label: '按软件名查询'},
                 {selectMethod_value: '选项2', label: '按节点查询'}
@@ -134,7 +156,7 @@ export default {
             //软件名下拉框值
             software_options: [
                 {software_value: '选项1', label: 'GEOEASTDL'},
-                {software_value: '选项2', label: 'Geoeast'},
+                {software_value: '选项2', label: 'GEOEAST'},
                 {software_value: '选项3', label: 'PWIN'},
                 {software_value: '选项4', label: 'TOMODEL'},
                 {software_value: '选项5', label: 'PARADIGM'},
@@ -156,14 +178,6 @@ export default {
                 {nodeID_value: '选项3', label: '3'}
             ],
             nodeID_value: '',
-            //起始日期
-            disabledDate(time) {
-                return time.getTime() > Date.now();
-            },
-            //终止日期
-            disabledDate2(time) {
-                return time.getTime() > Date.now();
-            },
             begin: '',
             end: '',
             option: {
@@ -224,9 +238,8 @@ export default {
                 },
                 series: [
                     {
-
                         name: '效率展示',
-                        type: 'bar',
+                        type: 'line',
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -245,7 +258,6 @@ export default {
                             opacity: 1
                         },
                         data: [1, 2, 3, 4, 5, 6],
-
                     },
                 ]
             }
@@ -270,52 +282,88 @@ export default {
         selectStopTime(val) {
             this.stopTime = val;
         },
-        //  根据软件名查效率
-        getSoftNameEfficiency() {
-            this.fullscreenLoading = true;
-            setTimeout(() => {
-                this.fullscreenLoading = false;
-            }, 200);
-            var url = "/calSoftName"
+      //  根据软件名查效率
+      getSoftNameEfficiency() {
+        this.fullscreenLoading = true;
+        setTimeout(() => {
+          this.fullscreenLoading = false;
+        }, 20000);
+        //传入哪个时间
+        if(this.year_value!=null){
+          this.Time=this.year_value;
+          var url = "/calSoftNameYear"
+          var params = {
+            'softName': this.softName,
+            'Time': this.Time,
+          }
+          this.$http.get(url, {params}).then(res => {
+            console.log(res)
+            //设置横轴
+            this.option.series[0].name = "软件效率"
+            this.option.series[0].data = res.data.value
+            //设置纵轴
+            this.option.yAxis.data = res.data.key
+          })
+        }else if(this.month_value!=null){
+          this.Time=this.month_value;
+          var url = "/calSoftName"
+          var params = {
+            'softName': this.softName,
+            'Time': this.Time,
+          }
+          this.$http.get(url, {params}).then(res => {
+            console.log(res)
+            //设置横轴
+            this.option.series[0].name = "软件效率"
+            this.option.series[0].data = res.data.value
+            //设置纵轴
+            this.option.yAxis.data = res.data.key
+            // this.option.title.subtext='平均效率：'+res.data.ave
+          })
+        }
+      },
+      //  根据节点名查效率
+        getNodeTypeEfficiency() {
+          this.fullscreenLoading = true;
+          setTimeout(() => {
+            this.fullscreenLoading = false;
+          }, 20000);
+          //传入哪个时间
+          if(this.year_value!=null){
+            this.Time=this.year_value;
+            var url = "/calNodeTypeYear"
             var params = {
-                'softName': this.softName,
-                'startTime': this.startTime,
-                'stopTime': this.stopTime
+              'nodeType':this.nodeType,
+              'nodeId': this.nodeId,
+              'Time': this.Time,
             }
             this.$http.get(url, {params}).then(res => {
-                //设置横轴
-                this.option.series[0].name = "软件效率"
-                this.option.series[0].data = res.data.value
-                //设置纵轴
-                this.option.yAxis.data = res.data.key
-                this.option.title.subtext='平均效率：'+res.data.ave
+              console.log(res)
+              //设置横轴
+              this.option.series[0].name = "软件效率"
+              this.option.series[0].data = res.data.value
+              //设置纵轴
+              this.option.yAxis.data = res.data.key
             })
-        },
-        //  根据节点名查效率
-        getNodeTypeEfficiency() {
-            this.fullscreenLoading = true;
-            setTimeout(() => {
-                this.fullscreenLoading = false;
-            }, 200);
-            console.log(this.startTime)
-            console.log(this.stopTime)
-            console.log(this.nodeType)
-            console.log(this.nodeId)
+          }else if(this.month_value!=null){
+            console.log(this.Time)
+            this.Time=this.month_value;
             var url = "/calNodeType"
             var params = {
-                'nodeType': this.nodeType,
-                'nodeId': this.nodeId,
-                'startTime': this.startTime,
-                'stopTime': this.stopTime
+              'nodeType':this.nodeType,
+              'nodeId': this.nodeId,
+              'Time': this.Time,
             }
             this.$http.get(url, {params}).then(res => {
-                //设置横轴
-                this.option.series[0].name = "节点效率"
-                this.option.series[0].data = res.data.value
-                //设置纵轴
-                this.option.yAxis.data = res.data.key
-                this.option.title.subtext='平均效率：'+res.data.ave
+              console.log(res)
+              //设置横轴
+              this.option.series[0].name = "节点效率"
+              this.option.series[0].data = res.data.value
+              //设置纵轴
+              this.option.yAxis.data = res.data.key
+              // this.option.title.subtext='平均效率：'+res.data.ave
             })
+          }
         }
     },
 }

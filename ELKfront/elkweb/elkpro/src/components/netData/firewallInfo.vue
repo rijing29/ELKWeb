@@ -15,7 +15,6 @@
                             style="margin-right: 1%; width: 10%;"
                             @change="selectStartTime">
                     </el-date-picker>
-
                     <!--终止日期下拉框-->
                     截止日期：
                     <el-date-picker
@@ -88,8 +87,7 @@
                                 <!-- 内嵌表格 begin-->
                                 <template slot-scope="props">
                                     <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
-                                        <el-table-column prop="time" label="时间"
-                                                         value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
+                                        <el-table-column prop="time" label="时间" value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
                                         <el-table-column prop="srczonename" label="源域" align="center"></el-table-column>
                                         <el-table-column prop="dstzonename" label="目的域" align="center"></el-table-column>
                                         <el-table-column prop="protocol" label="协议" align="center"></el-table-column>

@@ -61,8 +61,7 @@
   </insert>
   <!--软件名效率-->
   <select id="softNameEfficiency" resultType="java.lang.Integer">
-    select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_WORK_DETAIL a,
-                                                   (select NODE_TYPE,NODE_ID from T_NODE_SOFT_MAP where SOFT_NAME=#{softName,jdbcType=VARCHAR})b
+    select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_WORK_DETAIL a,(select NODE_TYPE,NODE_ID from T_NODE_SOFT_MAP where SOFT_NAME=#{softName,jdbcType=VARCHAR})b
     where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
       and to_date(#{stopTime},'yyyy-MM-dd hh24:mi:ss')
       and a.NODE_TYPE=b.NODE_TYPE and a.NODE_ID=b.NODE_ID
@@ -81,7 +80,7 @@
       and SOFT_NAME=#{softName,jdbcType=VARCHAR}
     </if>
   </select>
-  <!--nodeType效率-->
+  <!--按节点查询 nodeType效率-->
   <select id="nodeTypeEfficiency" resultType="java.lang.Integer">
     select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_WORK_DETAIL where NODE_TYPE=#{nodeType,jdbcType=VARCHAR} and NODE_ID=#{nodeId,jdbcType=DECIMAL} and TIME between
       to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')

@@ -103,6 +103,4 @@
                                                         and NODE_ID=#{nodeId,jdbcType=DECIMAL}
                                                         and SOFT_NAME=#{softName,jdbcType=VARCHAR})
   </select>
-
-
 </mapper>
