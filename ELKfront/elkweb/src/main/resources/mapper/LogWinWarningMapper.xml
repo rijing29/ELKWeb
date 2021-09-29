@@ -74,7 +74,7 @@
     <select id="getWinServiceJobInc" resultType="map">
         select time, ip, inc_value
         from Log_Win_Systemlog_JobInc
-        where TIME in ( select max ( time) from LOG_WIN_LOGIN)
+        where TIME in ( select max ( time) from Log_Win_Systemlog_JobInc)
         order by time desc
     </select>
 
