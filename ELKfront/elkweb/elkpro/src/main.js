@@ -7,6 +7,7 @@ import Blob from "@/tools/Blob.js"
 import Export2Excel from "@/tools/Export2Excel"
 Vue.prototype.$http = axios //正确的使用
 axios.defaults.baseURL = '/api'
+// axios.defaults.baseURL = 'http://localhost:8080/elk'
 Vue.config.productionTip = false
 new Vue({
   router,
