@@ -28,12 +28,8 @@ public class ELKIPMIController {
     private IPMIService ipmiService;
     @RequestMapping(value = "/getIPMIAlarm",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public List<IPMILogWarn> getIPMIAlarm(@Param("time") String time) throws ParseException {
-        System.out.println(time);
-        String stopTime = time;//根据传入的时间得到当天最后时间 --23:59:59
-        String startTime=transTime(transferString(decDay(transferDate(stopTime))));
-        System.out.println(startTime);
-        List<IPMILogWarn> IPMIAlarm = ipmiService.getIPMIAlarm(startTime,stopTime);
+    public List<IPMILogWarn> getIPMIAlarm() throws ParseException {
+        List<IPMILogWarn> IPMIAlarm = ipmiService.getIPMIAlarm();
         return IPMIAlarm;
     }
     /**

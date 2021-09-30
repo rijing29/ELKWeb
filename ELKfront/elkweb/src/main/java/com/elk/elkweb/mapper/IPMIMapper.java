@@ -13,8 +13,7 @@ import java.util.Map;
 @Mapper
 public interface IPMIMapper {
     //    查询IPMI告警信息
-    List<IPMILogWarn> getIPMIAlarm(@Param("startTime")String startTime,
-                                   @Param("stopTime")String stopTime);
+    List<IPMILogWarn> getIPMIAlarm();
     //    查询IPMI告警详细信息
     List<IPMILogInfo> getIPMIInfo(@Param("ip")String ip);
 

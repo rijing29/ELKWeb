@@ -15,8 +15,8 @@ public class IPMIServiceImpl implements IPMIService{
     @Autowired
     private IPMIMapper ipmiMapper;
     @Override
-    public List<IPMILogWarn> getIPMIAlarm(String startTime,String stopTime) {
-        List<IPMILogWarn> IPMIAlarm = ipmiMapper.getIPMIAlarm(startTime,stopTime);
+    public List<IPMILogWarn> getIPMIAlarm() {
+        List<IPMILogWarn> IPMIAlarm = ipmiMapper.getIPMIAlarm();
         return IPMIAlarm;
     }
 

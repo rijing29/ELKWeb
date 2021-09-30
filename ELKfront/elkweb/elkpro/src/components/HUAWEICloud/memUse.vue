@@ -321,6 +321,6 @@ export default {
     color: #ffffff;
     background-color: #17b3f0 !important;
     background-size: 100% 100%;
-    opacity: 0.7;
+    /*opacity: 0.7;*/
 }/*高亮选中行*/
 </style>

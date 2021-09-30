@@ -1,550 +1,583 @@
 <template>
-  <el-container>
-    <el-main>
-      <el-row>
-        <el-col :span="24" align="left">
-          <div class="title">
-            设备状态统计
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <!--————华为CPU节点负载变化 begin————-->
-        <el-col :span="11">
-          <el-row>
-            <el-col :span="24" class="area" align="center">
-              <!--————折线图 begin————-->
-              <v-chart class="echarts" :option="option1"/>
-              <!--————折线图 end————-->
-            </el-col>
-          </el-row>
-        </el-col>
-        <!--————华为CPU节点负载变化 end————-->
-        <!--————华为GPU节点负载变化 begin————-->
-        <el-col :span="11">
-          <el-row>
-            <el-col :span="24" class="area" align="center">
-              <!--————折线图 begin————-->
-              <v-chart class="echarts" :option="option2"/>
-              <!--————折线图 end————-->
-            </el-col>
-          </el-row>
-        </el-col>
-        <!--————华为GPU节点负载变化 end————-->
-      </el-row>
-      <el-row>
-        <!--————存储系统使用 begin————-->
-        <el-col :span="11">
-          <el-row>
-            <el-col :span="24" class="area" align="center">
-              <!--————饼状图 begin————-->
-              <v-chart class="echarts" :option="option3"/>
-              <!--————饼状图 end————-->
-            </el-col>
-          </el-row>
-        </el-col>
-        <!--————存储系统使用 end————-->
-        <!--————软件使用率 begin————-->
-        <el-col :span="11">
-          <el-row>
-            <el-col :span="24" class="area" align="center">
-              <!--————柱状图 begin————-->
-              <v-chart class="echarts" :option="option4"/>
-              <!--————柱状图 end————-->
-            </el-col>
-          </el-row>
-        </el-col>
-        <!--————软件使用率 end————-->
-      </el-row>
-    </el-main>
-  </el-container>
+    <el-container>
+        <el-main>
+            <el-row>
+                <el-col :span="24" align="left">
+                    <div class="title">
+                        设备状态统计
+                    </div>
+                </el-col>
+            </el-row>
+            <el-row>
+                <!--————华为CPU节点负载变化 begin————-->
+                <el-col :span="11">
+                    <el-row>
+                        <el-col :span="24" class="area" align="center">
+                            <!--————折线图 begin————-->
+                            <v-chart class="echarts" :option="option1"/>
+                            <!--————折线图 end————-->
+                        </el-col>
+                    </el-row>
+                </el-col>
+                <!--————华为CPU节点负载变化 end————-->
+                <!--————华为GPU节点负载变化 begin————-->
+                <el-col :span="11">
+                    <el-row>
+                        <el-col :span="24" class="area" align="center">
+                            <!--————折线图 begin————-->
+                            <v-chart class="echarts" :option="option2"/>
+                            <!--————折线图 end————-->
+                        </el-col>
+                    </el-row>
+                </el-col>
+                <!--————华为GPU节点负载变化 end————-->
+            </el-row>
+            <el-row>
+                <!--————存储系统使用 begin————-->
+                <el-col :span="11">
+                    <el-row>
+                        <el-col :span="24" class="area" align="center">
+                            <!--————饼状图 begin————-->
+                            <v-chart class="echarts" :option="option3"/>
+                            <!--————饼状图 end————-->
+                        </el-col>
+                    </el-row>
+                </el-col>
+                <!--————存储系统使用 end————-->
+                <!--————软件使用率 begin————-->
+                <el-col :span="11">
+                    <el-row>
+                        <el-col :span="24" class="area" align="center">
+                            <!--————柱状图 begin————-->
+                            <v-chart class="echarts" :option="option4"/>
+                            <!--————柱状图 end————-->
+                        </el-col>
+                    </el-row>
+                </el-col>
+                <!--————软件使用率 end————-->
+            </el-row>
+        </el-main>
+    </el-container>
 </template>
 
 <script>
 import * as echarts from 'echarts/core';
 import {
-  TooltipComponent,
-  LegendComponent
+    TooltipComponent,
+    LegendComponent
 } from 'echarts/components';
 import {
-  PieChart
+    PieChart
 } from 'echarts/charts';
 import {
-  CanvasRenderer
+    CanvasRenderer
 } from 'echarts/renderers';
 
 echarts.use(
-    [TooltipComponent, LegendComponent, PieChart, CanvasRenderer]
+        [TooltipComponent, LegendComponent, PieChart, CanvasRenderer]
 );
 import VChart, {THEME_KEY} from "vue-echarts";
 
 export default {
-  name: "deviceState",
-  components: {
-    VChart
-  },
-  data() {
-    return {
-      haveData: true,
-      date: '',//日期变量
-      pages: [//分页信息
-        {
-          pageSize: 20,
-          total: 1000,
-          currentPage: 1,
-        },
-      ],
-      time: '',//根据此时间查询分析表
-      currentRow: null,//存储当前点击行信息
-      tableDataService: [],//表格数据
-      tableDataLog: [],
-      tableDataTask: [],
-      /*————华为CPU节点负载变化 begin————*/
-      option1: {
-        title: {
-          text: '华为CPU节点负载变化',
-          textStyle: {
-            color: "#17caf0"//标题文字颜色
-          },
-          subtextStyle: {
-            color: "#17caf0"//副标题文字颜色
-          },
-        },
-        xAxis: {
-          type: 'category',
-          data: []
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: [],
-          type: 'line'
-        }],
-        grid: {
-          left: '0%',//设置图表距离左边界的距离
-          right: '0%',//设置图表距离右边界的距离
-          top:'9%',//设置图表距离上边界的距离
-          bottom: '0%',//设置图表距离下边界的距离
-          containLabel: true
-        }
-      },
-      option2: {
-        title: {
-          text: '华为GPU节点负载变化',
-          textStyle: {
-            color: "#17caf0"//标题文字颜色
-          },
-          subtextStyle: {
-            color: "#17caf0"//副标题文字颜色
-          },
-        },
-        xAxis: {
-          type: 'category',
-          data: []
-        },
-        yAxis: {
-          type: 'value'
-        },
-        series: [{
-          data: [],
-          type: 'line'
-        }],
-        grid: {
-          left: '0%',//设置图表距离左边界的距离
-          right: '0%',//设置图表距离右边界的距离
-          top:'9%',//设置图表距离上边界的距离
-          bottom: '0%',//设置图表距离下边界的距离
-          containLabel: true
-        }
-      },
-      option3: {
-        title: {
-          text: '存储系统使用',
-          textStyle: {
-            color: "#17caf0"//标题文字颜色
-          },
-          subtextStyle: {
-            color: "#17caf0"//副标题文字颜色
-          },
-        },
-        legend: {
-          top: 'bottom',
-          textStyle: {
-            color: "#ffffff"//顶部控制区域文字颜色
-          },
-        },
-        tooltip: {
-          trigger: 'item'
-        },
-        toolbox: {
-          show: true,
-          feature: {
-            mark: {show: false},
-            dataView: {show: false, readOnly: false},
-            restore: {show: false},
-            saveAsImage: {
-              //下载图标
-              show: true,
-              emphasis: {
-                iconStyle: {
-                  textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                }
-              }
-            },
-          },
-          iconStyle: {
-            //工具栏图标样式
-            borderColor: "#ffffff",//icon边框颜色
-            borderWidth: 1,//icon边框大小
-          },
-          left: "90%",//工具栏距离左边距离
-        },
-        series: [
-          {
-            name: '访问来源',
-            type: 'pie',
-            radius: ['40%', '80%'],
-            avoidLabelOverlap: false,
-            itemStyle: {
-              borderRadius: 10,
-              borderColor: '#ffffff',
-              borderWidth: 2
-            },
-            label: {
-              show: false,
-              position: 'center'
-            },
-            emphasis: {
-              label: {
-                show: true,
-                fontSize: '40',
-                fontWeight: 'bold'
-              }
-            },
-            labelLine: {show: true,},
-            cursor: "pointer",
-            data: [
-              {value: 92, name: '使用'},
-              {value: 8, name: '空闲'},
+    name: "deviceState",
+    components: {
+        VChart
+    },
+    data() {
+        return {
+            haveData: true,
+            date: '',//日期变量
+            pages: [//分页信息
+                {
+                    pageSize: 20,
+                    total: 1000,
+                    currentPage: 1,
+                },
             ],
-          }
-        ],
-        labelLine: {
-          show: true
-        },
-        label: {
-          alignTo: "labelLine"
-        }
-      },
-      option4: {
-        title: {
-          text: '软件使用率',
-          subtext: '',
-          // subtext: '时间：',
-          textStyle: {
-            color: "#17caf0"//标题文字颜色
-          },
-          subtextStyle: {
-            color: "#ffffff"//副标题文字颜色
-          },
-        },
-        tooltip: {
-          trigger: 'axis'
-        },
-        legend: {
-          textStyle: {
-            color: "#ffffff"//顶部控制区域文字颜色
-          },
-          left: "35%",//距离左边距离
-          data: ['GEOEAST', 'ES360', 'QPSTM']
-        },
-        grid: {left: '2%', right: '4%', bottom: '3%', containLabel: true},
-        toolbox: {
-          show: true,
-          feature: {
-            dataView: {show: false, readOnly: false},
-            magicType: {show: false, type: ['line', 'bar']},
-            restore: {show: false},
-            saveAsImage: {
-              //下载图标
-              show: true,
-              emphasis: {
-                iconStyle: {
-                  textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
+            time: '',//根据此时间查询分析表
+            currentRow: null,//存储当前点击行信息
+            tableDataService: [],//表格数据
+            tableDataLog: [],
+            tableDataTask: [],
+            /*————华为CPU节点负载变化 begin————*/
+            option1: {
+                title: {
+                    text: '华为CPU节点负载变化',
+                    textStyle: {
+                        color: "#17caf0"//标题文字颜色
+                    },
+                    subtextStyle: {
+                        color: "#17caf0"//副标题文字颜色
+                    },
+                },
+                xAxis: {
+                    type: 'category',
+                    data: []
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    itemStyle: {
+                        normal: {
+                            //柱状图颜色(渐变)
+                            color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                offset: 0,
+                                color: "rgb(211,163,246)" // 0% 处的颜色
+                            }, {
+                                offset: 0.6,
+                                color: "rgb(177,105,243)" // 60% 处的颜色
+                            }, {
+                                offset: 1,
+                                color: "rgb(147,125,243)" // 100% 处的颜色
+                            }], false)
+                        },
+                    },
+                    data: [16,28,20,18,29,15,25],
+                    type: 'line'
+                }],
+                grid: {
+                    left: '0%',//设置图表距离左边界的距离
+                    right: '0%',//设置图表距离右边界的距离
+                    top: '9%',//设置图表距离上边界的距离
+                    bottom: '0%',//设置图表距离下边界的距离
+                    containLabel: true
                 }
-              }
             },
+            option2: {
+                title: {
+                    text: '华为GPU节点负载变化',
+                    textStyle: {
+                        color: "#17caf0"//标题文字颜色
+                    },
+                    subtextStyle: {
+                        color: "#17caf0"//副标题文字颜色
+                    },
+                },
+                xAxis: {
+                    type: 'category',
+                    data: []
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    itemStyle: {
+                        normal: {
+                            //柱状图颜色(渐变)
+                            color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                offset: 0,
+                                color: "rgb(81,232,246)" // 0% 处的颜色
+                            }, {
+                                offset: 0.6,
+                                color: "rgb(53,236,236)" // 60% 处的颜色
+                            }, {
+                                offset: 1,
+                                color: "rgb(59,202,245)" // 100% 处的颜色
+                            }], false)
+                        },
+                    },
+                    data: [85,123,100,130,96,122,75],
+                    type: 'line'
+                }],
+                grid: {
+                    left: '0%',//设置图表距离左边界的距离
+                    right: '0%',//设置图表距离右边界的距离
+                    top: '9%',//设置图表距离上边界的距离
+                    bottom: '0%',//设置图表距离下边界的距离
+                    containLabel: true
+                }
+            },
+            option3: {
+                title: {
+                    text: '存储系统使用',
+                    textStyle: {
+                        color: "#17caf0"//标题文字颜色
+                    },
+                    subtextStyle: {
+                        color: "#17caf0"//副标题文字颜色
+                    },
+                },
+                legend: {
+                    top: 'bottom',
+                    textStyle: {
+                        color: "#ffffff"//顶部控制区域文字颜色
+                    },
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                toolbox: {
+                    show: true,
+                    feature: {
+                        mark: {show: false},
+                        dataView: {show: false, readOnly: false},
+                        restore: {show: false},
+                        saveAsImage: {
+                            //下载图标
+                            show: true,
+                            emphasis: {
+                                iconStyle: {
+                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
+                                }
+                            }
+                        },
+                    },
+                    iconStyle: {
+                        //工具栏图标样式
+                        borderColor: "#ffffff",//icon边框颜色
+                        borderWidth: 1,//icon边框大小
+                    },
+                    left: "90%",//工具栏距离左边距离
+                },
+                series: [
+                    {
+                        name: '访问来源',
+                        type: 'pie',
+                        radius: ['40%', '80%'],
+                        avoidLabelOverlap: false,
+                        itemStyle: {
+                            borderRadius: 10,
+                            borderColor: '#ffffff',
+                            borderWidth: 2
+                        },
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: '40',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {show: true,},
+                        cursor: "pointer",
+                        data: [
+                            {value: 92, name: '使用'},
+                            {value: 8, name: '空闲'},
+                        ],
+                    }
+                ],
+                labelLine: {
+                    show: true
+                },
+                label: {
+                    alignTo: "labelLine"
+                }
+            },
+            option4: {
+                title: {
+                    text: '软件使用率',
+                    subtext: '',
+                    // subtext: '时间：',
+                    textStyle: {
+                        color: "#17caf0"//标题文字颜色
+                    },
+                    subtextStyle: {
+                        color: "#ffffff"//副标题文字颜色
+                    },
+                },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    textStyle: {
+                        color: "#ffffff"//顶部控制区域文字颜色
+                    },
+                    left: "35%",//距离左边距离
+                    data: ['GEOEAST', 'ES360', 'QPSTM']
+                },
+                grid: {left: '2%', right: '4%', bottom: '3%', containLabel: true},
+                toolbox: {
+                    show: true,
+                    feature: {
+                        dataView: {show: false, readOnly: false},
+                        magicType: {show: false, type: ['line', 'bar']},
+                        restore: {show: false},
+                        saveAsImage: {
+                            //下载图标
+                            show: true,
+                            emphasis: {
+                                iconStyle: {
+                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
+                                }
+                            }
+                        },
 
-          },
-          iconStyle: {
-            //工具栏图标样式
-            borderColor: "#ffffff",//icon边框颜色
-            borderWidth: 1,//icon边框大小
-          },
-          left: "90%",//工具栏距离左边距离
-        },
-        calculable: true,
-        xAxis: [
-          {
-            inverse: true,//翻转坐标轴
-            axisLabel: {
-              color: "#ffffff",//坐标轴标签文字颜色
-              rotate: 0,//坐标轴标签文字选装角度
-              margin: 14,//坐标轴标签文字与轴线距离
-              fontWeight: "lighter",//坐标轴标签文字粗细
+                    },
+                    iconStyle: {
+                        //工具栏图标样式
+                        borderColor: "#ffffff",//icon边框颜色
+                        borderWidth: 1,//icon边框大小
+                    },
+                    left: "90%",//工具栏距离左边距离
+                },
+                calculable: true,
+                xAxis: [
+                    {
+                        inverse: true,//翻转坐标轴
+                        axisLabel: {
+                            color: "#ffffff",//坐标轴标签文字颜色
+                            rotate: 0,//坐标轴标签文字选装角度
+                            margin: 14,//坐标轴标签文字与轴线距离
+                            fontWeight: "lighter",//坐标轴标签文字粗细
+                        },
+                        type: 'category',
+                        data: ['服务器负载数据'],
+                        axisPointer: {
+                            type: "line"//坐标轴指示器(line\shadow\none)
+                        }
+                    },
+                ],
+                yAxis: [
+                    {
+                        position: "top",//X轴标签位置(顶部或底部)
+                        axisLabel: {color: "#ffffff"},//X轴底部标签颜色
+                        type: 'value',
+                        boundaryGap: [0, 0.01],
+                        // max:100,//最大刻度值
+
+                    }
+                ],
+                series: [
+                    {
+                        name: 'GEOEAST',
+                        type: 'bar',
+                        data: [90],
+                        itemStyle: {
+                            normal: {
+                                //柱状图颜色(渐变)
+                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                        offset: 0,
+                                        color: "#26b2ea" // 0% 处的颜色
+                                    }, {
+                                        offset: 0.6,
+                                        color: "#35b8ec" // 60% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: "#46c8fc" // 100% 处的颜色
+                                    }], false)
+                            },
+                            color: null,
+                            opacity: 1
+                        },
+                        barGap: "60%"//不同系列的柱间距离
+                    }, {
+                        name: 'ES360',
+                        type: 'bar',
+                        data: [35.8],
+                        itemStyle: {
+                            normal: {
+                                //柱状图颜色(渐变)
+                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                        offset: 0,
+                                        color: "#ea6026" // 0% 处的颜色
+                                    }, {
+                                        offset: 0.6,
+                                        color: "#ec6b35" // 60% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: "#fc7b46" // 100% 处的颜色
+                                    }], false)
+                            },
+                            color: null,
+                            opacity: 1
+                        },
+                        barGap: "60%"//不同系列的柱间距离
+                    }, {
+                        name: 'QPSTM',
+                        type: 'bar',
+                        data: [85.2],
+                        itemStyle: {
+                            normal: {
+                                //柱状图颜色(渐变)
+                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                        offset: 0,
+                                        color: "#6b26ea" // 0% 处的颜色
+                                    }, {
+                                        offset: 0.6,
+                                        color: "#8135ec" // 60% 处的颜色
+                                    }, {
+                                        offset: 1,
+                                        color: "#9246fc" // 100% 处的颜色
+                                    }], false)
+                            },
+                            color: null,
+                            opacity: 1
+                        },
+                        barGap: "60%"//不同系列的柱间距离
+                    },
+                ]
             },
-            type: 'category',
-            data: ['服务器负载数据'],
-            axisPointer: {
-              type: "line"//坐标轴指示器(line\shadow\none)
+            /*————饼状图数据 end————*/
+        }
+    },
+    created() {//自动渲染数据
+        this.getEquipState()
+    },
+    methods: {
+        dateForma: function (row, column) {//表格行格式化时间
+            var date = row[column.property];
+            if (date === undefined) {
+                return ''
             }
-          },
-        ],
-        yAxis: [
-          {
-            position: "top",//X轴标签位置(顶部或底部)
-            axisLabel: {color: "#ffffff"},//X轴底部标签颜色
-            type: 'value',
-            boundaryGap: [0, 0.01],
-            // max:100,//最大刻度值
-
-          }
-        ],
-        series: [
-          {
-            name: 'GEOEAST',
-            type: 'bar',
-            data: [90],
-            itemStyle: {
-              normal: {
-                //柱状图颜色(渐变)
-                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                  {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                    offset: 0,
-                    color: "#26b2ea" // 0% 处的颜色
-                  }, {
-                    offset: 0.6,
-                    color: "#35b8ec" // 60% 处的颜色
-                  }, {
-                    offset: 1,
-                    color: "#46c8fc" // 100% 处的颜色
-                  }], false)
-              },
-              color: null,
-              opacity: 1
-            },
-            barGap: "60%"//不同系列的柱间距离
-          }, {
-            name: 'ES360',
-            type: 'bar',
-            data: [35.8],
-            itemStyle: {
-              normal: {
-                //柱状图颜色(渐变)
-                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                  {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                    offset: 0,
-                    color: "#ea6026" // 0% 处的颜色
-                  }, {
-                    offset: 0.6,
-                    color: "#ec6b35" // 60% 处的颜色
-                  }, {
-                    offset: 1,
-                    color: "#fc7b46" // 100% 处的颜色
-                  }], false)
-              },
-              color: null,
-              opacity: 1
-            },
-            barGap: "60%"//不同系列的柱间距离
-          }, {
-            name: 'QPSTM',
-            type: 'bar',
-            data: [85.2],
-            itemStyle: {
-              normal: {
-                //柱状图颜色(渐变)
-                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-                  {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                    offset: 0,
-                    color: "#6b26ea" // 0% 处的颜色
-                  }, {
-                    offset: 0.6,
-                    color: "#8135ec" // 60% 处的颜色
-                  }, {
-                    offset: 1,
-                    color: "#9246fc" // 100% 处的颜色
-                  }], false)
-              },
-              color: null,
-              opacity: 1
-            },
-            barGap: "60%"//不同系列的柱间距离
-          },
-        ]
-      },
-      /*————饼状图数据 end————*/
+            ;
+            return moment(date).format("YYYY-MM-DD")
+        },
+        getDate() {//获取当前时间
+            var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
+            this.date = date.toLocaleString()
+        },
+        getWinWaring() {//渲染数据
+            var url = "/getWinWaring"
+            this.$http.get(url).then(res => {//渲染Windows服务器告警表格数据
+                this.tableDataLog = res.data
+                console.log(res.data)
+            })
+            var url1 = '/getWinServiceInfo'
+            this.$http.get(url1).then(res => {//渲染Windows服务器日志告警数据
+                this.tableDataService = res.data
+            })
+            var url2 = '/getWinServiceJobInc'
+            this.$http.get(url2).then(res => {//渲染Windows服务器任务增长分析
+                this.tableDataTask = res.data
+                console.log(res.data)
+            })
+            var url3 = '/getWinLoad'
+            this.$http.get(url3).then(res => {//渲染Windows服务器负载统计饼状图
+                console.log(res.data[0].ALLCOUNT - res.data[0].HIGHCOUNT, "22222222")
+                this.option.series[0].data[0].value = res.data[0].HIGHCOUNT
+                this.option.series[0].data[1].value = res.data[0].ALLCOUNT - res.data[0].HIGHCOUNT
+            })
+        },
+        getEquipState() {
+            //获取cpu
+            var url = "/getCPU"
+            this.$http.get(url).then(res => {
+                this.option1.series[0].data = res.data.name
+                this.option1.xAxis.data = res.data.time
+            })
+            //获取gpu
+            var url = "/getGPU"
+            this.$http.get(url).then(res => {
+                this.option2.series[0].data = res.data.name
+                this.option2.xAxis.data = res.data.time
+            })
+            //获取软件使用效率
+            var url = "/getSoftWareEfficiency"
+            this.$http.get(url).then(res => {
+                this.option4.series[0].data = res.data[0];
+                this.option4.series[1].data = res.data[1];
+                this.option4.series[2].data = res.data[2];
+            })
+            //获取存储系统使用
+            var url = "/getCCUsage"
+            this.$http.get(url).then(res => {
+                this.option3.series[0].data[0].value = res.data[0].HWYZX_USED;
+                this.option3.series[0].data[1].value = res.data[0].HWYZX_FREE;
+            })
+        }
     }
-  },
-  created() {//自动渲染数据
-    this.getEquipState()
-  },
-  methods: {
-    dateForma: function (row, column) {//表格行格式化时间
-      var date = row[column.property];
-      if (date === undefined) {
-        return ''
-      }
-      ;
-      return moment(date).format("YYYY-MM-DD")
-    },
-    getDate() {//获取当前时间
-      var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
-      this.date = date.toLocaleString()
-    },
-    getWinWaring() {//渲染数据
-      var url = "/getWinWaring"
-      this.$http.get(url).then(res => {//渲染Windows服务器告警表格数据
-        this.tableDataLog = res.data
-        console.log(res.data)
-      })
-      var url1 = '/getWinServiceInfo'
-      this.$http.get(url1).then(res => {//渲染Windows服务器日志告警数据
-        this.tableDataService = res.data
-      })
-      var url2 = '/getWinServiceJobInc'
-      this.$http.get(url2).then(res => {//渲染Windows服务器任务增长分析
-        this.tableDataTask = res.data
-        console.log(res.data)
-      })
-      var url3 = '/getWinLoad'
-      this.$http.get(url3).then(res => {//渲染Windows服务器负载统计饼状图
-        console.log(res.data[0].ALLCOUNT - res.data[0].HIGHCOUNT, "22222222")
-        this.option.series[0].data[0].value = res.data[0].HIGHCOUNT
-        this.option.series[0].data[1].value = res.data[0].ALLCOUNT - res.data[0].HIGHCOUNT
-      })
-    },
-    getEquipState(){
-      //获取cpu
-      var url="/getCPU"
-      this.$http.get(url).then(res=>{
-        this.option1.series[0].data=res.data.name
-        this.option1.xAxis.data=res.data.time
-      })
-      //获取gpu
-      var url="/getGPU"
-      this.$http.get(url).then(res=>{
-        this.option2.series[0].data=res.data.name
-        this.option2.xAxis.data=res.data.time
-      })
-      //获取软件使用效率
-      var url="/getSoftWareEfficiency"
-      this.$http.get(url).then(res=>{
-        this.option4.series[0].data=res.data[0];
-        this.option4.series[1].data=res.data[1];
-        this.option4.series[2].data=res.data[2];
-      })
-      //获取存储系统使用
-      var url="/getCCUsage"
-      this.$http.get(url).then(res=>{
-        this.option3.series[0].data[0].value=res.data[0].HWYZX_USED;
-        this.option3.series[0].data[1].value=res.data[0].HWYZX_FREE;
-      })
-    }
-  }
 }
 </script>
 
 <style scoped>
 .el-container {
-  display: flex;
-  flex-wrap: nowrap;
+    display: flex;
+    flex-wrap: nowrap;
 }
 
 .el-main {
-  color: #ffffff;
-  text-align: center;
-  height: 90vh;
-  z-index: 1;
+    color: #ffffff;
+    text-align: center;
+    height: 90vh;
+    z-index: 1;
 }
 
 .area {
-  width: 70vh;
-  height: 45vh;
-  background: #ffffff;
-  background: url("../../assets/bg_border.png");
-  background-size: 100% 100%;
-  padding: 40px;
-  margin-left: 10%;
+    width: 70vh;
+    height: 45vh;
+    background: #ffffff;
+    background: url("../../assets/bg_border.png");
+    background-size: 100% 100%;
+    padding: 40px;
+    margin-left: 10%;
 }
 
 .title {
-  width: 243px;
-  height: 75px;
-  font-size: 18px;
-  color: #17caf0;
-  background: url("../../assets/border_label.png") no-repeat;
-  line-height: 75px;
-  font-weight: bold;
-  text-align: center;
+    width: 243px;
+    height: 75px;
+    font-size: 18px;
+    color: #17caf0;
+    background: url("../../assets/border_label.png") no-repeat;
+    line-height: 75px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .tableSubTitle {
-  height: 50px;
-  line-height: 70px;
-  padding-left: 20px;
-  color: #17caf0;
-  font-weight: bold;
+    height: 50px;
+    line-height: 70px;
+    padding-left: 20px;
+    color: #17caf0;
+    font-weight: bold;
 }
 
 .border_top {
-  background: url("../../assets/border_top.png");
-  background-size: 100% 100%;
-  text-align: left;
+    background: url("../../assets/border_top.png");
+    background-size: 100% 100%;
+    text-align: left;
 }
 
 .border_bottom {
-  background: url("../../assets/border_bottom.png");
-  background-size: 100% 100%;
+    background: url("../../assets/border_bottom.png");
+    background-size: 100% 100%;
 }
 
 .border_top2 {
-  background: url("../../assets/border_top2.png");
-  background-size: 100% 100%;
-  text-align: left;
+    background: url("../../assets/border_top2.png");
+    background-size: 100% 100%;
+    text-align: left;
 }
 
 .border_bottom2 {
-  background: url("../../assets/border_bottom2.png");
-  background-size: 100% 100%;
+    background: url("../../assets/border_bottom2.png");
+    background-size: 100% 100%;
 }
 
 .el-table {
-  header-align: center;
-  border-radius: 4px;
-  margin: 1% auto 0;
-  width: 90%;
+    header-align: center;
+    border-radius: 4px;
+    margin: 1% auto 0;
+    width: 90%;
 }
 
 .el-pagination {
-  /*分页*/
-  margin-left: 50%;
+    /*分页*/
+    margin-left: 50%;
 }
 
 /*————表格背景透明 begin————*/
-.table-wrapper /deep/  .el-table,
+.table-wrapper /deep/ .el-table,
 .el-table__expanded-cell {
-  background-color: transparent !important;
+    background-color: transparent !important;
 }
+
 .table-wrapper /deep/ tr, .table-wrapper /deep/ th, .table-wrapper /deep/ td {
-  background: none !important;
-  color: #ffffff;
-  border-color: #18256f;
+    background: none !important;
+    color: #ffffff;
+    border-color: #18256f;
 }
+
 .table-wrapper /deep/ .el-table__row {
-  background: none !important;
-  color: #46d4ff;
+    background: none !important;
+    color: #46d4ff;
 }
+
 /*————表格背景透明 end————*/
 </style>

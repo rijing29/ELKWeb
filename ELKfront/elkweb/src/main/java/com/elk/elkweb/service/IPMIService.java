@@ -11,7 +11,7 @@ import java.util.Map;
 @Service
 public interface IPMIService {
     //    查询IPMI告警信息
-    List<IPMILogWarn> getIPMIAlarm(String startTime,String stopTime);
+    List<IPMILogWarn> getIPMIAlarm();
 
     //    查询IPMI告警详细信息
     List<IPMILogInfo> getIPMIInfo(String ip);

@@ -9,50 +9,55 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :span="24" align="left">
-                    <!--起始日期下拉框-->
-                    日期：
-                    <el-date-picker
-                            default-value
-                            v-model="Time"
-                            type="date"
-                            placeholder="请选择日期"
-                            format="yyyy/MM/dd"
-                            value-format="yyyy/MM/dd HH:mm:ss"
-                            style="margin-right: 1%; width: 11%;"
-                            @change="selectStartTime">
-                    </el-date-picker>
-                </el-col>
-            </el-row>
-            <el-row>
                 <!--————表格区域 begin————-->
                 <el-col :span="24">
-                    <el-row >
+                    <el-row>
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">一周内信息</div>
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">一周内信息 (点击查看详细信息)</div>
                         </el-col>
                     </el-row>
                     <el-row>
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
-                                <!-- 外表格 begin-->
-                                <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;"
-                                          @expand-change="explore"
-                                          :row-key='getRowKeys' :expand-row-keys="expands">
-                                    <el-table-column type="expand">
-                                        <!-- 内嵌表格 begin-->
-                                        <template slot-scope="props">
-                                            <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
-                                                <el-table-column prop="time" label="时间"
-                                                                 value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
-                                                <el-table-column prop="ip" label="IP" align="center"></el-table-column>
-                                                <el-table-column prop="info" label="告警信息" align="center"></el-table-column>
-                                            </el-table>
-                                        </template>
-                                        <!-- 内嵌表格 end-->
-                                    </el-table-column>
+                                <!-- 表格 begin-->
+                                <el-table :data="tableData"
+                                          height="500"
+                                          style="width: 95%;margin: auto;header-align: center;"
+                                          highlight-current-row
+                                          @current-change="handleCurrentChange">
                                     <el-table-column prop="time" label="时间"
-                                                     value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
+                                                     value-format="yyyy/MM/dd HH:mm:ss"
+                                                     align="center"></el-table-column>
+                                    <el-table-column prop="ip" label="IP" align="center"></el-table-column>
+                                    <el-table-column prop="info" label="告警信息" align="center"></el-table-column>
+                                </el-table>
+                                <!-- 表格 end-->
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row class="border_bottom">
+                        <el-col>
+                            <div style="height: 50px"></div>
+                        </el-col>
+                    </el-row>
+                </el-col>
+                <!--————表格区域 end————-->
+            </el-row>
+            <el-row>
+                <!--————表格区域 begin————-->
+                <el-col :span="24" v-if="haveData" >
+                    <el-row>
+                        <el-col :span="24" class="border_top">
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">IPMI详细信息</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24" style="padding: 0">
+                            <div class="table-wrapper">
+                                <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;">
+                                    <el-table-column prop="time" label="时间"
+                                                     value-format="yyyy/MM/dd HH:mm:ss"
+                                                     align="center"></el-table-column>
                                     <el-table-column prop="ip" label="IP" align="center"></el-table-column>
                                     <el-table-column prop="info" label="告警信息" align="center"></el-table-column>
                                 </el-table>
@@ -61,7 +66,7 @@
                         </el-col>
                     </el-row>
                     <el-row class="border_bottom">
-                        <el-col >
+                        <el-col>
                             <div style="height: 50px"></div>
                         </el-col>
                     </el-row>
@@ -75,51 +80,26 @@
 <script>
 export default {
     name: "ipmiLogAlarm",
-    data(){
-        return{
-            haveData:true,
-            Time:'',//日期选择器
-            date:'',//日期变量
+    data() {
+        return {
+            haveData: true,
+            Time: '',//日期选择器
+            date: '',//日期变量
             expands: [],
-            ip:'',
-            time:'',
-            tableData:[],
-            TableData:[],
+            ip: '',
+            time: '',
+            tableData: [],
+            TableData: [],
         }
     },
-    // created(){//自动渲染数据
-    //     this.getDate()
-    //     this.getIPMIAlarm()
-    //     this.Time=this.time
-    // },
+    created() {//自动渲染数据
+        this.getIPMIAlarm()
+    },
     methods: {
-        getRowKeys: function (row) {//控制表格只能展开一行
-            return row.time + row.ip + row.info
-            //  将row.time、row.ip、row.info的拼接作为行的唯一id,解决行id唯一问题
-        },
-
-        selectStartTime(val) {//日期选择器
-            //开始时间
-            this.Time = val;
-            this.date=this.Time;
-            this.getIPMIAlarm();
-            console.log(this.time)
-        },
-        explore(row, expandedRows) {
-            /*————控制表格只能展开一行 begin————*/
-            var that = this
-            if (expandedRows.length) {
-                that.expands = []
-                if (row) {
-                    that.expands.push(row.time + row.ip + row.info)
-                }
-            } else {
-                that.expands = []
-            }
-            /*————控制表格只能展开一行 end————*/
-
+        handleCurrentChange(val) {
+            // this.haveData=true
             //根据筛选条件选择所有数据
-            this.ip = row.ip
+            this.ip = val.ip
             //绑定后台数据传输地址
             var url = "/getIPMIInfo"
             //传递参数
@@ -130,38 +110,10 @@ export default {
                 this.TableData = res.data;
             })
         },
-        formatter (thistime, fmt) {//js格式化时间
-            let $this = new Date(thistime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
-        },
-        getDate(){//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy/MM/dd hh:mm:ss')
-            this.date=date.toLocaleString()
-        },
-        getIPMIAlarm(){
-            var url="/getIPMIAlarm"
-            var params={
-                'time':this.date,
-            }
-            this.$http.get(url,{params}).then(res=>{
-                this.tableData=res.data
+        getIPMIAlarm() {
+            var url = "/getIPMIAlarm"
+            this.$http.get(url).then(res => {
+                this.tableData = res.data
             })
         }
     },
@@ -173,13 +125,15 @@ export default {
     display: flex;
     flex-wrap: nowrap;
 }
+
 .el-main {
     color: #ffffff;
     text-align: center;
     height: 90vh;
     z-index: 1;
 }
-.area{
+
+.area {
     width: 600px;
     height: 500px;
     background: #ffffff;
@@ -189,7 +143,8 @@ export default {
     margin-left: 60px;
 
 }
-.title{
+
+.title {
     width: 243px;
     height: 75px;
     font-size: 18px;
@@ -199,44 +154,52 @@ export default {
     font-weight: bold;
     text-align: center;
 }
-.border_top{
-    background:url("../../assets/border_top2.png");
+
+.border_top {
+    background: url("../../assets/border_top2.png");
     background-size: 100% 100%;
     text-align: left;
 }
-.border_bottom{
-    background:url("../../assets/border_bottom2.png");
+
+.border_bottom {
+    background: url("../../assets/border_bottom2.png");
     background-size: 100% 100%;
 }
-.el-table{
+
+.el-table {
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;
     width: 90%;
 }
+
 .el-pagination {
     /*分页*/
     margin-left: 50%;
 }
+
 /*————表格背景透明 begin————*/
-.table-wrapper /deep/  .el-table,
+.table-wrapper /deep/ .el-table,
 .el-table__expanded-cell {
     background-color: transparent !important;
 }
+
 .table-wrapper /deep/ tr, .table-wrapper /deep/ th, .table-wrapper /deep/ td {
     background: none !important;
     color: #ffffff;
     border-color: #18256f;
 }
+
 .table-wrapper /deep/ .el-table__row {
     background: none !important;
     color: #46d4ff;
 }
+
 /*————表格背景透明 end————*/
-.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row>td {
+.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row > td {
     color: #ffffff;
     background-color: #17b3f0 !important;
     background-size: 100% 100%;
-    opacity: 0.7;
-}/*高亮选中行*/
+    /*opacity: 0.7;*/
+}  /*高亮选中行*/
 </style>

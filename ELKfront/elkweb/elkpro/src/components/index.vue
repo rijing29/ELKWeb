@@ -643,6 +643,7 @@ export default {
     color: #ffffff;
     text-align: center;
     padding: 0;
+    height: 92vh;
 }
 .bg_icon{
     position: absolute;
