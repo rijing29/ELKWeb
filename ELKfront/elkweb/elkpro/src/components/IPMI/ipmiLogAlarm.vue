@@ -21,7 +21,7 @@
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
                                 <el-table :data="tableData"
-                                          height="500"
+                                          height="400"
                                           style="width: 95%;margin: auto;header-align: center;"
                                           highlight-current-row
                                           @current-change="handleCurrentChange">
