@@ -18,7 +18,7 @@
                     </el-select>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row v-if="haveData">
                 <el-col :span="24" class="area">
                     <!--数据展示图-->
                     <v-chart class="echarts" :option="option"/>
@@ -56,6 +56,7 @@ export default {
     },
     data() {
         return {
+            haveData:false,
             soft_options:[
                 {soft_value:1,label:'GEOEASTDL'},
                 {soft_value:2,label:'PWIN'},
@@ -178,6 +179,7 @@ export default {
                 'softName':this.soft_value
             }
             this.$http.get(url,{params}).then(res =>{
+                this.haveData=true
                 console.log(res.data,'软件用户信息')
                 while (this.option.xAxis.data.length!==0){
                     this.option.xAxis.data.pop()

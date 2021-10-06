@@ -20,7 +20,7 @@
                     </span>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
                 <el-col :span="10" style="margin-top: 8px">
                     <el-row >
@@ -44,9 +44,9 @@
                             </div>
                         </el-col>
                     </el-row>
-                    <el-row class="border_bottom">
-                        <el-col >
-                            <div style="height: 50px"></div>
+                    <el-row >
+                        <el-col class="border_bottom">
+                            <div  class="tableSubTitle2">行为特性： {{this.character}}</div>
                         </el-col>
                     </el-row>
                 </el-col>
@@ -96,7 +96,8 @@ export default {
     },
     data(){
         return{
-            haveData: true,
+            haveData: false,
+            character:'',
             date:'',//日期变量
             user_lname: '',//员工姓名
             personname:'',
@@ -215,6 +216,7 @@ export default {
     methods:{
         getEpyCardInfo(){//获取表格以及柱状图数据并渲染
             if(this.user_lname!==''){
+                this.haveData=true
                 var url="/getEpyCardInfo"
                 var params={
                     'user_lname':this.user_lname,
@@ -226,11 +228,28 @@ export default {
                 })
                 var url2="/getEpyCardData"
                 this.$http.get(url2,{params}).then(res=>{
-                    console.log(res.data[0].CQ)
+                    console.log(res.data,"9999999")
                     this.option.series[0].data=[res.data[0].CQ]
                     this.option.series[1].data=[res.data[0].ZS]
                     this.option.series[2].data=[res.data[0].JB]
                     this.option.title.subtext="员工刷卡地点： "+res.data[0].PLACECOUNT+' 个'
+                    switch (res.data[0].CLASSNO){
+                        case 1:
+                            this.character='严谨型'
+                            break
+                        case 2:
+                            this.character='勤奋型'
+                            break
+                        case 4:
+                            this.character='散漫型'
+                            break
+                        case 3:
+                            this.character='普通型'
+                            break
+                        case 5:
+                            this.character='普通型'
+                            break
+                    }
                 })
             }
         },
@@ -276,6 +295,13 @@ export default {
 .tableSubTitle{
     height: 50px;
     line-height: 70px;
+    padding-left: 20px;
+    color: #17caf0;
+    font-weight: bold;
+}
+.tableSubTitle2{
+    height: 50px;
+    line-height: 35px;
     padding-left: 20px;
     color: #17caf0;
     font-weight: bold;

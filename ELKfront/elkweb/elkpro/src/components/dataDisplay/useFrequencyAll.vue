@@ -129,7 +129,7 @@ export default {
         return {
             startTime: '',
             stopTime: '',
-            haveData:true,
+            haveData:false,
             tableData: [],
             option: {
                 title: {

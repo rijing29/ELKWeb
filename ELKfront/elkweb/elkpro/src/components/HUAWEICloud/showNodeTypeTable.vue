@@ -31,7 +31,7 @@
                         <el-button icon="el-icon-search" type="primary" @click="export2Excel">导出excel</el-button>
                     </el-col>
                 </el-row>
-                <el-row>
+                <el-row v-if="haveData">
                     <el-col :span="24">
                         <el-row class="area">
                             <el-row>
@@ -82,6 +82,7 @@ export default {
     },
     data() {
         return {
+            haveData:false,
             fullscreenLoading: false,
             year: '',
             month: '',
@@ -129,6 +130,7 @@ export default {
                 'month': this.month,
             }
             this.$http.get(url, {params}).then(res => {
+                this.haveData=true
                 console.log(res)
                 this.tableData = res.data
                 console.log(this.tableData)

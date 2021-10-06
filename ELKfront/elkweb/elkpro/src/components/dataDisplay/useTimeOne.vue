@@ -143,7 +143,7 @@ export default {
             softwareName: '',//软件名
             softwareName_options: [],//下拉框选项
             softwareName_value: '',//下拉框值
-            haveData: true,//控制是否显示
+            haveData: false,//控制是否显示
             disabled_value: true,//按钮是否禁用,true表示禁用
             tableData: [],//表数据
             option: {//柱状图
