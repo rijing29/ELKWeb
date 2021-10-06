@@ -149,8 +149,10 @@ public class ELKTableController {
      */
     public JSONArray combineJSON(String[] ave,List softName,String year,String month){
         System.out.println(softName+year+month+ave);
+        System.out.println(softName.size());
         JSONArray json = new JSONArray();
-        for(int i=0;i<softName.size();i++){
+
+        for(int i=0;i<4;i++){
             JSONObject jo=new JSONObject();
             jo.put("softName",softName.get(i));
             jo.put("time",year+"年"+month+"月");

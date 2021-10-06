@@ -74,7 +74,7 @@
                     </el-button>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row v-if="haveData">
                 <el-col :span="24" class="area">
                     <!--数据展示图-->
                     <v-chart class="echarts" :option="option"/>
@@ -142,6 +142,7 @@ export default {
     },
     data() {
         return {
+            haveData:false,
             fullscreenLoading: false,
             softName: '',
             nodeType: '',
@@ -305,6 +306,7 @@ export default {
                         'Time': this.Time,
                     }
                     this.$http.get(url, {params}).then(res => {
+                        this.haveData=true
                         //设置横轴
                         this.option.series[0].name = "软件效率"
                         this.option.series[0].data = res.data.value
@@ -322,6 +324,7 @@ export default {
                         'Time': this.Time,
                     }
                     this.$http.get(url, {params}).then(res => {
+                        this.haveData=true
                         console.log(res)
                         //设置横轴
                         this.option.series[0].name = "软件效率"
@@ -352,6 +355,7 @@ export default {
                         'Time': this.Time,
                     }
                     this.$http.get(url, {params}).then(res => {
+                        this.haveData=true
                         console.log(res)
                         //设置横轴
                         this.option.series[0].name = "软件效率"

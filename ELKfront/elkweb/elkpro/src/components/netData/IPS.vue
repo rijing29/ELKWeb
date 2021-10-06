@@ -73,7 +73,7 @@
                 </el-col>
                 <!--————饼状图区域 end————-->
             </el-row>
-            <el-row>
+            <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
                 <el-col :span="22">
                     <el-row >
@@ -150,7 +150,7 @@ export default {
     },
     data(){
         return{
-            haveData: true,
+            haveData: false,
             date:'',//日期变量
             pages: [//分页信息
                 {
@@ -300,6 +300,7 @@ export default {
                 }
                 console.log(this.currentRow.time, this.currentRow.dstipaddr)
                 this.$http.get(url,{params}).then(res=> {
+                    this.haveData=true
                     /*————渲染详细表格数据 begin————*/
                     this.pages[0].total = res.data.total//向分页传递总数据
                     while (this.tableData1.length !== 0) {

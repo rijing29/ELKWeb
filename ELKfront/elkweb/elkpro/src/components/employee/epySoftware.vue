@@ -13,7 +13,7 @@
                 <el-col :span="24" align="left">
                     <!--员工查询输入框 -->
                     <span class="span_area">
-                        <el-input v-model="username" placeholder="请输入员工姓名" style="margin-right: 1%;width:20%;"></el-input>
+                        <el-input v-model="username" placeholder="请输入员工姓名" style="margin-right: 1%;width:12%;"></el-input>
                     </span>
                     <!-- 查询按钮 -->
                     <span class="span_area">
@@ -29,7 +29,7 @@
               </div>
             </el-row>
             <el-row>
-                <!--————近期（一个月）Windows服务器提供服务统计 begin————-->
+                <!--————员工近期使用软件信息 begin————-->
                 <el-col :span="12" style="margin-top: 8px" v-if="haveData">
                     <el-row >
                         <el-col :span="24" class="border_top">
@@ -61,8 +61,8 @@
                         </el-col>
                     </el-row>
                 </el-col>
-                <!--————近期（一个月）Windows服务器提供服务统计 end————-->
-                <!--————Windows服务器日志告警信息 begin————-->
+                <!--————员工近期使用软件信息 end————-->
+                <!--————员工近期加班使用软件统计 begin————-->
                 <el-col :span="11" style="margin-top: 8px;margin-left: 40px" v-if="haveData1">
                     <el-row >
                         <el-col :span="24" class="border_top">
@@ -84,9 +84,13 @@
                             </div>
                         </el-col>
                     </el-row>
-
+                    <el-row class="border_bottom">
+                        <el-col >
+                            <div style="height: 50px"></div>
+                        </el-col>
+                    </el-row>
                 </el-col>
-                <!--————Windows服务器日志告警信息 end————-->
+                <!--————员工近期加班使用软件统计 end————-->
             </el-row>
         </el-main>
     </el-container>

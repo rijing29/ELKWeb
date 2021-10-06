@@ -21,7 +21,7 @@
                     </span>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
                 <el-col :span="24" v-if="ipmiInfo">
                     <el-row >
@@ -87,6 +87,7 @@ export default {
     name: "ipmiLogInfo",
     data(){
         return{
+            haveData:false,
             ipmiInfo:true,//控制IPMI信息表格显示
             ipmiAlarm:false,//控制IPMI告警表格显示
             filtration:false,//是否过滤低级警告
@@ -131,6 +132,7 @@ export default {
         },
 
         getIPMI(ip){
+            this.haveData=true
             if(this.filtration===false){
                 this.ipmiInfo=true
                 this.ipmiAlarm=false

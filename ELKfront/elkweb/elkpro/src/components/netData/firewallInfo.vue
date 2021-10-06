@@ -74,7 +74,7 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :span="24" class="border_top"><br><br></el-col>
+                <el-col v-if="haveData" :span="24" class="border_top"><br><br></el-col>
             </el-row>
             <el-row>
                 <el-col :span="24">
@@ -108,7 +108,7 @@
                 </el-col>
             </el-row>
             <el-row class="border_bottom">
-                <el-col><br><br></el-col>
+                <el-col v-if="haveData"><br><br></el-col>
             </el-row>
             <el-row>
                 <el-col :span="24">
@@ -153,7 +153,7 @@ export default {
             destinationIP: false,
             sourcePort: false,
             destinationPort: false,
-            haveData: true,
+            haveData: false,
             isSourceSelected: false,
             isDestinationSelected: false,
             // 表列
@@ -393,6 +393,7 @@ export default {
                 'pageSize': this.pages[0].pageSize,
             }
             this.$http.get(url, {params}).then(res => {
+                this.haveData=true
                 this.tableData = res.data.list;//渲染外表
                 this.pages[0].total = res.data.total//向分页传递总数据
                 console.log("hhhhhh", res.data)

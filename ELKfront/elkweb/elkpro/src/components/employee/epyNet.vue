@@ -20,7 +20,7 @@
                     </span>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
                 <el-col :span="24">
                     <el-row >
@@ -61,7 +61,7 @@ export default {
     name: "epyNet",
     data(){
         return{
-            haveData:true,
+            haveData:false,
             username:'',
             tableData:[],
         }
@@ -73,7 +73,11 @@ export default {
             var params={'username':this.username}
             this.$http.get(url,{params}).then(res =>{
                 console.log(res.data)
-                this.tableData=res.data
+                if(res.data.length!==0){
+                    this.tableData=res.data
+                    this.haveData=true
+                }
+
             })
         }
 

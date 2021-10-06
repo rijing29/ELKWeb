@@ -20,7 +20,7 @@
                     </span>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
                 <el-col :span="10" style="margin-top: 8px">
                     <el-row >
@@ -46,7 +46,7 @@
                     </el-row>
                     <el-row class="border_bottom">
                         <el-col >
-                            <div style="height: 50px"></div>
+                            <div  class="tableSubTitle2">岗位特性： {{this.character}}</div>
                         </el-col>
                     </el-row>
                 </el-col>
@@ -96,7 +96,8 @@ export default {
     },
     data(){
         return{
-            haveData: true,
+            character:'',
+            haveData: false,
             date:'',//日期变量
             pages: [//分页信息
                 {
@@ -219,18 +220,49 @@ export default {
                     'username':this.username,
                 }
                 this.$http.get(url,{params}).then(res=>{
+                    console.log(res.data,"88888")
                     this.tableData=res.data
                     this.name=res.data[0].USERNAME
+                    this.haveData=true
                 })
                 var url2="/getEpyDQMDSData"
                 this.$http.get(url2,{params}).then(res=>{
-                    console.log(res.data[0].CQ)
+                    console.log(res.data,"7777777")
                     this.option.series[0].data=[res.data[0].AVGDAYS]
                     this.option.series[1].data=[res.data[0].ONETYPE]
                     this.option.series[2].data=[res.data[0].JB]
                     this.option.series[3].data=[res.data[0].TWOTYPE]
                     this.option.series[4].data=[res.data[0].THRTYPE]
                     this.option.title.subtext="平均每天使用次数： "+res.data[0].COUNTONEDAY+' 次'
+                    switch (res.data[0].CLASSNO){
+                        case 1:
+                            this.character='普通型'
+                            break
+                        case 3:
+                            this.character='普通型'
+                            break
+                        case 6:
+                            this.character='普通型'
+                            break
+                        case 9:
+                            this.character='普通型'
+                            break
+                        case 2:
+                            this.character='专业型'
+                            break
+                        case 8:
+                            this.character='专业型'
+                            break
+                        case 4:
+                            this.character='管理型'
+                            break
+                        case 5:
+                            this.character='管理型'
+                            break
+                        case 7:
+                            this.character='管理型'
+                            break
+                    }
                 })
             }
         },
@@ -300,6 +332,13 @@ export default {
 .tableSubTitle{
     height: 50px;
     line-height: 70px;
+    padding-left: 20px;
+    color: #17caf0;
+    font-weight: bold;
+}
+.tableSubTitle2{
+    height: 50px;
+    line-height: 35px;
     padding-left: 20px;
     color: #17caf0;
     font-weight: bold;
