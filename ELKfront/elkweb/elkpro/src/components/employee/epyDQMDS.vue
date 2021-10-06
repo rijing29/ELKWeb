@@ -46,7 +46,7 @@
                     </el-row>
                     <el-row class="border_bottom">
                         <el-col >
-                            <div  class="tableSubTitle2">岗位特性： {{this.character}}</div>
+                            <div  class="tableSubTitle2"></div>
                         </el-col>
                     </el-row>
                 </el-col>
@@ -159,21 +159,21 @@ export default {
                     left: "90%",//工具栏距离左边距离
                 },
                 calculable: true,
-                xAxis: [
+                yAxis: [
                     {
                         position: "top",//X轴标签位置(顶部或底部)
                         axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                         type: 'value',
                         boundaryGap: [0, 0.01],
-
+                        max:100,//最大刻度值
                     }
                 ],
-                yAxis: [
+                xAxis: [
                     {
                         inverse: true,//翻转坐标轴
                         axisLabel:{
                             color:"#ffffff",//坐标轴标签文字颜色
-                            rotate: 90,//坐标轴标签文字旋转角度
+                            rotate: 0,//坐标轴标签文字旋转角度
                             margin: 14,//坐标轴标签文字与轴线距离
                             fontWeight: "lighter",//坐标轴标签文字粗细
                         },
@@ -185,27 +185,27 @@ export default {
                     {
                         name: '工作日使用率',
                         type: 'bar',
-                        data: [87.50, 37.50, 29.17,25.00]
+                        data: []
                     },
                     {
                         name: '日常功能使用率',
                         type: 'bar',
-                        data: [8.38,2.89,9.71,1.50]
+                        data: []
                     },
                     {
                         name: '加班时间使用率',
                         type: 'bar',
-                        data: [17.61,42.31,50.00,0.00]
+                        data: []
                     },
                     {
                         name: '管理功能使用率',
                         type: 'bar',
-                        data: [1.70 ,100.00, 91.18,100.00]
+                        data: []
                     },
                     {
                         name: '专业功能使用率',
                         type: 'bar',
-                        data: [2.27, 0.00, 8.82,0.00]
+                        data: []
                     },
                 ]
             },
@@ -214,6 +214,7 @@ export default {
     },
     methods:{
         getEpyDQMSInfo(){//获取表格以及柱状图数据并渲染
+            this.name=this.username
             if(this.username!==''){
                 var url="/getEpyDQMSInfo"
                 var params={
@@ -222,7 +223,7 @@ export default {
                 this.$http.get(url,{params}).then(res=>{
                     console.log(res.data,"88888")
                     this.tableData=res.data
-                    this.name=res.data[0].USERNAME
+                    // this.name=res.data[0].USERNAME
                     this.haveData=true
                 })
                 var url2="/getEpyDQMDSData"
@@ -236,31 +237,31 @@ export default {
                     this.option.title.subtext="平均每天使用次数： "+res.data[0].COUNTONEDAY+' 次'
                     switch (res.data[0].CLASSNO){
                         case 1:
-                            this.character='普通型'
+                            this.option.xAxis[0].data[0]='岗位特性： 普通型'
                             break
                         case 3:
-                            this.character='普通型'
+                            this.option.xAxis[0].data[0]='岗位特性： 普通型'
                             break
                         case 6:
-                            this.character='普通型'
+                            this.option.xAxis[0].data[0]='岗位特性： 普通型'
                             break
                         case 9:
-                            this.character='普通型'
+                            this.option.xAxis[0].data[0]='岗位特性： 普通型'
                             break
                         case 2:
-                            this.character='专业型'
+                            this.option.xAxis[0].data[0]='岗位特性： 专业型'
                             break
                         case 8:
-                            this.character='专业型'
+                            this.option.xAxis[0].data[0]='岗位特性： 专业型'
                             break
                         case 4:
-                            this.character='管理型'
+                            this.option.xAxis[0].data[0]='岗位特性： 管理型'
                             break
                         case 5:
-                            this.character='管理型'
+                            this.option.xAxis[0].data[0]='岗位特性： 管理型'
                             break
                         case 7:
-                            this.character='管理型'
+                            this.option.xAxis[0].data[0]='岗位特性： 管理型'
                             break
                     }
                 })

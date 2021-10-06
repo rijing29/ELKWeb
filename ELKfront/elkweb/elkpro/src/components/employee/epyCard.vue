@@ -46,7 +46,7 @@
                     </el-row>
                     <el-row >
                         <el-col class="border_bottom">
-                            <div  class="tableSubTitle2">行为特性： {{this.character}}</div>
+                            <div  class="tableSubTitle2"></div>
                         </el-col>
                     </el-row>
                 </el-col>
@@ -152,7 +152,7 @@ export default {
                     left: "90%",//工具栏距离左边距离
                 },
                 calculable: true,
-                xAxis: [
+                yAxis: [
                     {
                         position: "top",//X轴标签位置(顶部或底部)
                         axisLabel:{color:"#ffffff"},//X轴底部标签颜色
@@ -162,12 +162,12 @@ export default {
 
                     }
                 ],
-                yAxis: [
+                xAxis: [
                     {
                         inverse: true,//翻转坐标轴
                         axisLabel:{
                             color:"#ffffff",//坐标轴标签文字颜色
-                            rotate: 90,//坐标轴标签文字旋转角度
+                            rotate: 0,//坐标轴标签文字旋转角度
                             margin: 14,//坐标轴标签文字与轴线距离
                             fontWeight: "lighter",//坐标轴标签文字粗细
                         },
@@ -215,6 +215,7 @@ export default {
     },
     methods:{
         getEpyCardInfo(){//获取表格以及柱状图数据并渲染
+            this.name=this.user_lname
             if(this.user_lname!==''){
                 this.haveData=true
                 var url="/getEpyCardInfo"
@@ -223,7 +224,7 @@ export default {
                 }
                 this.$http.get(url,{params}).then(res=>{
                     this.tableData=res.data
-                    this.name=res.data[0].USER_LNAME
+                    // this.name=res.data[0].USER_LNAME
                     this.personname=this.user_lname
                 })
                 var url2="/getEpyCardData"
@@ -235,19 +236,19 @@ export default {
                     this.option.title.subtext="员工刷卡地点： "+res.data[0].PLACECOUNT+' 个'
                     switch (res.data[0].CLASSNO){
                         case 1:
-                            this.character='严谨型'
+                            this.option.xAxis[0].data[0]='行为特性： 严谨型'
                             break
                         case 2:
-                            this.character='勤奋型'
+                            this.option.xAxis[0].data[0]='行为特性： 勤奋型'
                             break
                         case 4:
-                            this.character='散漫型'
+                            this.option.xAxis[0].data[0]='行为特性： 散漫型'
                             break
                         case 3:
-                            this.character='普通型'
+                            this.option.xAxis[0].data[0]='行为特性： 普通型'
                             break
                         case 5:
-                            this.character='普通型'
+                            this.option.xAxis[0].data[0]='行为特性： 普通型'
                             break
                     }
                 })
