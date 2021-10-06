@@ -140,8 +140,7 @@ public class ELKTableController {
         System.out.println(softName+year+month+ave);
         System.out.println(softName.size());
         JSONArray json = new JSONArray();
-
-        for(int i=0;i<4;i++){
+        for(int i=0;i<softName.size();i++){
             JSONObject jo=new JSONObject();
             jo.put("softName",softName.get(i));
             jo.put("time",year+"年"+month+"月");
