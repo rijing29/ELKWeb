@@ -13,8 +13,7 @@
                     <!--员工查询输入框 -->
                     员工姓名：
                     <el-select v-model="username_value" placeholder="请选择">
-                        <el-option v-for="item in username_options" :key="item.username_value"
-                                   :label="item.label" :value="item.label"></el-option>
+                        <el-option v-for="item in username_options" :key="item.username_value" :label="item.label" :value="item.label"></el-option>
                     </el-select>
                     <!-- 查询按钮 -->
                     <span class="span_area">
@@ -34,11 +33,7 @@
                         <el-col :span="24" style="padding: 0;">
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
-                                <el-table
-                                        height="540"
-                                        ref="singleTable"
-                                        :data="tableDataWeek"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                <el-table height="540" ref="singleTable" :data="tableDataWeek" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
                                     <el-table-column prop="SOFTWARE" label="使用软件" align="center"></el-table-column>
                                     <el-table-column prop="USERATE" label="使用率(%)" align="center"></el-table-column>
@@ -157,7 +152,6 @@ export default {
                 })
                 var url2="/getEpyCardData"
                 this.$http.get(url2,{params}).then(res=>{
-
                     console.log(res.data[0].CQ)
                     this.option.series[0].data=[res.data[0].CQ]
                     this.option.series[1].data=[res.data[0].ZS]

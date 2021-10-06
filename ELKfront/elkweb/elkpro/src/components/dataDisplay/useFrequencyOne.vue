@@ -147,7 +147,7 @@ export default {
             tableData: [],//表数据
             option: {//柱状图
                 title: {
-                    text: '全部软件使用频率',
+                    text: '各软件使用频率',
                     subtext: '时间：',
                     textStyle:{
                         color:"#17caf0"//标题文字颜色

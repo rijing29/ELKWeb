@@ -10,7 +10,7 @@ import java.util.Map;
 public class ZAServiceImpl implements ZAHostsErrorService{
     @Autowired
     private ZAHostsErrorMapper zaHostsErrorMapper;
-//    查询zabbix error
+    //    查询zabbix error
     public List<Map<String, Object>> serachZAError() {
         List<Map<String, Object>> serachZAError = zaHostsErrorMapper.serachZAError();
         return serachZAError;

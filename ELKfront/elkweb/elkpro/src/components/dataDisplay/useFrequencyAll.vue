@@ -58,7 +58,7 @@
                     <el-row class="text">
                         <el-col class="title title_border" :span="7" >
                             <div style="margin: 10px 40px">
-                                各软件使用频率
+                                全部软件使用频率
                             </div>
                         </el-col>
                         <el-col class="title" :span="17">

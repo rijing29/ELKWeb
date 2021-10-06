@@ -95,8 +95,8 @@
 <!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
 <!--            <table tableName="HW_CC_USEAGE" domainObjectName="HWCCUseAge" enableCountByExample="false" enableUpdateByExample="false"-->
 <!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-            <table tableName="ZA_HOSTS_ERROR" domainObjectName="ZAHostsError" enableCountByExample="false" enableUpdateByExample="false"
-                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+<!--            <table tableName="ZA_HOSTS_ERROR" domainObjectName="ZAHostsError" enableCountByExample="false" enableUpdateByExample="false"-->
+<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
             <table tableName="Person_Action_log" domainObjectName="PersonActionLog" enableCountByExample="false" enableUpdateByExample="false"
                    enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>

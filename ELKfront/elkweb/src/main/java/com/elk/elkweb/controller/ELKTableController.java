@@ -41,7 +41,6 @@ public class ELKTableController {
         }
         for(int i=0;i<a.length;i++)
             System.out.println(a[i]);
-
         return softname;
     }
     /**
@@ -58,7 +57,7 @@ public class ELKTableController {
         List softName = searchSoftName();
         System.out.println(softName+"wwwww");
         JSONArray combineJSON = combineJSON(ave, softName, year, month);
-        System.out.println(combineJSON+"fffff");
+        System.out.println("输出combineJSON：----------------------"+combineJSON);
         return combineJSON;
     }
     /**
@@ -148,13 +147,16 @@ public class ELKTableController {
      * @method:softName合并三个json成为一个jsonObject
      */
     public JSONArray combineJSON(String[] ave,List softName,String year,String month){
-        System.out.println(softName+year+month+ave);
+        System.out.println("combine中的softname长度："+softName.size());
+        System.out.println("combine中的ave长度："+ave.length);
         JSONArray json = new JSONArray();
-        for(int i=0;i<softName.size();i++){
+        for(int i=0;i<4;i++){
             JSONObject jo=new JSONObject();
             jo.put("softName",softName.get(i));
+            System.out.println("---------"+softName.get(i)+"------------");
             jo.put("time",year+"年"+month+"月");
             jo.put("efficiency",ave[i]);
+            System.out.println("---------"+ave[i]+"------------");
             json.add(jo);
         }
         return json;
