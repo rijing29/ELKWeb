@@ -25,7 +25,7 @@ public class ELKTableController {
      * Description:
      * date: 2021/7/20 9:51
      * @author: whj
-     * @method:查出所有的softName
+     * @method:查出所有的softName类型
      */
     @RequestMapping(value = "/searchSoftName",produces = "application/json;charset=utf-8" )
     @ResponseBody
@@ -33,15 +33,6 @@ public class ELKTableController {
         List softname = efficiService.getSoftName();
         String softName = JSON.toJSONString(softname);
         System.out.println("遍历出来的所有softName:"+softName);
-//        测试
-        String a[] ={"str1","str2"};
-        System.out.println(a.length);
-        for(int i=0;i<a.length;i++) {
-            a[i] = " ";
-        }
-        for(int i=0;i<a.length;i++)
-            System.out.println(a[i]);
-
         return softname;
     }
     /**
@@ -56,9 +47,7 @@ public class ELKTableController {
                                               @Param("month") String month) throws ParseException {
         String[] ave = collectAveEfficiency(year, month);
         List softName = searchSoftName();
-        System.out.println(softName+"wwwww");
         JSONArray combineJSON = combineJSON(ave, softName, year, month);
-        System.out.println(combineJSON+"fffff");
         return combineJSON;
     }
     /**
@@ -169,12 +158,14 @@ public class ELKTableController {
      * @method:收集软件的平均效率
      */
     public String[] collectAveEfficiency(String year, String month) throws ParseException {
-        String[] ave = new String[4];
         String[] time = new String[2];
         String[] Time = formatMonth(year, month, time);
         String startTime=Time[0];
         String stopTime=Time[1];
-        String[] softName={"Pardiam","GEOEASTDL","Geoeast","WCC"};
+//        String[] softName={"Pardiam","GEOEASTDL","Geoeast","WCC"};
+        List softNameList = efficiService.getSoftName();
+        String[] softName = (String[]) softNameList.toArray(new String[softNameList.size()]);
+        String[] ave = new String[softNameList.size()];
         for(int i=0;i<softName.length;i++){
             Double aveEffici = calSoftNameAveEffici(startTime, stopTime, softName[i]);
             System.out.println("每天的效率为："+aveEffici);
