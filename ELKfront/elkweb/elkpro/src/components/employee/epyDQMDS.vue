@@ -22,7 +22,7 @@
             </el-row>
             <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
-                <el-col :span="10" style="margin-top: 8px">
+                <el-col :span="10" style="margin-top: 10%">
                     <el-row >
                         <el-col :span="24" class="border_top">
                             <div class="tableSubTitle">员工 - {{this.name}}</div>
@@ -36,7 +36,7 @@
                                         height="540"
                                         ref="singleTable"
                                         :data="tableData"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'large'}">
                                     <el-table-column prop="OPERATIONTIME" label="时间" align="center"></el-table-column>
                                     <el-table-column prop="DESCRIPTION" label="使用功能" align="center" width="380"></el-table-column>
                                 </el-table>
@@ -283,18 +283,17 @@ export default {
     z-index: 1;
 }
 .area{
-    width: 90vh;
+    width: 95%;
     height: 70vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
-    padding: 60px;
-    margin-left: 20px;
-
+    padding: 8%;
+    margin-left: 5%;
 }
 .span_area {
     /*区域*/
-    margin-left: 40px;
+    margin-left: 1%;
 }
 .title{
     width: 243px;

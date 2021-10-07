@@ -9,27 +9,11 @@
                 </el-col>
             </el-row>
             <el-row>
-                <el-col :span="24" align="left">
-                    <!--起始日期下拉框-->
-                    日期：
-                    <el-date-picker
-                            default-value
-                            v-model="Time"
-                            type="date"
-                            placeholder="请选择日期"
-                            format="yyyy/MM/dd"
-                            value-format="yyyy/MM/dd HH:mm:ss"
-                            style="margin-right: 1%; width: 11%;"
-                            @change="selectStartTime">
-                    </el-date-picker>
-                </el-col>
-            </el-row>
-            <el-row>
                 <!--————表格区域 begin————-->
                 <el-col :span="24">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">最近一周内信息</div>
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">最近时间信息</div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -79,43 +63,6 @@ export default {
         this.getDQMDSDEP()
     },
     methods: {
-        getRowKeys: function (row) {//控制表格只能展开一行
-            return row.time + row.ip + row.info
-            //  将row.time、row.ip、row.info的拼接作为行的唯一id,解决行id唯一问题
-        },
-
-        selectStartTime(val) {//日期选择器
-            //开始时间
-            this.Time = val;
-            this.date=this.Time;
-            // this.getIPMIAlarm();
-            console.log(this.time)
-        },
-        formatter (thistime, fmt) {//js格式化时间
-            let $this = new Date(thistime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
-        },
-        getDate(){//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy/MM/dd hh:mm:ss')
-            this.date=date.toLocaleString()
-        },
         getDQMDSDEP(){
           var url="/getDQMDSDEP"
           this.$http.get(url).then(res=>{
@@ -147,6 +94,7 @@ export default {
     padding: 40px;
     margin-left: 60px;
 }
+
 .title{
     width: 243px;
     height: 75px;

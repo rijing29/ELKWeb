@@ -95,13 +95,13 @@ public class ELKController {
      */
     @RequestMapping(value = "/calNodeType",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public dataResults nodeTypeEfficiency(@Param("nodeType")String nodeType,
-                                          @Param("nodeId")String nodeId,
+    public dataResults nodeTypeEfficiency(@RequestParam("nodeType")String nodeType,
+                                          @RequestParam("nodeId")String nodeId,
                                           @RequestParam("Time") String Time) throws ParseException {
         List dateList = calDate(Time);
         String startTime =(String) dateList.get(0)+" 00:00:00";
         String stopTime =(String) dateList.get(1)+" 00:00:00";
-        System.out.println(startTime+"-----"+stopTime);
+        System.out.println(startTime+"-----按节点名查询，传入年月----"+stopTime);
         LinkedHashMap<String, Double> EfficiencyMap = new LinkedHashMap<String, Double>();
         double aveEffici = calNodeTypeAveEffici(startTime, stopTime, 30, nodeType, nodeId, EfficiencyMap);
         dataResults dataResults = new dataResults();
@@ -110,10 +110,10 @@ public class ELKController {
     }
 
     /**
-    *@Author:whj
-    *@date:2021-09-28 10:19
-    *@Method:按软件名查询 传入年 计算最终得到的月平均
-    */
+     *@Author:whj
+     *@date:2021-09-28 10:19
+     *@Method:按软件名查询 传入年 计算最终得到的月平均
+     */
     @RequestMapping(value = "/calSoftNameYear",produces = "application/json;charset=utf-8" )
     @ResponseBody
     public dataResults nodeTypeEfficiency(@RequestParam("softName") String softName,
@@ -144,15 +144,15 @@ public class ELKController {
         return results;
     }
     /**
-    *@Author:whj
-    *@date:2021-09-2811:18
-    *@Method:按节点查询 传入年 计算最终得到的月平均
-    */
+     *@Author:whj
+     *@date:2021-09-2811:18
+     *@Method:按节点查询 传入年 计算最终得到的月平均
+     */
     @RequestMapping(value = "/calNodeTypeYear",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public dataResults nodeTypeEfficiencyYear(@Param("nodeType")String nodeType,
-                                          @Param("nodeId")String nodeId,
-                                          @RequestParam("Time") String Time) throws ParseException {
+    public dataResults nodeTypeEfficiencyYear(@RequestParam("nodeType")String nodeType,
+                                              @RequestParam("nodeId")String nodeId,
+                                              @RequestParam("Time") String Time) throws ParseException {
         List dateList = calDate(Time);
         String startTime =(String) dateList.get(0)+" 00:00:00";
         String stopTime =(String) dateList.get(1)+" 00:00:00";
@@ -162,11 +162,16 @@ public class ELKController {
         String[] months = new String[12];
         double[] efficicy = new double[12];
         int j=1;
+        Date addThreeDay=null;
+        addThreeDay=transferDate(startTime);
         for(int i=0;i<12;i++) {
-            aveEffici =  calNodeTypeAveEffici(startTime, stopTime, 30, nodeType, nodeId, EfficiencyMap);
+            String startTimeTwo = transferString(addThreeDay);
+            aveEffici =  calNodeTypeAveEffici(startTimeTwo, stopTime, 30, nodeType, nodeId, EfficiencyMap);
             months[i]=Time+"-"+j+"月";
             j++;
             efficicy[i]=aveEffici;
+            addThreeDay= addThirstyDay(addThreeDay);
+
         }
         dataResults results = new dataResults();
         results.setKey(months);
@@ -238,7 +243,7 @@ public class ELKController {
             double oneDayEfficiency = calOneDayEfficiency(sumTotalWorkLoad, sumNodeWorkLoad);
             total=total+oneDayEfficiency;
             String yAxis = splitStartTime(dayStart);
-//            EfficiencyMap.put(yAxis,oneDayEfficiency);
+            EfficiencyMap.put(yAxis,oneDayEfficiency);
 
             //        日期加1
             addOneDay  = addOneDay(addOneDay);//+1
@@ -285,10 +290,10 @@ public class ELKController {
         return aveEffici;
     }
     /**
-    *@Author:whj
-    *@date:2021-09-2810:26
-    *@Method:传入一年计算每个月的月平均
-    */
+     *@Author:whj
+     *@date:2021-09-2810:26
+     *@Method:传入一年计算每个月的月平均
+     */
     public double calSoftNameAveEfficiMonth(String startTime,String stopTime,float day,String softName,LinkedHashMap<String, Double> EfficicencyMap) throws ParseException {
         //        加一天的变量
         Date addOneDay=null;
@@ -455,10 +460,10 @@ public class ELKController {
         return dataResults;
     }
     /**
-    *@Author:whj
-    *@date:2021-09-2810:40
-    *@Method:放月平均的值
-    */
+     *@Author:whj
+     *@date:2021-09-2810:40
+     *@Method:放月平均的值
+     */
     public dataResults resMonth(dataResults dataResults,double aveEffici,LinkedHashMap<String, Double> EfficiencyMap){
         double totalArr[]=new double[1];
         totalArr[0]=aveEffici;
@@ -510,10 +515,10 @@ public class ELKController {
         return date;
     }
     /**
-    *@Author:whj
-    *@date:2021-09-2817:15
-    *@Method:日期+30天
-    */
+     *@Author:whj
+     *@date:2021-09-2817:15
+     *@Method:日期+30天
+     */
     public Date addThirstyDay(Date date){
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
@@ -608,10 +613,10 @@ public class ELKController {
 
 
     /**
-    *@Author:whj
-    *@date:2021-09-2716:53
-    *@Method:按软件名查询月的日效率
-    */
+     *@Author:whj
+     *@date:2021-09-2716:53
+     *@Method:按软件名查询月的日效率
+     */
     @RequestMapping(value = "/softNameEffiYear",produces = "application/json;charset=utf-8" )
     @ResponseBody
     public void searchSoftNameYearEffi(@Param("softName") String softName,
@@ -636,23 +641,23 @@ public class ELKController {
         }
     }
     /**
-    *@Author:whj
-    *@date:2021-09-2719:16
-    *@Method:计算效率
-    */
+     *@Author:whj
+     *@date:2021-09-2719:16
+     *@Method:计算效率
+     */
     public double calEfficiency(int fenZi,int fenMu){
         double i = fenZi / (fenMu * 48);
         return i;
     }
     /**
-    *@Author:whj
-    *@date:2021-09-2717:00
-    *@Method:算日期的
-    */
+     *@Author:whj
+     *@date:2021-09-2717:00
+     *@Method:算日期的
+     */
     public List calDate(String date) throws ParseException {
         String startTime = null;
         String stopTime = null;
-    //        判断是否是年月查询
+        //        判断是否是年月查询
         boolean res = date.contains("-");
 //        如果是按年查询
         if(!res){
@@ -663,9 +668,9 @@ public class ELKController {
             String substring = date.substring(5,7);
             String year=date.substring(0,3);
             if(substring.equals("01")){
-                 stopTime=date+"-31";
+                stopTime=date+"-31";
             }else if(substring.equals("02")){
-            //判断是不是闰年
+                //判断是不是闰年
                 boolean flag = ifBissExtile(year);
                 if(flag)
                     stopTime=date+"-29";
@@ -676,13 +681,13 @@ public class ELKController {
             }else if(substring.equals("04")){
                 stopTime=date+"-30";
             }else if(substring.equals("05")){
-                 stopTime=date+"-31";
+                stopTime=date+"-31";
             }else if(substring.equals("06")){
                 stopTime=date+"-30";
             }else if(substring.equals("07")){
                 stopTime=date+"-31";
             }else if(substring.equals("08")){
-                 stopTime=date+"-31";
+                stopTime=date+"-31";
             }else if(substring.equals("09")){
                 stopTime=date+"-30";
             }else if(substring.equals("10")){
@@ -699,10 +704,10 @@ public class ELKController {
         return dateList;
     }
     /**
-    *@Author:whj
-    *@date:2021-09-2717:18
-    *@Method:判断闰年
-    */
+     *@Author:whj
+     *@date:2021-09-2717:18
+     *@Method:判断闰年
+     */
     public boolean ifBissExtile(String year) throws ParseException{
         Calendar calendar=Calendar.getInstance();
         boolean flag;

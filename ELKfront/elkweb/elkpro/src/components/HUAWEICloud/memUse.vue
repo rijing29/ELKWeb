@@ -246,13 +246,13 @@ export default {
     z-index: 1;
 }
 .area{
-    width: 80vh;
+    width: 95%;
     height: 70vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
-    padding: 60px;
-    margin-left: 20px;
+    padding: 8%;
+    margin-left: 5%;
 
 }
 .span_area {

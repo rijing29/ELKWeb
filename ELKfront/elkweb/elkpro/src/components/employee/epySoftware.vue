@@ -22,12 +22,12 @@
                 </el-col>
             </el-row>
             <!--无数据时的渲染提示-->
-            <el-row v-if="haveData3" class="noData_Con">
-              <div style="line-height: 500px">
-                查询框输入员工姓名即可进行信息展示。
-                例如：输入“wuying”
-              </div>
-            </el-row>
+<!--            <el-row v-if="haveData3" class="noData_Con">-->
+<!--              <div style="line-height: 500px">-->
+<!--                查询框输入员工姓名即可进行信息展示。-->
+<!--                例如：输入“wuying”-->
+<!--              </div>-->
+<!--            </el-row>-->
             <el-row>
                 <!--————员工近期使用软件信息 begin————-->
                 <el-col :span="12" style="margin-top: 8px" v-if="haveData">

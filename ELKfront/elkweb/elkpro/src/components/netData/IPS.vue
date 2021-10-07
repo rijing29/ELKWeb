@@ -37,7 +37,7 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table
-                                        height="400"
+                                        height="500"
                                         ref="singleTable"
                                         :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
@@ -62,12 +62,9 @@
                 <el-col :span="12">
                     <el-row>
                         <el-col :span="24" class="area" align="center">
-                            <div style="width: 500px;height: 400px;">
                                 <!--————饼状图 begin————-->
                                 <v-chart class="echarts" :option="option" />
                                 <!--————饼状图 end————-->
-                            </div>
-
                         </el-col>
                     </el-row>
                 </el-col>
@@ -75,7 +72,7 @@
             </el-row>
             <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
-                <el-col :span="22">
+                <el-col :span="23">
                     <el-row >
                         <el-col :span="24" class="border_top2">
                             <div style="height: 50px"></div>
@@ -356,14 +353,13 @@ export default {
     z-index: 1;
 }
 .area{
-    width: 600px;
-    height: 500px;
+    width: 90%;
+    height: 64vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
-    padding: 40px;
-    margin-left: 60px;
-
+    padding: 8%;
+    margin-left: 5%;
 }
 .title{
     width: 243px;

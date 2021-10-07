@@ -270,23 +270,22 @@ export default {
     z-index: 1;
 }
 .area{
-    width: 90vh;
+    width: 95%;
     height: 70vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
-    padding: 60px;
-    margin-left: 20px;
-
+    padding: 8%;
+    margin-left: 5%;
 }
 .span_area {
     /*区域*/
-    margin-left: 40px;
+    margin-left: 1%;
 }
 .title{
     width: 243px;
     height: 75px;
-    font-size: 18px;
+    font-size: large;
     color: #17caf0;
     background: url("../../assets/border_label.png") no-repeat;
     line-height: 75px;

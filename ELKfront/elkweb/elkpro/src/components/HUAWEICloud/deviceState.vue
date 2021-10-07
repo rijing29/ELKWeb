@@ -110,11 +110,29 @@ export default {
                         color: "#17caf0"//副标题文字颜色
                     },
                 },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                legend: {
+                    textStyle:{
+                        color:"#ffffff"//顶部控制区域文字颜色
+                    },
+                    // left: "40%",//距离左边距离
+                    data: ['CPU']
+                },
                 xAxis: {
+                    axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                     type: 'category',
                     data: []
                 },
                 yAxis: {
+                    axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                     type: 'value'
                 },
                 series: [{
@@ -134,12 +152,13 @@ export default {
                         },
                     },
                     data: [16,28,20,18,29,15,25],
-                    type: 'line'
+                    type: 'line',
+                    name:'CPU'
                 }],
                 grid: {
                     left: '0%',//设置图表距离左边界的距离
                     right: '0%',//设置图表距离右边界的距离
-                    top: '9%',//设置图表距离上边界的距离
+                    top: '20%',//设置图表距离上边界的距离
                     bottom: '0%',//设置图表距离下边界的距离
                     containLabel: true
                 }
@@ -154,11 +173,29 @@ export default {
                         color: "#17caf0"//副标题文字颜色
                     },
                 },
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: {
+                        type: 'cross',
+                        label: {
+                            backgroundColor: '#6a7985'
+                        }
+                    }
+                },
+                legend: {
+                    textStyle:{
+                        color:"#ffffff"//顶部控制区域文字颜色
+                    },
+                    // left: "40%",//距离左边距离
+                    data: ['GPU']
+                },
                 xAxis: {
+                    axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                     type: 'category',
                     data: []
                 },
                 yAxis: {
+                    axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                     type: 'value'
                 },
                 series: [{
@@ -177,13 +214,14 @@ export default {
                             }], false)
                         },
                     },
+                    name:'GPU',
                     data: [85,123,100,130,96,122,75],
                     type: 'line'
                 }],
                 grid: {
                     left: '0%',//设置图表距离左边界的距离
                     right: '0%',//设置图表距离右边界的距离
-                    top: '9%',//设置图表距离上边界的距离
+                    top: '20%',//设置图表距离上边界的距离
                     bottom: '0%',//设置图表距离下边界的距离
                     containLabel: true
                 }
@@ -215,7 +253,7 @@ export default {
                         restore: {show: false},
                         saveAsImage: {
                             //下载图标
-                            show: true,
+                            show: false,
                             emphasis: {
                                 iconStyle: {
                                     textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
@@ -298,7 +336,7 @@ export default {
                         restore: {show: false},
                         saveAsImage: {
                             //下载图标
-                            show: true,
+                            show: false,
                             emphasis: {
                                 iconStyle: {
                                     textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
@@ -349,7 +387,7 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                     {//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                         offset: 0,
                                         color: "#26b2ea" // 0% 处的颜色
@@ -372,7 +410,7 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                     {//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                         offset: 0,
                                         color: "#ea6026" // 0% 处的颜色
@@ -395,7 +433,7 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                     {//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                         offset: 0,
                                         color: "#6b26ea" // 0% 处的颜色
@@ -500,12 +538,12 @@ export default {
 }
 
 .area {
-    width: 70vh;
+    width: 95%;
     height: 45vh;
     background: #ffffff;
     background: url("../../assets/bg_border.png");
     background-size: 100% 100%;
-    padding: 40px;
+    padding: 5%;
     margin-left: 10%;
 }
 

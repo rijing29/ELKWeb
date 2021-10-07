@@ -24,7 +24,7 @@
                                         height="500"
                                         ref="singleTable"
                                         :data="tableDataService"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'large'}">
                                     <el-table-column prop="IP" label="IP" align="center"></el-table-column>
                                     <el-table-column prop="TYPE2" label="交互类任务" align="center"></el-table-column>
                                     <el-table-column prop="TYPE3" label="共享类任务" align="center"></el-table-column>
@@ -58,7 +58,7 @@
                                         height="500"
                                         ref="singleTable"
                                         :data="tableDataLog"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'large'}">
                                     <el-table-column prop="TIME" :formatter="dateForma" label="时间" align="center"></el-table-column>
                                     <el-table-column prop="IP" label="IP" align="center"></el-table-column>
                                     <el-table-column prop="WARNINFO" label="提示信息" align="center"></el-table-column>
@@ -77,7 +77,7 @@
             </el-row>
             <el-row>
                 <!--————近期（一个月）Windows服务器任务增长分析 begin————-->
-                <el-col :span="13" style="margin-top: 8px">
+                <el-col :span="13" style="margin-top: 2%">
                     <el-row >
                         <el-col :span="24" class="border_top">
                             <div class="tableSubTitle">各服务器数据</div>
@@ -91,7 +91,7 @@
                                         height="500"
                                         ref="singleTable"
                                         :data="tableDataTask"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'large'}">
                                     <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
                                     <el-table-column prop="IP" label="IP" align="center"></el-table-column>
                                     <el-table-column prop="INC_VALUE" label="任务增长量" align="center"></el-table-column>
@@ -293,14 +293,14 @@ export default {
     z-index: 1;
 }
 .area{
-    width: 72vh;
+    width: 100%;
     height: 67vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
-    padding: 60px;
-    margin-left: 20px;
-
+    padding: 8%;
+    margin-left: 5%;
+    margin-top: 3%;
 }
 .title{
     width: 243px;

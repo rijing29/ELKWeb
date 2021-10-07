@@ -367,6 +367,7 @@ export default {
                 }
 
             } else if (this.month_value !== null) {
+                this.haveData=true
                 console.log(this.Time)
                 this.Time = this.month_value;
                 if(this.Time.length!==0){

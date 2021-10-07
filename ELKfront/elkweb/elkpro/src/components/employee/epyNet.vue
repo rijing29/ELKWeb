@@ -106,6 +106,10 @@ export default {
     margin-left: 60px;
 
 }
+.span_area {
+    /*区域*/
+    margin-left: 1%;
+}
 .title{
     width: 243px;
     height: 75px;

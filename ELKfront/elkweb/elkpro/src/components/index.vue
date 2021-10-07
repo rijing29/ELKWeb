@@ -16,7 +16,7 @@
                 <!--————雷达图区域 end————-->
                 <el-col :span="8"></el-col>
                 <!--————右上角区域 begin————-->
-                <el-col :span="8" style="float: right;">
+                <el-col :span="8" style="float: right">
                     <el-row>
                         <el-col :span="24"class="time_area" align="left">
                             <el-row>
@@ -25,7 +25,7 @@
                                         <el-row class="text_small"><el-col>{{this.week}}</el-col></el-row>
                                 </el-col>
                                 <el-col :span="1"><div  class="center bg_line"></div></el-col>
-                                <el-col :span="9" style="margin-left: 20px;line-height: 7vh"class="text_light_blue text_blod">{{this.date}}</el-col>
+                                <el-col :span="9" style="margin-left: 5%;line-height: 7vh"class="text_light_blue text_blod">{{this.date}}</el-col>
                                 <el-col :span="8"><el-button type="primary" round icon="el-icon-menu" @click="Home">主 页</el-button></el-col>
                             </el-row>
                         </el-col>
@@ -71,14 +71,14 @@
                 </el-col>
                 <!--————柱状图区域 end————-->
                 <!--————走马灯 begin————-->
-                <el-col :span="7">
+                <el-col :span="7" align="center">
                     <el-row>
                         <el-col :span="24" style="height: 19vh"></el-col>
                     </el-row>
                     <el-row class="word_area">
                         <el-col :span="24">
                             <div class="block">
-                                <el-carousel height="20vh">
+                                <el-carousel height="100%">
                                     <el-carousel-item v-for="item in dataWord" :key="item.title">
                                         <el-row>
                                             <el-col class="text_blod text_light_blue text_title">{{item.title}}</el-col>
@@ -679,7 +679,7 @@ export default {
     bottom: 0;
 }
 .area{
-    width: 62vh;
+    width: 94%;
     height: 45vh;
     background: #ffffff;
     background: url("../assets/bg_border.png");
@@ -693,8 +693,7 @@ export default {
 .time_area{
     background:url("../assets/bg_border-narrow.png");
     background-size: 100% 100%;
-    height: 10vh;
-    width: 62vh;
+    width: 93%;
     margin-top: 20px;
     margin-left: 20px;
     color: #ffffff;
@@ -704,8 +703,7 @@ export default {
 .bg_num{
     background:url("../assets/bg_num.png");
     background-size: 100% 100%;
-    width: 20vh;
-    height: 20vh;
+    width: 104%;
     line-height: 20vh;
     text-align: center;
     color: #fa916c;
@@ -717,13 +715,13 @@ export default {
     margin-left: 20px;
     background:url("../assets/bg_border-width.png");
     background-size: 100% 100%;
-    height: 30vh;
-    width: 62vh;
+    width: 93%;
+    padding: 3%;
 }
 .word_area{
     background: url("../assets/bg_word.png");
     background-size: 100% 100%;
-    width: 66vh;
+    width: 115%;
     height: 25vh;
 }
 .text_big{
@@ -751,8 +749,8 @@ export default {
 .bg_line{
     background:url("../assets/line.png");
     background-size: 100% 100%;
-    width: 3px;
-    height: 6vh;
+    width: 0.5%;
+    height: 90%;
 }
 .el-button{
     box-shadow: 0px 0px 20px #17caf0;

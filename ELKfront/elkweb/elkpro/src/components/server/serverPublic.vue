@@ -8,7 +8,7 @@
                     </div>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row style="margin-top: 3%">
                 <!--————表格区域 begin————-->
                 <el-col :span="12" style="margin-top: 8px">
                     <el-row >
@@ -146,7 +146,7 @@ export default {
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['60%', '80%'],
+                        radius: ['50%', '80%'],
                         avoidLabelOverlap: false,
                         itemStyle: {
                             borderRadius: 10,
@@ -318,13 +318,13 @@ export default {
     z-index: 1;
 }
 .area{
-    width: 80vh;
+    width: 95%;
     height: 70vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
-    padding: 60px;
-    margin-left: 20px;
+    padding: 8%;
+    margin-left: 5%;
 
 }
 .span_area {

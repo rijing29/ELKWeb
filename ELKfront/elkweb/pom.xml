@@ -54,17 +54,12 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.oracle.database.nls</groupId>
-			<artifactId>orai18n</artifactId>
-			<version>19.7.0.0</version>
-		</dependency>
 		<!--连接oracle-->
-<!--		<dependency>-->
-<!--			<groupId>com.oracle</groupId>-->
-<!--			<artifactId>ojdbc14</artifactId>-->
-<!--			<version>10.2.0.4.0</version>-->
-<!--		</dependency>-->
+		<!--		<dependency>-->
+		<!--			<groupId>com.oracle</groupId>-->
+		<!--			<artifactId>ojdbc14</artifactId>-->
+		<!--			<version>10.2.0.4.0</version>-->
+		<!--		</dependency>-->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -95,16 +90,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
-				<configuration>
-					<verbose>true</verbose>
-					<fork>true</fork>
-					<executable>${JAVA8_HOME}/bin/javac</executable>
-				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.mybatis.generator</groupId>

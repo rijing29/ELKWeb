@@ -48,12 +48,9 @@
                 <el-col :span="12" style="margin-top: 60px">
                     <el-row>
                         <el-col :span="24" class="area">
-                            <div style="width: 600px;height: 500px;">
                                 <!--————柱状图 begin————-->
                                 <v-chart class="echarts" :option="option"/>
                                 <!--————柱状图 end————-->
-                            </div>
-
                         </el-col>
                     </el-row>
                 </el-col>
@@ -62,12 +59,10 @@
                 <el-col :span="12">
                     <el-row class="text">
                         <el-col class="title title_border" :span="7">
-                            <div style="margin: 10px 40px">
                                 模块使用频率
-                            </div>
                         </el-col>
-                        <el-col class="title" :span="17">
-                            <el-button style="margin: 5px 20px;" type="success" round icon="el-icon-top-right"
+                        <el-col class="title" :span="17" style="text-align: left">
+                            <el-button type="success" round icon="el-icon-top-right"
                                        @click="export2Excel" size="mini">导出
                             </el-button>
                         </el-col>
@@ -362,20 +357,21 @@ export default {
     /*按钮区域*/
     margin-left: 40px;
 }
-.title {
+.title{
     color: #17caf0;
-    text-align: left;
+    text-align: center;
     font-weight: bold;
-    font-size: 16px;
+    font-size: medium;
+    line-height: 40px;
 }
 
-.area {
-    width: 700px;
-    height: 600px;
+.area{
+    width: 95%;
+    height: 70vh;
     background: #ffffff;
     background: url("../../assets/bg_data.png");
     background-size: 100% 100%;
-    padding: 40px;
+    padding: 8%;
 }
 
 .border_top {

@@ -159,7 +159,7 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                     {//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                         offset: 0,
                                         color: "#26b2ea" // 0% 处的颜色
@@ -182,7 +182,7 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                     {//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                         offset: 0,
                                         color: "#ea6026" // 0% 处的颜色
@@ -205,7 +205,7 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
                                     {//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                         offset: 0,
                                         color: "#6b26ea" // 0% 处的颜色
@@ -293,7 +293,9 @@ export default {
                         axisLabel:{
                             color:"#ffffff",
                             formatter: '{value} °C'},//X轴底部标签颜色
-                        type: 'value'
+                        type: 'value',
+                        max:30,
+                        min:20
                     }
                 ],
                 series: [
@@ -418,8 +420,10 @@ export default {
                     {
                         axisLabel:{
                             color:"#ffffff",
-                            formatter: '{value} °C'},//X轴底部标签颜色
-                        type: 'value'
+                            formatter: '{value} %'},//X轴底部标签颜色
+                        type: 'value',
+                        max:34,
+                        min:26
                     }
                 ],
                 series: [
@@ -600,13 +604,13 @@ export default {
 }
 
 .area1 {
-    width: 70vh;
+    width: 90%;
     height: 80vh;
     background: url("../../assets/bg-border-high.png");
     background-size: 100% 100%;
 }
 .area2 {
-    width: 70vh;
+    width: 90%;
     height: 40vh;
     background: url("../../assets/bg_border-low.png");
     background-size: 100% 100%;
