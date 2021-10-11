@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        公共服务器性能数据
+                        存储使用情况
                     </div>
                 </el-col>
             </el-row>

@@ -40,10 +40,13 @@
 
   <!--  查询IPS告警分析  -->
   <select id="getIPSAnalysis" resultType="map">
-    select time,ip,dangervalue from FW_IPS_ANALYIZE t
-    where time <![CDATA[<=]]> to_date(#{Time},'yyyy-MM-dd hh24:mi:ss')
-    and rownum <![CDATA[<=]]> 30
-    order by time desc,dangervalue desc,ip desc
+    select *
+    from (
+           select time,ip,dangervalue from FW_IPS_ANALYIZE t
+           where time <![CDATA[<=]]> to_date(#{Time},'yyyy-MM-dd hh24:mi:ss')
+           order by time desc,dangervalue desc,ip desc
+           )
+    where rownum <![CDATA[<=]]> 30
   </select>
 
   <!--  查询IPS详细信息  -->

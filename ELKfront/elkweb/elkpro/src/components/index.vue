@@ -166,7 +166,7 @@ export default {
                     title: '网络',
                     data: [
                         '网络交换机132台，防火墙1个',
-                        '网络包：今日326万，涉及417个IP',
+                        '网络包：今日326个，涉及417个IP',
                         'IPS告警：213万项，涉及31个服务器',
                         '交换机告警：7万项，涉及2个交换机'
                     ],
@@ -614,7 +614,7 @@ export default {
                 this.dataWord[0].data[2] = '门禁刷卡：员工'+res.data[0].DOORPERSONNUM+'人，刷卡'+res.data[0].DOORLOGNUM+'次'
                 this.dataWord[0].data[3] = '软件许可：'+res.data[0].SOFTNUM+'个软件，'+res.data[0].SOFTPERSONNUM+'个用户，'+res.data[0].SOFTLOGNUM+'次使用'
                 this.dataWord[1].data[0] = '网络交换机'+res.data[0].SWITCHNUM+'台，防火墙1个'
-                this.dataWord[1].data[1] = '网络包：今日'+res.data[0].NETBAGNUM+'万，涉及'+res.data[0].NETBAGIPNUM+'个IP'
+                this.dataWord[1].data[1] = '网络包：今日'+res.data[0].NETBAGNUM+'，涉及'+res.data[0].NETBAGIPNUM+'个IP'
                 this.dataWord[1].data[2] = 'IPS告警：'+res.data[0].IPSWARNNUM+'万项，涉及'+res.data[0].IPSWARNIPNUM+'个服务器'
                 this.dataWord[1].data[3] = '交换机告警：'+res.data[0].SWITCHWARNNUM+'万项，涉及'+res.data[0].SWITCHWARNIPNUM+'个交换机'
             })

@@ -3,6 +3,8 @@ package com.elk.elkweb.controller;
 import com.elk.elkweb.entity.CpuGpuResults;
 import com.elk.elkweb.service.EquipStateService;
 import com.elk.elkweb.service.HWLienceService;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,22 +74,40 @@ public class ELKHWController {
         results.setName(gpu);
         return results;
     }
-    //    获取软件使用率
+    /**
+     * DaPingKuoLuo
+     * 2021/10/11 09:09
+     * 获取软件使用率
+     */
+
     @RequestMapping(value = "/getSoftWareEfficiency",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public String[] getSoftWareEfficiency(){
-        List<Map<String, Object>> softWareEfficiency = equipStateService.getSoftWareEfficiency();
-//        放三个值
-        String[] arr = new String[3];
-        int i=0;
-        for( Map<String, Object> mapList : softWareEfficiency ) {
-            for( String key : mapList.keySet() ) {
-                System.out.println( key + "-->" + mapList.get(key) );
-                arr[i]= String.valueOf(mapList.get(key));
-                i++;
+    public String getSoftWareEfficiency(){
+        JSONArray array = new JSONArray();
+        String maxTime = equipStateService.getMaxTime();
+        String startTime= dayStartTime(maxTime);
+        String stopTime = dayStopTime(maxTime);
+        System.out.println(startTime+"========"+stopTime);
+        List<Map<String,Object>> softName = equipStateService.getSoftName();
+        for(int i=0;i<softName.size();i++){
+            String soft_name = softName.get(i).get("SOFT_NAME").toString();
+            System.out.println(soft_name+"=====");
+            Double sumJob = equipStateService.getSumJob(soft_name, startTime, stopTime);
+            Double sumWork = equipStateService.getSumWork(soft_name);
+            JSONObject object = new JSONObject();
+            object.put("softname",soft_name);
+            Double caclulate;
+            if(calculate(sumJob,sumWork)>1){
+                caclulate=95.0;
             }
+            else {
+                caclulate=calculate(sumJob,sumWork)*100;
+            }
+            object.put("value",caclulate);
+            array.add(object);
         }
-        return arr;
+        System.out.println(array+"666666666");
+        return array.toString();
     }
     /**
      *@Author:whj
@@ -109,5 +130,24 @@ public class ELKHWController {
     public List getLience(){
         List showHWLience = hwLienceService.showHWLience();
         return showHWLience;
+    }
+
+    public static Double calculate(Double sumJob,Double sumWork){
+        Double calculate = sumJob/(sumWork*48);
+        System.out.println(calculate+"-----------");
+        return calculate;
+    }
+
+    public String dayStopTime(String s){
+        StringBuilder builder = new StringBuilder(s);
+        builder.replace(11,s.length(),"23:59:59");
+        String dayStopTime = builder.toString();
+        return dayStopTime;
+    }
+    public String dayStartTime(String s){
+        StringBuilder builder = new StringBuilder(s);
+        builder.replace(11,s.length(),"00:00:00");
+        String dayStartTime = builder.toString();
+        return dayStartTime;
     }
 }

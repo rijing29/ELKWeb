@@ -14,7 +14,7 @@
     <result column="EVENT" property="event" jdbcType="VARCHAR" />
   </resultMap>
   <insert id="insert" parameterType="com.elk.elkweb.entity.FireWallInfo" >
-    insert into T_FIREWALL_PACKAGE (TIME, SRCZONENAME, DSTZONENAME,
+    insert into FW_FIVECELL (TIME, SRCZONENAME, DSTZONENAME,
                                     PROTOCOL, SRCIPADDR, SRCPORT,
                                     DSTIPADDR, DSTPORT, EVENT
     )
@@ -24,7 +24,7 @@
            )
   </insert>
   <insert id="insertSelective" parameterType="com.elk.elkweb.entity.FireWallInfo" >
-    insert into T_FIREWALL_PACKAGE
+    insert into FW_FIVECELL
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="time != null" >
         TIME,
@@ -87,16 +87,16 @@
 
   <!--  查询下拉框值begin  -->
   <select id="getSrczonename" resultType="map">
-    select distinct srczonename from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+    select distinct srczonename from FW_FIVECELL where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
   </select>
   <select id="getDstzonename" resultType="map">
-    select distinct dstzonename from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+    select distinct dstzonename from FW_FIVECELL where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
   </select>
   <select id="getProtocol" resultType="map">
-    select distinct protocol from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+    select distinct protocol from FW_FIVECELL where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
   </select>
   <select id="getEvent" resultType="map">
-    select distinct event from T_FIREWALL_PACKAGE where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+    select distinct event from FW_FIVECELL where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
   </select>
   <!--  查询下拉框值end  -->
 
@@ -116,7 +116,7 @@
           dstport,
       </if>
       count(*) as count
-      from T_FIREWALL_PACKAGE t
+      from FW_FIVECELL t
       where 1=1
       <if test="sourceDomain != '' and sourceDomain!=null">
           and srczonename=#{sourceDomain,jdbcType=VARCHAR}
@@ -160,7 +160,7 @@
 
   <!--查询所有信息 begin-->
   <select id="getInfo" resultMap="BaseResultMap">
-    select * from T_FIREWALL_PACKAGE
+    select * from FW_FIVECELL
     where 1=1
     <if test="SRCIPADDR != '' and SRCIPADDR != null">
       and SRCIPADDR=#{SRCIPADDR,jdbcType=VARCHAR}

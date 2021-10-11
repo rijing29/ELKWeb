@@ -37,7 +37,6 @@
                                   <el-table-column prop="TIME" label="时间"
                                                    value-format="yyyy/MM/dd HH:mm:ss"
                                                    align="center"></el-table-column>
-                                  <el-table-column prop="IP" label="IP" align="center"></el-table-column>
                                   <el-table-column prop="INFO" label="告警信息" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 表格 end-->
@@ -92,10 +91,7 @@ export default {
             ipmiAlarm:false,//控制IPMI告警表格显示
             filtration:false,//是否过滤低级警告
             ip:'',
-            ip_options:[
-                {ip_value:1,label:'192.168.64.160'},
-                {ip_value:2,label:'192.168.64.145'},
-            ],
+            ip_options:[],
             ip_value:'',
             tableData:[],
             TableData:[],

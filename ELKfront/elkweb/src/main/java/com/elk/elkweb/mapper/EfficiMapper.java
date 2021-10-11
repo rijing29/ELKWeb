@@ -14,19 +14,21 @@ import java.util.Map;
 public interface EfficiMapper {
     // 软件名效率
     int softNameEfficiency(@Param("softName")String softName,
-                            @Param("startTime")String startTime,
-                            @Param("stopTime")String stopTime);
+                           @Param("startTime")String startTime,
+                           @Param("stopTime")String stopTime);
     // 软件名各节点工作量之和
     int sumWorkLoad(NodeSoftMap nodeSoftMap);
-//    按节点查询 根据nodeType和nodeId
+    //    按节点查询 根据nodeType和nodeId
     int nodeTypeEfficiency(@Param("nodeType")String nodeType,
                            @Param("nodeId")String nodeId,
                            @Param("startTime")String startTime,
                            @Param("stopTime")String stopTime);
-//    nodeType各节点工作之和
+    //    nodeType各节点工作之和
     int sumNodeTypeWorkLoad(NodeSoftMap nodeSoftMap);
-//    取出所有的softName
+    //    取出所有的softName
     List getSoftName();
-//    取出softName的所有nodeType和nodeId
+    //    取出softName的所有nodeType和nodeId
     List<Map< String, Object >> getNodeInfo(String softName);
+    //    查出它乘4还是1
+    int getSoftNameWordLoad(@Param("softName")String softName);
 }

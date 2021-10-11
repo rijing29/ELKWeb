@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        公共服务器性能数据
+                        Windows服务器日志
                     </div>
                 </el-col>
             </el-row>

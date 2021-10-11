@@ -15,4 +15,10 @@ public class ZAServiceImpl implements ZAHostsErrorService{
         List<Map<String, Object>> serachZAError = zaHostsErrorMapper.serachZAError();
         return serachZAError;
     }
+
+    @Override
+    public List<Map<String, Object>> searchWinlogbeats() {
+        List<Map<String, Object>> Winlogbeats = zaHostsErrorMapper.searchWinlogbeats();
+        return Winlogbeats;
+    }
 }

@@ -11,19 +11,18 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <!--员工查询输入框 -->
-                    员工姓名：
-                    <el-select v-model="username_value" placeholder="请选择">
-                        <el-option v-for="item in username_options" :key="item.username_value" :label="item.label" :value="item.label"></el-option>
-                    </el-select>
+                    <span class="span_area">
+                        <el-input v-model="users" placeholder="请输入员工姓名" style="margin-right: 1%;width: 10%;"></el-input>
+                    </span>
                     <!-- 查询按钮 -->
                     <span class="span_area">
-                        <el-button icon="el-icon-search" type="primary" @click="getEpyCardInfo">查询</el-button>
+                        <el-button icon="el-icon-search" type="primary" @click="getUserUseRate">查询</el-button>
                     </span>
                 </el-col>
             </el-row>
-            <el-row>
+            <el-row class="area" v-if="haveData">
                 <!--————表格区域 begin————-->
-                <el-col :span="11" style="margin-top: 8px">
+                <el-col :span="24" style="margin-top: 8px">
                     <el-row >
                         <el-col :span="24" class="border_top">
                             <div class="tableSubTitle">近一周软件使用率</div>
@@ -33,38 +32,7 @@
                         <el-col :span="24" style="padding: 0;">
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
-                                <el-table height="540" ref="singleTable" :data="tableDataWeek" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="SOFTWARE" label="使用软件" align="center"></el-table-column>
-                                    <el-table-column prop="USERATE" label="使用率(%)" align="center"></el-table-column>
-                                </el-table>
-                                <!--————表格 end————-->
-                            </div>
-                        </el-col>
-                    </el-row>
-                    <el-row class="border_bottom">
-                        <el-col >
-                            <div style="height: 50px"></div>
-                        </el-col>
-                    </el-row>
-                </el-col>
-                <!--————表格区域 end————-->
-                <!--————表格区域 begin————-->
-                <el-col :span="11" style="margin-top: 8px;margin-left: 80px">
-                    <el-row >
-                        <el-col :span="24" class="border_top">
-                            <div class="tableSubTitle">月度软件使用率</div>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="24" style="padding: 0;">
-                            <div class="table-wrapper">
-                                <!--————表格 begin————-->
-                                <el-table
-                                        height="540"
-                                        ref="singleTable"
-                                        :data="tableDataMonth"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                <el-table  ref="singleTable" :data="tableDataWeek" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
                                     <el-table-column prop="SOFTWARE" label="使用软件" align="center"></el-table-column>
                                     <el-table-column prop="USERATE" label="使用率(%)" align="center"></el-table-column>
@@ -114,51 +82,29 @@ export default {
     },
     data(){
         return{
-            haveData: true,
-            user_lname: '',//员工姓名
-            personname:'',
-            username_value:'',//员工姓名下拉框
-            username_options:[{username_value:'1',label:'zhaozhong'}],
-            tableDataWeek: [
-                {TIME:'2021-09-12',SOFTWARE:'GeoEast(解释)',USERATE:'25'},
-                {TIME:'2021-09-11',SOFTWARE:'GeoEast(解释)',USERATE:'35'},
-                {TIME:'2021-09-10',SOFTWARE:'GeoEast(解释)',USERATE:'5'},
-                {TIME:'2021-09-09',SOFTWARE:'GeoEast(解释)',USERATE:'15'},
-                {TIME:'2021-09-08',SOFTWARE:'GeoEast(解释)',USERATE:'12'},
-                {TIME:'2021-09-07',SOFTWARE:'GeoEast(解释)',USERATE:'11'},
-                {TIME:'2021-09-06',SOFTWARE:'GeoEast(解释)',USERATE:'2'},
-                {TIME:'2021-09-05',SOFTWARE:'GeoEast(解释)',USERATE:'5'},
-            ],//近一周软件使用率
-            tableDataMonth: [
-                {TIME:'2021-09',SOFTWARE:'GeoEast(解释)',USERATE:'15'},
-                {TIME:'2021-08',SOFTWARE:'GeoEast(解释)',USERATE:'25'},
-                {TIME:'2021-07',SOFTWARE:'GeoEast(解释)',USERATE:'11'},
-                {TIME:'2021-06',SOFTWARE:'GeoEast(解释)',USERATE:'7'},
-            ],//月度软件使用率
+            haveData: false,
+            users:'',//员工姓名输入框
+            tableDataWeek: [],//近一周软件使用率
 
         }
     },
     methods:{
-        getEpyCardInfo(){//获取表格以及柱状图数据并渲染
-            if(this.user_lname!==''){
-                var url="/getEpyCardInfo"
-                var params={
-                    'user_lname':this.user_lname,
-                }
-                this.$http.get(url,{params}).then(res=>{
-                    this.tableData=res.data
-                    this.name=res.data[0].USER_LNAME
-                    this.personname=this.user_lname
-                })
-                var url2="/getEpyCardData"
-                this.$http.get(url2,{params}).then(res=>{
-                    console.log(res.data[0].CQ)
-                    this.option.series[0].data=[res.data[0].CQ]
-                    this.option.series[1].data=[res.data[0].ZS]
-                    this.option.series[2].data=[res.data[0].JB]
-                    this.option.title.subtext="员工刷卡地点： "+res.data[0].PLACECOUNT+' 个'
-                })
+        getUserUseRate(){//SoftUserMapper.xml - ELKSoftUserController.java
+            this.haveData=true
+            var url="/getUserUseRate"
+            var params={
+                'users':this.users,
             }
+            this.$http.get(url,{params}).then(res=>{
+                console.log(res.data)
+                while (this.tableDataWeek.length!==0){
+                    this.tableDataWeek.pop()
+                }
+                for(var i=0;i<res.data.softname.length;i++){
+                    this.tableDataWeek.push({TIME:res.data.time[i],SOFTWARE:res.data.softname[i],USERATE:res.data.useRate[i]})
+                }
+
+            })
         },
     }
 }
@@ -175,15 +121,10 @@ export default {
     height: 90vh;
     z-index: 1;
 }
-.area{
-    width: 90vh;
-    height: 70vh;
-    background: #ffffff;
-    background: url("../../assets/bg_data.png");
-    background-size: 100% 100%;
-    padding: 60px;
-    margin-left: 20px;
-
+.area {
+    width: 80%;
+    margin-left: 9%;
+    margin-top: 2%;
 }
 .span_area {
     /*区域*/
@@ -207,12 +148,12 @@ export default {
     font-weight: bold;
 }
 .border_top{
-    background:url("../../assets/border_top.png");
+    background:url("../../assets/border_top2.png");
     background-size: 100% 100%;
     text-align: left;
 }
 .border_bottom{
-    background:url("../../assets/border_bottom.png");
+    background:url("../../assets/border_bottom2.png");
     background-size: 100% 100%;
 }
 .border_top2{
@@ -224,7 +165,7 @@ export default {
     background:url("../../assets/border_bottom2.png");
     background-size: 100% 100%;
 }
-.el-table{
+.el-table {
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;

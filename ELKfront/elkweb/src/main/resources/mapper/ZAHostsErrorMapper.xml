@@ -45,6 +45,10 @@
         </trim>
     </insert>
     <select id="serachZAError" resultType="map">
-        select host,errors_from,error from ZA_HOSTS_ERROR where errors_from in (select max(errors_from) from ZA_HOSTS_ERROR) order by host
+        select host,errors_from,error from ZA_HOSTS_ERROR where time in (select max(time) from ZA_HOSTS_ERROR) order by host
+    </select>
+
+    <select id="searchWinlogbeats" resultType="map">
+        select * from LOG_WINLOGBEATS_ALERT where time in (select max(time) from LOG_WINLOGBEATS_ALERT) order by ip
     </select>
 </mapper>

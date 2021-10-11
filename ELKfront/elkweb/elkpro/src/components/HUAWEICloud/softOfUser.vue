@@ -189,7 +189,7 @@ export default {
                 }
                 for(var i=0;i<res.data.length;i++){
                     this.option.series[0].data.push(res.data[i].USETIME)
-                    this.option.xAxis.data.push(res.data[i].USER_NAME)
+                    this.option.xAxis.data.push(res.data[i].USERS)
                 }
             })
         }

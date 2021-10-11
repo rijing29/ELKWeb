@@ -155,7 +155,7 @@ export default {
                     {
                         name: 'ups1',
                         type: 'bar',
-                        data: [1,2,3],
+                        data: [0,0,0],
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -178,7 +178,7 @@ export default {
                     }, {
                         name: 'ups2',
                         type: 'bar',
-                        data: [4,5,6],
+                        data: [0,0,0],
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -201,7 +201,7 @@ export default {
                     }, {
                         name: 'ups3',
                         type: 'bar',
-                        data: [7,8,9],
+                        data: [0,0,0],
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
@@ -291,8 +291,9 @@ export default {
                 yAxis: [
                     {
                         axisLabel:{
-                            color:"#ffffff",
-                            formatter: '{value} °C'},//X轴底部标签颜色
+                            color:"#ffffff",//X轴底部标签颜色
+                            formatter: '{value} °C'
+                        },
                         type: 'value',
                         max:30,
                         min:20
@@ -302,7 +303,7 @@ export default {
                     {
                         itemStyle: {
                             normal: {
-                                //柱状图颜色(渐变)
+                                //折线图图颜色(渐变)
                                 color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
                                     offset: 0,
                                     color: "rgb(81,232,246)" // 0% 处的颜色
@@ -317,7 +318,7 @@ export default {
                         },
                         name: '2楼',
                         type: 'line',
-                        data: [10, 11, 2, 11, 12, 12, 9],
+                        data: [],
                         // markPoint: {
                         //     data: [
                         //         {type: 'max', name: '最大值'},
@@ -348,7 +349,7 @@ export default {
                         },
                         name: '3楼',
                         type: 'line',
-                        data: [1, -2, 10, 5, 3, 2, 0],
+                        data: [],
                     }
                 ]
             },
@@ -445,7 +446,7 @@ export default {
                         },
                         name: '2楼',
                         type: 'line',
-                        data: [10, 11, 2, 11, 12, 12, 9],
+                        data: [],
                         // markPoint: {
                         //     data: [
                         //         {type: 'max', name: '最大值'},
@@ -476,7 +477,7 @@ export default {
                         },
                         name: '3楼',
                         type: 'line',
-                        data: [1, -2, 10, 5, 3, 2, 0],
+                        data: [],
                         // markPoint: {
                         //     data: [
                         //         {name: '周最低', value: -2, xAxis: 1, yAxis: -1.5}
@@ -524,6 +525,7 @@ export default {
                 while (this.option1.series[2].data.length!==0){
                     this.option1.series[2].data.pop()
                 }
+                console.log(this.option1.series[0].data[0],"+++++",this.option1.series[0].data[0],"------")
                 /*————清空data数组，以更新柱状图数据 end————*/
                 for(var i=0;i<res.data.length;i++){//
                     if(res.data[i].UPSNAME==='ups1'){

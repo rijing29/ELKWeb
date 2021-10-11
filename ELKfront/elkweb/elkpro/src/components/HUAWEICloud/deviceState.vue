@@ -132,7 +132,10 @@ export default {
                     data: []
                 },
                 yAxis: {
-                    axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                    axisLabel: {
+                        color: "#ffffff",//Y轴底部标签颜色
+                        formatter: '{value} %'
+                    },
                     type: 'value'
                 },
                 series: [{
@@ -195,7 +198,10 @@ export default {
                     data: []
                 },
                 yAxis: {
-                    axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                    axisLabel:{
+                        color:"#ffffff",//y轴底部标签颜色
+                        formatter: '{value} %'
+                    },
                     type: 'value'
                 },
                 series: [{
@@ -324,10 +330,10 @@ export default {
                     textStyle: {
                         color: "#ffffff"//顶部控制区域文字颜色
                     },
-                    left: "35%",//距离左边距离
-                    data: ['GEOEAST', 'ES360', 'QPSTM']
+                    left: "20%",//距离左边距离
+                    data: ['QPSTM', 'GEOEAST', 'ES360']
                 },
-                grid: {left: '2%', right: '4%', bottom: '3%', containLabel: true},
+                grid: {left: '2%', right: '4%', bottom: '3%', top:'20%',containLabel: true},
                 toolbox: {
                     show: true,
                     feature: {
@@ -363,7 +369,7 @@ export default {
                             fontWeight: "lighter",//坐标轴标签文字粗细
                         },
                         type: 'category',
-                        data: ['服务器负载数据'],
+                        data: ['软件使用率'],
                         axisPointer: {
                             type: "line"//坐标轴指示器(line\shadow\none)
                         }
@@ -371,86 +377,18 @@ export default {
                 ],
                 yAxis: [
                     {
-                        position: "top",//X轴标签位置(顶部或底部)
-                        axisLabel: {color: "#ffffff"},//X轴底部标签颜色
+                        position: "top",//y轴标签位置(顶部或底部)
+                        axisLabel: {
+                            color: "#ffffff",//y轴底部标签颜色
+                            formatter: '{value} %'
+                        },
                         type: 'value',
                         boundaryGap: [0, 0.01],
                         // max:100,//最大刻度值
 
                     }
                 ],
-                series: [
-                    {
-                        name: 'GEOEAST',
-                        type: 'bar',
-                        data: [90],
-                        itemStyle: {
-                            normal: {
-                                //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                                        offset: 0,
-                                        color: "#26b2ea" // 0% 处的颜色
-                                    }, {
-                                        offset: 0.6,
-                                        color: "#35b8ec" // 60% 处的颜色
-                                    }, {
-                                        offset: 1,
-                                        color: "#46c8fc" // 100% 处的颜色
-                                    }], false)
-                            },
-                            color: null,
-                            opacity: 1
-                        },
-                        barGap: "60%"//不同系列的柱间距离
-                    }, {
-                        name: 'ES360',
-                        type: 'bar',
-                        data: [35.8],
-                        itemStyle: {
-                            normal: {
-                                //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                                        offset: 0,
-                                        color: "#ea6026" // 0% 处的颜色
-                                    }, {
-                                        offset: 0.6,
-                                        color: "#ec6b35" // 60% 处的颜色
-                                    }, {
-                                        offset: 1,
-                                        color: "#fc7b46" // 100% 处的颜色
-                                    }], false)
-                            },
-                            color: null,
-                            opacity: 1
-                        },
-                        barGap: "60%"//不同系列的柱间距离
-                    }, {
-                        name: 'QPSTM',
-                        type: 'bar',
-                        data: [85.2],
-                        itemStyle: {
-                            normal: {
-                                //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                                        offset: 0,
-                                        color: "#6b26ea" // 0% 处的颜色
-                                    }, {
-                                        offset: 0.6,
-                                        color: "#8135ec" // 60% 处的颜色
-                                    }, {
-                                        offset: 1,
-                                        color: "#9246fc" // 100% 处的颜色
-                                    }], false)
-                            },
-                            color: null,
-                            opacity: 1
-                        },
-                        barGap: "60%"//不同系列的柱间距离
-                    },
-                ]
+                series: []
             },
             /*————饼状图数据 end————*/
         }
@@ -459,40 +397,6 @@ export default {
         this.getEquipState()
     },
     methods: {
-        dateForma: function (row, column) {//表格行格式化时间
-            var date = row[column.property];
-            if (date === undefined) {
-                return ''
-            }
-            ;
-            return moment(date).format("YYYY-MM-DD")
-        },
-        getDate() {//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
-            this.date = date.toLocaleString()
-        },
-        getWinWaring() {//渲染数据
-            var url = "/getWinWaring"
-            this.$http.get(url).then(res => {//渲染Windows服务器告警表格数据
-                this.tableDataLog = res.data
-                console.log(res.data)
-            })
-            var url1 = '/getWinServiceInfo'
-            this.$http.get(url1).then(res => {//渲染Windows服务器日志告警数据
-                this.tableDataService = res.data
-            })
-            var url2 = '/getWinServiceJobInc'
-            this.$http.get(url2).then(res => {//渲染Windows服务器任务增长分析
-                this.tableDataTask = res.data
-                console.log(res.data)
-            })
-            var url3 = '/getWinLoad'
-            this.$http.get(url3).then(res => {//渲染Windows服务器负载统计饼状图
-                console.log(res.data[0].ALLCOUNT - res.data[0].HIGHCOUNT, "22222222")
-                this.option.series[0].data[0].value = res.data[0].HIGHCOUNT
-                this.option.series[0].data[1].value = res.data[0].ALLCOUNT - res.data[0].HIGHCOUNT
-            })
-        },
         getEquipState() {
             //获取cpu
             var url = "/getCPU"
@@ -507,17 +411,31 @@ export default {
                 this.option2.xAxis.data = res.data.time
             })
             //获取软件使用效率
-            var url = "/getSoftWareEfficiency"
+            var url = "/getSoftWareEfficiency" //SoftWareEfficiencyMapper.xml - ELKHWController.java
             this.$http.get(url).then(res => {
-                this.option4.series[0].data = res.data[0];
-                this.option4.series[1].data = res.data[1];
-                this.option4.series[2].data = res.data[2];
+                console.log(res.data,"666666")
+                while (this.option4.legend.data.length!==0){
+                    this.option4.legend.data.pop()
+                    this.option4.series.pop()
+                }
+                for(var i=0;i<res.data.length;i++){
+                    this.option4.legend.data.push(res.data[i].softname);
+                    this.option4.series.push(
+                            {
+                                name: res.data[i].softname,
+                                type: 'bar',
+                                data: [res.data[i].value],
+                            }
+                    )
+                }
+
             })
             //获取存储系统使用
-            var url = "/getCCUsage"
+            var url = "/getCCUsage"//CCUsageMapper.xml - ELKHWController.java
             this.$http.get(url).then(res => {
-                this.option3.series[0].data[0].value = res.data[0].HWYZX_USED;
-                this.option3.series[0].data[1].value = res.data[0].HWYZX_FREE;
+                console.log(res.data,"jjjjjj")
+                this.option3.series[0].data[0].value = res.data[0].USE;
+                this.option3.series[0].data[1].value = res.data[0].FREE;
             })
         }
     }

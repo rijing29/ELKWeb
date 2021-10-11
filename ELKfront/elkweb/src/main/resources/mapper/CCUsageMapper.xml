@@ -1,89 +1,90 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.elk.elkweb.mapper.CCUsageMapper" >
-    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.CCUsage" >
-        <result column="GG_USED" property="ggUsed" jdbcType="DECIMAL" />
-        <result column="GG_FREE" property="ggFree" jdbcType="DECIMAL" />
-        <result column="LC_USED" property="lcUsed" jdbcType="DECIMAL" />
-        <result column="LC_FREE" property="lcFree" jdbcType="DECIMAL" />
-        <result column="HWYZX_USED" property="hwyzxUsed" jdbcType="DECIMAL" />
-        <result column="HWYZX_FREE" property="hwyzxFree" jdbcType="DECIMAL" />
-        <result column="BDHW_USED" property="bdhwUsed" jdbcType="DECIMAL" />
-        <result column="BDHW_FREE" property="bdhwFree" jdbcType="DECIMAL" />
-        <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+<mapper namespace="com.elk.elkweb.mapper.CCUsageMapper">
+    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.CCUsage">
+        <result column="GG_USED" property="ggUsed" jdbcType="DECIMAL"/>
+        <result column="GG_FREE" property="ggFree" jdbcType="DECIMAL"/>
+        <result column="LC_USED" property="lcUsed" jdbcType="DECIMAL"/>
+        <result column="LC_FREE" property="lcFree" jdbcType="DECIMAL"/>
+        <result column="HWYZX_USED" property="hwyzxUsed" jdbcType="DECIMAL"/>
+        <result column="HWYZX_FREE" property="hwyzxFree" jdbcType="DECIMAL"/>
+        <result column="BDHW_USED" property="bdhwUsed" jdbcType="DECIMAL"/>
+        <result column="BDHW_FREE" property="bdhwFree" jdbcType="DECIMAL"/>
+        <result column="TIME" property="time" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <insert id="insert" parameterType="com.elk.elkweb.entity.CCUsage" >
+    <insert id="insert" parameterType="com.elk.elkweb.entity.CCUsage">
         insert into FR_CC_USAGE (GG_USED, GG_FREE, LC_USED,
                                  LC_FREE, HWYZX_USED, HWYZX_FREE,
-                                 BDHW_USED, BDHW_FREE, TIME
-        )
+                                 BDHW_USED, BDHW_FREE, TIME)
         values (#{ggUsed,jdbcType=DECIMAL}, #{ggFree,jdbcType=DECIMAL}, #{lcUsed,jdbcType=DECIMAL},
                 #{lcFree,jdbcType=DECIMAL}, #{hwyzxUsed,jdbcType=DECIMAL}, #{hwyzxFree,jdbcType=DECIMAL},
-                #{bdhwUsed,jdbcType=DECIMAL}, #{bdhwFree,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP}
-               )
+                #{bdhwUsed,jdbcType=DECIMAL}, #{bdhwFree,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.CCUsage" >
+    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.CCUsage">
         insert into FR_CC_USAGE
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="ggUsed != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="ggUsed != null">
                 GG_USED,
             </if>
-            <if test="ggFree != null" >
+            <if test="ggFree != null">
                 GG_FREE,
             </if>
-            <if test="lcUsed != null" >
+            <if test="lcUsed != null">
                 LC_USED,
             </if>
-            <if test="lcFree != null" >
+            <if test="lcFree != null">
                 LC_FREE,
             </if>
-            <if test="hwyzxUsed != null" >
+            <if test="hwyzxUsed != null">
                 HWYZX_USED,
             </if>
-            <if test="hwyzxFree != null" >
+            <if test="hwyzxFree != null">
                 HWYZX_FREE,
             </if>
-            <if test="bdhwUsed != null" >
+            <if test="bdhwUsed != null">
                 BDHW_USED,
             </if>
-            <if test="bdhwFree != null" >
+            <if test="bdhwFree != null">
                 BDHW_FREE,
             </if>
-            <if test="time != null" >
+            <if test="time != null">
                 TIME,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="ggUsed != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="ggUsed != null">
                 #{ggUsed,jdbcType=DECIMAL},
             </if>
-            <if test="ggFree != null" >
+            <if test="ggFree != null">
                 #{ggFree,jdbcType=DECIMAL},
             </if>
-            <if test="lcUsed != null" >
+            <if test="lcUsed != null">
                 #{lcUsed,jdbcType=DECIMAL},
             </if>
-            <if test="lcFree != null" >
+            <if test="lcFree != null">
                 #{lcFree,jdbcType=DECIMAL},
             </if>
-            <if test="hwyzxUsed != null" >
+            <if test="hwyzxUsed != null">
                 #{hwyzxUsed,jdbcType=DECIMAL},
             </if>
-            <if test="hwyzxFree != null" >
+            <if test="hwyzxFree != null">
                 #{hwyzxFree,jdbcType=DECIMAL},
             </if>
-            <if test="bdhwUsed != null" >
+            <if test="bdhwUsed != null">
                 #{bdhwUsed,jdbcType=DECIMAL},
             </if>
-            <if test="bdhwFree != null" >
+            <if test="bdhwFree != null">
                 #{bdhwFree,jdbcType=DECIMAL},
             </if>
-            <if test="time != null" >
+            <if test="time != null">
                 #{time,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
     <select id="getCCUsage" resultType="map">
-        select hwyzx_used,hwyzx_free from FR_CC_USAGE where time in (select max(time) from FR_CC_USAGE)
+        select use, total - use as free
+        from HW_CC_USEAGE
+        where time in (select max (time) from HW_CC_USEAGE)
+          and ccname='all'
     </select>
 </mapper>

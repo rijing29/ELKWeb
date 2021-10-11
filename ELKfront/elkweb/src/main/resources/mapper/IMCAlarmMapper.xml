@@ -87,6 +87,7 @@
   <!--  查询IMC的IP信息  -->
   <select id="getIMCIP" resultType="map">
     select distinct deviceip from IMC_ALARM t
+    where deviceip!='127.0.0.1'
     order by deviceip ASC
   </select>
 

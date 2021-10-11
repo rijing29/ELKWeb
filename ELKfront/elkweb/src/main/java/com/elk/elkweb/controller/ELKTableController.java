@@ -14,7 +14,6 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import static com.elk.elkweb.controller.ELKController.calOneDayEfficiency;
 
 @Controller
 @RequestMapping("/elk")
@@ -90,10 +89,15 @@ public class ELKTableController {
             String nodeType= (String) nodeInfo.get(i).get("NODE_TYPE");
             String nodeId= nodeInfo.get(i).get("NODE_ID").toString();
             String aveEfficiency = calNodeTypeAveEfficiency(nodeInfo, nodeType, nodeId, startTime, stopTime);
-            aveNodeType[i]=aveEfficiency;
+            if(aveEfficiency.equals("Infinity")){
+                aveNodeType[i]="0%";
+            }else{
+                double value = Double.valueOf(aveEfficiency.toString());
+                aveNodeType[i]=Double.valueOf(new Formatter().format("%.1f",value*100).toString())+"%";
+            }
         }
         for(int i=0;i<aveNodeType.length;i++) {
-            System.out.println(aveNodeType[i]);
+            System.out.println("10月10日输出来的效率：----"+aveNodeType[i]);
         }
         return aveNodeType;
     }
@@ -105,12 +109,16 @@ public class ELKTableController {
      * @method:nodeType计算效率
      */
     public String calNodeTypeAveEfficiency(List<Map<String, Object>> nodeInfo,String nodeType,String nodeId,String startTime,String stopTime){
+        System.out.println("时间："+startTime+"-----"+stopTime);
         int sumTotalWorkLoad = efficiService.nodeTypeEfficiency(nodeType, nodeId, startTime, stopTime);
+        System.out.println("节点分子所有的workload:"+sumTotalWorkLoad);
         NodeSoftMap nodeSoftMap = new NodeSoftMap(nodeType,null,nodeId);
         int sumNodeWorkLoad = efficiService.sumNodeTypeWorkLoad(nodeSoftMap);
+        System.out.println("节点分母要乘的那个数workload:"+sumTotalWorkLoad);
         double aveEfficiency = calOneDayEfficiency(sumTotalWorkLoad, sumNodeWorkLoad);
-        double aveEffici=calAveEfficiency(aveEfficiency);
-        return aveTransferPercen(aveEffici);
+        String aveEffici= String.valueOf(calAveEfficiency(aveEfficiency));
+//        return aveTransferPercen(aveEffici);
+        return aveEffici;
     }
     /**
      * Description:
@@ -168,10 +176,22 @@ public class ELKTableController {
         for(int i=0;i<softName.length;i++){
             Double aveEffici = calSoftNameAveEffici(startTime, stopTime, softName[i]);
             System.out.println("每天的效率为："+aveEffici);
-            ave[i]=aveTransferPercen(aveEffici);
+            ave[i]= String.valueOf(Double.valueOf(new Formatter().format("%.1f",aveEffici*100).toString()))+"%";
+            System.out.println("10月11日输出的效率：----"+ave[i]);
         }
         return ave;
     }
+    /**
+     *@Author:whj
+     *@date:2021-10-1116:09
+     *@Method:获取所有的软件名字
+     */
+//    @ResponseBody
+//    @RequestMapping(value = "/getSoftName",produces = "application/json;charset=utf-8")
+//    public List getSoftName(){
+//        List softNameList = efficiService.getSoftName();
+//        return softNameList;
+//    }
     /**
      * Description:
      * date: 2021/7/22 16:08
@@ -224,7 +244,7 @@ public class ELKTableController {
         //        工作总量（分子）
         System.out.println("即将计算了的softName"+softName);
         int sumTotalWorkLoad = efficiService.softNameEfficiency(softName, startTime, stopTime);
-        double aveEfficiency = calOneDayEfficiency(sumTotalWorkLoad, sumNodeWorkLoad);
+        double aveEfficiency = calOneDaySoftNameEfficiency(softName,sumTotalWorkLoad, sumNodeWorkLoad);
         //        月平均效率
         double aveEffici=calAveEfficiency(aveEfficiency);
         return aveEffici;
@@ -298,4 +318,28 @@ public class ELKTableController {
         float day = 30;
         return total/day;
     }
+    public double calOneDayEfficiency( int sumTotalWorkLoad, int sumNodeWorkLoad){
+//        int wordLoad = efficiService.getSoftNameWordLoad(softName);
+        double fenMu=24*2*sumTotalWorkLoad;        //✖ 4或1
+        double res=sumNodeWorkLoad/fenMu;
+        System.out.println("Total是："+sumTotalWorkLoad);
+        System.out.println("node是："+sumNodeWorkLoad);
+        System.out.println("分子和分母分别是："+fenMu+"-----------"+res);
+        return res;
+    }
+    /**
+     *@Author:whj
+     *@date:2021-10-119:50
+     *@Method:软件报表导出
+     */
+    public double calOneDaySoftNameEfficiency(String softName, int sumTotalWorkLoad, int sumNodeWorkLoad){
+        int wordLoad = efficiService.getSoftNameWordLoad(softName);
+        double fenMu=24*2*wordLoad;        //✖ 4或1
+        double res=sumNodeWorkLoad/fenMu;
+        System.out.println("Total是："+wordLoad);
+        System.out.println("node是："+sumNodeWorkLoad);
+        System.out.println("分子和分母分别是："+fenMu+"-----------"+res);
+        return res;
+    }
+
 }

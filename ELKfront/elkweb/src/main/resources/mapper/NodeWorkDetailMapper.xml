@@ -61,10 +61,10 @@
   </insert>
   <!--软件名效率-->
   <select id="softNameEfficiency" resultType="java.lang.Integer">
-    select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_WORK_DETAIL a,(select NODE_TYPE,NODE_ID from T_NODE_SOFT_MAP where SOFT_NAME=#{softName,jdbcType=VARCHAR})b
+    select nvl(SUM(JOBCOUNT),0) as JOBCOUNT from HW_NODE_USEAGE a,(select NODE_TYPE,NODE_ID from T_NODE_SOFT_MAP where SOFT_NAME=#{softName,jdbcType=VARCHAR})b
     where TIME between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss')
       and to_date(#{stopTime},'yyyy-MM-dd hh24:mi:ss')
-      and a.NODE_TYPE=b.NODE_TYPE and a.NODE_ID=b.NODE_ID
+      and a.NODENAME=b.NODE_TYPE and a.NO=b.NODE_ID
   </select>
   <!--各节点工作量之和-->
   <select id="sumWorkLoad" resultType="java.lang.Integer">
@@ -82,7 +82,7 @@
   </select>
   <!--按节点查询 nodeType效率-->
   <select id="nodeTypeEfficiency" resultType="java.lang.Integer">
-    select nvl(SUM(WORK_LOAD),0) as WORK_LOAD from T_NODE_WORK_DETAIL where NODE_TYPE=#{nodeType,jdbcType=VARCHAR} and NODE_ID=#{nodeId,jdbcType=DECIMAL} and TIME between
+    select nvl(SUM(JOBCOUNT),0) as JOBCOUNT from HW_NODE_USEAGE where NODENAME=#{nodeType,jdbcType=VARCHAR} and NO=#{nodeId,jdbcType=DECIMAL} and TIME between
       to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
   </select>
   <!--nodeType各节点工作之和-->
@@ -103,5 +103,9 @@
   <!--取出softName的所有nodeType和nodeId-->
   <select id="getNodeInfo" resultType="map">
     select NODE_TYPE,NODE_ID from T_NODE_SOFT_MAP where SOFT_NAME=#{softName,jdbcType=VARCHAR}
+  </select>
+  <!--取出node的workLoad-->
+  <select id="getSoftNameWordLoad" resultType="java.lang.Integer">
+    select max(WORK_LOAD) from T_NODE_SOFT_MAP where SOFT_NAME=#{softName,jdbcType=VARCHAR}
   </select>
 </mapper>

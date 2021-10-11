@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        员工刷卡行为分析
+                        DQMDS行为分析
                     </div>
                 </el-col>
             </el-row>
@@ -22,7 +22,7 @@
             </el-row>
             <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
-                <el-col :span="10" style="margin-top: 10%">
+                <el-col :span="10" style="margin-top: 1vh">
                     <el-row >
                         <el-col :span="24" class="border_top">
                             <div class="tableSubTitle">员工 - {{this.name}}</div>

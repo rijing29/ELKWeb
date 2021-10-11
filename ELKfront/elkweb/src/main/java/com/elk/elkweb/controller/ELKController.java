@@ -171,7 +171,6 @@ public class ELKController {
             j++;
             efficicy[i]=aveEffici;
             addThreeDay= addThirstyDay(addThreeDay);
-
         }
         dataResults results = new dataResults();
         results.setKey(months);
@@ -312,6 +311,10 @@ public class ELKController {
             int sumTotalWorkLoad = efficiService.softNameEfficiency(softName, dayStart, dayStop);
             //        日效率
             double oneDayEfficiency = calOneDayEfficiency(sumTotalWorkLoad, sumNodeWorkLoad);
+            if(oneDayEfficiency>=0.95){
+                oneDayEfficiency=0.95;
+            }
+            System.out.println("这次对了吧!!!!"+oneDayEfficiency);
             total=total+oneDayEfficiency;
             String yAxis = splitStartTime(dayStart);
 //            EfficicencyMap.put(yAxis,oneDayEfficiency);
@@ -322,6 +325,7 @@ public class ELKController {
         JSONArray jsonArray = joinJSON(EfficicencyMap);
         System.out.println("json字符串："+jsonArray);
         double aveEffici=calAveEfficiency(startTime,stopTime,total);
+        System.out.println("10月11日生成的月效率:"+aveEffici);
         return aveEffici;
     }
     /**
@@ -414,8 +418,12 @@ public class ELKController {
         Iterator iter = EfficicencyMap.entrySet().iterator();
         while (iter.hasNext()) {
             Map.Entry entry = (Map.Entry) iter.next();
-            Object key = entry.getKey();
-            Object val = entry.getValue();
+            String key = String.valueOf(entry.getKey());
+            String val = String.valueOf(entry.getValue());
+            if(val.equals("Infinity")){
+                val="0";
+            }
+            System.out.println("存进去的value值："+val);
             JSONObject object = new JSONObject();
             object.put("time",key);
             object.put("efficiency",val);
@@ -449,7 +457,12 @@ public class ELKController {
         for (Map.Entry<String, Double> entry : EfficiencyMap.entrySet()) {
             String num = entry.getKey();
             double count = entry.getValue();
+            System.out.println("这次应该是对的了的效率值："+count);
             System.out.println(num+"---"+count);
+            String s=String.valueOf(count);
+            if(s.equals("Infinity")){
+                count=0;
+            }
             key[j]=num;
             value[j]=count;
             j++;
@@ -545,9 +558,13 @@ public class ELKController {
      * @author: whj
      * @method:日效率计算
      */
-    public static double calOneDayEfficiency(int sumTotalWorkLoad,int sumNodeWorkLoad){
-        double fenMu=24*2*sumNodeWorkLoad;
-        double res=sumTotalWorkLoad/fenMu;
+    public double calOneDayEfficiency( int sumTotalWorkLoad, int sumNodeWorkLoad){
+//        int wordLoad = efficiService.getSoftNameWordLoad(softName);
+        double fenMu=24*2*sumTotalWorkLoad;        //✖ 4或1
+        double res=sumNodeWorkLoad/fenMu;
+        System.out.println("Total是："+sumTotalWorkLoad);
+        System.out.println("node是："+sumNodeWorkLoad);
+        System.out.println("分子和分母分别是："+fenMu+"-----------"+res);
         return res;
     }
     /**

@@ -38,7 +38,8 @@
 
   <!--  查询IPMI告警信息  -->
   <select id="getIPMIAlarm" resultMap="BaseResultMap">
-    select * from IPMI_LOG_WARN t
+    select distinct ip, info, time
+    from IPMI_LOG_WARN t
     where time between (select max(time)-7 from IPMI_LOG_WARN) and (select max(time) from IPMI_LOG_WARN)
     order by time desc
   </select>

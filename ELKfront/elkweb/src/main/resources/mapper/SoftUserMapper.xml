@@ -2,24 +2,26 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.elk.elkweb.mapper.SoftUserMapper">
     <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.NodeSoftMap">
-        <id column="NODE_ID" jdbcType="DECIMAL" property="nodeId" />
-        <id column="NODE_TYPE" jdbcType="VARCHAR" property="nodeType" />
-        <id column="SOFT_NAME" jdbcType="VARCHAR" property="softName" />
-        <result column="WORK_LOAD" jdbcType="DECIMAL" property="workLoad" />
+        <id column="NODE_ID" jdbcType="DECIMAL" property="nodeId"/>
+        <id column="NODE_TYPE" jdbcType="VARCHAR" property="nodeType"/>
+        <id column="SOFT_NAME" jdbcType="VARCHAR" property="softName"/>
+        <result column="WORK_LOAD" jdbcType="DECIMAL" property="workLoad"/>
     </resultMap>
     <sql id="Base_Column_List">
-        NODE_ID, NODE_TYPE, SOFT_NAME, WORK_LOAD
+        NODE_ID
+        , NODE_TYPE, SOFT_NAME, WORK_LOAD
     </sql>
     <select id="selectByPrimaryKey" parameterType="com.elk.elkweb.entity.NodeSoftMapKey" resultMap="BaseResultMap">
         select
-        <include refid="Base_Column_List" />
+        <include refid="Base_Column_List"/>
         from T_NODE_SOFT_MAP
         where NODE_ID = #{nodeId,jdbcType=DECIMAL}
         and NODE_TYPE = #{nodeType,jdbcType=VARCHAR}
         and SOFT_NAME = #{softName,jdbcType=VARCHAR}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="com.elk.elkweb.entity.NodeSoftMapKey">
-        delete from T_NODE_SOFT_MAP
+        delete
+        from T_NODE_SOFT_MAP
         where NODE_ID = #{nodeId,jdbcType=DECIMAL}
           and NODE_TYPE = #{nodeType,jdbcType=VARCHAR}
           and SOFT_NAME = #{softName,jdbcType=VARCHAR}
@@ -63,15 +65,57 @@
     </insert>
     <!--查询软件-->
     <select id="getSoftName" resultType="map">
-        select distinct soft_name from T_NODE_SOFT_MAP
+        select distinct soft_name
+        from T_NODE_SOFT_MAP
     </select>
     <!--根据软件名查询一周内用户数据-->
     <select id="getSoft_userInfo" resultType="map">
-        select user_name,sum(work_load)/10 as useTime from T_NODE_WORK_DETAIL
-        where node_type in(select distinct(node_type) from T_NODE_SOFT_MAP where soft_name=#{softName,jdbcType=VARCHAR})
-        and node_id in(select node_id from T_NODE_SOFT_MAP where soft_name=#{softName,jdbcType=VARCHAR})
-        and time between (select max(time)-7 from T_NODE_WORK_DETAIL) and (select max(time) from T_NODE_WORK_DETAIL)
-        group by user_name
+        select users, sum(jobcount) / 10 as useTime
+        from HW_NODE_USEAGE
+        where nodename in
+              (select distinct(node_type) from T_NODE_SOFT_MAP where soft_name = #{softName,jdbcType=VARCHAR})
+          and no in (select node_id from T_NODE_SOFT_MAP where soft_name=#{softName,jdbcType=VARCHAR})
+          and time between (select max (time)-7 from HW_NODE_USEAGE)
+          and (select max (time) from HW_NODE_USEAGE)
+        group by users
+    </select>
+
+
+    <select id="getMaxTime" resultType="java.lang.String">
+        select max(time)
+        from HW_NODE_USEAGE
+    </select>
+
+    <select id="getWork_load" resultType="java.lang.Double">
+        select nvl(sum(work_load), 0) as work_load
+        from T_NODE_SOFT_MAP
+        where soft_name = #{soft_name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getSumJob" resultType="java.lang.Double">
+        select nvl(sum(jobcount), 0) as sumJob
+        from (
+                 select *
+                 from HW_NODE_USEAGE a,
+                      T_NODE_SOFT_MAP b
+                 where a.nodename = b.node_type
+                   and a.no = b.node_id
+                   and time between to_date('2021/8/7 00:00:00'
+                     , 'yyyy-MM-dd hh24:mi:ss')
+                   and to_date('2021/8/7 23:59:59'
+                     , ' yyyy-MM-dd hh24:mi:ss')
+                   and users='zhaozh'
+             )
+        where soft_name = #{soft_name,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getsoftname" resultType="Map">
+        select distinct soft_name
+        from HW_NODE_USEAGE a,
+             T_NODE_SOFT_MAP b
+        where users = #{users,jdbcType=VARCHAR}
+          and a.nodename = b.node_type
+          and a.no = b.node_id
     </select>
 
 </mapper>

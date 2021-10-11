@@ -11,4 +11,5 @@ import java.util.Map;
 public interface ZAHostsErrorMapper {
     //    查询
     List<Map< String, Object >> serachZAError();
+    List<Map< String, Object >> searchWinlogbeats();
 }

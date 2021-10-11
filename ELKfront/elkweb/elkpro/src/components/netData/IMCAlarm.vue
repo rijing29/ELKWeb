@@ -23,7 +23,7 @@
             </el-row>
             <el-row>
                 <!--————表格区域 begin————-->
-                <el-col :span="24">
+                <el-col :span="24" v-if="haveData">
                     <el-row >
                         <el-col :span="24" class="border_top">
                             <div style="height: 50px"></div>
@@ -33,9 +33,7 @@
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
-                                <el-table v-if="haveData"
-                                          :data="tableData"
-                                          style="width: 95%;margin: auto;header-align: center;">
+                                <el-table :data="tableData" style="width: 95%;margin: auto;header-align: center;">
                                     <el-table-column prop="DEVICEIP" label="设备IP" align="center"></el-table-column>
                                     <el-table-column prop="ALARMLEVEL" label="告警级别" align="center"></el-table-column>
                                     <el-table-column prop="ALARMCATEGORYDESC" label="告警类别信息" align="center"></el-table-column>
@@ -69,19 +67,16 @@ export default {
     name: "IMCAlarm",
     data(){
         return{
-            haveData:true,//表格是否有数据
+            haveData:false,//表格是否有数据
             filtration:false,//是否过滤低级警告
-            ip_options:[
-                {ip_value:1,label:'192.168.64.160'},
-                {ip_value:2,label:'192.168.64.145'},
-            ],
+            ip_options:[],
             ip_value:'',
             tableData:[],
         }
     },
     created(){
         this.getIMCIP()
-        this.getIMCInfo()
+        // this.getIMCInfo()
     },
     watch:{
         ip_value:function (newV, oldV){
@@ -116,6 +111,7 @@ export default {
                 'filtration':this.filtration,
             }
             this.$http.get(url, {params}).then(res => {
+                this.haveData=true
                 this.tableData=res.data
                 console.log(res.data)
             })

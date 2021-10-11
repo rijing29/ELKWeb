@@ -34,6 +34,7 @@ import serverWin from "../components/server/serverWin";
 import serveStorage from "../components/server/serveStorage";
 import siteDeviceInfo from "../components/siteDevice/siteDeviceInfo";
 import searchZabbixAgent from "@/components/TroubleSearch/searchZabbixAgent";
+import searchWinlogbeats from "@/components/TroubleSearch/searchWinlogbeats";
 import epyBehaviorProfile from "@/components/employee/epyBehaviorProfile";
 
 // import searchZabbixAgent from "../components/TroubleSearch/searchZabbixAgent";
@@ -78,6 +79,7 @@ const routes = [
             {path: '/memUse', name: 'memUse', component: memUse},
             {path: '/siteDeviceInfo', name: 'siteDeviceInfo', component: siteDeviceInfo},
             {path: '/searchZabbixAgent',name:'searchZabbixAgent',component: searchZabbixAgent},
+            {path: '/searchWinlogbeats',name:'searchWinlogbeats',component: searchWinlogbeats},
             {path: '/softOfUser',name:'softOfUser',component: softOfUser},
         ]
     },

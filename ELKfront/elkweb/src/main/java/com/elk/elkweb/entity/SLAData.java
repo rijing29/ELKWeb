@@ -5,7 +5,18 @@ import java.util.Arrays;
 public class SLAData {
     private String SOFTWARENAME[];
     private String SUMTIME[];
+
+    public Double[] getFREQUENCY() {
+        return FREQUENCY;
+    }
+
+    public void setFREQUENCY(Double[] FREQUENCY) {
+        this.FREQUENCY = FREQUENCY;
+    }
+
     private Double FREQUENCY[];
+
+
     private String OPTION[];
     private String MODULENAME[];
 
@@ -25,20 +36,12 @@ public class SLAData {
         return SUMTIME;
     }
 
-    public Double[] getFREQUENCY() {
-        return FREQUENCY;
-    }
-
     public void setSOFTWARENAME(String[] SOFTWARENAME) {
         this.SOFTWARENAME = SOFTWARENAME;
     }
 
     public void setSUMTIME(String[] SUMTIME) {
         this.SUMTIME = SUMTIME;
-    }
-
-    public void setFREQUENCY(Double[] FREQUENCY) {
-        this.FREQUENCY = FREQUENCY;
     }
 
     @Override

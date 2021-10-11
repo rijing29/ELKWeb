@@ -29,11 +29,33 @@ public class EquipStateServiceImpl implements EquipStateService{
         List<Map<String, Object>> equipStateMapperGPU = equipStateMapper.getGPU();
         return equipStateMapperGPU;
     }
-    //      软件使用率
-    public List<Map<String, Object>> getSoftWareEfficiency() {
-        List<Map<String, Object>> softWareEfficiency = softWareEfficiencyMapper.getSoftWareEfficiency();
-        return softWareEfficiency;
+
+    @Override
+    public String getMaxTime() {
+        String maxTime = softWareEfficiencyMapper.getMaxTime();
+        return maxTime;
     }
+
+    @Override
+    public List<Map<String,Object>> getSoftName() {
+        List<Map<String,Object>> softName = softWareEfficiencyMapper.getSoftName();
+        return softName;
+    }
+
+    @Override
+    public Double getSumJob(String soft_name, String startTime, String stoptime) {
+        Double sumJob = softWareEfficiencyMapper.getSumJob(soft_name, startTime, stoptime);
+        return sumJob;
+    }
+
+    @Override
+    public Double getSumWork(String soft_name) {
+        Double sumWork = softWareEfficiencyMapper.getSumWork(soft_name);
+        return sumWork;
+    }
+
+    //      软件使用率
+
     //      获取存储系统使用
     public List<Map<String, Object>> getCCUsage() {
         List<Map<String, Object>> ccUsage = ccUsageMapper.getCCUsage();

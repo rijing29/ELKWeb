@@ -14,12 +14,14 @@ public interface EfficiService {
     int softNameEfficiency(String softName, String startTime, String stopTime);
     // 各节点工作量之和
     int sumWorkLoad(NodeSoftMap nodeSoftMap);
-//    nodeType效率
+    //    nodeType效率
     int nodeTypeEfficiency(String nodeType,String nodeId,String startTime,String stopTime);
-//    nodeType各节点工作量之和
+    //    nodeType各节点工作量之和
     int sumNodeTypeWorkLoad(NodeSoftMap nodeSoftMap);
-//取出所有的softName
+    //取出所有的softName
     List getSoftName();
-//    根据softName取出nodeType和nodeId
+    //    根据softName取出nodeType和nodeId
     List<Map< String, Object >> getNodeInfo(String softName);
+    //    查出它乘4还是1
+    int getSoftNameWordLoad(String softName);
 }

@@ -1,5 +1,6 @@
 package com.elk.elkweb.service;
 
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -13,7 +14,10 @@ public interface EquipStateService {
     //    获取gpu
     List< Map< String, Object > > getGPU();
     //    软件使用率
-    List< Map< String, Object > > getSoftWareEfficiency();
+    String getMaxTime();
+    List<Map<String,Object>> getSoftName();
+    Double getSumJob(String soft_name,String startTime, String stoptime);
+    Double getSumWork(String soft_name);
     //    获取存储系统使用
     List< Map< String, Object > > getCCUsage();
 }

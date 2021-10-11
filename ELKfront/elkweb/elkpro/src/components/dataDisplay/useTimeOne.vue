@@ -200,7 +200,7 @@ export default {
                         inverse: true,//翻转坐标轴
                         axisLabel:{color:"#ffffff"},//Y轴底部标签颜色
                         type: 'category',
-                        data: ['software1', 'software2', 'software3', 'software4', 'software5']
+                        data: []
                     }
                 ],
                 series: [
@@ -222,7 +222,7 @@ export default {
                                 }], false)
                             }
                         },
-                        data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7]
+                        data: []
                     },
                 ]
             },

@@ -70,9 +70,6 @@
 <script>
 export default {
     watch: {
-        softName_value: function (newV, oldV) {
-            this.softName = newV
-        },
         yearvalue: function (newV, oldV) {
             this.year = newV
         },
@@ -82,17 +79,11 @@ export default {
     },
     data() {
         return {
-            haveData:false,
+            haveData:true,
             fullscreenLoading: false,
             year: '',
             month: '',
-            softName: '',
             tableData: [],
-            softName_options: [{softName_value: '选项1', label: 'Geoeast'},
-                {softName_value: '选项2', label: 'GEOEASTDL'},
-                {softName_value: '选项3', label: 'Pardiam'},
-                {softName_value: '选项4', label: 'WCC'}],
-            softName_value: '',
             month_options: [{monthvalue: '选项1', label: '1'},
                 {monthvalue: '选项2', label: '2'},
                 {monthvalue: '选项3', label: '3'},
@@ -118,45 +109,49 @@ export default {
         // this.getSoftName();
     },
     methods: {
-        getNodeTypeEffi() {
+        getSoftName() {
+            var url = "/searchSoftName"
+            this.$http.get(url).then(res => {
+                this.tableData = res.data
+                console.log(res)
+            })
+        },
+        searchSoftNameEfficiency() {
+            console.log(this.year)
+            console.log(this.month)
             this.fullscreenLoading = true;
             setTimeout(() => {
                 this.fullscreenLoading = false;
             }, 500);
-            var url = "/searchNodeTypeEfficiency"
+            var url = "/searchSoftNameEfficiency"
             var params = {
-                'softName': this.softName,
                 'year': this.year,
                 'month': this.month,
             }
             this.$http.get(url, {params}).then(res => {
                 this.haveData=true
-                console.log(res)
                 this.tableData = res.data
                 console.log(this.tableData)
             })
         },
-
         //导出excel的信息集合
         export2Excel() {
             require.ensure([], () => {
                 const {export_json_to_excel} = require("../../tools/Export2Excel.js");
                 // 设置自己的excel表头
                 const tHeader = [
-                    "节点名",
-                    "节点编号",
+                    "软件名",
                     "时间",
-                    "效率",
+                    "月平均效率",
                 ]; // 上面设置Excel的表格第一行的标题
                 const filterVal = [
-                    "nodeType",
-                    "nodeId",
+                    "softName",
                     "time",
                     "efficiency",
                 ]; // client_id client_name client_phone 为tableData的属性
                 const list = this.tableData; //把data里的tableData存到list
                 const data = this.formatJson(filterVal, list);
-                export_json_to_excel(tHeader, data, "节点效率excel");
+                export_json_to_excel(tHeader, data, "软件名效率excel");
             });
         },
         formatJson(filterVal, jsonData) {

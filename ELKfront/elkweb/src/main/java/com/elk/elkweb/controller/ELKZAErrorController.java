@@ -21,4 +21,17 @@ public class ELKZAErrorController {
         List<Map<String, Object>> serachZAError = zaService.serachZAError();
         return serachZAError;
     }
+
+    /**
+     * DaPingKuoLuo
+     * 2121/10/10 21:27
+     *
+     * */
+
+    @RequestMapping(value = "/searchWinlogbeats",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List searchWinlogbeats(){
+        List<Map<String, Object>> Winlogbeats = zaService.searchWinlogbeats();
+        return Winlogbeats;
+    }
 }

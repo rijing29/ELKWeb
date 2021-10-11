@@ -23,7 +23,7 @@ public class EfficiServiceImpl implements EfficiService {
         int res = efficiMapper.sumWorkLoad(nodeSoftMap);
         return res;
     }
-//    nodeType效率
+    //    nodeType效率
     public int nodeTypeEfficiency(String nodeType, String nodeId, String startTime, String stopTime) {
         int res = efficiMapper.nodeTypeEfficiency(nodeType, nodeId, startTime, stopTime);
         return res;
@@ -34,15 +34,20 @@ public class EfficiServiceImpl implements EfficiService {
         return res;
     }
 
-//    取出所有的softName
+    //    取出所有的softName
     public List getSoftName() {
         List softName = efficiMapper.getSoftName();
         return softName;
     }
 
-//    根据softName取出nodeType和nodeId
+    //    根据softName取出nodeType和nodeId
     public List<Map< String, Object >> getNodeInfo(String softName) {
         List nodeInfo = efficiMapper.getNodeInfo(softName);
         return nodeInfo;
+    }
+    //取出work_load是4还是1
+    public int getSoftNameWordLoad(String softName) {
+        int wordLoad = efficiMapper.getSoftNameWordLoad(softName);
+        return wordLoad;
     }
 }

@@ -52,7 +52,7 @@ export default {
     this.getZAErrors();
   },
   methods: {
-    getZAErrors(){
+    getZAErrors(){//ZAHostsErrorMapper.xml
       var url="/searchZAError"
       this.$http.get(url).then(res=>{
         console.log(res)

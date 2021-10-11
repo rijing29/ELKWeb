@@ -1,50 +1,72 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.elk.elkweb.mapper.SoftWareEfficiencyMapper" >
-    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.SoftWareEfficiency" >
-        <result column="GEOEAST" property="geoeast" jdbcType="DECIMAL" />
-        <result column="ES360" property="es360" jdbcType="DECIMAL" />
-        <result column="QPSTM" property="qpstm" jdbcType="DECIMAL" />
-        <result column="TIME" property="time" jdbcType="TIMESTAMP" />
+<mapper namespace="com.elk.elkweb.mapper.SoftWareEfficiencyMapper">
+    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.SoftWareEfficiency">
+        <result column="GEOEAST" property="geoeast" jdbcType="DECIMAL"/>
+        <result column="PWIN" property="es360" jdbcType="DECIMAL"/>
+        <result column="QPSTM" property="qpstm" jdbcType="DECIMAL"/>
+        <result column="TIME" property="time" jdbcType="TIMESTAMP"/>
     </resultMap>
-    <insert id="insert" parameterType="com.elk.elkweb.entity.SoftWareEfficiency" >
-        insert into FR_HW_SOFTWAREUSAGE (GEOEAST, ES360, QPSTM,
+    <insert id="insert" parameterType="com.elk.elkweb.entity.SoftWareEfficiency">
+        insert into FR_HW_SOFTWAREUSAGE (GEOEAST, PWIN, QPSTM,
                                          TIME)
         values (#{geoeast,jdbcType=DECIMAL}, #{es360,jdbcType=DECIMAL}, #{qpstm,jdbcType=DECIMAL},
                 #{time,jdbcType=TIMESTAMP})
     </insert>
-    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.SoftWareEfficiency" >
+    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.SoftWareEfficiency">
         insert into FR_HW_SOFTWAREUSAGE
-        <trim prefix="(" suffix=")" suffixOverrides="," >
-            <if test="geoeast != null" >
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="geoeast != null">
                 GEOEAST,
             </if>
-            <if test="es360 != null" >
-                ES360,
+            <if test="es360 != null">
+                PWIN,
             </if>
-            <if test="qpstm != null" >
+            <if test="qpstm != null">
                 QPSTM,
             </if>
-            <if test="time != null" >
+            <if test="time != null">
                 TIME,
             </if>
         </trim>
-        <trim prefix="values (" suffix=")" suffixOverrides="," >
-            <if test="geoeast != null" >
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="geoeast != null">
                 #{geoeast,jdbcType=DECIMAL},
             </if>
-            <if test="es360 != null" >
+            <if test="es360 != null">
                 #{es360,jdbcType=DECIMAL},
             </if>
-            <if test="qpstm != null" >
+            <if test="qpstm != null">
                 #{qpstm,jdbcType=DECIMAL},
             </if>
-            <if test="time != null" >
+            <if test="time != null">
                 #{time,jdbcType=TIMESTAMP},
             </if>
         </trim>
     </insert>
-    <select id="getSoftWareEfficiency" resultType="map">
-        select GEOEAST,ES360,QPSTM from FR_HW_SOFTWAREUSAGE where time in (select max(time) from FR_HW_SOFTWAREUSAGE )
+    <select id="getMaxTime" resultType="java.lang.String">
+        SELECT MAX(time)
+        from HW_NODE_USEAGE
     </select>
+    <select id="getSoftName" resultType="map">
+        SELECT distinct soft_name
+        from T_NODE_SOFT_MAP
+    </select>
+
+    <select id="getSumJob" resultType="java.lang.Double">
+        select nvl(sum(jobcount), 0) as sumJob
+        from T_NODE_SOFT_MAP a,
+             HW_NODE_USEAGE b
+        where a.node_type = b.nodename
+          and a.node_id = b.no
+          and soft_name = #{soft_name,jdbcType=VARCHAR}
+          and B.TIME between to_date(#{startTime}, 'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime}, ' yyyy-MM-dd hh24:mi:ss')
+    </select>
+
+    <select id="getSumWork" resultType="java.lang.Double">
+        select nvl(sum(work_load), 0) as sumWork
+        from T_NODE_SOFT_MAP
+        where soft_name = #{soft_name,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

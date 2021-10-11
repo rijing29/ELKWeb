@@ -162,14 +162,19 @@ export default {
             selectMethod_value: '',
             //软件名下拉框值
             software_options: [
-                {software_value: '选项1', label: 'GEOEASTDL'},
-                {software_value: '选项2', label: 'GEOEAST'},
-                {software_value: '选项3', label: 'PWIN'},
-                {software_value: '选项4', label: 'TOMODEL'},
-                {software_value: '选项5', label: 'PARADIGM'},
+                {software_value: '选项1', label: 'GEOEAST'},
+                {software_value: '选项2', label: 'GEOEASTDL'},
+                {software_value: '选项3', label: 'Pardiam'},
+                {software_value: '选项4', label: 'WCC'},
+                {software_value: '选项5', label: 'PSTM'},
                 {software_value: '选项6', label: 'PARADIGMDL'},
                 {software_value: '选项7', label: 'ZHIKONG'},
-                {software_value: '选项8', label: 'PSTM'}
+                {software_value: '选项8', label: 'TOMODEL'},
+                {software_value: '选项9', label: 'PARADIGM'},
+                {software_value: '选项10', label: 'PSTM'},
+                {software_value: '选项11', label: 'GEOEAST'},
+                {software_value: '选项12', label: 'GEOEASTDL'},
+                {software_value: '选项13', label: 'Geoeast'}
             ],
             software_value: '',
             //节点名下拉框值
@@ -365,9 +370,7 @@ export default {
                         //
                     })
                 }
-
             } else if (this.month_value !== null) {
-                this.haveData=true
                 console.log(this.Time)
                 this.Time = this.month_value;
                 if(this.Time.length!==0){
@@ -387,7 +390,6 @@ export default {
                         // this.option.title.subtext='平均效率：'+res.data.ave
                     })
                 }
-
             }
         }
     },
