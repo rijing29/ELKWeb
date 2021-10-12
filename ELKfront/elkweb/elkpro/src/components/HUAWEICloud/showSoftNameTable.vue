@@ -10,7 +10,11 @@
             </el-row>
             <el-row>
                 <el-col :span="24">
-
+                    请选择一个软件名：
+                    <el-select v-model="softName_value" placeholder="请选择">
+                        <el-option v-for="item in softName_options" :key="item.softName_value" :label="item.label"
+                                   :value="item.label"></el-option>
+                    </el-select>
                     请选择一个年份：
                     <el-select v-model="yearvalue" placeholder="请选择">
                         <el-option v-for="item in year_options" :key="item.yearvalue" :label="item.label"
@@ -21,7 +25,7 @@
                         <el-option v-for="item in month_options" :key="item.monthvalue" :label="item.label"
                                    :value="item.label"></el-option>
                     </el-select>
-                    <el-button icon="el-icon-search" type="primary" @click="searchSoftNameEfficiency"
+                    <el-button icon="el-icon-search" type="primary" @click="getNodeTypeEffi"
                                v-loading.fullscreen.lock="fullscreenLoading">查询
                     </el-button>
                     <el-button icon="el-icon-search" type="primary" @click="export2Excel">导出excel</el-button>
@@ -38,10 +42,15 @@
                         <el-row>
                             <el-col :span="24">
                                 <div class="table-wrapper">
-                                    <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                        <el-table-column prop="softName" label="软件名" width="360" align="center"></el-table-column>
-                                        <el-table-column prop="time" label="时间" width="360" align="center"></el-table-column>
-                                        <el-table-column prop="efficiency" label="效率" align="center"></el-table-column>
+                                    <el-table :data="tableData"
+                                              :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                        <el-table-column prop="nodeType" label="节点名"
+                                                         align="center"></el-table-column>
+                                        <el-table-column prop="nodeId" label="节点编号"
+                                                         align="center"></el-table-column>
+                                        <el-table-column prop="time" label="时间" align="center"></el-table-column>
+                                        <el-table-column prop="efficiency" label="效率"
+                                                         align="center"></el-table-column>
                                     </el-table>
                                 </div>
                             </el-col>
