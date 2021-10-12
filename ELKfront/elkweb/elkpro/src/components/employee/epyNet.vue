@@ -33,7 +33,7 @@
                             <div class="table-wrapper">
                                 <!-- 外表格 begin-->
                                 <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;">
-                                    <el-table-column prop="TIME" label="日期" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" :formatter="dateForma" label="日期" align="center"></el-table-column>
                                     <el-table-column prop="WORKCOUNTSOFWORKTIME" label="工作时间 - 工作网站" align="center"></el-table-column>
                                     <el-table-column prop="OTHERCOUNTSOFWORKTIME" label="工作时间 - 搜索网站" align="center"></el-table-column>
                                     <el-table-column prop="PLAYCOUNTSOFWORKTIME" label="工作时间 - 娱乐网站" align="center"></el-table-column>
@@ -57,6 +57,8 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
     name: "epyNet",
     data(){
@@ -68,7 +70,12 @@ export default {
     },
 
     methods: {
-        getEpyNetInfo(){
+        dateForma:function(row,column){//表格行格式化时间
+            var date = row[column.property];
+            if(date === undefined){return ''};
+            return moment(date).format("YYYY-MM-DD")
+        },
+        getEpyNetInfo(){//DoorInfoMappr.xml - ELKEPYController.java
             var url = '/getEpyNetInfo'
             var params={'username':this.username}
             this.$http.get(url,{params}).then(res =>{

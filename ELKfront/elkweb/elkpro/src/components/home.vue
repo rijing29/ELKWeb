@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>资源管理系统</el-header>
+        <el-header>研究院日志管理系统</el-header>
         <el-container>
             <el-aside width="300px">
                 <h5 class="title">导航栏</h5>

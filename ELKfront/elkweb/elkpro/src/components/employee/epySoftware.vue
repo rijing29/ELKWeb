@@ -41,11 +41,11 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table
-                                        height="500"
+                                        height="600"
                                         ref="singleTable"
                                         :data="tableDataInfo"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="time" label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="time" :formatter="dateForma" label="时间" align="center"></el-table-column>
                                     <el-table-column prop="username" label="用户名" align="center"></el-table-column>
                                     <el-table-column prop="softwarename" label="软件系统的名称"align="center"></el-table-column>
                                     <el-table-column prop="modulename" label="软件系统模块名称" align="center"></el-table-column>
@@ -74,10 +74,11 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table
+                                        height="600"
                                         ref="singleTable"
                                         :data="tableDataSum"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" :formatter="dateForma" label="时间" align="center"></el-table-column>
                                     <el-table-column prop="SUM(WORKUSEMINTUE)" label="加班时间(分钟)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
@@ -113,6 +114,7 @@ echarts.use(
         [TooltipComponent, LegendComponent, PieChart, CanvasRenderer]
 );
 import VChart, { THEME_KEY } from "vue-echarts";
+import moment from "moment";
 export default {
     name: "epySoftware",
     components: {
@@ -148,92 +150,13 @@ export default {
         this.getEpySoftWareUsage()
     },
     methods:{
-        getDate(){//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
-            this.date=date.toLocaleString()
-        },
-        getIPSAnalysis(){//渲染数据
-            var url="/getIPSAnalysis"
-            var params={
-                'time':this.date,
-            }
-            this.$http.get(url,{params}).then(res=>{
-                /*————渲染分析表格数据 begin————*/
-                while (this.tableData.length !== 0) {
-                    this.tableData.pop()
-                }
-                var i;
-                for (i = 0; i < res.data.time.length; i++) {
-                    this.tableData.push(
-                            {
-                                time: res.data.time[i],
-                                dstipaddr: res.data.dstipaddr[i],
-                                dangervalue: res.data.dangervalue[i],
-                            })
-                }
-                /*————渲染分析表格数据 end————*/
-                /*————渲染饼状图数据 begin————*/
-                while(this.option.series[0].data.length!==0) {
-                    this.option.series[0].data.pop()
-                }
-                if(res.data.low!==0){
-                    this.option.series[0].data.push({value: res.data.low, name: '低'})
-                }
-                if(res.data.middle!==0){
-                    this.option.series[0].data.push({value: res.data.middle, name: '中'})
-                }
-                if(res.data.high!==0){
-                    this.option.series[0].data.push({value: res.data.high, name: '高'})
-                }
-
-                /*————渲染饼状图数据 end————*/
-            })
-        },
-        selectStartTime(val) {//日期选择器
-            this.time = val;
-            if (this.time==null){
-                this.getDate()
-                this.getIPSAnalysis()
-            }
-            else if(this.time!==null){
-                this.date=this.time
-                this.getIPSAnalysis()
-            }
-        },
-        handleSizeChange(val) {
-            // 改变每页显示的条数
-            this.paginations.PageSize=val
-            // 注意：在改变每页显示的条数时，要将页码显示到第一页
-            this.paginations.currentPage=1
-        },
-        // 现在显示当前页的第几页
-        handleCurrentChange(val) {
-            // 改变默认的页数
-            this.paginations.currentPage=val
-        },
-        formatter (thistime, fmt) {//js格式化时间
-            let $this = new Date(thistime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
+        dateForma:function(row,column){//表格行格式化时间
+            var date = row[column.property];
+            if(date === undefined){return ''};
+            return moment(date).format("YYYY-MM-DD")
         },
         //员工姓名模糊查询
-        getEpyCardInfo(){
+        getEpyCardInfo(){//EpySoftWareUsageMapper.xml - ELKEPYController.java
             this.haveData=true;
             this.haveData1=true;
             this.haveData3=false;

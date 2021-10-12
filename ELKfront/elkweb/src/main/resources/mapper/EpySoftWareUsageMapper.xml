@@ -1,77 +1,91 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.elk.elkweb.mapper.EpySoftWareUsageMapper">
-  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.EpySoftWareUsage">
-    <result column="SOFTWARENAME" jdbcType="VARCHAR" property="softwarename" />
-    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
-    <result column="MODULENAME" jdbcType="VARCHAR" property="modulename" />
-    <result column="USEMINTUE" jdbcType="DECIMAL" property="usemintue" />
-    <result column="WORKUSEMINTUE" jdbcType="DECIMAL" property="workusemintue" />
-    <result column="SPAREUSEMINTUE" jdbcType="DECIMAL" property="spareusemintue" />
-    <result column="TIME" jdbcType="TIMESTAMP" property="time" />
-  </resultMap>
-  <insert id="insert" parameterType="com.elk.elkweb.entity.EpySoftWareUsage">
-    insert into JK_LOGANALYIZE_USERUSAGE (SOFTWARENAME, USERNAME, MODULENAME, 
-      USEMINTUE, WORKUSEMINTUE, SPAREUSEMINTUE, 
-      TIME)
-    values (#{softwarename,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{modulename,jdbcType=VARCHAR}, 
-      #{usemintue,jdbcType=DECIMAL}, #{workusemintue,jdbcType=DECIMAL}, #{spareusemintue,jdbcType=DECIMAL}, 
-      #{time,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.EpySoftWareUsage">
-    insert into JK_LOGANALYIZE_USERUSAGE
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="softwarename != null">
-        SOFTWARENAME,
-      </if>
-      <if test="username != null">
-        USERNAME,
-      </if>
-      <if test="modulename != null">
-        MODULENAME,
-      </if>
-      <if test="usemintue != null">
-        USEMINTUE,
-      </if>
-      <if test="workusemintue != null">
-        WORKUSEMINTUE,
-      </if>
-      <if test="spareusemintue != null">
-        SPAREUSEMINTUE,
-      </if>
-      <if test="time != null">
-        TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="softwarename != null">
-        #{softwarename,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="modulename != null">
-        #{modulename,jdbcType=VARCHAR},
-      </if>
-      <if test="usemintue != null">
-        #{usemintue,jdbcType=DECIMAL},
-      </if>
-      <if test="workusemintue != null">
-        #{workusemintue,jdbcType=DECIMAL},
-      </if>
-      <if test="spareusemintue != null">
-        #{spareusemintue,jdbcType=DECIMAL},
-      </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
-  <select id="showEpySoftWareUsage" parameterType="com.elk.elkweb.entity.EpySoftWareUsage" resultMap="BaseResultMap">
-    select * from JK_LOGANALYIZE_USERUSAGE where rownum <![CDATA[<=]]> 30 and username like concat(concat('%',#{username,jdbcType=VARCHAR}),'%')
-  </select>
-  <select id="showEpySoftWareUsageCount" resultType="map" parameterType="com.elk.elkweb.entity.EpySoftWareUsage" >
-    select time,SUM(WORKUSEMINTUE) from JK_LOGANALYIZE_USERUSAGE where trunc(time) >= trunc((select max(time) from JK_LOGANALYIZE_USERUSAGE),'d')
-    and trunc(time) <![CDATA[<=]]> next_day(trunc((select max(time) from JK_LOGANALYIZE_USERUSAGE),'d'),7) group by time
-  </select>
+    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.EpySoftWareUsage">
+        <result column="SOFTWARENAME" jdbcType="VARCHAR" property="softwarename"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="MODULENAME" jdbcType="VARCHAR" property="modulename"/>
+        <result column="USEMINTUE" jdbcType="DECIMAL" property="usemintue"/>
+        <result column="WORKUSEMINTUE" jdbcType="DECIMAL" property="workusemintue"/>
+        <result column="SPAREUSEMINTUE" jdbcType="DECIMAL" property="spareusemintue"/>
+        <result column="TIME" jdbcType="TIMESTAMP" property="time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.elk.elkweb.entity.EpySoftWareUsage">
+        insert into JK_LOGANALYIZE_USERUSAGE (SOFTWARENAME, USERNAME, MODULENAME,
+                                              USEMINTUE, WORKUSEMINTUE, SPAREUSEMINTUE,
+                                              TIME)
+        values (#{softwarename,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{modulename,jdbcType=VARCHAR},
+                #{usemintue,jdbcType=DECIMAL}, #{workusemintue,jdbcType=DECIMAL}, #{spareusemintue,jdbcType=DECIMAL},
+                #{time,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.EpySoftWareUsage">
+        insert into JK_LOGANALYIZE_USERUSAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="softwarename != null">
+                SOFTWARENAME,
+            </if>
+            <if test="username != null">
+                USERNAME,
+            </if>
+            <if test="modulename != null">
+                MODULENAME,
+            </if>
+            <if test="usemintue != null">
+                USEMINTUE,
+            </if>
+            <if test="workusemintue != null">
+                WORKUSEMINTUE,
+            </if>
+            <if test="spareusemintue != null">
+                SPAREUSEMINTUE,
+            </if>
+            <if test="time != null">
+                TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="softwarename != null">
+                #{softwarename,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="modulename != null">
+                #{modulename,jdbcType=VARCHAR},
+            </if>
+            <if test="usemintue != null">
+                #{usemintue,jdbcType=DECIMAL},
+            </if>
+            <if test="workusemintue != null">
+                #{workusemintue,jdbcType=DECIMAL},
+            </if>
+            <if test="spareusemintue != null">
+                #{spareusemintue,jdbcType=DECIMAL},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="showEpySoftWareUsage" parameterType="com.elk.elkweb.entity.EpySoftWareUsage" resultMap="BaseResultMap">
+        select *
+        from (
+                 select *
+                 from JK_LOGANALYIZE_USERUSAGE
+                 where username like concat(concat('%', #{username,jdbcType=VARCHAR}), '%')
+                 order by time desc
+             )
+        where rownum <![CDATA[<=]]> 30
+
+    </select>
+    <select id="showEpySoftWareUsageCount" resultType="map" parameterType="com.elk.elkweb.entity.EpySoftWareUsage">
+        select time, SUM (WORKUSEMINTUE)
+        from JK_LOGANALYIZE_USERUSAGE
+        where trunc(time) >= trunc((select max (time) from JK_LOGANALYIZE_USERUSAGE)
+            , 'd')
+          and trunc(time) <![CDATA[<=]]> next_day(trunc((select max (time) from JK_LOGANALYIZE_USERUSAGE)
+            , 'd')
+            , 7)
+        group by time
+    </select>
 </mapper>

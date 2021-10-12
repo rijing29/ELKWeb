@@ -95,7 +95,7 @@
 
     <!--  根据姓名查询员工外网浏览信息  -->
     <select id="getEpyNetInfo" resultType="map">
-        select *
+        select distinct t.time,t.ip, t.workcountsofworktime,t.playcountsofworktime,t.othercountsofworktime,t.workcountsofsparetime,t.othercountsofsparetime,t.workdayflag,t.distinctpagecount,t.playtimerateofworktime
         from MAIL_WEBPAGE_TJ t
         where ip in (select ip from PARAMS_IPANDUSER where users = #{username,jdbcType=VARCHAR})
           and time between (select max (time)-7 from MAIL_WEBPAGE_TJ)
