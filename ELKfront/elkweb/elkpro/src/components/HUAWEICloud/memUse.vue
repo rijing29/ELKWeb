@@ -127,7 +127,7 @@ export default {
                     data: ['存储使用情况']
                 },
                 toolbox: {
-                    show: true,
+                    show: false,
                     feature: {
                         mark: {show: false},
                         dataView: {show: false, readOnly: false},
@@ -157,7 +157,7 @@ export default {
                 },
                 xAxis: [
                     {
-                        // axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                         type: 'category',
                         boundaryGap: false,
                         data: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
@@ -165,7 +165,7 @@ export default {
                 ],
                 yAxis: [
                     {
-                        // axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        axisLabel:{color:"#ffffff",formatter: '{value} T',},//X轴底部标签颜色
                         type: 'value'
                     }
                 ],

@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        用户软件使用率统计
+                        用户软件使用时间
                     </div>
                 </el-col>
             </el-row>
@@ -76,7 +76,7 @@ echarts.use(
 );
 import VChart, { THEME_KEY } from "vue-echarts";
 export default {
-    name: "userUsageRate",
+    name: "userUsageTime",
     components: {
         VChart
     },

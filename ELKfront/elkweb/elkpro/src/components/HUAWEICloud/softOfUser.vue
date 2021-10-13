@@ -105,9 +105,10 @@ export default {
                 grid: {left: '3%', right: '10%', bottom: '3%', containLabel: true},
                 xAxis: {
                     name:'使用时间/小时',
-                    nameTextStyle: {color: "#ffffff"},
+                    nameTextStyle: {color: "#ffffff",},
                     axisLabel: {
                         color: "#ffffff",//坐标轴标签文字颜色
+                        formatter: '{value} 小时',
                     },
                     type: 'value',
                     boundaryGap: [0, 0.01],

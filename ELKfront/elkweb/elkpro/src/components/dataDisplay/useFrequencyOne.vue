@@ -83,7 +83,7 @@
                                     </el-table-column>
                                     <el-table-column prop="MODULENAME" label="模块" align="center">
                                     </el-table-column>
-                                    <el-table-column prop="COUNT" label="使用次数" align="center">
+                                    <el-table-column prop="COUNT" label="使用次数（次）" align="center">
                                     </el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
@@ -189,7 +189,7 @@ export default {
                 xAxis: [
                     {
                         position: "top",//X轴标签位置(顶部或底部)
-                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        axisLabel:{color:"#ffffff",formatter: '{value} 次',},//X轴底部标签颜色
                         type: 'value', boundaryGap: [0, 0.01],
                     }
                 ],

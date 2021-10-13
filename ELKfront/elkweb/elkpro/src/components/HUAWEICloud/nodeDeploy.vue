@@ -5,7 +5,7 @@
                 <el-row>
                     <el-col :span="24" align="left">
                         <div class="title">
-                            云节点部署
+                            节点作业规划
                         </div>
                     </el-col>
                 </el-row>
@@ -61,7 +61,7 @@
                                                 <el-table-column prop="nodeType" label="节点名" align="center"></el-table-column>
                                                 <el-table-column prop="softName" label="软件名" align="center"></el-table-column>
                                                 <el-table-column prop="nodeId" label="起始和截止节点" align="center"></el-table-column>
-                                                <el-table-column prop="workLoad" label="工作量" align="center"></el-table-column>
+                                                <el-table-column prop="workLoad" label="作业规划数" align="center"></el-table-column>
                                             </el-table>
                                         </div>
                                     </el-col>

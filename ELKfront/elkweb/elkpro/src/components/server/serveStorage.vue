@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        存储使用情况
+                        公共存储日志
                     </div>
                 </el-col>
             </el-row>
@@ -117,7 +117,7 @@ export default {
                     data: ['存储使用情况']
                 },
                 toolbox: {
-                    show: true,
+                    show: false,
                     feature: {
                         mark: {show: false},
                         dataView: {show: false, readOnly: false},
@@ -155,7 +155,7 @@ export default {
                 ],
                 yAxis: [
                     {
-                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        axisLabel:{color:"#ffffff",formatter: '{value} T',},//X轴底部标签颜色
                         type: 'value'
                     }
                 ],

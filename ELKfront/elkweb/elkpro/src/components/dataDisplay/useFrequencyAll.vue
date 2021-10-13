@@ -74,7 +74,7 @@
                             <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                 <el-table-column prop="SOFTWARENAME" label="软件" align="center">
                                 </el-table-column>
-                                <el-table-column prop="COUNT" label="使用频率" align="center">
+                                <el-table-column prop="COUNT" label="使用频率（次）" align="center">
                                 </el-table-column>
                             </el-table>
                             <!--————表格 end————-->
@@ -176,7 +176,7 @@ export default {
                 xAxis: [
                     {
                         position: "top",//X轴标签位置(顶部或底部)
-                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        axisLabel:{color:"#ffffff",formatter: '{value} 次',},//X轴底部标签颜色
                         type: 'value',
                         boundaryGap: [0, 0.01],
 

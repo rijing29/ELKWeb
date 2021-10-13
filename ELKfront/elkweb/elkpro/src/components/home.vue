@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>研究院日志管理系统</el-header>
+        <el-header>企业级日志智能化分析系统</el-header>
         <el-container>
             <el-aside width="300px">
                 <h5 class="title">导航栏</h5>
@@ -78,7 +78,7 @@
                         </template>
                         <el-menu-item index="/serverPublic">公共服务器性能数据</el-menu-item>
                         <el-menu-item index="/serverWin">Windows服务器日志</el-menu-item>
-                        <el-menu-item index="/serveStorage">存储使用情况</el-menu-item>
+                        <el-menu-item index="/serveStorage">公共存储日志</el-menu-item>
                     </el-submenu>
                     <el-submenu index="6">
                         <template slot="title">
@@ -90,12 +90,12 @@
                             <el-menu-item index="/deviceState">设备状态统计</el-menu-item>
                             <el-menu-item index="/memUse">存储使用情况</el-menu-item>
                             <el-menu-item index="/softwareLicense">软件许可信息</el-menu-item>
-                            <el-menu-item index="/userUseRate">用户软件使用率统计</el-menu-item>
+                            <el-menu-item index="/userUseTime">用户软件使用时间</el-menu-item>
                         </el-submenu>
                         <el-submenu index="6-2">
                             <template slot="title">软件/节点管理</template>
 <!--                            <el-menu-item index="/dataInfo">软件/节点效率</el-menu-item>-->
-                            <el-menu-item index="/nodeDeploy">云节点部署</el-menu-item>
+                            <el-menu-item index="/nodeDeploy">节点作业规划</el-menu-item>
                             <el-menu-item index="/softOfUser">软件用户数据</el-menu-item>
                         </el-submenu>
                         <el-submenu index="6-3">

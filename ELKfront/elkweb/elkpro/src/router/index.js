@@ -7,7 +7,7 @@ import test from '../components/test.vue'
 import dataInfo from '../components/HUAWEICloud/dataInfo.vue'
 import showSoftNameTable from '../components/HUAWEICloud/showSoftNameTable.vue'
 import showNodeTypeTable from '../components/HUAWEICloud/showNodeTypeTable.vue'
-import userUseRate from '../components/HUAWEICloud/userUseRate.vue'
+import userUseTime from '../components/HUAWEICloud/userUseTime.vue'
 import softwareLicense from '../components/HUAWEICloud/softwareLicense.vue'
 import deviceState from '../components/HUAWEICloud/deviceState.vue'
 import memUse from '../components/HUAWEICloud/memUse.vue'
@@ -74,7 +74,7 @@ const routes = [
             {path: '/showSoftNameTable', name: 'showSoftNameTable', component: showSoftNameTable},
             {path: '/showNodeTypeTable', name: 'showNodeTypeTable', component: showNodeTypeTable},
             {path: '/deviceState', name: 'deviceState', component: deviceState},
-            {path: '/userUseRate', name: 'userUseRate', component: userUseRate},
+            {path: '/userUseTime', name: 'userUseTime', component: userUseTime},
             {path: '/softwareLicense', name: 'softwareLicense', component: softwareLicense},
             {path: '/memUse', name: 'memUse', component: memUse},
             {path: '/siteDeviceInfo', name: 'siteDeviceInfo', component: siteDeviceInfo},
