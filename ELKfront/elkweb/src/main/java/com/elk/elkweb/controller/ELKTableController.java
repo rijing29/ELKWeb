@@ -88,7 +88,7 @@ public class ELKTableController {
         for(int i=0;i<nodeInfo.size();i++){
             String nodeType= (String) nodeInfo.get(i).get("NODE_TYPE");
             String nodeId= nodeInfo.get(i).get("NODE_ID").toString();
-            String aveEfficiency = calNodeTypeAveEfficiency(nodeInfo, nodeType, nodeId, startTime, stopTime);
+            String aveEfficiency = calNodeTypeAveEfficiency(softName,nodeInfo, nodeType, nodeId, startTime, stopTime);
             if(aveEfficiency.equals("Infinity")){
                 aveNodeType[i]="0%";
             }else{
@@ -108,16 +108,19 @@ public class ELKTableController {
      * @author: whj
      * @method:nodeType计算效率
      */
-    public String calNodeTypeAveEfficiency(List<Map<String, Object>> nodeInfo,String nodeType,String nodeId,String startTime,String stopTime){
+    public String calNodeTypeAveEfficiency(String softName, List<Map<String, Object>> nodeInfo, String nodeType, String nodeId, String startTime, String stopTime){
         System.out.println("时间："+startTime+"-----"+stopTime);
         int sumTotalWorkLoad = efficiService.nodeTypeEfficiency(nodeType, nodeId, startTime, stopTime);
-        System.out.println("节点分子所有的workload:"+sumTotalWorkLoad);
-        NodeSoftMap nodeSoftMap = new NodeSoftMap(nodeType,null,nodeId);
-        int sumNodeWorkLoad = efficiService.sumNodeTypeWorkLoad(nodeSoftMap);
-        System.out.println("节点分母要乘的那个数workload:"+sumTotalWorkLoad);
-        double aveEfficiency = calOneDayEfficiency(sumTotalWorkLoad, sumNodeWorkLoad);
+        double aveEfficiency = calOneDayEfficiencySoftName(softName, sumTotalWorkLoad);
+
+//        System.out.println("节点分子所有的workload:"+sumTotalWorkLoad);
+//        NodeSoftMap nodeSoftMap = new NodeSoftMap(nodeType,null,nodeId);
+//        int sumNodeWorkLoad = efficiService.sumNodeTypeWorkLoad(nodeSoftMap);
+//        System.out.println("节点分母要乘的那个数workload:"+sumTotalWorkLoad);
+//        double aveEfficiency = calOneDayEfficiency(sumTotalWorkLoad, sumNodeWorkLoad);
         String aveEffici= String.valueOf(calAveEfficiency(aveEfficiency));
 //        return aveTransferPercen(aveEffici);
+        System.out.println("13号计算出来的效率"+aveEffici);
         return aveEffici;
     }
     /**
@@ -333,12 +336,43 @@ public class ELKTableController {
      *@Method:软件报表导出
      */
     public double calOneDaySoftNameEfficiency(String softName, int sumTotalWorkLoad, int sumNodeWorkLoad){
-        int wordLoad = efficiService.getSoftNameWordLoad(softName);
-        double fenMu=24*2*wordLoad;        //✖ 4或1
-        double res=sumNodeWorkLoad/fenMu;
-        System.out.println("Total是："+wordLoad);
-        System.out.println("node是："+sumNodeWorkLoad);
-        System.out.println("分子和分母分别是："+fenMu+"-----------"+res);
+//        int wordLoad = efficiService.getSoftNameWordLoad(softName);
+//        double fenMu=24*2*wordLoad;        //✖ 4或1
+//        double res=sumNodeWorkLoad/fenMu;
+//        System.out.println("Total是："+wordLoad);
+//        System.out.println("node是："+sumNodeWorkLoad);
+//        System.out.println("分子和分母分别是："+fenMu+"-----------"+res);
+//        return res;
+        double fenMu;
+        double fenZi;
+        double res;
+        if(softName.equals("GEOEAST")){
+            fenMu=48*4;
+        }else{
+            fenMu=48;
+        }
+        fenZi=sumNodeWorkLoad;
+        res=fenMu/fenZi;
+        return res;
+    }
+
+    /**
+    *@Author:whj
+    *@date:2021-10-1320:08
+    *@Method:软件 计算月效率
+     * 这是目前把节点效率隐藏后的稍微最为准确的一版计算公式
+    */
+    public double calOneDayEfficiencySoftName(String softName, int sumTotalWorkLoad){
+        double fenMu;
+        double fenZi;
+        double res;
+        if(softName.equals("GEOEAST")){
+            fenMu=48*4;
+        }else{
+            fenMu=48;
+        }
+        fenZi=sumTotalWorkLoad;
+        res=fenMu/fenZi;
         return res;
     }
 
