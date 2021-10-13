@@ -235,81 +235,51 @@ export default {
             option3: {
                 title: {
                     text: '存储系统使用',
-                    textStyle: {
-                        color: "#17caf0"//标题文字颜色
+                    left:'center',
+                    textStyle:{
+                        color:"#17caf0"//标题文字颜色
                     },
-                    subtextStyle: {
-                        color: "#17caf0"//副标题文字颜色
-                    },
-                },
-                legend: {
-                    top: 'bottom',
-                    textStyle: {
-                        color: "#ffffff"//顶部控制区域文字颜色
+                    subtextStyle:{
+                        color:"#17caf0"//副标题文字颜色
                     },
                 },
                 tooltip: {
                     trigger: 'item'
                 },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: false},
-                        dataView: {show: false, readOnly: false},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: false,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    textStyle: {
+                        color: "#ffffff"//顶部控制区域文字颜色
                     },
-                    iconStyle: {
-                        //工具栏图标样式
-                        borderColor: "#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['40%', '80%'],
-                        avoidLabelOverlap: false,
+                        radius: '70%',
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
                             borderWidth: 2
                         },
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
                         emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '40',
-                                fontWeight: 'bold'
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         },
-                        labelLine: {show: true,},
-                        cursor: "pointer",
+                        label: {
+                            fontSize: 18
+                        },
                         data: [
-                            {value: 92, name: '使用'},
-                            {value: 8, name: '空闲'},
+                            {value: 0, name: '使用'},
+                            {value: 0, name: '空闲'},
                         ],
                     }
                 ],
-                labelLine: {
-                    show: true
-                },
-                label: {
-                    alignTo: "labelLine"
-                }
+
             },
             option4: {
                 title: {
