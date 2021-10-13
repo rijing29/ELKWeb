@@ -126,7 +126,7 @@ export default {
             //一开始无数据时的数据展示提示
             haveData3:true,
             date:'',//日期变量
-            username:'',
+            username:'lenovo',
             paginations:{
                 // 默认显示第几页
                 currentPage:1,
@@ -144,9 +144,7 @@ export default {
         }
     },
     created(){//自动渲染数据
-        // this.getDate()
-        // this.getIPSAnalysis()
-        this.getEpySoftWareUsage()
+        this.getEpyCardInfo()
     },
     methods:{
         dateForma:function(row,column){//表格行格式化时间

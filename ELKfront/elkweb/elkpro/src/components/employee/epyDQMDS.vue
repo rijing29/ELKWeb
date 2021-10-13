@@ -106,7 +106,7 @@ export default {
                     currentPage: 1,
                 },
             ],
-            username: '',//员工姓名
+            username: '赵成栋',//员工姓名
             tableData: [],//表格数据
             currentRow: null,//存储当前点击行信息
             /*————饼状图数据 begin————*/
@@ -211,6 +211,9 @@ export default {
             },
             /*————饼状图数据 end————*/
         }
+    },
+    created(){
+      this.getEpyDQMSInfo();
     },
     methods:{
         getEpyDQMSInfo(){//获取表格以及柱状图数据并渲染

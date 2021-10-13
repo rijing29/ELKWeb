@@ -83,13 +83,13 @@ export default {
         return {
             haveData:false,
             tableData: [],
-            startTime: '',
-            stopTime: '',
-            userName: ''
+            startTime: '2021-09-07',
+            stopTime: '2021-09-24',
+            userName: '荣海亮'
         }
     },
     created() {
-        // this.EpyBehavProfile();
+        this.EpyBehavProfile();
     },
     methods: {
         EpyBehavProfile() {

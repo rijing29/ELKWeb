@@ -99,7 +99,7 @@ export default {
             haveData: false,
             character:'',
             date:'',//日期变量
-            user_lname: '',//员工姓名
+            user_lname: '伍英',//员工姓名
             personname:'',
             name:'',//表格标题区域
             tableData: [],//分析表格数据
@@ -213,8 +213,11 @@ export default {
             /*————柱状图数据 end————*/
         }
     },
+    created(){
+      this.getEpyCardInfo();
+    },
     methods:{
-        getEpyCardInfo(){//获取表格以及柱状图数据并渲染
+        getEpyCardInfo(){//获取表格以及柱状图数据并渲染   DoorInfoMapper.xml
             this.name=this.user_lname
             if(this.user_lname!==''){
                 this.haveData=true

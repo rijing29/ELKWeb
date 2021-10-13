@@ -64,11 +64,13 @@ export default {
     data(){
         return{
             haveData:false,
-            username:'',
+            username:'金玮',
             tableData:[],
         }
     },
-
+    created(){
+      this.getEpyNetInfo();
+    },
     methods: {
         dateForma:function(row,column){//表格行格式化时间
             var date = row[column.property];
