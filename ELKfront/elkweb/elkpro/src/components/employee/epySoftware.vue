@@ -49,7 +49,7 @@
                                     <el-table-column prop="username" label="用户名" align="center"></el-table-column>
                                     <el-table-column prop="softwarename" label="软件系统的名称"align="center"></el-table-column>
                                     <el-table-column prop="modulename" label="软件系统模块名称" align="center"></el-table-column>
-                                    <el-table-column prop="usemintue" label="用户使用模块的总时间" align="center"></el-table-column>
+                                    <el-table-column prop="workusemintue" label="用户使用模块的总时间" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -74,12 +74,11 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table
-                                        height="600"
                                         ref="singleTable"
                                         :data="tableDataSum"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="TIME" :formatter="dateForma" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="SUM(WORKUSEMINTUE)" label="加班时间(分钟)" align="center"></el-table-column>
+                                    <el-table-column prop="SUM(WORKUSEMINTUE)" label="时间(分钟)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

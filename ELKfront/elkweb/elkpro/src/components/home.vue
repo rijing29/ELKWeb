@@ -94,7 +94,7 @@
                         </el-submenu>
                         <el-submenu index="6-2">
                             <template slot="title">软件/节点管理</template>
-                            <el-menu-item index="/dataInfo">软件/节点效率</el-menu-item>
+<!--                            <el-menu-item index="/dataInfo">软件/节点效率</el-menu-item>-->
                             <el-menu-item index="/nodeDeploy">云节点部署</el-menu-item>
                             <el-menu-item index="/softOfUser">软件用户数据</el-menu-item>
                         </el-submenu>

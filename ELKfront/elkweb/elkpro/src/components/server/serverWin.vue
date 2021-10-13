@@ -13,7 +13,7 @@
                 <el-col :span="13" style="margin-top: 8px">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div class="tableSubTitle">近期（一个月）Windows服务器提供服务统计</div>
+                            <div class="tableSubTitle">Windows服务器提供服务统计</div>
                         </el-col>
                     </el-row>
                     <el-row>

@@ -91,24 +91,23 @@
         from T_NODE_SOFT_MAP
         where soft_name = #{soft_name,jdbcType=VARCHAR}
     </select>
-
-    <select id="getSumJob" resultType="java.lang.Double">
-        select nvl(sum(jobcount), 0) as sumJob
-        from (
-                 select *
-                 from HW_NODE_USEAGE a,
-                      T_NODE_SOFT_MAP b
-                 where a.nodename = b.node_type
-                   and a.no = b.node_id
-                   and time between to_date('2021/8/7 00:00:00'
-                     , 'yyyy-MM-dd hh24:mi:ss')
-                   and to_date('2021/8/7 23:59:59'
-                     , ' yyyy-MM-dd hh24:mi:ss')
-                   and users='zhaozh'
-             )
-        where soft_name = #{soft_name,jdbcType=VARCHAR}
-    </select>
-
+        <select id="getSumJob" resultType="java.lang.Double">
+            select nvl(sum(jobcount), 0) as sumJob
+            from (
+                     select *
+                     from HW_NODE_USEAGE a,
+                          T_NODE_SOFT_MAP b
+                     where a.nodename = b.node_type
+                       and a.no = b.node_id
+                       and time between to_date('2021/8/7 00:00:00'
+                         , 'yyyy-MM-dd hh24:mi:ss')
+                       and to_date('2021/8/7 23:59:59'
+                         , ' yyyy-MM-dd hh24:mi:ss')
+                       and users=#{users,jdbcType=VARCHAR}
+                 )
+            where soft_name = #{soft_name,jdbcType=VARCHAR}
+        </select>
+    <!--用户软件-->
     <select id="getsoftname" resultType="Map">
         select distinct soft_name
         from HW_NODE_USEAGE a,

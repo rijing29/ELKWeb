@@ -73,10 +73,13 @@ public class ELKSoftUserController {
                 System.out.println(softname.get(j).get("SOFT_NAME").toString()+"8888888");
                 Double sumJob = softUserService.getSumJob(soft_name,users, startTime, stopTime);
                 Double userUseRate = calculate(sumJob,workLoad);
+                System.out.println(userUseRate+"你大爷啊啊啊啊啊啊啊");
                 Time[k]=time;
                 Softname[k]=soft_name;
                 if(userUseRate*100>100){
                     UserUseRate[k]=95.0;
+                }else if(userUseRate.equals("NaN")){
+                    UserUseRate[k]= Double.valueOf(0);
                 }
                 else {
                     UserUseRate[k]=Double.valueOf(new Formatter().format("%.1f", userUseRate*100).toString());
@@ -93,8 +96,15 @@ public class ELKSoftUserController {
     }
 
     public static Double calculate(Double sumJob,Double workLoad){
-        Double calculate = Double.valueOf(sumJob/(48*workLoad));
-        System.out.println(calculate+"-----------");
+        Double calculate=0.0;
+        if(sumJob==0){
+            calculate=0.0;
+        }
+        else {
+            calculate = Double.valueOf(sumJob/(48*workLoad));
+        }
+
+        System.out.println(sumJob+"ppppppppppppppp");
         return calculate;
     }
 

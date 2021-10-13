@@ -110,7 +110,7 @@ export default {
                 this.TableData = res.data;
             })
         },
-        getIPMIAlarm() {
+        getIPMIAlarm() {//IPMILogWarnMapper.xml - ELKIPMIController.java
             var url = "/getIPMIAlarm"
             this.$http.get(url).then(res => {
                 this.tableData = res.data

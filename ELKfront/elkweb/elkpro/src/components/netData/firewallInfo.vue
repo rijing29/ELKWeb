@@ -159,16 +159,33 @@ export default {
             // 表列
             cols: [],
             //源域下拉框值
-            sourceDomain_options: [],
+            sourceDomain_options:[
+                    {sourceDomain_value:1,label:'Trust'},
+                    {sourceDomain_value:2,label:'Untrust'},
+                    {sourceDomain_value:3,label:'Local'},
+                    {sourceDomain_value:4,label:'Management'},
+            ],
             sourceDomain_value: '',
             //目的域下拉框值
-            destinationDomain_options: [],
+            destinationDomain_options: [
+                    {destinationDomain_value:1,label:'Trust'},
+                    {destinationDomain_value:2,label:'Untrust'},
+                    {destinationDomain_value:3,label:'Local'},
+                    {destinationDomain_value:4,label:'Management'},
+            ],
             destinationDomain_value: '',
             //Protocol下拉框值
-            protocol_option: [],
+            protocol_option: [
+                    {protocol_value:1,label:'UDP'},
+                    {protocol_value:2,label:'TCP'},
+                    {protocol_value:3,label:'IGMP'},
+            ],
             protocol_value: '',
             //Event下拉框值
-            event_options: [],
+            event_options: [
+                    {event_value:1,label:'Deny'},
+                    {event_value:2,label:'Permit'},
+            ],
             event_value: '',
             //外表数据
             tableData: [],
@@ -297,54 +314,56 @@ export default {
         selectStopTime(val) {
             //截止时间
             this.stopTime = val;
-
-            /*渲染下拉框 begin*/
-            var url = "/getSelectionInfo"
-            var params = {
-                'startTime': this.startTime,
-                'stopTime': this.stopTime,
-            }
-            this.$http.get(url, {params}).then(res => {
-                console.log(res.data.option[0], "option")
-                var i;
-                while (this.sourceDomain_options.length !== 0) {
-                    this.sourceDomain_options.pop()
-                }
-                while (this.destinationDomain_options.length !== 0) {
-                    this.destinationDomain_options.pop()
-                }
-                while (this.protocol_option.length !== 0) {
-                    this.protocol_option.pop()
-                }
-                while (this.event_options.length !== 0) {
-                    this.event_options.pop()
-                }
-                for (i = 0; i < res.data.sourceDomain.length; i++) {
-                    //源域下拉框
-                    this.sourceDomain_options.push({
-                        sourceDomain_value: res.data.option[i],
-                        label: res.data.sourceDomain[i]
-                    })
-                }
-                for (i = 0; i < res.data.destinationDomain.length; i++) {
-                    //目的域下拉框
-                    this.destinationDomain_options.push({
-                        destinationDomain_value: res.data.option[i],
-                        label: res.data.destinationDomain[i]
-                    })
-                }
-                for (i = 0; i < res.data.protocol.length; i++) {
-                    //Protocol下拉框
-                    this.protocol_option.push({protocol_value: res.data.option[i], label: res.data.protocol[i]})
-                }
-                for (i = 0; i < res.data.event.length; i++) {
-                    //Event下拉框
-                    this.event_options.push({event_value: res.data.option[i], label: res.data.event[i]})
-                }
-            })
-            /*渲染下拉框 end*/
         },
         /*————日期选择器 end————*/
+
+        // getSelectionInfo(){
+        //     /*渲染下拉框 begin*/
+        //     var url = "/getSelectionInfo"
+        //     var params = {
+        //         'startTime': this.startTime,
+        //         'stopTime': this.stopTime,
+        //     }
+        //     this.$http.get(url, {params}).then(res => {
+        //         console.log(res.data.option[0], "option")
+        //         var i;
+        //         while (this.sourceDomain_options.length !== 0) {
+        //             this.sourceDomain_options.pop()
+        //         }
+        //         while (this.destinationDomain_options.length !== 0) {
+        //             this.destinationDomain_options.pop()
+        //         }
+        //         while (this.protocol_option.length !== 0) {
+        //             this.protocol_option.pop()
+        //         }
+        //         while (this.event_options.length !== 0) {
+        //             this.event_options.pop()
+        //         }
+        //         for (i = 0; i < res.data.sourceDomain.length; i++) {
+        //             //源域下拉框
+        //             this.sourceDomain_options.push({
+        //                 sourceDomain_value: res.data.option[i],
+        //                 label: res.data.sourceDomain[i]
+        //             })
+        //         }
+        //         for (i = 0; i < res.data.destinationDomain.length; i++) {
+        //             //目的域下拉框
+        //             this.destinationDomain_options.push({
+        //                 destinationDomain_value: res.data.option[i],
+        //                 label: res.data.destinationDomain[i]
+        //             })
+        //         }
+        //         for (i = 0; i < res.data.protocol.length; i++) {
+        //             //Protocol下拉框
+        //             this.protocol_option.push({protocol_value: res.data.option[i], label: res.data.protocol[i]})
+        //         }
+        //         for (i = 0; i < res.data.event.length; i++) {
+        //             //Event下拉框
+        //             this.event_options.push({event_value: res.data.option[i], label: res.data.event[i]})
+        //         }
+        //     })
+        //     /*渲染下拉框 end*/
+        // },
 
         getSelection() {
             //控制多选框并查询外表数据

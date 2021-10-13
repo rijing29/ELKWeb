@@ -102,8 +102,8 @@ export default {
                     },
                     left: "90%",//工具栏距离左边距离
                 },
-                grid: {left: '3%', right: '4%', bottom: '3%', containLabel: true},
-                yAxis: {
+                grid: {left: '3%', right: '10%', bottom: '3%', containLabel: true},
+                xAxis: {
                     name:'使用时间/小时',
                     nameTextStyle: {color: "#ffffff"},
                     axisLabel: {
@@ -112,7 +112,7 @@ export default {
                     type: 'value',
                     boundaryGap: [0, 0.01],
                 },
-                xAxis: {
+                yAxis: {
                     name:'用户',
                     nameTextStyle: {color: "#ffffff"},
                     axisLabel: {
@@ -181,15 +181,15 @@ export default {
             this.$http.get(url,{params}).then(res =>{
                 this.haveData=true
                 console.log(res.data,'软件用户信息')
-                while (this.option.xAxis.data.length!==0){
-                    this.option.xAxis.data.pop()
+                while (this.option.yAxis.data.length!==0){
+                    this.option.yAxis.data.pop()
                 }
                 while (this.option.series[0].data.length!==0){
                     this.option.series[0].data.pop()
                 }
                 for(var i=0;i<res.data.length;i++){
                     this.option.series[0].data.push(res.data[i].USETIME)
-                    this.option.xAxis.data.push(res.data[i].USERS)
+                    this.option.yAxis.data.push(res.data[i].USERS)
                 }
             })
         }

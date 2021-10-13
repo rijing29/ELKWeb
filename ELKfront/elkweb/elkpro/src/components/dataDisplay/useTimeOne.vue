@@ -82,7 +82,7 @@
                                     </el-table-column>
                                     <el-table-column prop="MODULENAME" label="模块" align="center">
                                     </el-table-column>
-                                    <el-table-column prop="SUMTIME" label="使用时间" align="center">
+                                    <el-table-column prop="SUMTIME" label="使用时间(小时)" align="center">
                                     </el-table-column>
                                     <el-table-column prop="FREQUENCY" label="使用率(%)" align="center">
                                     </el-table-column>

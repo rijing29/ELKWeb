@@ -20,6 +20,16 @@ public class ServerPublic {
 
     private BigDecimal memrateforsparetime;
 
+    public BigDecimal getTotalpjvalue() {
+        return totalpjvalue;
+    }
+
+    public void setTotalpjvalue(BigDecimal totalpjvalue) {
+        this.totalpjvalue = totalpjvalue;
+    }
+
+    private BigDecimal totalpjvalue;
+
     public Date getTime() {
         return time;
     }
@@ -83,4 +93,5 @@ public class ServerPublic {
     public void setMemrateforsparetime(BigDecimal memrateforsparetime) {
         this.memrateforsparetime = memrateforsparetime;
     }
+
 }

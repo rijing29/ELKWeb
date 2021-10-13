@@ -24,8 +24,7 @@
                                         height="540"
                                         ref="singleTable"
                                         :data="tableData"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
-                                        @current-change="handleCurrentChange">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="ip" label="IP" align="center"></el-table-column>
                                     <el-table-column prop="cpurateforworktime" label="CPU负载" align="center"></el-table-column>
                                     <el-table-column prop="memrateforworktime" label="内存负载" align="center"></el-table-column>
@@ -184,83 +183,6 @@ export default {
         this.getPublicServer()
     },
     methods:{
-        getDate(){//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
-            this.date=date.toLocaleString()
-        },
-        getIPSAnalysis(){//渲染数据
-            var url="/getIPSAnalysis"
-            var params={
-                'time':this.date,
-            }
-            this.$http.get(url,{params}).then(res=>{
-                /*————渲染分析表格数据 begin————*/
-                while (this.tableData.length !== 0) {
-                    this.tableData.pop()
-                }
-                var i;
-                for (i = 0; i < res.data.time.length; i++) {
-                    this.tableData.push(
-                            {
-                                time: res.data.time[i],
-                                dstipaddr: res.data.dstipaddr[i],
-                                dangervalue: res.data.dangervalue[i],
-                            })
-                }
-                /*————渲染分析表格数据 end————*/
-                /*————渲染饼状图数据 begin————*/
-                while(this.option.series[0].data.length!==0) {
-                    this.option.series[0].data.pop()
-                }
-                if(res.data.low!==0){
-                    this.option.series[0].data.push({value: res.data.low, name: '低'})
-                }
-                if(res.data.middle!==0){
-                    this.option.series[0].data.push({value: res.data.middle, name: '中'})
-                }
-                if(res.data.high!==0){
-                    this.option.series[0].data.push({value: res.data.high, name: '高'})
-                }
-
-                /*————渲染饼状图数据 end————*/
-            })
-        },
-        selectStartTime(val) {//日期选择器
-            this.time = val;
-            if (this.time==null){
-                this.getDate()
-                this.getIPSAnalysis()
-            }
-            else if(this.time!==null){
-                this.date=this.time
-                this.getIPSAnalysis()
-            }//if
-        },
-        currentPage: function (row) {//分页控制部分
-            this.pages[0].currentPage = row//取当前页码
-            this.handleCurrentChange(this.currentRow)//根据当前页码渲染数据
-        },
-        formatter (thistime, fmt) {//js格式化时间
-            let $this = new Date(thistime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
-        },
         getPublicServer(){
             var url="/getPublicServer"
             //获取到表格的数据
@@ -284,17 +206,27 @@ export default {
                 this.memra=0;
                 this.highMemra=0;
                 this.lowMemra=0;
+                console.log(res.data,"pppppppppp")
                 res.data.forEach(item=>{
-                    if(item.cpurateforworktime>=20)
+                    if(item.cpurateforworktime>=20) {
+                        console.log('cpu22222222')
                         this.cpu++;
-                    else if(item.cpurateforworktime<20 && item.memrateforworktime>=15)
+                    }
+                    else if(item.cpurateforworktime<20 && item.memrateforworktime>=15) {
+                        console.log('memra44444444444444')
                         this.memra++;
-                    else if(item.cpurateforworktime<20 && item.memrateforworktime<15)
+                    }
+                    else if(item.cpurateforworktime<20 && item.memrateforworktime<15 && item.totalpjvalue>=8){
+                        console.log('1111111111111')
                         this.highMemra++;
-                    else
-                        this.lowMemra=length-this.cpu-this.memra-this.highMemra;
+                    }
+
+                    else {
+                        console.log('lowMemra3333333333333333')
+                        this.lowMemra = length - this.cpu - this.memra - this.highMemra;
+                    }
                 })
-                console.log(this.cpu+"--"+this.memra+"--"+this.highMemra+"--"+this.lowMemra)
+                console.log("length:",length,"cpu:"+ this.cpu,"memra:"+this.memra,"highMemra:",this.highMemra,"lowMemra:",this.lowMemra)
                 this.tableData=res.data
                 this.option.series[0].data[0].value=this.cpu;
                 this.option.series[0].data[1].value=this.memra;

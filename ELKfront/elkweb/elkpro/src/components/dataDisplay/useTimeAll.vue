@@ -72,7 +72,7 @@
                                 <el-table :data="tableData" style="width: 100%">
                                     <el-table-column prop="SOFTWARENAME" label="软件" align="center">
                                     </el-table-column>
-                                    <el-table-column prop="SUMTIME" label="使用时间(分钟)" align="center">
+                                    <el-table-column prop="SUMTIME" label="使用时间(小时)" align="center">
                                     </el-table-column>
                                     <el-table-column prop="FREQUENCY" label="使用率(%)" align="center">
                                     </el-table-column>

@@ -69,23 +69,21 @@
     </insert>
     <select id="showEpySoftWareUsage" parameterType="com.elk.elkweb.entity.EpySoftWareUsage" resultMap="BaseResultMap">
         select *
-        from (
-                 select *
-                 from JK_LOGANALYIZE_USERUSAGE
-                 where username like concat(concat('%', #{username,jdbcType=VARCHAR}), '%')
-                 order by time desc
-             )
-        where rownum <![CDATA[<=]]> 30
+        from JK_LOGANALYIZE_USERUSAGE
+        where username like concat(concat('%', #{username,jdbcType=VARCHAR}), '%')
+        and time between (select max(time)-6 from JK_LOGANALYIZE_USERUSAGE) and (select max(time) from JK_LOGANALYIZE_USERUSAGE)
 
     </select>
     <select id="showEpySoftWareUsageCount" resultType="map" parameterType="com.elk.elkweb.entity.EpySoftWareUsage">
-        select time, SUM (WORKUSEMINTUE)
-        from JK_LOGANALYIZE_USERUSAGE
-        where trunc(time) >= trunc((select max (time) from JK_LOGANALYIZE_USERUSAGE)
-            , 'd')
-          and trunc(time) <![CDATA[<=]]> next_day(trunc((select max (time) from JK_LOGANALYIZE_USERUSAGE)
-            , 'd')
-            , 7)
-        group by time
+        select *
+        from (select time, SUM (WORKUSEMINTUE)
+              from JK_LOGANALYIZE_USERUSAGE
+              where username like concat(concat('%'
+                  , #{username,jdbcType=VARCHAR})
+                  , '%')
+                and time between (select max (time)-6 from JK_LOGANALYIZE_USERUSAGE)
+                and (select max (time) from JK_LOGANALYIZE_USERUSAGE)
+              group by time)
+        order by time desc
     </select>
 </mapper>

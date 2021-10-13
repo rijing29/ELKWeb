@@ -56,7 +56,7 @@ public class ELKSLAController {
         String softwareName[] = new String[sumTime.size()];
         String sumtime[] = new String[sumTime.size()];
         for(int i=0;i<sumTime.size();i++){
-            frequency[i] = Double.valueOf(new Formatter().format("%.1f",useFrequency(startTime,stopTime,Integer.valueOf(sumTime.get(i).get("SUMTIME").toString()))*100).toString());
+            frequency[i] = Double.valueOf(new Formatter().format("%.2f",useFrequency(startTime,stopTime,Double.valueOf(sumTime.get(i).get("SUMTIME").toString()))*100).toString());
             //计算全部软件使用率并存入frequency数组
             softwareName[i] = sumTime.get(i).get("SOFTWARENAME").toString();
             //获取软件名并存入frequency数组
@@ -135,7 +135,7 @@ public class ELKSLAController {
         String Sumtime[] = new String[sumTime.size()];
         for(int i=0;i<sumTime.size();i++){
             //计算全部软件使用率并存入Frequency数组
-            Frequency[i] =Double.valueOf(new Formatter().format("%.1f",useFrequency(startTime,stopTime,Integer.valueOf(sumTime.get(i).get("SUMTIME").toString()))*100).toString());
+            Frequency[i] =Double.valueOf(new Formatter().format("%.2f",useFrequency(startTime,stopTime,Double.valueOf(sumTime.get(i).get("SUMTIME").toString()))*100).toString());
 
             //获取软件名并存入Frequency数组
             SoftwareName[i] = sumTime.get(i).get("SOFTWARENAME").toString();
@@ -160,11 +160,11 @@ public class ELKSLAController {
      * 计算软件使用率
      *
      * */
-    public Double useFrequency(String startTime,String stopTime,int sumTime){
+    public Double useFrequency(String startTime,String stopTime,Double sumTime){
 
         double day = calculateTime(startTime,stopTime);
         Double time = day*24*60;
-        Double useFrequency = sumTime/time;
+        Double useFrequency = sumTime*60/time;
 //        Integer useFrequency = Integer.valueOf(new Formatter().format("%.0f",useFrequency1).toString()) ;
         return  useFrequency;
     }

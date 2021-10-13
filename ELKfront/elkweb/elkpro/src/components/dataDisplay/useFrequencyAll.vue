@@ -228,7 +228,7 @@ export default {
         },
         /*————日期选择器 end————*/
 
-        getFrequency(){
+        getFrequency(){//UserUsageMapper.xml - ELKSLAController.java
             var url="/getAllFrequency"
             var params={
                 'startTime':this.startTime,

@@ -615,8 +615,8 @@ export default {
                 this.dataWord[0].data[3] = '软件许可：'+res.data[0].SOFTNUM+'个软件，'+res.data[0].SOFTPERSONNUM+'个用户，'+res.data[0].SOFTLOGNUM+'次使用'
                 this.dataWord[1].data[0] = '网络交换机'+res.data[0].SWITCHNUM+'台，防火墙1个'
                 this.dataWord[1].data[1] = '网络包：今日'+res.data[0].NETBAGNUM+'，涉及'+res.data[0].NETBAGIPNUM+'个IP'
-                this.dataWord[1].data[2] = 'IPS告警：'+res.data[0].IPSWARNNUM+'万项，涉及'+res.data[0].IPSWARNIPNUM+'个服务器'
-                this.dataWord[1].data[3] = '交换机告警：'+res.data[0].SWITCHWARNNUM+'万项，涉及'+res.data[0].SWITCHWARNIPNUM+'个交换机'
+                this.dataWord[1].data[2] = 'IPS告警：'+res.data[0].IPSWARNNUM+'项，涉及'+res.data[0].IPSWARNIPNUM+'个服务器'
+                this.dataWord[1].data[3] = '交换机告警：'+res.data[0].SWITCHWARNNUM+'项，涉及'+res.data[0].SWITCHWARNIPNUM+'个交换机'
             })
         }
     },

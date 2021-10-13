@@ -77,7 +77,8 @@
     </trim>
   </insert>
   <select id="showServerPublic" resultMap="BaseResultMap" parameterType="com.elk.elkweb.entity.ServerPublic">
-    select * from JK_SERVERRUNNINGDATA where time in (select max(time) from JK_SERVERRUNNINGDATA)
+    select distinct ip,cpurateforworktime,memrateforworktime,netfloatforworktime from JK_SERVERRUNNINGDATA
+    where time in (select max(time) from JK_SERVERRUNNINGDATA) order by memrateforworktime desc
   </select>
 
   <select id="getStorage" resultType="map">
