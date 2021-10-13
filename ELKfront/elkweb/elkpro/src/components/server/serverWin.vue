@@ -159,13 +159,14 @@ export default {
             ],
             time: '',//根据此时间查询分析表
             currentRow: null,//存储当前点击行信息
-            tableDataService:[],//表格数据
+            tableDataService:[],//表格数据 负载数据统计
             tableDataLog:[],
             tableDataTask:[],
             /*————饼状图数据 begin————*/
             option : {
                 title: {
                     text: '负载数据统计',
+                    left:'center',
                     textStyle:{
                         color:"#17caf0"//标题文字颜色
                     },
@@ -173,66 +174,37 @@ export default {
                         color:"#17caf0"//副标题文字颜色
                     },
                 },
-                legend: {
-                    top: 'bottom',
-                    textStyle:{
-                        color:"#ffffff"//顶部控制区域文字颜色
-                    },
-                },
                 tooltip: {
                     trigger: 'item'
                 },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: false},
-                        dataView: {show: false, readOnly: false},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    textStyle: {
+                        color: "#ffffff"//顶部控制区域文字颜色
                     },
-                    iconStyle:{
-                        //工具栏图标样式
-                        borderColor:"#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['50%', '80%'],
-                        avoidLabelOverlap: false,
+                        radius: '70%',
+                        data: [],
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
-                            borderWidth: 2,
-                        },
-                        label: {
-                            show: false,
-                            position: 'center'
+                            borderWidth: 2
                         },
                         emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '40',
-                                fontWeight: 'bold'
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         },
-                        labelLine: {show: true},
-                        cursor: "pointer",
-                        data: [
-                            {value: 112, name: '负载高'},
-                            {value: 17, name: '负载低'},
-                        ],
+                        label: {
+                            fontSize: 18
+                        }
 
                     }
                 ]
@@ -273,8 +245,11 @@ export default {
             var url3='/getWinLoad'
             this.$http.get(url3).then(res=>{//渲染Windows服务器负载统计饼状图
                 console.log(res.data[0].ALLCOUNT-res.data[0].HIGHCOUNT,"22222222")
-                this.option.series[0].data[0].value=res.data[0].HIGHCOUNT
-                this.option.series[0].data[1].value=res.data[0].ALLCOUNT-res.data[0].HIGHCOUNT
+                while( this.option.series[0].data.length!=0){
+                    this.option.series[0].data.pop()
+                }
+                this.option.series[0].data.push({value:res.data[0].HIGHCOUNT,name:'负载高'})
+                this.option.series[0].data.push({value:res.data[0].ALLCOUNT-res.data[0].HIGHCOUNT,name:'负载低'})
             })
         },
     }

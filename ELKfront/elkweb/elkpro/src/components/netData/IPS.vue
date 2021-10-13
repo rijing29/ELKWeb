@@ -27,7 +27,7 @@
             <el-row>
                 <!--————表格区域 begin————-->
                 <el-col :span="12">
-                    <el-row >
+                    <el-row>
                         <el-col :span="24" class="border_top">
                             <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">点击查看详细信息</div>
                         </el-col>
@@ -52,7 +52,7 @@
                         </el-col>
                     </el-row>
                     <el-row class="border_bottom">
-                        <el-col >
+                        <el-col>
                             <div style="height: 50px"></div>
                         </el-col>
                     </el-row>
@@ -62,9 +62,9 @@
                 <el-col :span="12">
                     <el-row>
                         <el-col :span="24" class="area" align="center">
-                                <!--————饼状图 begin————-->
-                                <v-chart class="echarts" :option="option" />
-                                <!--————饼状图 end————-->
+                            <!--————饼状图 begin————-->
+                            <v-chart class="echarts" :option="option"/>
+                            <!--————饼状图 end————-->
                         </el-col>
                     </el-row>
                 </el-col>
@@ -73,7 +73,7 @@
             <el-row v-if="haveData">
                 <!--————表格区域 begin————-->
                 <el-col :span="23">
-                    <el-row >
+                    <el-row>
                         <el-col :span="24" class="border_top2">
                             <div style="height: 50px"></div>
                         </el-col>
@@ -95,7 +95,7 @@
                         </el-col>
                     </el-row>
                     <el-row class="border_bottom2">
-                        <el-col >
+                        <el-col>
                             <div style="height: 50px"></div>
                         </el-col>
                     </el-row>
@@ -126,29 +126,37 @@
 <script>
 import * as echarts from 'echarts/core';
 import {
+    TitleComponent,
     TooltipComponent,
     LegendComponent
+
 } from 'echarts/components';
 import {
     PieChart
 } from 'echarts/charts';
+
 import {
     CanvasRenderer
 } from 'echarts/renderers';
 
 echarts.use(
-        [TooltipComponent, LegendComponent, PieChart, CanvasRenderer]
+        [TitleComponent,
+            TooltipComponent,
+            LegendComponent,
+            PieChart,
+            CanvasRenderer,]
 );
-import VChart, { THEME_KEY } from "vue-echarts";
+import VChart, {THEME_KEY} from "vue-echarts";
+
 export default {
     name: "IPS",
     components: {
         VChart
     },
-    data(){
-        return{
+    data() {
+        return {
             haveData: false,
-            date:'',//日期变量
+            date: '',//日期变量
             pages: [//分页信息
                 {
                     pageSize: 20,
@@ -159,96 +167,72 @@ export default {
             time: '',//根据此时间查询分析表
             tableData: [],//分析表格数据
             currentRow: null,//存储当前点击行信息
-            tableData1:[],//详情表格数据
+            tableData1: [],//详情表格数据
             /*————饼状图数据 begin————*/
-            option : {
+            option: {
                 title: {
                     text: '受威胁统计',
-                    textStyle:{
-                        color:"#17caf0"//标题文字颜色
+                    textStyle: {
+                        color: "#17caf0"//标题文字颜色
                     },
-                    subtextStyle:{
-                        color:"#17caf0"//副标题文字颜色
+                    subtextStyle: {
+                        color: "#17caf0"//副标题文字颜色
                     },
-                },
-                legend: {
-                    top: 'bottom',
-                    textStyle:{
-                        color:"#ffffff"//顶部控制区域文字颜色
-                    },
+                    left:'center'
                 },
                 tooltip: {
                     trigger: 'item'
                 },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: false},
-                        dataView: {show: false, readOnly: false},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    textStyle: {
+                        color: "#ffffff"//顶部控制区域文字颜色
                     },
-                    iconStyle:{
-                        //工具栏图标样式
-                        borderColor:"#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
                 },
                 series: [
                     {
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['40%', '80%'],
-                        avoidLabelOverlap: false,
+                        radius: '70%',
+                        data: [],
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
                             borderWidth: 2
                         },
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
                         emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '40',
-                                fontWeight: 'bold'
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         },
-                        labelLine: {show: true,},
-                        cursor: "pointer",
-                        data: [],
+                        label: {
+                            fontSize: 18
+                        }
+
                     }
                 ]
             },
             /*————饼状图数据 end————*/
         }
     },
-    created(){//自动渲染数据
+    created() {//自动渲染数据
         this.getDate()
         this.getIPSAnalysis()
     },
-    methods:{
-        getDate(){//获取当前时间
+    methods: {
+        getDate() {//获取当前时间
             var date = this.formatter(new Date(), 'yyyy-MM-dd hh:mm:ss')
-            this.date=date.toLocaleString()
+            this.date = date.toLocaleString()
         },
-        getIPSAnalysis(){//渲染数据
-            var url="/getIPSAnalysis"
-            var params={
-                'time':this.date,
+        getIPSAnalysis() {//渲染数据
+            var url = "/getIPSAnalysis"
+            var params = {
+                'time': this.date,
             }
-            this.$http.get(url,{params}).then(res=>{
+            this.$http.get(url, {params}).then(res => {
                 console.log(res.data)
                 /*————渲染分析表格数据 begin————*/
                 while (this.tableData.length !== 0) {
@@ -265,7 +249,7 @@ export default {
                 }
                 /*————渲染分析表格数据 end————*/
                 /*————渲染饼状图数据 begin————*/
-                while(this.option.series[0].data.length!==0) {
+                while (this.option.series[0].data.length !== 0) {
                     this.option.series[0].data.pop()
                 }
                 this.option.series[0].data.push({value: res.data.low, name: '低'})
@@ -276,28 +260,27 @@ export default {
         },
         selectStartTime(val) {//日期选择器
             this.time = val;
-            if (this.time==null){
+            if (this.time == null) {
                 this.getDate()
                 this.getIPSAnalysis()
-            }
-            else if(true){
-                this.date=this.time
+            } else if (true) {
+                this.date = this.time
                 this.getIPSAnalysis()
             }//if
         },
         handleCurrentChange(val) {//表格点击事件
-            if(val!==null){
+            if (val !== null) {
                 this.currentRow = val;
-                var url="/getIPSInfo"
-                var params={
-                    'time':this.currentRow.time,
-                    'dstipaddr':this.currentRow.dstipaddr,
+                var url = "/getIPSInfo"
+                var params = {
+                    'time': this.currentRow.time,
+                    'dstipaddr': this.currentRow.dstipaddr,
                     'pageNum': this.pages[0].currentPage,
                     'pageSize': this.pages[0].pageSize,
                 }
                 console.log(this.currentRow.time, this.currentRow.dstipaddr)
-                this.$http.get(url,{params}).then(res=> {
-                    this.haveData=true
+                this.$http.get(url, {params}).then(res => {
+                    this.haveData = true
                     /*————渲染详细表格数据 begin————*/
                     this.pages[0].total = res.data.total//向分页传递总数据
                     while (this.tableData1.length !== 0) {
@@ -310,7 +293,7 @@ export default {
                                     time: res.data.time[k],
                                     attackname: res.data.attackname[k],
                                     severity: res.data.dangervalue[k],
-                                    srcipaddr:res.data.srcipaddr[k]
+                                    srcipaddr: res.data.srcipaddr[k]
                                 })
                     }
                     /*————渲染详细表格数据 end————*/
@@ -321,7 +304,7 @@ export default {
             this.pages[0].currentPage = row//取当前页码
             this.handleCurrentChange(this.currentRow)//根据当前页码渲染数据
         },
-        formatter (thistime, fmt) {//js格式化时间
+        formatter(thistime, fmt) {//js格式化时间
             let $this = new Date(thistime)
             let o = {
                 'M+': $this.getMonth() + 1,
@@ -352,7 +335,8 @@ export default {
     text-align: center;
     z-index: 1;
 }
-.area{
+
+.area {
     width: 90%;
     height: 64vh;
     background: #ffffff;
@@ -361,7 +345,8 @@ export default {
     padding: 8%;
     margin-left: 5%;
 }
-.title{
+
+.title {
     width: 243px;
     height: 75px;
     font-size: 18px;
@@ -371,53 +356,65 @@ export default {
     font-weight: bold;
     text-align: center;
 }
-.border_top{
-    background:url("../../assets/border_top.png");
+
+.border_top {
+    background: url("../../assets/border_top.png");
     background-size: 100% 100%;
     text-align: left;
 }
-.border_bottom{
-    background:url("../../assets/border_bottom.png");
+
+.border_bottom {
+    background: url("../../assets/border_bottom.png");
     background-size: 100% 100%;
 }
-.border_top2{
-    background:url("../../assets/border_top2.png");
+
+.border_top2 {
+    background: url("../../assets/border_top2.png");
     background-size: 100% 100%;
     text-align: left;
 }
-.border_bottom2{
-    background:url("../../assets/border_bottom2.png");
+
+.border_bottom2 {
+    background: url("../../assets/border_bottom2.png");
     background-size: 100% 100%;
 }
-.el-table{
+
+.el-table {
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;
     width: 90%;
 }
+
 .el-pagination {
     /*分页*/
     margin-left: 50%;
 }
+
 /*————表格背景透明 begin————*/
-.table-wrapper /deep/  .el-table,
+.table-wrapper /deep/ .el-table,
 .el-table__expanded-cell {
     background-color: transparent !important;
 }
+
 .table-wrapper /deep/ tr, .table-wrapper /deep/ th, .table-wrapper /deep/ td {
     background: none !important;
     color: #ffffff;
     border-color: #18256f;
 }
+
 .table-wrapper /deep/ .el-table__row {
     background: none !important;
     color: #46d4ff;
 }
+
 /*————表格背景透明 end————*/
-.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row>td {
+.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row > td {
     color: #ffffff;
     background-color: #17b3f0 !important;
     background-size: 100% 100%;
     /*opacity: 0.7;*/
-}/*高亮选中行*/
+}
+
+/*高亮选中行*/
 </style>

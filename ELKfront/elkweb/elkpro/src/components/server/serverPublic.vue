@@ -60,6 +60,7 @@
 <script>
 import * as echarts from 'echarts/core';
 import {
+    TitleComponent,
     TooltipComponent,
     LegendComponent
 } from 'echarts/components';
@@ -71,7 +72,11 @@ import {
 } from 'echarts/renderers';
 
 echarts.use(
-        [TooltipComponent, LegendComponent, PieChart, CanvasRenderer]
+        [TitleComponent,
+            TooltipComponent,
+            LegendComponent,
+            PieChart,
+            CanvasRenderer,]
 );
 import VChart, { THEME_KEY } from "vue-echarts";
 export default {
@@ -102,6 +107,7 @@ export default {
             option : {
                 title: {
                     text: '负载数据统计',
+                    left:'center',
                     textStyle:{
                         color:"#17caf0"//标题文字颜色
                     },
@@ -109,68 +115,38 @@ export default {
                         color:"#17caf0"//副标题文字颜色
                     },
                 },
-                legend: {
-                    top: 'bottom',
-                    textStyle:{
-                        color:"#ffffff"//顶部控制区域文字颜色
-                    },
-                },
                 tooltip: {
                     trigger: 'item'
                 },
-                toolbox: {
-                    show: true,
-                    feature: {
-                        mark: {show: false},
-                        dataView: {show: false, readOnly: false},
-                        restore: {show: false},
-                        saveAsImage: {
-                            //下载图标
-                            show: true,
-                            emphasis: {
-                                iconStyle: {
-                                    textFill: "#2791f3"//鼠标放上工具栏提示文字颜色
-                                }
-                            }
-                        },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    textStyle: {
+                        color: "#ffffff"//顶部控制区域文字颜色
                     },
-                    iconStyle:{
-                        //工具栏图标样式
-                        borderColor:"#ffffff",//icon边框颜色
-                        borderWidth: 1,//icon边框大小
-                    },
-                    left: "90%",//工具栏距离左边距离
                 },
                 series: [
                     {
+                        data: [],
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['50%', '80%'],
-                        avoidLabelOverlap: false,
+                        radius: '70%',
                         itemStyle: {
                             borderRadius: 10,
-                            borderColor: '#fff',
+                            borderColor: '#ffffff',
                             borderWidth: 2
                         },
-                        label: {
-                            show: false,
-                            position: 'center'
-                        },
                         emphasis: {
-                            label: {
-                                show: true,
-                                fontSize: '40',
-                                fontWeight: 'bold'
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
                             }
                         },
-                        labelLine: {show: true},
-                        cursor: "pointer",
-                        data: [
-                            {value: 50, name: 'CPU负载高'},
-                            {value: 17, name: '内存负载高'},
-                            {value: 12, name: '高负载均衡'},
-                            {value: 11, name: '低负载均衡'},
-                        ],
+                        label: {
+                            fontSize: 18
+                        }
+
                     }
                 ]
             },
@@ -228,10 +204,15 @@ export default {
                 })
                 console.log("length:",length,"cpu:"+ this.cpu,"memra:"+this.memra,"highMemra:",this.highMemra,"lowMemra:",this.lowMemra)
                 this.tableData=res.data
-                this.option.series[0].data[0].value=this.cpu;
-                this.option.series[0].data[1].value=this.memra;
-                this.option.series[0].data[2].value=this.highMemra;
-                this.option.series[0].data[3].value=this.lowMemra;
+                while(this.option.series[0].data.length!==0){
+                    this.option.series[0].data.pop()
+                }
+
+                this.option.series[0].data.push({value: this.cpu, name: 'CPU负载高'})
+                this.option.series[0].data.push({value: this.memra, name: '内存负载高'})
+                this.option.series[0].data.push({value: this.lowMemra, name: '低负载均衡'})
+                this.option.series[0].data.push({value: this.highMemra, name: '高负载均衡'})
+
             })
         }
     }
