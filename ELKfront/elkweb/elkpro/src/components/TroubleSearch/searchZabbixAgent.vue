@@ -26,6 +26,7 @@
                     <el-table-column prop="HOST" sortable label="主机名" align="center"></el-table-column>
                   </el-table>
                 </div>
+
               </el-col>
             </el-row>
             <el-row class="border_bottom">
