@@ -17,6 +17,7 @@
               </el-col>
             </el-row>
             <el-row>
+
               <el-col :span="24">
                 <div class="table-wrapper">
                   <el-table :data="tableData"
