@@ -115,7 +115,8 @@
                     <!-- 分页 begin-->
                     <el-pagination
                             v-if="haveData"
-                            v-for="item in pages"
+                            v-for="(item,index) in pages"
+                            :key="index"
                             background layout="prev, pager, next"
                             @current-change="currentPage"
                             :page-size="item.pageSize"

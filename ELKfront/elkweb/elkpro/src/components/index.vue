@@ -485,8 +485,18 @@ export default {
     mounted() {
         let that= this;
         this.timer = setInterval(function() {
-            that.hours = new Date().getHours();
-            that.minutes=new Date().getMinutes();
+            if(new Date().getHours()<10){
+                that.hours = '0'+new Date().getHours();
+            }
+            else{
+                that.hours = new Date().getHours();
+            }
+            if(new Date().getMinutes()<10){
+                that.minutes='0'+new Date().getMinutes();
+            }
+            else{
+                that.minutes=new Date().getMinutes();
+            }
         });
     },
     beforeDestroy: function() {
