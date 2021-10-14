@@ -83,10 +83,12 @@ export default {
     data(){
         return{
             haveData: false,
-            users:'',//员工姓名输入框
+            users:'zhaozh',//员工姓名输入框
             tableDataWeek: [],//近一周软件使用率
-
         }
+    },
+    created() {//自动渲染数据
+      this.getUserUseRate()
     },
     methods:{
         getUserUseRate(){//SoftUserMapper.xml - ELKSoftUserController.java

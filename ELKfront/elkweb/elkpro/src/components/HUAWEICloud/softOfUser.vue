@@ -61,7 +61,7 @@ export default {
                 {soft_value:1,label:'GEOEASTDL'},
                 {soft_value:2,label:'PWIN'},
             ],
-            soft_value:'',
+            soft_value:'GEOEAST',
             option: {
                 title: {
                     text: '最近一周软件用户数据',
@@ -124,7 +124,6 @@ export default {
                 },
                 series: [
                     {
-
                         name: '效率展示',
                         type: 'bar',
                         itemStyle: {
@@ -153,6 +152,7 @@ export default {
     },
     created(){
         this.getSoftName()
+        this.getSoft_userInfo()
     },
     watch: {
         soft_value: function (newV, oldV) {

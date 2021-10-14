@@ -84,9 +84,9 @@ export default {
     return {
       haveData:false,
       fullscreenLoading: false,
-      year: '',
-      month: '',
-      softName: '',
+      year: '2021',
+      month: '9',
+      softName: 'GEOEAST',
       tableData: [],
       softName_options: [{softName_value: '选项1', label: 'GEOEAST'},
         {softName_value: '选项2', label: 'GEOEASTDL'},
@@ -121,7 +121,7 @@ export default {
     }
   },
   created() {
-    // this.getSoftName();
+    this.getNodeTypeEffi();
   },
   methods: {
     //获取软件名的下拉单
@@ -136,13 +136,14 @@ export default {
       this.fullscreenLoading = true;
       setTimeout(() => {
         this.fullscreenLoading = false;
-      }, 500);
+      }, 15000);
       var url = "/searchNodeTypeEfficiency"
       var params = {
         'softName': this.softName,
         'year': this.year,
         'month': this.month,
       }
+      console.log(this.year+"------"+this.month)
       this.$http.get(url, {params}).then(res => {
         this.haveData=true
         console.log(res)

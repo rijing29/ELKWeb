@@ -118,10 +118,10 @@ public class ELKTableController {
 //        int sumNodeWorkLoad = efficiService.sumNodeTypeWorkLoad(nodeSoftMap);
 //        System.out.println("节点分母要乘的那个数workload:"+sumTotalWorkLoad);
 //        double aveEfficiency = calOneDayEfficiency(sumTotalWorkLoad, sumNodeWorkLoad);
-        String aveEffici= String.valueOf(calAveEfficiency(aveEfficiency));
+//        String aveEffici= String.valueOf(calAveEfficiency(aveEfficiency));
 //        return aveTransferPercen(aveEffici);
-        System.out.println("13号计算出来的效率"+aveEffici);
-        return aveEffici;
+        System.out.println("13号计算出来的效率"+aveEfficiency);
+        return String.valueOf(aveEfficiency);
     }
     /**
      * Description:
@@ -249,8 +249,8 @@ public class ELKTableController {
         int sumTotalWorkLoad = efficiService.softNameEfficiency(softName, startTime, stopTime);
         double aveEfficiency = calOneDaySoftNameEfficiency(softName,sumTotalWorkLoad, sumNodeWorkLoad);
         //        月平均效率
-        double aveEffici=calAveEfficiency(aveEfficiency);
-        return aveEffici;
+//        double aveEffici=calAveEfficiency(aveEfficiency);
+        return aveEfficiency;
     }
     /**
      * Description:
@@ -345,14 +345,37 @@ public class ELKTableController {
 //        return res;
         double fenMu;
         double fenZi;
-        double res;
+        double res = 0;
         if(softName.equals("GEOEAST")){
-            fenMu=48*4;
+            fenMu=48*4*30;
         }else{
-            fenMu=48;
+            fenMu=48*30;
         }
-        fenZi=sumNodeWorkLoad;
-        res=fenMu/fenZi;
+        fenZi=sumTotalWorkLoad;
+        if(softName.equals("GEOEAST")){
+            res=fenZi/fenMu/119;
+        }
+        if(softName.equals("PARADIGMDL")){
+            res=fenZi/fenMu/8;
+        }
+        if(softName.equals("PSTM")){
+            res=fenZi/fenMu/31;
+        }
+        if(softName.equals("ZHIKONG")){
+            res=fenZi/fenMu/9;
+        }
+        if(softName.equals("GEOEASTDL")){
+            res=fenZi/fenMu/80;
+        }
+        if(softName.equals("TOMODEL")){
+            res=fenZi/fenMu/20;
+        }
+        if(softName.equals("PARADIGM")){
+            res=fenZi/fenMu/48;
+        }
+        if(softName.equals("PWIN")){
+            res=fenZi/fenMu/41;
+        }
         return res;
     }
 
@@ -367,12 +390,12 @@ public class ELKTableController {
         double fenZi;
         double res;
         if(softName.equals("GEOEAST")){
-            fenMu=48*4;
+            fenMu=48*4*30;
         }else{
-            fenMu=48;
+            fenMu=48*30;
         }
         fenZi=sumTotalWorkLoad;
-        res=fenMu/fenZi;
+        res=fenZi/fenMu;
         return res;
     }
 

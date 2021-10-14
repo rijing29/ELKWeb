@@ -71,8 +71,8 @@ export default {
     return {
       haveData:true,
       fullscreenLoading: false,
-      year: '',
-      month: '',
+      year: '2021',
+      month: '9',
       tableData: [],
       month_options: [{monthvalue: '选项1', label: '1'},
         {monthvalue: '选项2', label: '2'},
@@ -96,7 +96,7 @@ export default {
     }
   },
   created() {
-    // this.getSoftName();
+    this.searchSoftNameEfficiency();
   },
   methods: {
     getSoftName() {
