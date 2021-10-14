@@ -12,7 +12,7 @@
                 <el-col :span="24" align="left">
                     <!--IP下拉框-->
                     请选择IP：
-                    <el-select v-model="ip_value" placeholder="请选择">
+                    <el-select v-model="ip_value" filterable placeholder="请选择">
                         <el-option v-for="item in ip_options" :key="item.ip_value"
                                    :label="item.label" :value="item.label"></el-option>
                     </el-select>
@@ -67,13 +67,13 @@ export default {
             haveData:false,//表格是否有数据
             filtration:false,//是否过滤低级警告
             ip_options:[],
-            ip_value:'',
+            ip_value:'192.168.198.2',
             tableData:[],
         }
     },
     created(){
         this.getIMCIP()
-        // this.getIMCInfo()
+        this.getIMCInfo()
     },
     watch:{
         ip_value:function (newV, oldV){
