@@ -43,9 +43,9 @@
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
                                         highlight-current-row
                                         @current-change="handleCurrentChange">
-                                    <el-table-column prop="time" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="dstipaddr" label="受攻击服务器" align="center"></el-table-column>
-                                    <el-table-column prop="dangervalue" label="受威胁程度" align="center"></el-table-column>
+                                    <el-table-column prop="time" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="dstipaddr" sortable label="受攻击服务器" align="center"></el-table-column>
+                                    <el-table-column prop="dangervalue" sortable label="受威胁程度" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -85,10 +85,10 @@
                                 <el-table
                                         :data="tableData1"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="time" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="attackname" label="攻击类型" align="center"></el-table-column>
-                                    <el-table-column prop="severity" label="危险程度" align="center"></el-table-column>
-                                    <el-table-column prop="srcipaddr" label="攻击源IP" align="center"></el-table-column>
+                                    <el-table-column prop="time" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="attackname" sortable label="攻击类型" align="center"></el-table-column>
+                                    <el-table-column prop="severity" sortable label="危险程度" align="center"></el-table-column>
+                                    <el-table-column prop="srcipaddr" sortable label="攻击源IP" align="center"></el-table-column>
                                 </el-table>
                                 <!--————扩展表格 end————-->
                             </div>

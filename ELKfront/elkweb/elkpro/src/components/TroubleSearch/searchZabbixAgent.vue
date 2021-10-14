@@ -21,9 +21,9 @@
                 <div class="table-wrapper">
                   <el-table :data="tableData"
                             :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                    <el-table-column prop="ERRORS_FROM" label="时间" align="center"></el-table-column>
-                    <el-table-column prop="ERROR" label="故障信息" align="center"></el-table-column>
-                    <el-table-column prop="HOST" label="主机名" align="center"></el-table-column>
+                    <el-table-column prop="ERRORS_FROM" sortable label="时间" align="center"></el-table-column>
+                    <el-table-column prop="ERROR" sortable label="故障信息" align="center"></el-table-column>
+                    <el-table-column prop="HOST" sortable label="主机名" align="center"></el-table-column>
                   </el-table>
                 </div>
               </el-col>

@@ -44,12 +44,12 @@
                     <div class="table-wrapper">
                       <el-table :data="tableData"
                                 :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                        <el-table-column prop="nodeType" label="节点名"
+                        <el-table-column prop="nodeType" sortable label="节点名"
                                          align="center"></el-table-column>
-                        <el-table-column prop="nodeId" label="节点编号"
+                        <el-table-column prop="nodeId" sortable label="节点编号"
                                          align="center"></el-table-column>
-                        <el-table-column prop="time" label="时间" align="center"></el-table-column>
-                        <el-table-column prop="efficiency" label="效率"
+                        <el-table-column prop="time" sortable label="时间" align="center"></el-table-column>
+                        <el-table-column prop="efficiency" sortable label="效率"
                                          align="center"></el-table-column>
                       </el-table>
                     </div>

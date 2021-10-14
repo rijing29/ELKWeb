@@ -27,10 +27,10 @@
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
                                         highlight-current-row
                                         @current-change="handleCurrentChange">
-                                    <el-table-column prop="CCNAME" label="用户" align="center"></el-table-column>
-                                    <el-table-column prop="TOTAL" label="总容量(T)" align="center"></el-table-column>
-                                    <el-table-column prop="USE" label="使用(T)" align="center"></el-table-column>
-                                    <el-table-column prop="USERATE" label="使用率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="CCNAME" sortable label="用户" align="center"></el-table-column>
+                                    <el-table-column prop="TOTAL" sortable label="总容量(T)" align="center"></el-table-column>
+                                    <el-table-column prop="USE" sortable label="使用(T)" align="center"></el-table-column>
+                                    <el-table-column prop="USERATE" sortable label="使用率(%)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

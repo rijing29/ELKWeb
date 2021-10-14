@@ -87,20 +87,20 @@
                                 <!-- 内嵌表格 begin-->
                                 <template slot-scope="props">
                                     <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
-                                        <el-table-column prop="time" label="时间" value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
-                                        <el-table-column prop="srczonename" label="源域" align="center"></el-table-column>
-                                        <el-table-column prop="dstzonename" label="目的域" align="center"></el-table-column>
-                                        <el-table-column prop="protocol" label="协议" align="center"></el-table-column>
-                                        <el-table-column prop="srcipaddr" label="源IP" align="center"></el-table-column>
-                                        <el-table-column prop="srcport" label="源port" align="center"></el-table-column>
-                                        <el-table-column prop="dstipaddr" label="目的IP" align="center"></el-table-column>
-                                        <el-table-column prop="dstport" label="目的port" align="center"></el-table-column>
-                                        <el-table-column prop="event" label="Event" align="center"></el-table-column>
+                                        <el-table-column prop="time" sortable label="时间" value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
+                                        <el-table-column prop="srczonename" sortable label="源域" align="center"></el-table-column>
+                                        <el-table-column prop="dstzonename" sortable label="目的域" align="center"></el-table-column>
+                                        <el-table-column prop="protocol" sortable label="协议" align="center"></el-table-column>
+                                        <el-table-column prop="srcipaddr" sortable label="源IP" align="center"></el-table-column>
+                                        <el-table-column prop="srcport" sortable label="源port" align="center"></el-table-column>
+                                        <el-table-column prop="dstipaddr" sortable label="目的IP" align="center"></el-table-column>
+                                        <el-table-column prop="dstport" sortable label="目的port" align="center"></el-table-column>
+                                        <el-table-column prop="event" sortable label="Event" align="center"></el-table-column>
                                     </el-table>
                                 </template>
                                 <!-- 内嵌表格 end-->
                             </el-table-column>
-                            <el-table-column v-for="(col,i) in cols" :prop="col.prop" :key="i"
+                            <el-table-column v-for="(col,i) in cols" :prop="col.prop" :key="i"  sortable
                                              :label="col.label" align="center"></el-table-column>
                         </el-table>
                         <!-- 外表格 end-->

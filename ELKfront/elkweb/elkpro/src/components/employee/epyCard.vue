@@ -37,8 +37,8 @@
                                         ref="singleTable"
                                         :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="JL_SJ" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="DEP_NAME" label="刷卡地点" align="center"></el-table-column>
+                                    <el-table-column prop="JL_SJ" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="DEP_NAME" sortable label="刷卡地点" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

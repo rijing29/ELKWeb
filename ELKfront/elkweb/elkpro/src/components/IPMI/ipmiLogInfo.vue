@@ -34,10 +34,10 @@
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
                                 <el-table :data="tableData" style="width: 95%;margin: auto;header-align: center;">
-                                  <el-table-column prop="TIME" label="时间"
+                                  <el-table-column prop="TIME" sortable label="时间"
                                                    value-format="yyyy/MM/dd HH:mm:ss"
                                                    align="center"></el-table-column>
-                                  <el-table-column prop="INFO" label="告警信息" align="center"></el-table-column>
+                                  <el-table-column prop="INFO" sortable label="告警信息" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 表格 end-->
                             </div>
@@ -60,10 +60,10 @@
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
                                 <el-table :data="TableData" style="width: 95%;margin: auto;header-align: center;">
-                                    <el-table-column prop="TIME" label="时间"
+                                    <el-table-column prop="TIME" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
                                                      align="center"></el-table-column>
-                                    <el-table-column prop="INFO" label="告警信息" align="center"></el-table-column>
+                                    <el-table-column prop="INFO" sortable label="告警信息" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 表格 end-->
                             </div>

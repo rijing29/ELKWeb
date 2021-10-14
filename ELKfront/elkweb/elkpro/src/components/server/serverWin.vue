@@ -25,12 +25,12 @@
                                         ref="singleTable"
                                         :data="tableDataService"
                                         :header-cell-style="{color: '#17caf0',fontSize:'large'}">
-                                    <el-table-column prop="IP" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE2" label="交互类任务" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE3" label="共享类任务" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE5" label="服务类任务" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE10" label="远程交互任务" align="center"></el-table-column>
-                                    <el-table-column prop="TIME" :formatter="dateForma" label="服务天数" align="center"></el-table-column>
+                                    <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE2" sortable label="交互类任务" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE3" sortable label="共享类任务" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE5" sortable label="服务类任务" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE10" sortable label="远程交互任务" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="服务天数" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -59,9 +59,9 @@
                                         ref="singleTable"
                                         :data="tableDataLog"
                                         :header-cell-style="{color: '#17caf0',fontSize:'large'}">
-                                    <el-table-column prop="TIME" :formatter="dateForma" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="IP" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="WARNINFO" label="提示信息" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
+                                    <el-table-column prop="WARNINFO" sortable label="提示信息" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -92,9 +92,9 @@
                                         ref="singleTable"
                                         :data="tableDataTask"
                                         :header-cell-style="{color: '#17caf0',fontSize:'large'}">
-                                    <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="IP" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="INC_VALUE" label="任务增长量" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
+                                    <el-table-column prop="INC_VALUE" sortable label="任务增长量" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

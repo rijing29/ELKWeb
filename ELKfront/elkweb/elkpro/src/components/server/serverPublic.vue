@@ -25,10 +25,10 @@
                                         ref="singleTable"
                                         :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="ip" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="cpurateforworktime" label="CPU负载" align="center"></el-table-column>
-                                    <el-table-column prop="memrateforworktime" label="内存负载" align="center"></el-table-column>
-                                    <el-table-column prop="netfloatforworktime" label="网络负载" align="center"></el-table-column>
+                                    <el-table-column prop="ip" sortable label="IP" align="center"></el-table-column>
+                                    <el-table-column prop="cpurateforworktime" sortable label="CPU负载" align="center"></el-table-column>
+                                    <el-table-column prop="memrateforworktime" sortable label="内存负载" align="center"></el-table-column>
+                                    <el-table-column prop="netfloatforworktime" sortable label="网络负载" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

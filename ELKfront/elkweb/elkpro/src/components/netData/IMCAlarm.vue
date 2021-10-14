@@ -34,16 +34,13 @@
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
                                 <el-table :data="tableData" style="width: 95%;margin: auto;header-align: center;">
-                                    <el-table-column prop="DEVICEIP" label="设备IP" align="center"></el-table-column>
-                                    <el-table-column prop="ALARMLEVEL" label="告警级别" align="center"></el-table-column>
-                                    <el-table-column prop="ALARMCATEGORYDESC" label="告警类别信息" align="center"></el-table-column>
-                                    <el-table-column prop="RECSTATUS" label="告警状态" align="center"></el-table-column>
-                                    <el-table-column prop="ALARMDESC" label="告警具体信息" align="center" width="600"></el-table-column>
-                                    <el-table-column prop="rectimedesc" label="设备恢复时间" align="center"></el-table-column>
-                                    <el-table-column prop="FAULTTIMEDESC"
-                                                     label="设备告警时间"
-                                                     value-format="yyyy/MM/dd HH:mm:ss"
-                                                     align="center" width="180">
+                                    <el-table-column prop="DEVICEIP" sortable label="设备IP" align="center"></el-table-column>
+                                    <el-table-column prop="ALARMLEVEL" sortable label="告警级别" align="center"></el-table-column>
+                                    <el-table-column prop="ALARMCATEGORYDESC" sortable label="告警类别信息" align="center"></el-table-column>
+                                    <el-table-column prop="RECSTATUS" sortable label="告警状态" align="center"></el-table-column>
+                                    <el-table-column prop="ALARMDESC" sortable label="告警具体信息" align="center" width="600"></el-table-column>
+                                    <el-table-column prop="rectimedesc" sortable label="设备恢复时间" align="center"></el-table-column>
+                                    <el-table-column prop="FAULTTIMEDESC" sortable label="设备告警时间" value-format="yyyy/MM/dd HH:mm:ss" align="center" width="180">
                                     </el-table-column>
                                 </el-table>
                                 <!-- 表格 end-->
