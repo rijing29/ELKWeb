@@ -58,10 +58,10 @@
                                             <!--下面的表格-->
                                             <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                                 <el-table-column type="selection" width="55" align="center"></el-table-column>
-                                                <el-table-column prop="nodeType" label="节点名" align="center"></el-table-column>
-                                                <el-table-column prop="softName" label="软件名" align="center"></el-table-column>
-                                                <el-table-column prop="nodeId" label="起始和截止节点" align="center"></el-table-column>
-                                                <el-table-column prop="workLoad" label="作业规划数" align="center"></el-table-column>
+                                                <el-table-column prop="nodeType" sortable label="节点名" align="center"></el-table-column>
+                                                <el-table-column prop="softName" sortable label="软件名" align="center"></el-table-column>
+                                                <el-table-column prop="nodeId" sortable label="起始和截止节点" align="center"></el-table-column>
+                                                <el-table-column prop="workLoad" sortable label="作业规划数" align="center"></el-table-column>
                                             </el-table>
                                         </div>
                                     </el-col>

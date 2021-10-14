@@ -33,9 +33,9 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table  ref="singleTable" :data="tableDataWeek" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="SOFTWARE" label="使用软件" align="center"></el-table-column>
-                                    <el-table-column prop="USERATE" label="使用率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="SOFTWARE" sortable label="使用软件" align="center"></el-table-column>
+                                    <el-table-column prop="USERATE" sortable label="使用率(%)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

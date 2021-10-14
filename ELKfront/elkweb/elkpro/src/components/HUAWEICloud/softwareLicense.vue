@@ -21,11 +21,11 @@
                                 <div class="table-wrapper">
                                     <el-table :data="tableData"
                                               :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                        <el-table-column prop="userName" label="用户" align="center"></el-table-column>
-                                        <el-table-column prop="licenceServer" label="软件名" align="center"></el-table-column>
-                                        <el-table-column prop="userAction" label="许可动作" align="center"></el-table-column>
-                                        <el-table-column prop="moduleName" label="软件模块名" align="center"></el-table-column>
-                                        <el-table-column prop="inputTime" label="时间" align="center"></el-table-column>
+                                        <el-table-column prop="userName" sortable label="用户" align="center"></el-table-column>
+                                        <el-table-column prop="licenceServer" sortable label="软件名" align="center"></el-table-column>
+                                        <el-table-column prop="userAction" sortable label="许可动作" align="center"></el-table-column>
+                                        <el-table-column prop="moduleName" sortable label="软件模块名" align="center"></el-table-column>
+                                        <el-table-column prop="inputTime" sortable label="时间" align="center"></el-table-column>
                                     </el-table>
                                 </div>
                             </el-col>

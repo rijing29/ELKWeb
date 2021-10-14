@@ -33,10 +33,10 @@ public class ELKFirewallController {
                                   @Param("stopTime") String stopTime) throws ParseException {
         dataInfo dataInfo = new dataInfo();//引入dataInfo对象
 //        查询四个下拉框值
-        List<Map< String, Object >> srczonename = fireWallService.getSrczonename(startTime,stopTime);
-        List<Map< String, Object >> dstzonename = fireWallService.getDstzonename(startTime,stopTime);
-        List<Map< String, Object >> protocol = fireWallService.getProtocol(startTime,stopTime);
-        List<Map< String, Object >> event = fireWallService.getEvent(startTime,stopTime);
+        List<Map< String, Object >> srczonename = fireWallService.getSrczonename(dayStart(startTime), dayStopTime(stopTime));
+        List<Map< String, Object >> dstzonename = fireWallService.getDstzonename(dayStart(startTime), dayStopTime(stopTime));
+        List<Map< String, Object >> protocol = fireWallService.getProtocol(dayStart(startTime), dayStopTime(stopTime));
+        List<Map< String, Object >> event = fireWallService.getEvent(dayStart(startTime), dayStopTime(stopTime));
 //        创建四个数组空间
         String keySrczonename[] = new String[srczonename.size()];
         String keyDstzonename[] = new String[dstzonename.size()];
@@ -104,10 +104,11 @@ public class ELKFirewallController {
                                        @Param("dstIp")String dstIp,
                                        @Param("pageNum")String pageNum,
                                        @Param("pageSize")String pageSize) throws ParseException {
+        System.out.println(dayStart(startTime)+ dayStopTime(stopTime));
         Integer pnum = Integer.valueOf(pageNum);
         Integer psize = Integer.valueOf(pageSize);
         PageHelper.startPage(pnum, psize);//1,20
-        List<info> selection = fireWallService.getSelection(startTime, stopTime, sourceDomain,
+        List<info> selection = fireWallService.getSelection(dayStart(startTime), dayStopTime(stopTime), sourceDomain,
                 destinationDomain, protocol, event, sourceIP, sourcePort, destinationIP, destinationPort,srcIp,dstIp);
         PageInfo<info> pageInfoUser = new PageInfo<info>(selection);
         pageInfoUser.setList(selection);
@@ -132,8 +133,22 @@ public class ELKFirewallController {
                                       @Param("SRCIPADDR")String SRCIPADDR,
                                       @Param("SRCPORT")String SRCPORT) throws ParseException {
         System.out.println("数据传递："+startTime+stopTime+SRCZONENAME+DSTZONENAME+PROTOCOL+EVENT+DSTIPADDR+DSTPORT+SRCIPADDR+SRCPORT);
-        List<FireWallInfo> selection = fireWallService.getInfo(startTime,stopTime,SRCZONENAME,DSTZONENAME,PROTOCOL, EVENT,DSTIPADDR, DSTPORT, SRCIPADDR, SRCPORT);
+        List<FireWallInfo> selection = fireWallService.getInfo(dayStart(startTime), dayStopTime(stopTime),SRCZONENAME,DSTZONENAME,PROTOCOL, EVENT,DSTIPADDR, DSTPORT, SRCIPADDR, SRCPORT);
         selection.forEach(System.out::println);
         return selection;
+    }
+
+    public String dayStopTime(String s){
+        StringBuilder builder = new StringBuilder(s);
+        builder.replace(11,s.length(),"23:59:59");
+        String dayStopTime = builder.toString();
+        return dayStopTime;
+    }
+
+    public String dayStart(String s){
+        StringBuilder builder = new StringBuilder(s);
+        builder.replace(11,s.length(),"00:00:00");
+        String dayStart = builder.toString();
+        return dayStart;
     }
 }

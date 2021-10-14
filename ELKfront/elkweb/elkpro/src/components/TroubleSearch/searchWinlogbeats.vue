@@ -21,8 +21,8 @@
                                 <div class="table-wrapper">
                                     <el-table :data="tableData"
                                               :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                        <el-table-column prop="TIME" label="时间" align="center"></el-table-column>
-                                        <el-table-column prop="IP" label="IP" align="center"></el-table-column>
+                                        <el-table-column prop="TIME" sortable label="时间" align="center"></el-table-column>
+                                        <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
                                     </el-table>
                                 </div>
                             </el-col>

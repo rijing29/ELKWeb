@@ -58,9 +58,9 @@
                 <el-col :span="24">
                     <!-- `checked` 为 true 或 false -->
                     <el-checkbox v-model="sourceIP"><div class="checkColor">源IP</div></el-checkbox>
-                    <el-checkbox v-if="isSourceSelected" v-model="sourcePort"><div class="checkColor">源Port</div></el-checkbox>
+                    <el-checkbox :disabled="useSourcePort" v-model="sourcePort"><div class="checkColor">源Port</div></el-checkbox>
                     <el-checkbox v-model="destinationIP"><div class="checkColor">目的IP</div></el-checkbox>
-                    <el-checkbox v-if="isDestinationSelected" v-model="destinationPort"><div class="checkColor">目的Port</div></el-checkbox>
+                    <el-checkbox :disabled="useDestinationPort" v-model="destinationPort"><div class="checkColor">目的Port</div></el-checkbox>
                     <span class="span_area">
                         <el-input v-model="srcIp" placeholder="请输入源IP" style="margin-right: 1%;width: 10%;"
                                   :disabled="srcIp_disabled"></el-input>
@@ -87,20 +87,20 @@
                                 <!-- 内嵌表格 begin-->
                                 <template slot-scope="props">
                                     <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
-                                        <el-table-column prop="time" label="时间" value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
-                                        <el-table-column prop="srczonename" label="源域" align="center"></el-table-column>
-                                        <el-table-column prop="dstzonename" label="目的域" align="center"></el-table-column>
-                                        <el-table-column prop="protocol" label="协议" align="center"></el-table-column>
-                                        <el-table-column prop="srcipaddr" label="源IP" align="center"></el-table-column>
-                                        <el-table-column prop="srcport" label="源port" align="center"></el-table-column>
-                                        <el-table-column prop="dstipaddr" label="目的IP" align="center"></el-table-column>
-                                        <el-table-column prop="dstport" label="目的port" align="center"></el-table-column>
-                                        <el-table-column prop="event" label="Event" align="center"></el-table-column>
+                                        <el-table-column prop="time" sortable label="时间" value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
+                                        <el-table-column prop="srczonename" sortable label="源域" align="center"></el-table-column>
+                                        <el-table-column prop="dstzonename" sortable label="目的域" align="center"></el-table-column>
+                                        <el-table-column prop="protocol" sortable label="协议" align="center"></el-table-column>
+                                        <el-table-column prop="srcipaddr" sortable label="源IP" align="center"></el-table-column>
+                                        <el-table-column prop="srcport" sortable label="源port" align="center"></el-table-column>
+                                        <el-table-column prop="dstipaddr" sortable label="目的IP" align="center"></el-table-column>
+                                        <el-table-column prop="dstport" sortable label="目的port" align="center"></el-table-column>
+                                        <el-table-column prop="event" sortable label="Event" align="center"></el-table-column>
                                     </el-table>
                                 </template>
                                 <!-- 内嵌表格 end-->
                             </el-table-column>
-                            <el-table-column v-for="(col,i) in cols" :prop="col.prop" :key="i"
+                            <el-table-column v-for="(col,i) in cols" :prop="col.prop" :key="i"  sortable
                                              :label="col.label" align="center"></el-table-column>
                         </el-table>
                         <!-- 外表格 end-->
@@ -137,8 +137,10 @@ export default {
         return {
             expands: [],
             //时间选择器
-            startTime: '',
-            stopTime: '',
+            startTime: '2021/10/14 00:00:00',
+            stopTime: '2021/10/14 23:59:59',
+            useSourcePort:false,
+            useDestinationPort:false,
             //下拉框
             sourceDomain: '',
             destinationDomain: '',
@@ -150,10 +152,10 @@ export default {
             srcIp_disabled: true,
             dstIp_disabled: true,
             // 复选框
-            sourceIP: false,
-            destinationIP: false,
-            sourcePort: false,
-            destinationPort: false,
+            sourceIP: true,
+            destinationIP: true,
+            sourcePort: true,
+            destinationPort: true,
             haveData: false,
             isSourceSelected: false,
             isDestinationSelected: false,
@@ -232,25 +234,27 @@ export default {
         //复选框事件
         sourceIP: function () {
             if (this.sourceIP === false) {
-                this.sourcePort = false
-                this.isSourceSelected = false
+                this.useSourcePort = true
                 this.srcIp_disabled = true
             } else {
-                this.isSourceSelected = true
+                this.useSourcePort = false
                 this.srcIp_disabled = false
             }
         },
 
         destinationIP: function () {
             if (this.destinationIP === false) {
+                this.useDestinationPort=true
                 this.destinationPort = false
-                this.isDestinationSelected = false
                 this.dstIp_disabled = true
             } else {
-                this.isDestinationSelected = true
+                this.useDestinationPort=false
                 this.dstIp_disabled = false
             }
         }
+    },
+    created(){
+        this.getSelection()
     },
     methods: {
         /*————控制表格智能展开一行 begin————*/

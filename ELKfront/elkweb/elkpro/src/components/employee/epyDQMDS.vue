@@ -37,8 +37,8 @@
                                         ref="singleTable"
                                         :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'large'}">
-                                    <el-table-column prop="OPERATIONTIME" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="DESCRIPTION" label="使用功能" align="center" width="380"></el-table-column>
+                                    <el-table-column prop="OPERATIONTIME" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="DESCRIPTION" sortable label="使用功能" align="center" width="380"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

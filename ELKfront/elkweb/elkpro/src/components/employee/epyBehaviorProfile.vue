@@ -58,8 +58,8 @@
                                     <el-table :data="tableData"
                                               :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                         <el-table-column prop="username" label="姓名" align="center"></el-table-column>
-                                        <el-table-column prop="actiontime" label="时间" align="center"></el-table-column>
-                                        <el-table-column prop="action" label="员工行为" align="center"></el-table-column>
+                                        <el-table-column prop="actiontime" sortable label="时间" align="center"></el-table-column>
+                                        <el-table-column prop="action" sortable label="员工行为" align="center"></el-table-column>
                                     </el-table>
                                 </div>
                             </el-col>

@@ -25,11 +25,11 @@
                                           style="width: 95%;margin: auto;header-align: center;"
                                           highlight-current-row
                                           @current-change="handleCurrentChange">
-                                    <el-table-column prop="time" label="时间"
+                                    <el-table-column prop="time" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
                                                      align="center"></el-table-column>
-                                    <el-table-column prop="ip" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="info" label="告警信息" align="center"></el-table-column>
+                                    <el-table-column prop="ip" sortable label="IP" align="center"></el-table-column>
+                                    <el-table-column prop="info" sortable label="告警信息" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 表格 end-->
                             </div>
@@ -55,11 +55,11 @@
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
                                 <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;">
-                                    <el-table-column prop="time" label="时间"
+                                    <el-table-column prop="time" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
                                                      align="center"></el-table-column>
                                     <el-table-column prop="ip" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="info" label="告警信息" align="center"></el-table-column>
+                                    <el-table-column prop="info" sortable label="告警信息" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 外表格 end-->
                             </div>

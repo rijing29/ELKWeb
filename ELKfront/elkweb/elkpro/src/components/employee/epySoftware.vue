@@ -46,10 +46,10 @@
                                         :data="tableDataInfo"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="time" :formatter="dateForma" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="username" label="用户名" align="center"></el-table-column>
-                                    <el-table-column prop="softwarename" label="软件系统的名称"align="center"></el-table-column>
-                                    <el-table-column prop="modulename" label="软件系统模块名称" align="center"></el-table-column>
-                                    <el-table-column prop="workusemintue" label="用户使用模块的总时间" align="center"></el-table-column>
+                                    <el-table-column prop="username" sortable label="用户名" align="center"></el-table-column>
+                                    <el-table-column prop="softwarename" sortable label="软件系统的名称"align="center"></el-table-column>
+                                    <el-table-column prop="modulename" sortable label="软件系统模块名称" align="center"></el-table-column>
+                                    <el-table-column prop="workusemintue" sortable label="用户使用模块的总时间" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -77,8 +77,8 @@
                                         ref="singleTable"
                                         :data="tableDataSum"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" :formatter="dateForma" label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="SUM(WORKUSEMINTUE)" label="时间(分钟)" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="SUM(WORKUSEMINTUE)" sortable label="时间(分钟)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
