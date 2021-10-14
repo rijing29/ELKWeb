@@ -72,9 +72,9 @@
                             <div class="table-wrapper">
                             <!--————表格 begin————-->
                             <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                <el-table-column prop="SOFTWARENAME" label="软件" align="center">
+                                <el-table-column prop="SOFTWARENAME" sortable label="软件" align="center">
                                 </el-table-column>
-                                <el-table-column prop="COUNT" label="使用频率（次）" align="center">
+                                <el-table-column prop="COUNT" sortable label="使用频率（次）" align="center">
                                 </el-table-column>
                             </el-table>
                             <!--————表格 end————-->
@@ -120,10 +120,13 @@ export default {
         VChart
     },
     name: "useFrequencyAll",
+    created(){
+      this.getFrequency();
+    },
     data() {
         return {
-            startTime: '',
-            stopTime: '',
+            startTime:'2021-07-26',
+            stopTime:'2021-08-03',
             haveData:false,
             tableData: [],
             option: {

@@ -79,11 +79,11 @@
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
                                 <el-table :data="tableData" style="width: 100%">
-                                    <el-table-column prop="SOFTWARENAME" label="软件" align="center">
+                                    <el-table-column prop="SOFTWARENAME" sortable label="软件" align="center">
                                     </el-table-column>
-                                    <el-table-column prop="MODULENAME" label="模块" align="center">
+                                    <el-table-column prop="MODULENAME" sortable label="模块" align="center">
                                     </el-table-column>
-                                    <el-table-column prop="COUNT" label="使用次数（次）" align="center">
+                                    <el-table-column prop="COUNT" sortable label="使用次数（次）" align="center">
                                     </el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
@@ -130,11 +130,15 @@ export default {
         VChart
     },
     name: "useFrequencyOne",
+    created(){
+      this.getSoftwareName();
+      this.getModuleCount();
+    },
     data() {
         return {
-            startTime: '',//开始时间选择器
-            stopTime: '',//截止时间选择器
-            softwareName: '',//软件名
+            startTime: '2021-08-11',//开始时间选择器
+            stopTime: '2021-08-11',//截止时间选择器
+            softwareName: 'GEOEAST-JS',//软件名
             softwareName_options: [],//下拉框选项
             softwareName_value: '',//下拉框值
             haveData: false,//控制是否显示
