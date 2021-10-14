@@ -155,7 +155,7 @@ export default {
                 yAxis: [
                     {
                         position: "top",//X轴标签位置(顶部或底部)
-                        axisLabel:{color:"#ffffff"},//X轴底部标签颜色
+                        axisLabel:{color:"#ffffff",formatter: '{value} 次'},//X轴底部标签颜色
                         type: 'value',
                         boundaryGap: [0, 0.01],
                         max:100,//最大刻度值

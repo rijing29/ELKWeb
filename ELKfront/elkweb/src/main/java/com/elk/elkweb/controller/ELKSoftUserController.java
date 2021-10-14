@@ -53,10 +53,9 @@ public class ELKSoftUserController {
     @RequestMapping(value = "/getUserUseRate",produces = "application/json;charset=utf-8")
     public UserUseRate getUserUseRate(@Param("users")String users)throws Exception{
         UserUseRate userUseRate1 = new UserUseRate();
-
-        Double workLoad = softUserService.getWork_load(users);
         String maxTime = softUserService.getMaxTime();
         List<Map< String, Object >> softname = softUserService.getsoftname(users);
+        System.out.println(softname+"---------------+++++");
         String Time[] = new String[7*softname.size()];
         String Softname[] = new String[7*softname.size()];
         Double UserUseRate[] = new Double[7*softname.size()];
@@ -67,19 +66,19 @@ public class ELKSoftUserController {
             String startTime= dayStartTime(transferString(cutOneDay));
             String stopTime= dayStopTime(transferString(cutOneDay));
             String time=tarnsDay(transferString(cutOneDay));
-
+            System.out.println(startTime+"starttime");
             for(int j=0;j<softname.size();j++){
                 String soft_name = softname.get(j).get("SOFT_NAME").toString();
                 System.out.println(softname.get(j).get("SOFT_NAME").toString()+"8888888");
+                Double workLoad = softUserService.getWork_load(soft_name);
                 Double sumJob = softUserService.getSumJob(soft_name,users, startTime, stopTime);
+                System.out.println(sumJob+"----------"+workLoad);
                 Double userUseRate = calculate(sumJob,workLoad);
-                System.out.println(userUseRate+"你大爷啊啊啊啊啊啊啊");
+                System.out.println(userUseRate);
                 Time[k]=time;
                 Softname[k]=soft_name;
                 if(userUseRate*100>100){
                     UserUseRate[k]=95.0;
-                }else if(userUseRate.equals("NaN")){
-                    UserUseRate[k]= Double.valueOf(0);
                 }
                 else {
                     UserUseRate[k]=Double.valueOf(new Formatter().format("%.1f", userUseRate*100).toString());
@@ -91,7 +90,7 @@ public class ELKSoftUserController {
         userUseRate1.setTime(Time);
         userUseRate1.setUseRate(UserUseRate);
         userUseRate1.setSoftname(Softname);
-        System.out.println(userUseRate1+"你大爷");
+        System.out.println(userUseRate1);
         return userUseRate1;
     }
 
@@ -104,7 +103,7 @@ public class ELKSoftUserController {
             calculate = Double.valueOf(sumJob/(48*workLoad));
         }
 
-        System.out.println(sumJob+"ppppppppppppppp");
+        System.out.println(sumJob+"总会时间");
         return calculate;
     }
 

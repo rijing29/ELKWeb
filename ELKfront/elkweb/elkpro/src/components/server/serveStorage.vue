@@ -150,7 +150,7 @@ export default {
                         axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                         type: 'category',
                         boundaryGap: false,
-                        data: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12,13,14,15]
+                        data: []
                     }
                 ],
                 yAxis: [
@@ -213,13 +213,15 @@ export default {
                 }
                 console.log(this.currentRow.DIRNAME, this.currentRow.INFO)
                 this.$http.get(url,{params}).then(res=> {
-                    console.log(res.data[0].USE,"2222222")
+
+                    console.log(res.data[0].TIME,"2222222")
                     while (this.option.series[0].data.length!==0){
                         this.option.series[0].data.pop()
                     }
                     var i;
                     for(i=0;i<res.data.length;i++){
                         this.option.series[0].data.push(res.data[i].USE)
+                        this.option.xAxis[0].data.push(res.data[0].TIME)
                     }
                 })
             }

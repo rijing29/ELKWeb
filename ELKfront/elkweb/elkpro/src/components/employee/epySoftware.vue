@@ -45,7 +45,7 @@
                                         ref="singleTable"
                                         :data="tableDataInfo"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="time" :formatter="dateForma" label="时间" align="center"></el-table-column>
+                                    <el-table-column prop="time" :formatter="dateForma" sortable label="时间" align="center"></el-table-column>
                                     <el-table-column prop="username" sortable label="用户名" align="center"></el-table-column>
                                     <el-table-column prop="softwarename" sortable label="软件系统的名称"align="center"></el-table-column>
                                     <el-table-column prop="modulename" sortable label="软件系统模块名称" align="center"></el-table-column>

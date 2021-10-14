@@ -99,10 +99,7 @@
                           T_NODE_SOFT_MAP b
                      where a.nodename = b.node_type
                        and a.no = b.node_id
-                       and time between to_date('2021/8/7 00:00:00'
-                         , 'yyyy-MM-dd hh24:mi:ss')
-                       and to_date('2021/8/7 23:59:59'
-                         , ' yyyy-MM-dd hh24:mi:ss')
+                       and time between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
                        and users=#{users,jdbcType=VARCHAR}
                  )
             where soft_name = #{soft_name,jdbcType=VARCHAR}
