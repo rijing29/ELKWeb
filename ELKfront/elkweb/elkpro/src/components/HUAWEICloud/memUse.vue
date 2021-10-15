@@ -27,7 +27,6 @@
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
                                         highlight-current-row
                                         @current-change="handleCurrentChange">
-                                    <el-table-column prop="CCNAME" sortable label="用户" align="center"></el-table-column>
                                     <el-table-column prop="TOTAL" sortable label="总容量(T)" align="center"></el-table-column>
                                     <el-table-column prop="USE" sortable label="使用(T)" align="center"></el-table-column>
                                     <el-table-column prop="USERATE" sortable label="使用率(%)" align="center"></el-table-column>
@@ -160,7 +159,7 @@ export default {
                         axisLabel:{color:"#ffffff"},//X轴底部标签颜色
                         type: 'category',
                         boundaryGap: false,
-                        data: [1, 2, 3, 4, 5, 6,7,8,9,10,11,12]
+                        data: []
                     }
                 ],
                 yAxis: [
@@ -205,7 +204,7 @@ export default {
     },
     methods:{
 
-        getHWCCUseage(){//渲染数据
+        getHWCCUseage(){//渲染数据 HWCCUseAgeMapper.xml - ELKHWCCUAGColtroller.java
             var url="/getHWCCUseage"
             this.$http.get(url).then(res=>{
                this.tableData=res.data
@@ -220,11 +219,12 @@ export default {
                 }
                 this.$http.get(url,{params}).then(res=> {
                   console.log(res.data)
-                    this.option.title.subtext="用户： "+ this.currentRow.CCNAME
+                    // this.option.title.subtext="用户： "+ this.currentRow.CCNAME
                     while (this.option.series[0].data.length!==0){
                         this.option.series[0].data.pop()
                     }
-                    for(var i=0;i<res.data.length;i++){
+                    for(var i=res.data.length-1;i>=0;i--){
+                        this.option.xAxis[0].data.push(res.data[i].TIME)
                         this.option.series[0].data.push(res.data[i].USE)
                     }
                 })

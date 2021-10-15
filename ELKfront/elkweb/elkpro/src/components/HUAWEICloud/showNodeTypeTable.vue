@@ -85,7 +85,7 @@ export default {
       haveData:false,
       fullscreenLoading: false,
       year: '2021',
-      month: '9',
+      month: '10',
       softName: 'ZHIKONG',
       tableData: [],
       softName_options: [{softName_value: '选项1', label: 'GEOEAST'},

@@ -72,7 +72,7 @@ export default {
       haveData:true,
       fullscreenLoading: false,
       year: '2021',
-      month: '9',
+      month: '10',
       tableData: [],
       month_options: [{monthvalue: '选项1', label: '1'},
         {monthvalue: '选项2', label: '2'},

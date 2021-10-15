@@ -92,13 +92,14 @@ export default {
             filtration:false,//是否过滤低级警告
             ip:'',
             ip_options:[],
-            ip_value:'',
+            ip_value:'192.168.10.101',
             tableData:[],
             TableData:[],
         }
     },
     created(){
         this.getIPSelection()
+        this.getIPMI()
     },
     watch:{
         ip_value:function (newV, oldV){
@@ -127,14 +128,14 @@ export default {
             })
         },
 
-        getIPMI(ip){
+        getIPMI(){
             this.haveData=true
             if(this.filtration===false){
                 this.ipmiInfo=true
                 this.ipmiAlarm=false
                 var url = "/getIPMIInfo1"
                 var params = {
-                    'ip': ip,
+                    'ip': this.ip_value,
                 }
                 this.$http.get(url, {params}).then(res => {
                     this.tableData=res.data
