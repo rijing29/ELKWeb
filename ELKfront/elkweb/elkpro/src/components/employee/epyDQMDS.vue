@@ -63,6 +63,38 @@
                 </el-col>
                 <!--————柱状图区域 end————-->
             </el-row>
+            <!--————默认显示区域 begin————-->
+            <el-row v-if="defaultData">
+                <el-col :span="24">
+                    <el-row>
+                        <el-col :span="24" class="border_top2">
+                            <div class="tableSubTitle">全院最近一天平均使用功能次数</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24" style="padding: 0;">
+                            <div class="table-wrapper">
+                                <!--————表格 begin————-->
+                                <el-table
+                                        height="600"
+                                        ref="singleTable"
+                                        :data="tableData2"
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                    <el-table-column prop="DESCRIPTION" sortable label="功能描述" align="center"></el-table-column>
+                                    <el-table-column prop="COU" sortable label="全院平均使用次数（次）" align="center"></el-table-column>
+                                </el-table>
+                                <!--————表格 end————-->
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col class="border_bottom2">
+                            <div class="tableSubTitle2"></div>
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+            <!--————默认显示区域 end————-->
         </el-main>
     </el-container>
 </template>
@@ -98,6 +130,8 @@ export default {
         return{
             character:'',
             haveData: false,
+            defaultData:true,
+            tableData2:[],
             date:'',//日期变量
             pages: [//分页信息
                 {
@@ -106,7 +140,7 @@ export default {
                     currentPage: 1,
                 },
             ],
-            username: '赵成栋',//员工姓名
+            username: '',//员工姓名
             tableData: [],//表格数据
             currentRow: null,//存储当前点击行信息
             /*————饼状图数据 begin————*/
@@ -214,8 +248,16 @@ export default {
     },
     created(){
       this.getEpyDQMSInfo();
+      this.getDefaultDQMDS()
     },
     methods:{
+        getDefaultDQMDS(){
+            var url = "/getDefaultDQMDS"
+            this.$http.get(url).then(res => {
+                console.log(res.data)
+                this.tableData2=res.data
+            })
+        },
         getEpyDQMSInfo(){//获取表格以及柱状图数据并渲染
             this.name=this.username
             if(this.username!==''){
@@ -228,6 +270,7 @@ export default {
                     this.tableData=res.data
                     // this.name=res.data[0].USERNAME
                     this.haveData=true
+                    this.defaultData=false
                 })
                 var url2="/getEpyDQMDSData"
                 this.$http.get(url2,{params}).then(res=>{

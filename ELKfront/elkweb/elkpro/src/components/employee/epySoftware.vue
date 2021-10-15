@@ -21,13 +21,6 @@
                     </span>
                 </el-col>
             </el-row>
-            <!--无数据时的渲染提示-->
-<!--            <el-row v-if="haveData3" class="noData_Con">-->
-<!--              <div style="line-height: 500px">-->
-<!--                查询框输入员工姓名即可进行信息展示。-->
-<!--                例如：输入“wuying”-->
-<!--              </div>-->
-<!--            </el-row>-->
             <el-row>
                 <!--————员工近期使用软件信息 begin————-->
                 <el-col :span="12" style="margin-top: 8px" v-if="haveData">
@@ -92,6 +85,38 @@
                 </el-col>
                 <!--————员工近期加班使用软件统计 end————-->
             </el-row>
+            <!--————默认显示区域 begin————-->
+            <el-row v-if="defaultData">
+                <el-col :span="24">
+                    <el-row>
+                        <el-col :span="24" class="border_top2">
+                            <div class="tableSubTitle">一周内软件使用人数</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24" style="padding: 0;">
+                            <div class="table-wrapper">
+                                <!--————表格 begin————-->
+                                <el-table
+                                        height="600"
+                                        ref="singleTable"
+                                        :data="defaultTable"
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="日期" align="center"></el-table-column>
+                                    <el-table-column prop="COU" sortable label="一周内使用软件人数（人）" align="center"></el-table-column>
+                                </el-table>
+                                <!--————表格 end————-->
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col class="border_bottom2">
+                            <div class="tableSubTitle2"></div>
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+            <!--————默认显示区域 end————-->
         </el-main>
     </el-container>
 </template>
@@ -124,9 +149,10 @@ export default {
             haveData: false,
             haveData1:false,
             //一开始无数据时的数据展示提示
-            haveData3:true,
+            defaultData:true,
+            defaultTable:[],
             date:'',//日期变量
-            username:'lenovo',
+            username:'',
             paginations:{
                 // 默认显示第几页
                 currentPage:1,
@@ -144,7 +170,7 @@ export default {
         }
     },
     created(){//自动渲染数据
-        this.getEpyCardInfo()
+        this.getDefaultSoftInfo()
     },
     methods:{
         dateForma:function(row,column){//表格行格式化时间
@@ -152,11 +178,19 @@ export default {
             if(date === undefined){return ''};
             return moment(date).format("YYYY-MM-DD")
         },
+
+        getDefaultSoftInfo(){//DoorInfoMappr.xml - ELKEPYController.java
+            var url = "/getDefaultSoftInfo"
+            this.$http.get(url).then(res => {
+                console.log(res.data)
+                this.defaultTable=res.data
+            })
+        },
         //员工姓名模糊查询
         getEpyCardInfo(){//EpySoftWareUsageMapper.xml - ELKEPYController.java
             this.haveData=true;
             this.haveData1=true;
-            this.haveData3=false;
+            this.defaultData=false;
             //员工近期使用软件信息
             var url="/getEpySoftWareUsage"
             var params={
@@ -220,6 +254,13 @@ export default {
 .tableSubTitle{
     height: 50px;
     line-height: 70px;
+    padding-left: 20px;
+    color: #17caf0;
+    font-weight: bold;
+}
+.tableSubTitle2 {
+    height: 50px;
+    line-height: 35px;
     padding-left: 20px;
     color: #17caf0;
     font-weight: bold;

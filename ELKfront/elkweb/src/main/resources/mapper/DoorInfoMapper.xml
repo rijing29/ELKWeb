@@ -95,7 +95,16 @@
 
     <!--  根据姓名查询员工外网浏览信息  -->
     <select id="getEpyNetInfo" resultType="map">
-        select distinct t.time,t.ip, t.workcountsofworktime,t.playcountsofworktime,t.othercountsofworktime,t.workcountsofsparetime,t.othercountsofsparetime,t.workdayflag,t.distinctpagecount,t.playtimerateofworktime
+        select distinct t.time,
+                        t.ip,
+                        t.workcountsofworktime,
+                        t.playcountsofworktime,
+                        t.othercountsofworktime,
+                        t.workcountsofsparetime,
+                        t.othercountsofsparetime,
+                        t.workdayflag,
+                        t.distinctpagecount,
+                        t.playtimerateofworktime
         from MAIL_WEBPAGE_TJ t
         where ip in (select ip from PARAMS_IPANDUSER where users = #{username,jdbcType=VARCHAR})
           and time between (select max (time)-7 from MAIL_WEBPAGE_TJ)
@@ -127,4 +136,40 @@
              )
         where rownum <![CDATA[<=]]> 1
     </select>
+
+
+    <!--  ————默认查询 begin————  -->
+    <select id="getDefaultCardInfo" resultType="map">
+        select t.dep_name, count(*) as cou
+        from DOOR_INFO t
+        where t.jl_sj between (select max(jl_sj) - 1 from DOOR_INFO) and (select max(jl_sj) from DOOR_INFO)
+        group by t.dep_name
+        order by cou desc
+    </select>
+
+    <select id="getDefaultNetInfo" resultType="map">
+        select time, ROUND(avg (t.workcountsofworktime),2) as workcountsofworktime, ROUND(avg (t.playcountsofworktime),2) as playcountsofworktime, ROUND(avg (t.othercountsofworktime),2) asothercountsofworktime
+        from MAIL_WEBPAGE_TJ t
+        where time between (select max (time)-6 from MAIL_WEBPAGE_TJ) and (select max (time) from MAIL_WEBPAGE_TJ)
+        group by time
+        order by time desc
+    </select>
+
+    <select id="getDefaultDQMDS" resultType="map">
+        select substr(description,8) as description,count(*) as cou from MDS_LOG t
+        where  t.operationtime between (select max(operationtime) - 1 from MDS_LOG) and (select max(operationtime) from MDS_LOG)
+        group by t.description order by cou desc
+    </select>
+
+    <select id="getDefaultSoftInfo" resultType="map">
+        select time,count(distinct t.username) as cou from JK_LOGANALYIZE_USERUSAGE t  where time between (select max(time)-7 from JK_LOGANALYIZE_USERUSAGE) and (select max(time) from JK_LOGANALYIZE_USERUSAGE)
+        group by time order by time desc
+    </select>
+
+    <select id="getDefaultBehavior" resultType="map">
+        select t.time,count(*) as cou from PERSON_ACTION_LOG t  where time between (select max(time)-7 from PERSON_ACTION_LOG) and (select max(time) from PERSON_ACTION_LOG)
+        group by t.time order by time desc
+    </select>
+
+    <!--  ————默认查询 end————  -->
 </mapper>

@@ -72,26 +72,77 @@
                     </el-row>
                 </el-col>
             </el-row>
+
+            <!--————默认显示区域 begin————-->
+            <el-row v-if="defaultData">
+                <el-col :span="24">
+                    <el-row>
+                        <el-col :span="24" class="border_top2">
+                            <div class="tableSubTitle">一周内员工行为统计个数</div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24" style="padding: 0;">
+                            <div class="table-wrapper">
+                                <!--————表格 begin————-->
+                                <el-table
+                                        height="600"
+                                        ref="singleTable"
+                                        :data="defaultTable"
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="日期" align="center"></el-table-column>
+                                    <el-table-column prop="COU" sortable label="员工行为统计数（个）" align="center"></el-table-column>
+                                </el-table>
+                                <!--————表格 end————-->
+                            </div>
+                        </el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col class="border_bottom2">
+                            <div class="tableSubTitle2"></div>
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+            <!--————默认显示区域 end————-->
         </el-main>
     </el-container>
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
     name: "epyBehaviorProfile",
     data() {
         return {
             haveData:false,
+            defaultData:true,
             tableData: [],
-            startTime: '2021-09-07',
-            stopTime: '2021-09-24',
-            userName: '荣海亮'
+            defaultTable:[],
+            startTime: '',
+            stopTime: '',
+            userName: ''
         }
     },
     created() {
-        this.EpyBehavProfile();
+        this.getDefaultBehavior()
     },
     methods: {
+        dateForma:function(row,column){//表格行格式化时间
+            var date = row[column.property];
+            if(date === undefined){return ''};
+            return moment(date).format("YYYY-MM-DD")
+        },
+
+        getDefaultBehavior(){
+            var url = "/getDefaultBehavior"
+            this.$http.get(url).then(res => {
+                console.log(res.data)
+                this.defaultTable=res.data
+            })
+        },
+
         EpyBehavProfile() {
             console.log(this.startTime)
             console.log(this.stopTime)
@@ -103,9 +154,13 @@ export default {
                 'userName': this.userName
             }
             this.$http.get(url, {params}).then(res => {
-                this.tableData = res.data
-                console.log(res.data)
-                this.haveData=true
+                if(res.data.length!==0){
+                    this.tableData = res.data
+                    console.log(res.data)
+                    this.haveData=true
+                    this.defaultData=false;
+                }
+
             })
         },
     },
@@ -163,7 +218,22 @@ export default {
     font-weight: bold;
     text-align: center;
 }
-
+.tableSubTitle2 {
+    height: 50px;
+    line-height: 35px;
+    padding-left: 20px;
+    color: #17caf0;
+    font-weight: bold;
+}
+.border_top2{
+    background:url("../../assets/border_top2.png");
+    background-size: 100% 100%;
+    text-align: left;
+}
+.border_bottom2{
+    background:url("../../assets/border_bottom2.png");
+    background-size: 100% 100%;
+}
 .el-table {
     header-align: center;
     border-radius: 4px;

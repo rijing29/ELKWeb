@@ -67,13 +67,12 @@ export default {
             haveData:false,//表格是否有数据
             filtration:false,//是否过滤低级警告
             ip_options:[],
-            ip_value:'192.168.198.2',
+            ip_value:'',
             tableData:[],
         }
     },
     created(){
         this.getIMCIP()
-        this.getIMCInfo()
     },
     watch:{
         ip_value:function (newV, oldV){
@@ -101,10 +100,10 @@ export default {
             })
         },
 
-        getIMCInfo(ip){
+        getIMCInfo(){
             var url = "/getIMCInfo"
             var params = {
-                'ip': ip,
+                'ip': this.ip_value,
                 'filtration':this.filtration,
             }
             this.$http.get(url, {params}).then(res => {

@@ -159,4 +159,43 @@ public class ELKEPYController {
        return epyProfile;
    }
 
+    /**
+     *@Author:DaPingKuoLuo
+     *@date:2021-10-15 10:21
+     *@Method:默认查询
+     */
+    @RequestMapping(value = "/getDefaultCardInfo",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getDefaultCardInfo(){
+        List<Map<String, Object>> defaultCardInfo = epyService.getDefaultCardInfo();
+        return defaultCardInfo;
+    }
+
+    @RequestMapping(value = "/getDefaultNetInfo",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getDefaultNetInfo(){
+        List<Map<String, Object>> defaultNetInfo = epyService.getDefaultNetInfo();
+        return defaultNetInfo;
+    }
+
+    @RequestMapping(value = "/getDefaultDQMDS",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getDefaultDQMDS(){
+        List<Map<String, Object>> defaultDQMDS = epyService.getDefaultDQMDS();
+        return defaultDQMDS;
+    }
+
+    @RequestMapping(value = "/getDefaultSoftInfo",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getDefaultSoftInfo(){
+        List<Map<String, Object>> defaultSoftInfo = epyService.getDefaultSoftInfo();
+        return defaultSoftInfo;
+    }
+    @RequestMapping(value = "/getDefaultBehavior",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getDefaultBehavior(){
+        List<Map<String, Object>> defaultBehavior = epyService.getDefaultBehavior();
+        return defaultBehavior;
+    }
+
 }

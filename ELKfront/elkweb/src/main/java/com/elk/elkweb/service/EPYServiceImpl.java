@@ -55,13 +55,43 @@ public class EPYServiceImpl implements EPYService{
         List<Map<String, Object>> softWareUsageCount = epySoftWareUsageMapper.showEpySoftWareUsageCount(username);
         return softWareUsageCount;
     }
-
+    //员工外网浏览信息
     @Override
     public List<Map<String, Object>> getEpyNetInfo(String username) {
         List<Map<String, Object>> epyNetInfo = epyMapper.getEpyNetInfo(username);
         return epyNetInfo;
     }
-    //员工外网浏览信息
+
+    //默认查询
+    @Override
+    public List<Map<String, Object>> getDefaultCardInfo() {
+        List<Map<String, Object>> defaultCardInfo = epyMapper.getDefaultCardInfo();
+        return defaultCardInfo;
+    }
+
+    @Override
+    public List<Map<String, Object>> getDefaultNetInfo() {
+        List<Map<String, Object>> defaultNetInfo = epyMapper.getDefaultNetInfo();
+        return defaultNetInfo;
+    }
+
+    @Override
+    public List<Map<String, Object>> getDefaultDQMDS() {
+        List<Map<String, Object>> defaultDQMDS = epyMapper.getDefaultDQMDS();
+        return defaultDQMDS;
+    }
+
+    @Override
+    public List<Map<String, Object>> getDefaultSoftInfo() {
+        List<Map<String, Object>> defaultSoftInfo = epyMapper.getDefaultSoftInfo();
+        return defaultSoftInfo;
+    }
+
+    @Override
+    public List<Map<String, Object>> getDefaultBehavior() {
+        List<Map<String, Object>> defaultBehavior = epyMapper.getDefaultBehavior();
+        return defaultBehavior;
+    }
 
 
 }

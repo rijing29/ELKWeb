@@ -27,4 +27,10 @@ public interface EPYService {
     //    员工外网浏览数据
     List<Map< String, Object >> getEpyNetInfo(String username);
 
+    //默认查询
+    List<Map< String, Object >> getDefaultCardInfo();
+    List<Map< String, Object >> getDefaultNetInfo();
+    List<Map< String, Object >> getDefaultDQMDS();
+    List<Map< String, Object >> getDefaultSoftInfo();
+    List<Map< String, Object >> getDefaultBehavior();
 }

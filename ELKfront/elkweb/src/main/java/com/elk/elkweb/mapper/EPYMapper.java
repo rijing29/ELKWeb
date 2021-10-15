@@ -25,4 +25,10 @@ public interface EPYMapper {
     //查询员工外网浏览信息
     List<Map< String, Object >> getEpyNetInfo(@Param("username") String username);
 
+    //默认查询
+    List<Map< String, Object >> getDefaultCardInfo();
+    List<Map< String, Object >> getDefaultNetInfo();
+    List<Map< String, Object >> getDefaultDQMDS();
+    List<Map< String, Object >> getDefaultSoftInfo();
+    List<Map< String, Object >> getDefaultBehavior();
 }
