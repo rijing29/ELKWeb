@@ -115,6 +115,7 @@ echarts.use(
         [TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent, MarkLineComponent, MarkPointComponent, BarChart, CanvasRenderer]
 );
 import VChart, {THEME_KEY} from "vue-echarts";
+import moment from "moment";
 
 export default {
     components: {
@@ -123,6 +124,7 @@ export default {
     name: "useTimeAll",
     created(){
       this.getFrequency();
+      this.getYesterday();
     },
     data() {
         return {
@@ -226,7 +228,6 @@ export default {
             this.stopTime = val;
         },
         /*————日期选择器 end————*/
-
         getFrequency() {
             var url = "/getSumTime"
             var params = {
@@ -260,7 +261,18 @@ export default {
                 /*————渲染柱状图数据 end————*/
             })
         },
-
+        getYesterday() {
+          let obj = {
+            starttime: '',
+            endtime: ''
+          }
+          obj.starttime = moment(moment().add(-1, 'days').startOf("day").valueOf()).format("YYYY/MM/DD");
+          obj.endtime = moment(moment().add(0, 'days').endOf('day').valueOf()).format('YYYY/MM/DD');
+          console.log(obj.endtime,obj.starttime)
+          this.startTime=obj.starttime;
+          this.stopTime=obj.endtime;
+          // return obj
+        },
         //导出excel的信息集合
         export2Excel() {
             require.ensure([], () => {

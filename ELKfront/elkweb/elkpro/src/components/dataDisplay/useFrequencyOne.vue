@@ -124,6 +124,7 @@ echarts.use(
         [TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent, MarkLineComponent, MarkPointComponent, BarChart, CanvasRenderer]
 );
 import VChart, {THEME_KEY} from "vue-echarts";
+import moment from "moment";
 
 export default {
     components: {
@@ -133,6 +134,7 @@ export default {
     created(){
       this.getSoftwareName();
       this.getModuleCount();
+      this.getYesterday();
     },
     data() {
         return {
@@ -242,7 +244,18 @@ export default {
             this.getSoftwareName();
         },
         /*————日期选择器 end————*/
-
+        getYesterday() {
+          let obj = {
+            starttime: '',
+            endtime: ''
+          }
+          obj.starttime = moment(moment().add(-1, 'days').startOf("day").valueOf()).format("YYYY/MM/DD");
+          obj.endtime = moment(moment().add(0, 'days').endOf('day').valueOf()).format('YYYY/MM/DD');
+          console.log(obj.endtime,obj.starttime)
+          this.startTime=obj.starttime;
+          this.stopTime=obj.endtime;
+          // return obj
+        },
 
         canClick() {
             //控制按钮是否禁用,当下拉框无数据时禁用

@@ -115,6 +115,7 @@ echarts.use(
         [TitleComponent, ToolboxComponent, TooltipComponent, GridComponent, LegendComponent, MarkLineComponent, MarkPointComponent, BarChart, CanvasRenderer]
 );
 import VChart, { THEME_KEY } from "vue-echarts";
+import moment from "moment";
 export default {
     components: {
         VChart
@@ -122,7 +123,8 @@ export default {
     name: "useFrequencyAll",
     created(){
       this.getFrequency();
-      this.getDate()
+      // this.getDate()
+      this.getYesterday()
     },
     data() {
         return {
@@ -196,7 +198,6 @@ export default {
                 ],
                 series: [
                     {
-
                         name: '样例',
                         type: 'bar',
                         itemStyle: {
@@ -231,15 +232,25 @@ export default {
             this.stopTime = val;
         },
         /*————日期选择器 end————*/
-        getDate() {//获取当前时间
-            var date = this.formatter(new Date(), 'yyyy/MM/dd')
-            this.startTime = date.toLocaleString()
-            console.log(date.toLocaleString())
-            for(var i=0;i<this.startTime.length;i++){
-
-            }
+        // getDate() {//获取当前时间
+        //     var date = this.formatter(new Date(), 'yyyy/MM/dd')
+        //     this.startTime = date.toLocaleString()
+        //     console.log(date.toLocaleString())
+        //     for(var i=0;i<this.startTime.length;i++){
+        //     }
+        // },
+        getYesterday() {
+          let obj = {
+            starttime: '',
+            endtime: ''
+          }
+          obj.starttime = moment(moment().add(-1, 'days').startOf("day").valueOf()).format("YYYY/MM/DD");
+          obj.endtime = moment(moment().add(0, 'days').endOf('day').valueOf()).format('YYYY/MM/DD');
+          console.log(obj.endtime,obj.starttime)
+          this.startTime=obj.starttime;
+          this.stopTime=obj.endtime;
+          return obj
         },
-
         getFrequency(){//UserUsageMapper.xml - ELKSLAController.java
             var url="/getAllFrequency"
             var params={
@@ -283,27 +294,27 @@ export default {
         formatJson(filterVal, jsonData) {
             return jsonData.map(v => filterVal.map(j => v[j]));
         },
-        formatter(thisTime, fmt) {//js格式化时间
-            let $this = new Date(thisTime)
-            let o = {
-                'M+': $this.getMonth() + 1,
-                'd+': $this.getDate(),
-                'h+': $this.getHours(),
-                'm+': $this.getMinutes(),
-                's+': $this.getSeconds(),
-                'q+': Math.floor(($this.getMonth() + 3) / 3),
-                'S': $this.getMilliseconds()
-            }
-            if (/(y+)/.test(fmt)) {
-                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
-            }
-            for (var k in o) {
-                if (new RegExp('(' + k + ')').test(fmt)) {
-                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
-                }
-            }
-            return fmt
-        },
+        // formatter(thisTime, fmt) {//js格式化时间
+        //     let $this = new Date(thisTime)
+        //     let o = {
+        //         'M+': $this.getMonth() + 1,
+        //         'd+': $this.getDate(),
+        //         'h+': $this.getHours(),
+        //         'm+': $this.getMinutes(),
+        //         's+': $this.getSeconds(),
+        //         'q+': Math.floor(($this.getMonth() + 3) / 3),
+        //         'S': $this.getMilliseconds()
+        //     }
+        //     if (/(y+)/.test(fmt)) {
+        //         fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
+        //     }
+        //     for (var k in o) {
+        //         if (new RegExp('(' + k + ')').test(fmt)) {
+        //             fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+        //         }
+        //     }
+        //     return fmt
+        // },
     }
 }
 </script>
