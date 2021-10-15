@@ -222,6 +222,7 @@ export default {
                     // this.option.title.subtext="用户： "+ this.currentRow.CCNAME
                     while (this.option.series[0].data.length!==0){
                         this.option.series[0].data.pop()
+                        this.option.xAxis[0].data.pop()
                     }
                     for(var i=res.data.length-1;i>=0;i--){
                         this.option.xAxis[0].data.push(res.data[i].TIME)
