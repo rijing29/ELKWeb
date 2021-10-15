@@ -159,8 +159,8 @@ export default {
                     name:'CPU'
                 }],
                 grid: {
-                    left: '0%',//设置图表距离左边界的距离
-                    right: '0%',//设置图表距离右边界的距离
+                    left: '5%',//设置图表距离左边界的距离
+                    right: '5%',//设置图表距离右边界的距离
                     top: '20%',//设置图表距离上边界的距离
                     bottom: '0%',//设置图表距离下边界的距离
                     containLabel: true
@@ -247,8 +247,8 @@ export default {
                     trigger: 'item'
                 },
                 legend: {
-                    orient: 'vertical',
-                    left: 'left',
+                    orient: "horizontal",
+                    top: 'bottom',
                     textStyle: {
                         color: "#ffffff"//顶部控制区域文字颜色
                     },
@@ -256,8 +256,12 @@ export default {
                 series: [
                     {
                         name: '访问来源',
+                        data: [
+                            {value: 0, name: '使用'},
+                            {value: 0, name: '空闲'},
+                        ],
                         type: 'pie',
-                        radius: '70%',
+                        radius: ['30%','70%'],
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
@@ -271,12 +275,26 @@ export default {
                             }
                         },
                         label: {
-                            fontSize: 18
-                        },
-                        data: [
-                            {value: 0, name: '使用'},
-                            {value: 0, name: '空闲'},
-                        ],
+                            color:'#17caf0',
+                            textBorderWidth: 0,
+                            alignTo: 'edge',
+                            formatter: '{name|{b}}\n{time|{c} %}',
+                            minMargin: 5,
+                            edgeDistance: "10%",
+                            lineHeight: 15,
+                            rich: {
+                                time: {
+                                    fontSize: 10,
+                                    color: '#ffffff'
+                                }
+                            },
+                            labelLine: {
+                                length: 35,
+                                length2: 0,
+                                maxSurfaceAngle: 80
+                            },
+                            fontSize: 18,
+                        }
                     }
                 ],
 
@@ -303,7 +321,7 @@ export default {
                     left: "20%",//距离左边距离
                     data: ['QPSTM', 'GEOEAST', 'ES360']
                 },
-                grid: {left: '2%', right: '4%', bottom: '3%', top:'20%',containLabel: true},
+                grid: {left: '5%', right: '5%', bottom: '3%', top:'20%',containLabel: true},
                 toolbox: {
                     show: true,
                     feature: {
@@ -367,7 +385,7 @@ export default {
         this.getEquipState()
     },
     methods: {
-        getEquipState() {
+        getEquipState() {//ELKHWController.java
             //获取cpu
             var url = "/getCPU"
             this.$http.get(url).then(res => {
@@ -394,7 +412,7 @@ export default {
                             {
                                 name: res.data[i].softname,
                                 type: 'bar',
-                                data: [res.data[i].value],
+                                data: [(res.data[i].value).toFixed(1)],
                             }
                     )
                 }
@@ -404,8 +422,8 @@ export default {
             var url = "/getCCUsage"//CCUsageMapper.xml - ELKHWController.java
             this.$http.get(url).then(res => {
                 console.log(res.data,"jjjjjj")
-                this.option3.series[0].data[0].value = res.data[0].USE;
-                this.option3.series[0].data[1].value = res.data[0].FREE;
+                this.option3.series[0].data[0].value = (res.data[0].USE/(res.data[0].USE+res.data[0].FREE)*100).toFixed(1);
+                this.option3.series[0].data[1].value = (res.data[0].FREE/(res.data[0].USE+res.data[0].FREE)*100).toFixed(1);
             })
         }
     }

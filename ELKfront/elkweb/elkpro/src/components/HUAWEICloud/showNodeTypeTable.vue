@@ -49,7 +49,7 @@
                         <el-table-column prop="nodeId" sortable label="节点编号"
                                          align="center"></el-table-column>
                         <el-table-column prop="time" sortable label="时间" align="center"></el-table-column>
-                        <el-table-column prop="efficiency" sortable label="效率"
+                        <el-table-column prop="efficiency" sortable label="效率（%）"
                                          align="center"></el-table-column>
                       </el-table>
                     </div>
@@ -86,7 +86,7 @@ export default {
       fullscreenLoading: false,
       year: '2021',
       month: '9',
-      softName: 'GEOEAST',
+      softName: 'ZHIKONG',
       tableData: [],
       softName_options: [{softName_value: '选项1', label: 'GEOEAST'},
         {softName_value: '选项2', label: 'GEOEASTDL'},
@@ -136,7 +136,7 @@ export default {
       this.fullscreenLoading = true;
       setTimeout(() => {
         this.fullscreenLoading = false;
-      }, 15000);
+      }, 0);
       var url = "/searchNodeTypeEfficiency"
       var params = {
         'softName': this.softName,

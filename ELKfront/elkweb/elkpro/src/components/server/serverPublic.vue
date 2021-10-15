@@ -26,9 +26,9 @@
                                         :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="ip" sortable label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="cpurateforworktime" sortable label="CPU负载" align="center"></el-table-column>
-                                    <el-table-column prop="memrateforworktime" sortable label="内存负载" align="center"></el-table-column>
-                                    <el-table-column prop="netfloatforworktime" sortable label="网络负载" align="center"></el-table-column>
+                                    <el-table-column prop="cpurateforworktime" sortable label="CPU负载（%）" align="center"></el-table-column>
+                                    <el-table-column prop="memrateforworktime" sortable label="内存负载（%）" align="center"></el-table-column>
+                                    <el-table-column prop="netfloatforworktime" sortable label="网络负载（%）" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -119,8 +119,8 @@ export default {
                     trigger: 'item'
                 },
                 legend: {
-                    orient: 'vertical',
-                    left: 'left',
+                    orient: "horizontal",
+                    top: 'bottom',
                     textStyle: {
                         color: "#ffffff"//顶部控制区域文字颜色
                     },
@@ -130,7 +130,7 @@ export default {
                         data: [],
                         name: '访问来源',
                         type: 'pie',
-                        radius: '70%',
+                        radius: ['30%','70%'],
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
@@ -144,7 +144,25 @@ export default {
                             }
                         },
                         label: {
-                            fontSize: 18
+                            color:'#17caf0',
+                            textBorderWidth: 0,
+                            alignTo: 'edge',
+                            formatter: '{name|{b}}\n{time|{c} 个}',
+                            minMargin: 5,
+                            edgeDistance: "10%",
+                            lineHeight: 15,
+                            rich: {
+                                time: {
+                                    fontSize: 10,
+                                    color: '#ffffff'
+                                }
+                            },
+                            labelLine: {
+                                length: 80,
+                                length2: "50",
+                                // maxSurfaceAngle: 80
+                            },
+                            fontSize: 18,
                         }
 
                     }
@@ -159,7 +177,7 @@ export default {
         this.getPublicServer()
     },
     methods:{
-        getPublicServer(){
+        getPublicServer(){//serverPublicMapper.xml - ELKServerController.java
             var url="/getPublicServer"
             //获取到表格的数据
             var length=0;

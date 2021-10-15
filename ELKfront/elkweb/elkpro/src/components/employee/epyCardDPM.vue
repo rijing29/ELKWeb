@@ -20,10 +20,10 @@
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
                                 <!-- 外表格 begin-->
-                                <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;">
+                                <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;":header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="name" sortable label="单位名称" align="center"></el-table-column>
-                                    <el-table-column prop="counts" sortable label="单位统计涉及人数" align="center"></el-table-column>
-                                    <el-table-column prop="placecount" sortable label="人均刷卡地点" align="center"></el-table-column>
+                                    <el-table-column prop="counts" sortable label="单位统计涉及人数（人）" align="center"></el-table-column>
+                                    <el-table-column prop="placecount" sortable label="人均刷卡地点（个）" align="center"></el-table-column>
                                     <el-table-column prop="cq" sortable label="人均出勤率(%)" align="center"></el-table-column>
                                     <el-table-column prop="jb" sortable label="人均加班率(%)" align="center"></el-table-column>
                                     <el-table-column prop="zs" sortable label="人均准时率(%)" align="center"></el-table-column>

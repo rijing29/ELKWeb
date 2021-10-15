@@ -192,10 +192,10 @@ export default {
                 },
                 series: [
                     {
+                        data: [],
                         name: '访问来源',
                         type: 'pie',
-                        radius: '70%',
-                        data: [],
+                        radius: ['30%','70%'],
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
@@ -209,7 +209,25 @@ export default {
                             }
                         },
                         label: {
-                            fontSize: 18
+                            color:'#ffffff',
+                            textBorderWidth: 0,
+                            alignTo: 'edge',
+                            formatter: '{name|{b}}\n{time|{c} 个}',
+                            minMargin: 5,
+                            edgeDistance: 10,
+                            lineHeight: 15,
+                            rich: {
+                                time: {
+                                    fontSize: 10,
+                                    color: '#ffffff'
+                                }
+                            },
+                            labelLine: {
+                                length: 35,
+                                length2: 0,
+                                maxSurfaceAngle: 80
+                            },
+                            fontSize: 18,
                         }
 
                     }

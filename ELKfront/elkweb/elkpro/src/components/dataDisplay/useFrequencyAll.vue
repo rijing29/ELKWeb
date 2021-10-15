@@ -122,11 +122,12 @@ export default {
     name: "useFrequencyAll",
     created(){
       this.getFrequency();
+      this.getDate()
     },
     data() {
         return {
-            startTime:'2021-07-26',
-            stopTime:'2021-08-03',
+            startTime:'',
+            stopTime:'',
             haveData:false,
             tableData: [],
             option: {
@@ -230,6 +231,14 @@ export default {
             this.stopTime = val;
         },
         /*————日期选择器 end————*/
+        getDate() {//获取当前时间
+            var date = this.formatter(new Date(), 'yyyy/MM/dd')
+            this.startTime = date.toLocaleString()
+            console.log(date.toLocaleString())
+            for(var i=0;i<this.startTime.length;i++){
+
+            }
+        },
 
         getFrequency(){//UserUsageMapper.xml - ELKSLAController.java
             var url="/getAllFrequency"
@@ -273,7 +282,28 @@ export default {
         },
         formatJson(filterVal, jsonData) {
             return jsonData.map(v => filterVal.map(j => v[j]));
-        }
+        },
+        formatter(thisTime, fmt) {//js格式化时间
+            let $this = new Date(thisTime)
+            let o = {
+                'M+': $this.getMonth() + 1,
+                'd+': $this.getDate(),
+                'h+': $this.getHours(),
+                'm+': $this.getMinutes(),
+                's+': $this.getSeconds(),
+                'q+': Math.floor(($this.getMonth() + 3) / 3),
+                'S': $this.getMilliseconds()
+            }
+            if (/(y+)/.test(fmt)) {
+                fmt = fmt.replace(RegExp.$1, ($this.getFullYear() + '').substr(4 - RegExp.$1.length))
+            }
+            for (var k in o) {
+                if (new RegExp('(' + k + ')').test(fmt)) {
+                    fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? (o[k]) : (('00' + o[k]).substr(('' + o[k]).length)))
+                }
+            }
+            return fmt
+        },
     }
 }
 </script>

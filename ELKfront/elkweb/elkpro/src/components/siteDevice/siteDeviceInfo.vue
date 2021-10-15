@@ -182,17 +182,18 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                                        offset: 0,
-                                        color: "#ea6026" // 0% 处的颜色
-                                    }, {
-                                        offset: 0.6,
-                                        color: "#ec6b35" // 60% 处的颜色
-                                    }, {
-                                        offset: 1,
-                                        color: "#fc7b46" // 100% 处的颜色
-                                    }], false)
+
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                    offset: 0,
+                                    color: "rgb(84,246,200)" // 0% 处的颜色
+                                }, {
+                                    offset: 0.6,
+                                    color: "rgb(82,250,191)" // 60% 处的颜色
+                                }, {
+                                    offset: 1,
+                                    color: "rgb(83,232,202)" // 100% 处的颜色
+                                }], false)
+
                             },
                             color: null,
                             opacity: 1
@@ -205,17 +206,16 @@ export default {
                         itemStyle: {
                             normal: {
                                 //柱状图颜色(渐变)
-                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [
-                                    {//0,0,1,0分别表示左、上、右、下,控制渐变方向
-                                        offset: 0,
-                                        color: "#6b26ea" // 0% 处的颜色
-                                    }, {
-                                        offset: 0.6,
-                                        color: "#8135ec" // 60% 处的颜色
-                                    }, {
-                                        offset: 1,
-                                        color: "#9246fc" // 100% 处的颜色
-                                    }], false)
+                                color: new echarts.graphic.LinearGradient(0, 1, 0, 0, [{//0,0,1,0分别表示左、上、右、下,控制渐变方向
+                                    offset: 0,
+                                    color: "rgb(147,125,243)" // 0% 处的颜色
+                                }, {
+                                    offset: 0.6,
+                                    color: "rgb(177,105,243)" // 60% 处的颜色
+                                }, {
+                                    offset: 1,
+                                    color: "rgb(211,163,246)" // 100% 处的颜色
+                                }], false)
                             },
                             color: null,
                             opacity: 1

@@ -40,7 +40,7 @@
                       <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                         <el-table-column prop="softName" sortable label="软件名" width="360" align="center"></el-table-column>
                         <el-table-column prop="time" sortable label="时间" width="360" align="center"></el-table-column>
-                        <el-table-column prop="efficiency" sortable label="效率" align="center"></el-table-column>
+                        <el-table-column prop="efficiency" sortable label="效率（%）" align="center"></el-table-column>
                       </el-table>
                     </div>
                   </el-col>
@@ -112,7 +112,7 @@ export default {
       this.fullscreenLoading = true;
       setTimeout(() => {
         this.fullscreenLoading = false;
-      }, 500);
+      }, 0);
       var url = "/searchSoftNameEfficiency"
       var params = {
         'year': this.year,

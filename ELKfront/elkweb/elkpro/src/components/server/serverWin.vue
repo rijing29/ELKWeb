@@ -24,13 +24,13 @@
                                         height="500"
                                         ref="singleTable"
                                         :data="tableDataService"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'large'}">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE2" sortable label="交互类任务" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE3" sortable label="共享类任务" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE5" sortable label="服务类任务" align="center"></el-table-column>
-                                    <el-table-column prop="TYPE10" sortable label="远程交互任务" align="center"></el-table-column>
-                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="服务天数" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE2" sortable label="交互类任务（个）" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE3" sortable label="共享类任务（个）" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE5" sortable label="服务类任务（个）" align="center"></el-table-column>
+                                    <el-table-column prop="TYPE10" sortable label="远程交互任务（个）" align="center"></el-table-column>
+                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="服务日期" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -58,7 +58,7 @@
                                         height="500"
                                         ref="singleTable"
                                         :data="tableDataLog"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'large'}">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="TIME" :formatter="dateForma" sortable label="时间" align="center"></el-table-column>
                                     <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
                                     <el-table-column prop="WARNINFO" sortable label="提示信息" align="center"></el-table-column>
@@ -91,10 +91,10 @@
                                         height="500"
                                         ref="singleTable"
                                         :data="tableDataTask"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'large'}">
+                                        :header-cell-style="{color: '#17caf0',fontSize:'16xp'}">
                                     <el-table-column prop="TIME" sortable label="时间" align="center"></el-table-column>
                                     <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="INC_VALUE" sortable label="任务增长量" align="center"></el-table-column>
+                                    <el-table-column prop="INC_VALUE" sortable label="任务增长量（个）" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -178,8 +178,8 @@ export default {
                     trigger: 'item'
                 },
                 legend: {
-                    orient: 'vertical',
-                    left: 'left',
+                    orient: "horizontal",
+                    top: 'bottom',
                     textStyle: {
                         color: "#ffffff"//顶部控制区域文字颜色
                     },
@@ -187,9 +187,9 @@ export default {
                 series: [
                     {
                         name: '访问来源',
-                        type: 'pie',
-                        radius: '70%',
                         data: [],
+                        type: 'pie',
+                        radius: ['30%','70%'],
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
@@ -203,7 +203,25 @@ export default {
                             }
                         },
                         label: {
-                            fontSize: 18
+                            color:'#17caf0',
+                            textBorderWidth: 0,
+                            alignTo: 'edge',
+                            formatter: '{name|{b}}\n{time|{c} 个}',
+                            minMargin: 5,
+                            edgeDistance: "5%",
+                            lineHeight: 15,
+                            rich: {
+                                time: {
+                                    fontSize: 10,
+                                    color: '#ffffff'
+                                }
+                            },
+                            labelLine: {
+                                length: 35,
+                                length2: 0,
+                                maxSurfaceAngle: 80
+                            },
+                            fontSize: 18,
                         }
 
                     }

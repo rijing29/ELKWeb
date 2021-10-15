@@ -103,7 +103,7 @@ public class ELKSoftUserController {
             calculate = Double.valueOf(sumJob/(48*workLoad));
         }
 
-        System.out.println(sumJob+"总会时间");
+        System.out.println(sumJob+"总时间");
         return calculate;
     }
 

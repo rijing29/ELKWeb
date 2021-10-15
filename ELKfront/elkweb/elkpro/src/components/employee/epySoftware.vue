@@ -49,7 +49,7 @@
                                     <el-table-column prop="username" sortable label="用户名" align="center"></el-table-column>
                                     <el-table-column prop="softwarename" sortable label="软件系统的名称"align="center"></el-table-column>
                                     <el-table-column prop="modulename" sortable label="软件系统模块名称" align="center"></el-table-column>
-                                    <el-table-column prop="workusemintue" sortable label="用户使用模块的总时间" align="center"></el-table-column>
+                                    <el-table-column prop="workusemintue" sortable label="使用模块总时间（分钟）" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

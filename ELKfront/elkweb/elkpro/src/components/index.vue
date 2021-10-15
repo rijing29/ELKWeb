@@ -1,6 +1,6 @@
 <template>
     <el-container>
-        <el-header>资源管理系统</el-header>
+        <el-header>企业级日志智能化分析系统</el-header>
         <el-main>
             <el-row style="z-index: 1">
                 <!--————雷达图区域 begin————-->

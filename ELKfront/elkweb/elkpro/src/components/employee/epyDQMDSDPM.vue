@@ -20,14 +20,14 @@
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
                                 <!-- 外表格 begin-->
-                                <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;">
+                                <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="name" sortable label="单位名称" align="center"></el-table-column>
-                                    <el-table-column prop="avgdays" sortable label="工作日使用率" align="center"></el-table-column>
-                                    <el-table-column prop="countoneday" sortable label="平均每天使用次数" align="center"></el-table-column>
-                                    <el-table-column prop="jb" sortable label="加班时间使用率" align="center"></el-table-column>
-                                    <el-table-column prop="onetype" sortable label="日常功能使用率" align="center"></el-table-column>
-                                    <el-table-column prop="twotype" sortable label="管理功能使用率" align="center"></el-table-column>
-                                    <el-table-column prop="thrtype" sortable label="专业功能使用率" align="center"></el-table-column>
+                                    <el-table-column prop="avgdays" sortable label="工作日使用率（%）" align="center"></el-table-column>
+                                    <el-table-column prop="countoneday" sortable label="平均每天使用（次）" align="center"></el-table-column>
+                                    <el-table-column prop="jb" sortable label="加班时间使用率（%）" align="center"></el-table-column>
+                                    <el-table-column prop="onetype" sortable label="日常功能使用率（%）" align="center"></el-table-column>
+                                    <el-table-column prop="twotype" sortable label="管理功能使用率（%）" align="center"></el-table-column>
+                                    <el-table-column prop="thrtype" sortable label="专业功能使用率（%）" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 外表格 end-->
                             </div>

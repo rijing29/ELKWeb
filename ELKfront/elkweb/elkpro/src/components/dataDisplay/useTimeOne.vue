@@ -77,7 +77,7 @@
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
                                 <!--————表格 begin————-->
-                                <el-table :data="tableData" style="width: 100%">
+                                <el-table :data="tableData" style="width: 100%" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="SOFTWARENAME" sortable label="软件" align="center">
                                     </el-table-column>
                                     <el-table-column prop="MODULENAME" sortable label="模块" align="center">

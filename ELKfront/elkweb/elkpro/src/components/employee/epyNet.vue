@@ -34,11 +34,11 @@
                                 <!-- 外表格 begin-->
                                 <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;">
                                     <el-table-column prop="TIME" :formatter="dateForma" sortable label="日期" align="center"></el-table-column>
-                                    <el-table-column prop="WORKCOUNTSOFWORKTIME" sortable label="工作时间 - 工作网站" align="center"></el-table-column>
-                                    <el-table-column prop="OTHERCOUNTSOFWORKTIME" sortable label="工作时间 - 搜索网站" align="center"></el-table-column>
-                                    <el-table-column prop="PLAYCOUNTSOFWORKTIME" sortable label="工作时间 - 娱乐网站" align="center"></el-table-column>
-                                    <el-table-column prop="WORKCOUNTSOFSPARETIME" sortable label="业余时间 - 工作网站" align="center"></el-table-column>
-                                    <el-table-column prop="OTHERCOUNTSOFSPARETIME" sortable label="业余时间 - 搜索网站" align="center"></el-table-column>
+                                    <el-table-column prop="WORKCOUNTSOFWORKTIME" sortable label="工作时间 - 工作网站（次）" align="center"></el-table-column>
+                                    <el-table-column prop="OTHERCOUNTSOFWORKTIME" sortable label="工作时间 - 搜索网站（次）" align="center"></el-table-column>
+                                    <el-table-column prop="PLAYCOUNTSOFWORKTIME" sortable label="工作时间 - 娱乐网站（次）" align="center"></el-table-column>
+                                    <el-table-column prop="WORKCOUNTSOFSPARETIME" sortable label="业余时间 - 工作网站（次）" align="center"></el-table-column>
+                                    <el-table-column prop="OTHERCOUNTSOFSPARETIME" sortable label="业余时间 - 搜索网站（次）" align="center"></el-table-column>
                                 </el-table>
                                 <!-- 外表格 end-->
                             </div>

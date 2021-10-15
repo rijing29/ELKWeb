@@ -11,7 +11,7 @@
                          style="text-align: left;border-right: none"
                          active-text-color="#ea6026"
                          background-color="#000a40"
-                         text-color="#2791f3"
+                         text-color="#ffffff"
                          default-active="/"
                          :unique-opened="true"
                          router>
@@ -56,7 +56,7 @@
                     </el-submenu>
                     <el-submenu index="3">
                         <template slot="title">
-                            <i class="el-icon-s-data icon_color"></i>
+                            <i class="el-icon-s-help icon_color"></i>
                             <span slot="title">网络数据</span>
                         </template>
                         <el-menu-item index="/firewallInfo">防火墙数据包</el-menu-item>
@@ -113,7 +113,7 @@
                         <el-menu-item index="/searchWinlogbeats">故障Winlogbeats查询</el-menu-item>
                     </el-submenu>
                     <el-menu-item index="/siteDeviceInfo">
-                        <i class="el-icon-s-help icon_color"></i>
+                        <i class="el-icon-s-data icon_color"></i>
                         <span slot="title">场地设备监控信息</span>
                     </el-menu-item>
                 </el-menu>
