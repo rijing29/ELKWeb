@@ -202,7 +202,6 @@ export default {
 
             })
         },
-
         handleCurrentChange(val) {//表格点击事件
             if(val!==null){
                 this.currentRow = val;
@@ -213,10 +212,10 @@ export default {
                 }
                 console.log(this.currentRow.DIRNAME, this.currentRow.INFO)
                 this.$http.get(url,{params}).then(res=> {
-
                     console.log(res.data[0].TIME,"2222222")
                     while (this.option.series[0].data.length!==0){
                         this.option.series[0].data.pop()
+                      this.option.xAxis[0].data.pop()
                     }
                     var i;
                     for(i=0;i<res.data.length;i++){
