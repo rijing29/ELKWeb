@@ -24,4 +24,10 @@ public class IMCServiceImpl implements IMCService{
         List<IMCAlarm> imcInfo = imcMapper.getIMCInfo(ip, filtration);
         return imcInfo;
     }
+
+    @Override
+    public List<IMCAlarm> getDefaultIMC() {
+        List<IMCAlarm> defaultIMC = imcMapper.getDefaultIMC();
+        return defaultIMC;
+    }
 }

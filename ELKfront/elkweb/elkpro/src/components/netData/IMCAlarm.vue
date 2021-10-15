@@ -67,13 +67,13 @@ export default {
             haveData:false,//表格是否有数据
             filtration:false,//是否过滤低级警告
             ip_options:[],
-            ip_value:'192.168.198.2',
+            ip_value:'',
             tableData:[],
         }
     },
     created(){
         this.getIMCIP()
-        this.getIMCInfo()
+        this.getDefaultIMC()
     },
     watch:{
         ip_value:function (newV, oldV){
@@ -86,6 +86,14 @@ export default {
         }
     },
     methods: {
+        getDefaultIMC(){//IMCAlarmMapper.xml - ELKIMCController.java
+            var url = "/getDefaultIMC"
+            this.$http.get(url).then(res => {
+                this.haveData=true
+                this.tableData=res.data
+                console.log(res.data)
+            })
+        },
         getIMCIP(){
             var url = "/getIMCIP"
             this.$http.get(url).then(res => {
