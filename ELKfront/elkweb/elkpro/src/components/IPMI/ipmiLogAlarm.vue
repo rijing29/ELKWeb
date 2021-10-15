@@ -82,7 +82,7 @@ export default {
     name: "ipmiLogAlarm",
     data() {
         return {
-            haveData: true,
+            haveData: false,
             Time: '',//日期选择器
             date: '',//日期变量
             expands: [],
@@ -97,7 +97,7 @@ export default {
     },
     methods: {
         handleCurrentChange(val) {
-            // this.haveData=true
+            this.haveData=true
             //根据筛选条件选择所有数据
             this.ip = val.ip
             //绑定后台数据传输地址

@@ -67,12 +67,13 @@ export default {
             haveData:false,//表格是否有数据
             filtration:false,//是否过滤低级警告
             ip_options:[],
-            ip_value:'',
+            ip_value:'192.168.198.2',
             tableData:[],
         }
     },
     created(){
         this.getIMCIP()
+        this.getIMCInfo()
     },
     watch:{
         ip_value:function (newV, oldV){
@@ -96,7 +97,7 @@ export default {
                 for(i=0;i<res.data.length;i++){
                     this.ip_options.push({ip_value: i,label: res.data[i].DEVICEIP})
                 }
-
+                this.haveData=true
             })
         },
 
