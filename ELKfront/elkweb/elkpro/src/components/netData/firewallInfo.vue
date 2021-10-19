@@ -73,6 +73,7 @@
                     </span>
                 </el-col>
             </el-row>
+            <!--从这开始-->
             <el-row>
                 <el-col v-if="haveData" :span="24" class="border_top"><br><br></el-col>
             </el-row>
@@ -83,8 +84,8 @@
                         <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;"
                                   @expand-change="explore"
                                   :row-key='getRowKeys' :expand-row-keys="expands">
-                            <el-table-column type="expand">
-                                <!-- 内嵌表格 begin-->
+                          <!-- 内嵌表格 begin-->
+                          <el-table-column type="expand">
                                 <template slot-scope="props">
                                     <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
                                         <el-table-column prop="time" sortable label="时间" value-format="yyyy/MM/dd HH:mm:ss"  align="center"></el-table-column>
@@ -98,10 +99,11 @@
                                         <el-table-column prop="event" sortable label="Event" align="center"></el-table-column>
                                     </el-table>
                                 </template>
-                                <!-- 内嵌表格 end-->
-                            </el-table-column>
-                            <el-table-column v-for="(col,i) in cols" :prop="col.prop" :key="i"  sortable
-                                             :label="col.label" align="center"></el-table-column>
+                          </el-table-column>
+                          <!-- 内嵌表格 end-->
+                          <el-table-column v-for="(col,i) in cols" :prop="col.prop" :key="i"  sortable
+                                             :label="col.label" align="center">
+                          </el-table-column>
                         </el-table>
                         <!-- 外表格 end-->
                     </div>
@@ -110,6 +112,7 @@
             <el-row class="border_bottom">
                 <el-col v-if="haveData"><br><br></el-col>
             </el-row>
+            <!--到这结束-->
             <el-row>
                 <el-col :span="24">
                     <!-- 分页 begin-->
@@ -285,7 +288,6 @@ export default {
                 that.expands = []
             }
             /*————控制表格只能展开一行 end————*/
-
             //根据筛选条件选择所有数据
             this.DSTIPADDR = row.DSTIPADDR
             this.DSTPORT = row.DSTPORT
@@ -320,59 +322,8 @@ export default {
             //截止时间
             this.stopTime = val;
         },
-        /*————日期选择器 end————*/
-
-        // getSelectionInfo(){
-        //     /*渲染下拉框 begin*/
-        //     var url = "/getSelectionInfo"
-        //     var params = {
-        //         'startTime': this.startTime,
-        //         'stopTime': this.stopTime,
-        //     }
-        //     this.$http.get(url, {params}).then(res => {
-        //         console.log(res.data.option[0], "option")
-        //         var i;
-        //         while (this.sourceDomain_options.length !== 0) {
-        //             this.sourceDomain_options.pop()
-        //         }
-        //         while (this.destinationDomain_options.length !== 0) {
-        //             this.destinationDomain_options.pop()
-        //         }
-        //         while (this.protocol_option.length !== 0) {
-        //             this.protocol_option.pop()
-        //         }
-        //         while (this.event_options.length !== 0) {
-        //             this.event_options.pop()
-        //         }
-        //         for (i = 0; i < res.data.sourceDomain.length; i++) {
-        //             //源域下拉框
-        //             this.sourceDomain_options.push({
-        //                 sourceDomain_value: res.data.option[i],
-        //                 label: res.data.sourceDomain[i]
-        //             })
-        //         }
-        //         for (i = 0; i < res.data.destinationDomain.length; i++) {
-        //             //目的域下拉框
-        //             this.destinationDomain_options.push({
-        //                 destinationDomain_value: res.data.option[i],
-        //                 label: res.data.destinationDomain[i]
-        //             })
-        //         }
-        //         for (i = 0; i < res.data.protocol.length; i++) {
-        //             //Protocol下拉框
-        //             this.protocol_option.push({protocol_value: res.data.option[i], label: res.data.protocol[i]})
-        //         }
-        //         for (i = 0; i < res.data.event.length; i++) {
-        //             //Event下拉框
-        //             this.event_options.push({event_value: res.data.option[i], label: res.data.event[i]})
-        //         }
-        //     })
-        //     /*渲染下拉框 end*/
-        // },
-
         getSelection() {
             //控制多选框并查询外表数据
-
             /*————多选框控制外表列属性 begin————*/
             while (this.cols.length !== 0) {
                 this.cols.pop()

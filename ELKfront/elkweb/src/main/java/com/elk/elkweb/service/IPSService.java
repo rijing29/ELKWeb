@@ -11,4 +11,6 @@ public interface IPSService {
     List<Map< String, Object >> getIPSAnalysis(String Time);
     //    查询IPS详细信息
     List<Map< String, Object >> getIPSInfo(String startTime,String stopTime,String dstipaddr);
+    //    根据源ip查询所有被攻击的ip
+    List<Map< String, Object >> getAttackedIP(String startTime,String stopTime,String srcipaddr);
 }

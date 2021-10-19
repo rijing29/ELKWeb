@@ -22,4 +22,11 @@ public class IPSServiceImpl implements IPSService{
         List<Map< String, Object >> IPSInfo = ipsMapper.getIPSInfo(startTime, stopTime, dstipaddr);
         return IPSInfo;
     }
+    //根据源ip查询所有被攻击ip
+    public List<Map< String, Object >> getAttackedIP(String startTime, String stopTime, String srcipaddr) {
+        List<Map<String, Object>> attackedIP = ipsMapper.getAttackedIP(startTime, stopTime, srcipaddr);
+        return attackedIP;
+    }
+
+
 }

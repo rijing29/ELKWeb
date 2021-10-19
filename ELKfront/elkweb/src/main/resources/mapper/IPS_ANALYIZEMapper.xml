@@ -37,7 +37,6 @@
       </if>
     </trim>
   </insert>
-
   <!--  查询IPS告警分析  -->
   <select id="getIPSAnalysis" resultType="map">
     select *
@@ -48,12 +47,18 @@
            )
     where rownum <![CDATA[<=]]> 30
   </select>
-
   <!--  查询IPS详细信息  -->
   <select id="getIPSInfo" resultType="map">
     select time,attackname,severity,srcipaddr from FW_IPSALERT t
     where time between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
     and dstipaddr=#{dstipaddr,jdbcType=VARCHAR}
+    order by time desc
+  </select>
+  <!-- 根据源ip查询所有被攻击的ip -->
+  <select id="getAttackedIP" resultType="map">
+    select time,attackname,severity,dstipaddr from FW_IPSALERT
+    where time between to_date(#{startTime},'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime},' yyyy-MM-dd hh24:mi:ss')
+    and srcipaddr=#{srcipaddr,jdbcType=VARCHAR}
     order by time desc
   </select>
 </mapper>

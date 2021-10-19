@@ -1,6 +1,5 @@
 package com.elk.elkweb.mapper;
 
-import com.elk.elkweb.entity.IPS_ANALYIZE;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -17,4 +16,8 @@ public interface IPSMapper {
     List<Map< String, Object >> getIPSInfo(@Param("startTime")String startTime,
                                            @Param("stopTime")String stopTime,
                                            @Param("dstipaddr")String dstipaddr);
+    //根据源ip查询所有被攻击的ip
+    List<Map< String, Object >> getAttackedIP(@Param("startTime")String startTime,
+                       @Param("stopTime")String stopTime,
+                       @Param("srcipaddr")String srcipaddr);
 }

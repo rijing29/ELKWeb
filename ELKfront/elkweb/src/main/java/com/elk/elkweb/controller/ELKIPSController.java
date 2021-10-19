@@ -155,4 +155,18 @@ public class ELKIPSController {
         String time = builder.toString();
         return time;
     }
+
+    /**
+    *@Author:whj
+    *@date:2021-10-19 9:45
+    *@Method:根据源ip找到所有的受攻击的ip
+    */
+    @RequestMapping(value = "/getAttackedIP",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getAttackedIP(@Param("startTime") String startTime,
+                              @Param("srcipaddr") String srcipaddr){
+        String stopTime=startTime+" 23:59:59";
+        List<Map<String, Object>> attackedIP = ipsService.getAttackedIP(startTime, stopTime, srcipaddr);
+        return attackedIP;
+    }
 }
