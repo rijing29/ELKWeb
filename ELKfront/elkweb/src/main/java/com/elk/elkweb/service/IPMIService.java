@@ -24,4 +24,8 @@ public interface IPMIService {
 
     //    根据ip查询IPMI告警信息
     List<IPMILogWarn> getIPMIAlarm1(String ip);
+
+
+    //    IPMI信息默认查询
+    List<IPMILogInfo> getDefaultIPMI();
 }

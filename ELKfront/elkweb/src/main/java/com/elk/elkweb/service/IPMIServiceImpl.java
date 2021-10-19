@@ -43,4 +43,10 @@ public class IPMIServiceImpl implements IPMIService{
         List<IPMILogWarn> IPMIAlarm1 = ipmiMapper.getIPMIAlarm1(ip);
         return IPMIAlarm1;
     }
+
+    @Override
+    public List<IPMILogInfo> getDefaultIPMI() {
+        List<IPMILogInfo> defaultIPMI = ipmiMapper.getDefaultIPMI();
+        return defaultIPMI;
+    }
 }

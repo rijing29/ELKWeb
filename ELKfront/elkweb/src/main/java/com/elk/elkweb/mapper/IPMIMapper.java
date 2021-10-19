@@ -25,4 +25,8 @@ public interface IPMIMapper {
 
     //    根据ip查询IPMI告警信息
     List<IPMILogWarn> getIPMIAlarm1(@Param("ip")String ip);
+
+
+    //    IPMI信息默认查询
+    List<IPMILogInfo> getDefaultIPMI();
 }
