@@ -77,4 +77,15 @@
         where ip=#{ip,jdbcType=VARCHAR}
         order by time desc
     </select>
+
+    <!--  IPMI的详细信息默认查询  -->
+    <select id="getDefaultIPMI" resultType="map">
+        select *
+        from (
+                 select *
+                 from IPMI_LOG_INFO t
+                 order by time desc
+             )
+        where rownum <![CDATA[<=]]> 20
+    </select>
 </mapper>

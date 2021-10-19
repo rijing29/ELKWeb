@@ -103,5 +103,11 @@
     </if>
     order by faulttimedesc desc
   </select>
-
+  <!--  ————默认查询 begin————  -->
+  <select id="getDefaultIMC" resultType="map">
+    select * from IMC_ALARM t
+    where rownum <![CDATA[<=]]> 20
+    order by faulttimedesc desc
+  </select>
+  <!--  ————默认查询 end————  -->
 </mapper>

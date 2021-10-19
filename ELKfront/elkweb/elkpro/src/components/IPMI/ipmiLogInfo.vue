@@ -77,6 +77,22 @@
                 </el-col>
                 <!--————表格区域 end————-->
             </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <!-- 分页 begin-->
+                    <el-pagination
+                            v-if="defaultData"
+                            v-for="(item,index) in pages"
+                            :key="index"
+                            background layout="prev, pager, next"
+                            @current-change="currentPage"
+                            :page-size="item.pageSize"
+                            :current-page="item.currentPage"
+                            :total="item.total">
+                    </el-pagination>
+                    <!-- 分页 end-->
+                </el-col>
+            </el-row>
         </el-main>
     </el-container>
 </template>
@@ -86,20 +102,29 @@ export default {
     name: "ipmiLogInfo",
     data(){
         return{
-            haveData:false,
+            haveData:true,
+            defaultData:false,
             ipmiInfo:true,//控制IPMI信息表格显示
             ipmiAlarm:false,//控制IPMI告警表格显示
             filtration:false,//是否过滤低级警告
             ip:'',
             ip_options:[],
-            ip_value:'192.168.10.101',
+            ip_value:'',
             tableData:[],
             TableData:[],
+            //分页信息
+            pages: [
+                {
+                    pageSize: 20,
+                    total: 1000,
+                    currentPage: 1,
+                },
+            ],
         }
     },
     created(){
         this.getIPSelection()
-        this.getIPMI()
+        this.getDefaultIPMI()
     },
     watch:{
         ip_value:function (newV, oldV){
@@ -112,6 +137,20 @@ export default {
         }
     },
     methods: {
+        /*————分页控制部分 begin————*/
+        currentPage: function (row) {
+            this.pages[0].currentPage = row//取当前页码
+            this.getIPMI()//根据当前页码渲染数据
+        },
+        /*————分页控制部分 end————*/
+
+        getDefaultIPMI(){
+            var url = "/getDefaultIPMI"
+            this.$http.get(url).then(res =>{
+                console.log(res.data)
+                this.tableData=res.data
+            })
+        },
         getIPSelection(){
             var url = "/getIPSelection"
             this.$http.get(url).then(res => {
@@ -121,7 +160,6 @@ export default {
                 }
                 var i;
                 for(i=0;i<res.data.length;i++){
-                    console.log(i)
                     this.ip_options.push({ip_value: i,label: res.data[i].IP})
                 }
 
@@ -129,6 +167,7 @@ export default {
         },
 
         getIPMI(){
+            this.defaultData=true
             this.haveData=true
             if(this.filtration===false){
                 this.ipmiInfo=true
@@ -136,10 +175,12 @@ export default {
                 var url = "/getIPMIInfo1"
                 var params = {
                     'ip': this.ip_value,
+                    'pageNum': this.pages[0].currentPage,
+                    'pageSize': this.pages[0].pageSize,
                 }
                 this.$http.get(url, {params}).then(res => {
-                    this.tableData=res.data
-                    console.log(res.data)
+                    this.tableData = res.data.list;
+                    this.pages[0].total = res.data.total//向分页传递总数据
                 })
             }
             else if(this.filtration===true){

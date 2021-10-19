@@ -46,4 +46,18 @@ public class ELKIMCController {
         System.out.println(imcInfo);
         return imcInfo;
     }
+
+
+    /**
+     *
+     * 默认查询IPMI
+     *
+     * */
+    @RequestMapping(value = "/getDefaultIMC",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List<IMCAlarm> getDefaultIMC() throws ParseException {
+        List<IMCAlarm> defaultIMC = imcService.getDefaultIMC();
+        System.out.println(defaultIMC);
+        return defaultIMC;
+    }
 }

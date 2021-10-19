@@ -16,4 +16,7 @@ public interface IMCService {
 
     //    查询IMC信息
     List<IMCAlarm> getIMCInfo(String ip, String filtration);
+
+    //    默认查询
+    List<IMCAlarm> getDefaultIMC();
 }

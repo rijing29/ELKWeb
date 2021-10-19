@@ -3,7 +3,10 @@ package com.elk.elkweb.controller;
 import com.elk.elkweb.entity.IPMILogInfo;
 import com.elk.elkweb.entity.IPMILogWarn;
 import com.elk.elkweb.entity.IPSAnalysis;
+import com.elk.elkweb.entity.info;
 import com.elk.elkweb.service.IPMIService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -63,9 +66,17 @@ public class ELKIPMIController {
      * */
     @RequestMapping(value = "/getIPMIInfo1",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public List<IPMILogInfo> getIPMIInfo1(@Param("ip") String ip) throws ParseException {
+    public PageInfo<IPMILogInfo> getIPMIInfo1(@Param("ip") String ip,
+                                          @Param("pageNum")String pageNum,
+                                          @Param("pageSize")String pageSize) throws ParseException {
+        Integer pnum = Integer.valueOf(pageNum);
+        Integer psize = Integer.valueOf(pageSize);
+        PageHelper.startPage(pnum, psize);//1,20
         List<IPMILogInfo> IPMIInfo1 = ipmiService.getIPMIInfo1(ip);
-        return IPMIInfo1;
+        PageInfo<IPMILogInfo> pageInfoUser = new PageInfo<IPMILogInfo>(IPMIInfo1);
+        pageInfoUser.setList(IPMIInfo1);
+        System.out.println(IPMIInfo1);
+        return pageInfoUser;
     }
 
     /**
@@ -78,6 +89,19 @@ public class ELKIPMIController {
     public List<IPMILogWarn> getIPMIAlarm1(@Param("ip") String ip) throws ParseException {
         List<IPMILogWarn> IPMIAlarm1 = ipmiService.getIPMIAlarm1(ip);
         return IPMIAlarm1;
+    }
+
+    /**
+     * DaPingKuoLuo
+     * 2021/10/19 10:56
+     * IPMI详细信息默认查询
+     *
+     * */
+    @RequestMapping(value = "/getDefaultIPMI",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List<IPMILogInfo> getDefaultIPMI() throws ParseException {
+        List<IPMILogInfo> defaultIPMI = ipmiService.getDefaultIPMI();
+        return defaultIPMI;
     }
 
     /**
