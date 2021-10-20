@@ -1,7 +1,11 @@
 package com.elk.elkweb.controller;
 
+import com.elk.elkweb.entity.NodeSoftMap;
 import com.elk.elkweb.service.ZAHostsErrorService;
 import com.elk.elkweb.service.ZAServiceImpl;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,9 +21,15 @@ public class ELKZAErrorController {
     private ZAServiceImpl zaService;
     @RequestMapping(value = "/searchZAError",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public List serachZAError(){
+    public PageInfo<Map<String, Object>> serachZAError(@Param("pageNum")String pageNum, @Param("pageSize")String pageSize){
+        Integer pnum = Integer.valueOf(pageNum);
+        Integer psize = Integer.valueOf(pageSize);
+        PageHelper.startPage(pnum, psize);//1,20
         List<Map<String, Object>> serachZAError = zaService.serachZAError();
-        return serachZAError;
+        PageInfo<Map<String, Object>> pageInfoUser = new PageInfo<Map<String, Object>>(serachZAError);
+        pageInfoUser.setList(serachZAError);
+        System.out.println(serachZAError);
+        return pageInfoUser;
     }
 
     /**
@@ -30,8 +40,14 @@ public class ELKZAErrorController {
 
     @RequestMapping(value = "/searchWinlogbeats",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public List searchWinlogbeats(){
+    public PageInfo<Map<String, Object>> searchWinlogbeats(@Param("pageNum")String pageNum, @Param("pageSize")String pageSize){
+        Integer pnum = Integer.valueOf(pageNum);
+        Integer psize = Integer.valueOf(pageSize);
+        PageHelper.startPage(pnum, psize);//1,20
         List<Map<String, Object>> Winlogbeats = zaService.searchWinlogbeats();
-        return Winlogbeats;
+        PageInfo<Map<String, Object>> pageInfoUser = new PageInfo<Map<String, Object>>(Winlogbeats);
+        pageInfoUser.setList(Winlogbeats);
+        System.out.println(Winlogbeats);
+        return pageInfoUser;
     }
 }

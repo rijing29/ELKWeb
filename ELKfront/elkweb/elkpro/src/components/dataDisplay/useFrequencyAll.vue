@@ -71,7 +71,7 @@
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
                             <!--————表格 begin————-->
-                            <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                            <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}" height="500">
                                 <el-table-column prop="SOFTWARENAME" sortable label="软件" align="center">
                                 </el-table-column>
                                 <el-table-column prop="COUNT" sortable label="使用频率（次）" align="center">

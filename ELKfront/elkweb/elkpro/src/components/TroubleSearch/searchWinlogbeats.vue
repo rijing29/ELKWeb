@@ -35,6 +35,21 @@
                     </el-row>
                 </el-col>
             </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <!-- 分页 begin-->
+                    <el-pagination
+                            v-for="(item,index) in pages"
+                            :key="index"
+                            background layout="prev, pager, next"
+                            @current-change="currentPage"
+                            :page-size="item.pageSize"
+                            :current-page="item.currentPage"
+                            :total="item.total">
+                    </el-pagination>
+                    <!-- 分页 end-->
+                </el-col>
+            </el-row>
         </el-main>
     </el-container>
 </template>
@@ -45,17 +60,37 @@ export default {
     data() {
         return {
             tableData: [],
+            //分页信息
+            pages: [
+                {
+                    pageSize: 20,
+                    total: 1000,
+                    currentPage: 1,
+                },
+            ],
         }
     },
     created() {
         this.getZAErrors();
     },
     methods: {
+        /*————分页控制部分 begin————*/
+        currentPage: function (row) {
+            this.pages[0].currentPage = row//取当前页码
+            this.getZAErrors()
+        },
+        /*————分页控制部分 end————*/
+
         getZAErrors(){//ZAHostsErrorMapper.xml
             var url="/searchWinlogbeats"
-            this.$http.get(url).then(res=>{
+            var params = {
+                'pageNum': this.pages[0].currentPage,
+                'pageSize': this.pages[0].pageSize,
+            }
+            this.$http.get(url,{params}).then(res=>{
                 console.log(res)
-                this.tableData=res.data
+                this.tableData=res.data.list
+                this.pages[0].total = res.data.total//向分页传递总数据
             })
         }
     },
@@ -111,7 +146,10 @@ export default {
     font-weight: bold;
     text-align: center;
 }
-
+.el-pagination {
+    /*分页*/
+    margin-left: 50%;
+}
 .el-table {
     header-align: center;
     border-radius: 4px;

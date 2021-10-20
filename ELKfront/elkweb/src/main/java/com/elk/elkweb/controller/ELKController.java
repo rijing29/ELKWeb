@@ -1,5 +1,8 @@
 package com.elk.elkweb.controller;
+import com.elk.elkweb.entity.IPMILogInfo;
 import com.elk.elkweb.entity.TableExport;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import com.elk.elkweb.entity.NodeSoftMap;
@@ -30,13 +33,15 @@ public class ELKController {
     //    查询所有table数据
     @RequestMapping(value = "/queryTable",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public List<NodeSoftMap> show(){
+    public PageInfo<NodeSoftMap> show(@Param("pageNum")String pageNum, @Param("pageSize")String pageSize){
+        Integer pnum = Integer.valueOf(pageNum);
+        Integer psize = Integer.valueOf(pageSize);
+        PageHelper.startPage(pnum, psize);//1,20
         List<NodeSoftMap> nodeSoftMaps = elkService.queryTableData();
-        for (int i=0;i<nodeSoftMaps.size();i++){
-            System.out.println("从数据库返回来的值：");
-            System.out.println(nodeSoftMaps.get(i).toString());
-        }
-        return nodeSoftMaps;
+        PageInfo<NodeSoftMap> pageInfoUser = new PageInfo<NodeSoftMap>(nodeSoftMaps);
+        pageInfoUser.setList(nodeSoftMaps);
+        System.out.println(nodeSoftMaps);
+        return pageInfoUser;
     }
     //    删除
     @ResponseBody

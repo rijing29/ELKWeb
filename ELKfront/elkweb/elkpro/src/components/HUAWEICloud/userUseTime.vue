@@ -25,7 +25,7 @@
                 <el-col :span="24" style="margin-top: 8px">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div class="tableSubTitle">近一周软件使用率</div>
+                            <div class="tableSubTitle">近一周软件使用时间</div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -35,7 +35,7 @@
                                 <el-table  ref="singleTable" :data="tableDataWeek" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="TIME" sortable label="时间" align="center"></el-table-column>
                                     <el-table-column prop="SOFTWARE" sortable label="使用软件" align="center"></el-table-column>
-                                    <el-table-column prop="USERATE" sortable label="使用率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="USERATE" sortable label="使用时间(小时)" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>

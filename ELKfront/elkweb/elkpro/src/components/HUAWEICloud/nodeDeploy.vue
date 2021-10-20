@@ -59,8 +59,8 @@
                                             <el-table :data="tableData" :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                                 <el-table-column type="selection" width="55" align="center"></el-table-column>
                                                 <el-table-column prop="nodeType" sortable label="节点名" align="center"></el-table-column>
-                                                <el-table-column prop="softName" sortable label="软件名" align="center"></el-table-column>
                                                 <el-table-column prop="nodeId" sortable label="起始和截止节点" align="center"></el-table-column>
+                                                <el-table-column prop="softName" sortable label="软件名" align="center"></el-table-column>
                                                 <el-table-column prop="workLoad" sortable label="作业规划数（个）" align="center"></el-table-column>
                                             </el-table>
                                         </div>
@@ -73,6 +73,22 @@
                                 </el-row>
                             </el-col>
                         </el-row>
+                    </el-col>
+                </el-row>
+                <el-row>
+                    <el-col :span="24">
+                        <!-- 分页 begin-->
+                        <el-pagination
+                                v-if="defaultData"
+                                v-for="(item,index) in pages"
+                                :key="index"
+                                background layout="prev, pager, next"
+                                @current-change="currentPage"
+                                :page-size="item.pageSize"
+                                :current-page="item.currentPage"
+                                :total="item.total">
+                        </el-pagination>
+                        <!-- 分页 end-->
                     </el-col>
                 </el-row>
             </el-main>
@@ -109,12 +125,21 @@ export default {
     },
     data() {
         return {
+            defaultData:true,
             softName_present: '',//softName
             nodeType_present: '',//nodeType
             start_present: '',
             stop_present: '',
             work_present: '',
             tableData: [],
+            //分页信息
+            pages: [
+                {
+                    pageSize: 20,
+                    total: 1000,
+                    currentPage: 1,
+                },
+            ],
             //软件名节点下拉框值
             softName_options: [{softName_value: '选项1', label: 'Geoeast'},
                 {softName_value: '选项2', label: 'Pardiam'},
@@ -151,12 +176,24 @@ export default {
         this.getTableData()
     },
     methods: {
+        /*————分页控制部分 begin————*/
+        currentPage: function (row) {
+            this.pages[0].currentPage = row//取当前页码
+            this.getTableData()
+        },
+        /*————分页控制部分 end————*/
+
         //获取tabledata数据
         getTableData() {
             var url = "/queryTable"
-            this.$http.get(url).then(res => {
+            var params = {
+                'pageNum': this.pages[0].currentPage,
+                'pageSize': this.pages[0].pageSize,
+            }
+            this.$http.get(url,{params}).then(res => {
                 console.log("table返回来的值：")
-                this.tableData = res.data;
+                this.tableData = res.data.list;
+                this.pages[0].total = res.data.total//向分页传递总数据
             })
         },
         //新增
@@ -189,6 +226,7 @@ export default {
     color: #ffffff;
     text-align: center;
     z-index: 1;
+    height: 90vh;
 }
 
 .el-select {
@@ -222,12 +260,17 @@ export default {
     margin-left: 9%;
     margin-top: 2%;
 }
+.el-pagination {
+    /*分页*/
+    margin-left: 50%;
+}
 .el-table {
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;
     width: 90%;
 }
+
 /*————表格背景透明 begin————*/
 .table-wrapper /deep/  .el-table,
 .el-table__expanded-cell {

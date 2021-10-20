@@ -67,8 +67,8 @@ public class ELKIPMIController {
     @RequestMapping(value = "/getIPMIInfo1",produces = "application/json;charset=utf-8" )
     @ResponseBody
     public PageInfo<IPMILogInfo> getIPMIInfo1(@Param("ip") String ip,
-                                          @Param("pageNum")String pageNum,
-                                          @Param("pageSize")String pageSize) throws ParseException {
+                                              @Param("pageNum")String pageNum,
+                                              @Param("pageSize")String pageSize) throws ParseException {
         Integer pnum = Integer.valueOf(pageNum);
         Integer psize = Integer.valueOf(pageSize);
         PageHelper.startPage(pnum, psize);//1,20

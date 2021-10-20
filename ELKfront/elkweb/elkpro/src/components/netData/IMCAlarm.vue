@@ -55,6 +55,22 @@
                 </el-col>
                 <!--————表格区域 end————-->
             </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <!-- 分页 begin-->
+                    <el-pagination
+                            v-if="defaultData"
+                            v-for="(item,index) in pages"
+                            :key="index"
+                            background layout="prev, pager, next"
+                            @current-change="currentPage"
+                            :page-size="item.pageSize"
+                            :current-page="item.currentPage"
+                            :total="item.total">
+                    </el-pagination>
+                    <!-- 分页 end-->
+                </el-col>
+            </el-row>
         </el-main>
     </el-container>
 </template>
@@ -64,11 +80,20 @@ export default {
     name: "IMCAlarm",
     data(){
         return{
+            defaultData:false,
             haveData:false,//表格是否有数据
             filtration:false,//是否过滤低级警告
             ip_options:[],
             ip_value:'',
             tableData:[],
+            //分页信息
+            pages: [
+                {
+                    pageSize: 20,
+                    total: 1000,
+                    currentPage: 1,
+                },
+            ],
         }
     },
     created(){
@@ -86,6 +111,14 @@ export default {
         }
     },
     methods: {
+
+        /*————分页控制部分 begin————*/
+        currentPage: function (row) {
+            this.pages[0].currentPage = row//取当前页码
+            this.getIPMI()//根据当前页码渲染数据
+        },
+        /*————分页控制部分 end————*/
+
         getDefaultIMC(){//IMCAlarmMapper.xml - ELKIMCController.java
             var url = "/getDefaultIMC"
             this.$http.get(url).then(res => {
@@ -110,17 +143,19 @@ export default {
         },
 
         getIMCInfo(){
+            this.defaultData=true
             var url = "/getIMCInfo"
             var params = {
                 'ip': this.ip_value,
                 'filtration':this.filtration,
+                'pageNum': this.pages[0].currentPage,
+                'pageSize': this.pages[0].pageSize,
             }
             this.$http.get(url, {params}).then(res => {
-                this.haveData=true
-                this.tableData=res.data
+                this.tableData = res.data.list;
+                this.pages[0].total = res.data.total//向分页传递总数据
                 console.log(res.data)
             })
-
         },
     },
 }
@@ -136,16 +171,6 @@ export default {
     text-align: center;
 
     z-index: 1;
-}
-.area{
-    width: 600px;
-    height: 500px;
-    background: #ffffff;
-    background: url("../../assets/bg_data.png");
-    background-size: 100% 100%;
-    padding: 40px;
-    margin-left: 60px;
-
 }
 .span_area {
     /*按钮边距区域*/

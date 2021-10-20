@@ -77,12 +77,13 @@ public class ELKSoftUserController {
                 System.out.println(userUseRate);
                 Time[k]=time;
                 Softname[k]=soft_name;
-                if(userUseRate*100>100){
-                    UserUseRate[k]=95.0;
-                }
-                else {
-                    UserUseRate[k]=Double.valueOf(new Formatter().format("%.1f", userUseRate*100).toString());
-                }
+                UserUseRate[k]=Double.valueOf(new Formatter().format("%.1f", sumJob).toString());
+//                if(userUseRate*100>100){ //注销了此代码，使用率变成使用时间，向UserUseRate[k]传值不同
+//                    UserUseRate[k]=95.0;
+//                }
+//                else {
+//                    UserUseRate[k]=Double.valueOf(new Formatter().format("%.1f", userUseRate*100).toString());
+//                }
                 k++;
             }
             cutOneDay  = cutOneDay(cutOneDay);

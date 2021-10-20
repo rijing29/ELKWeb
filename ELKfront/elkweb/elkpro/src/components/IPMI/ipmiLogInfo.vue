@@ -21,7 +21,7 @@
                     </span>
                 </el-col>
             </el-row>
-            <el-row v-if="haveData">
+            <el-row v-if="haveData" class="area">
                 <!--————表格区域 begin————-->
                 <el-col :span="24" v-if="ipmiInfo">
                     <el-row >
@@ -212,15 +212,10 @@ export default {
     height: 90vh;
     z-index: 1;
 }
-.area{
-    width: 600px;
-    height: 500px;
-    background: #ffffff;
-    background: url("../../assets/bg_data.png");
-    background-size: 100% 100%;
-    padding: 40px;
-    margin-left: 60px;
-
+.area {
+    width: 80%;
+    margin-left: 9%;
+    margin-top: 2%;
 }
 .span_area {
     /*多选框区域*/

@@ -19,13 +19,18 @@
                         <el-row>
                             <el-col :span="24">
                                 <div class="table-wrapper">
-                                    <el-table :data="tableData"
+                                    <el-table :data="tableData.slice((currentPage-1)*pageSize,currentPage*pageSize)"
                                               :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                        <el-table-column prop="userName" sortable label="用户" align="center"></el-table-column>
-                                        <el-table-column prop="licenceServer" sortable label="软件名" align="center"></el-table-column>
-                                        <el-table-column prop="userAction" sortable label="许可动作" align="center"></el-table-column>
-                                        <el-table-column prop="moduleName" sortable label="软件模块名" align="center"></el-table-column>
-                                        <el-table-column prop="inputTime" sortable label="时间" align="center"></el-table-column>
+                                        <el-table-column prop="userName" sortable label="用户"
+                                                         align="center"></el-table-column>
+                                        <el-table-column prop="licenceServer" sortable label="软件名"
+                                                         align="center"></el-table-column>
+                                        <el-table-column prop="userAction" sortable label="许可动作"
+                                                         align="center"></el-table-column>
+                                        <el-table-column prop="moduleName" sortable label="软件模块名"
+                                                         align="center"></el-table-column>
+                                        <el-table-column prop="inputTime" sortable label="时间"
+                                                         align="center"></el-table-column>
                                     </el-table>
                                 </div>
                             </el-col>
@@ -38,6 +43,20 @@
                     </el-row>
                 </el-col>
             </el-row>
+            <el-row>
+                <el-col :span="24">
+                    <!-- 分页 begin-->
+                    <el-pagination
+                            :key="index"
+                            background layout="prev, pager, next"
+                            @current-change="currentPage1"
+                            :page-size="pageSize"
+                            :current-page="currentPage"
+                            :total="total">
+                    </el-pagination>
+                    <!-- 分页 end-->
+                </el-col>
+            </el-row>
         </el-main>
     </el-container>
 </template>
@@ -45,17 +64,6 @@
 <script>
 export default {
     name: 'softwareLicence',
-    watch: {
-        softName_value: function (newV, oldV) {
-            this.softName = newV
-        },
-        yearvalue: function (newV, oldV) {
-            this.year = newV
-        },
-        monthvalue: function (newV, oldV) {
-            this.month = newV
-        }
-    },
     data() {
         return {
             fullscreenLoading: false,
@@ -63,61 +71,34 @@ export default {
             month: '',
             softName: '',
             tableData: [],
+            //分页信息 begin
+            index:'',
+            pageSize: 20,
+            total: 1000,
+            currentPage: 1,
+            //分页信息 end
         }
     },
     created() {
         this.getLience();
     },
-    methods: {
-        getNodeTypeEffi() {
-            this.fullscreenLoading = true;
-            setTimeout(() => {
-                this.fullscreenLoading = false;
-            }, 500);
-            var url = "/searchNodeTypeEfficiency"
-            var params = {
-                'softName': this.softName,
-                'year': this.year,
-                'month': this.month,
-            }
-            this.$http.get(url, {params}).then(res => {
-                console.log(res)
-                this.tableData = res.data
-                console.log(this.tableData)
-            })
-        },
 
-        //导出excel的信息集合
-        export2Excel() {
-            require.ensure([], () => {
-                const {export_json_to_excel} = require("../../tools/Export2Excel.js");
-                // 设置自己的excel表头
-                const tHeader = [
-                    "节点名",
-                    "节点编号",
-                    "时间",
-                    "效率",
-                ]; // 上面设置Excel的表格第一行的标题
-                const filterVal = [
-                    "nodeType",
-                    "nodeId",
-                    "time",
-                    "efficiency",
-                ]; // client_id client_name client_phone 为tableData的属性
-                const list = this.tableData; //把data里的tableData存到list
-                const data = this.formatJson(filterVal, list);
-                export_json_to_excel(tHeader, data, "节点效率excel");
-            });
+    methods: {
+
+        /*————分页控制部分 begin————*/
+        currentPage1: function (row) {
+            this.currentPage = row//取当前页码
+            console.log(row, "44444444444444")
         },
-        formatJson(filterVal, jsonData) {
-            return jsonData.map(v => filterVal.map(j => v[j]));
-        },
-        getLience(){
-          var url="/getLience"
-          this.$http.get(url).then(res=>{
-            console.log(res)
-            this.tableData=res.data
-          })
+        /*————分页控制部分 end————*/
+
+        getLience() {
+            var url = "/getLience"
+            this.$http.get(url).then(res => {
+                console.log(res)
+                this.total = res.data.length
+                this.tableData = res.data
+            })
         }
     },
 }
@@ -145,7 +126,8 @@ export default {
     background: url("../../assets/border_bottom2.png");
     background-size: 100% 100%;
 }
-.title{
+
+.title {
     width: 243px;
     height: 75px;
     font-size: 18px;
@@ -155,6 +137,7 @@ export default {
     font-weight: bold;
     text-align: center;
 }
+
 .area {
     width: 80%;
     margin-left: 9%;
@@ -171,7 +154,10 @@ export default {
     font-weight: bold;
     text-align: center;
 }
-
+.el-pagination {
+    /*分页*/
+    margin-left: 50%;
+}
 .el-table {
     header-align: center;
     border-radius: 4px;
@@ -198,7 +184,7 @@ export default {
 
 /*————表格背景透明 end————*/
 
-.tableSubTitle{
+.tableSubTitle {
     height: 50px;
     line-height: 70px;
     padding-left: 20px;

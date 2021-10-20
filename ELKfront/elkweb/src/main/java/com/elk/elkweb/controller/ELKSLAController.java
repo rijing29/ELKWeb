@@ -176,7 +176,7 @@ public class ELKSLAController {
      * */
     public static float calculateTime(String starTime,String stopTime){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                "yyyy/MM/dd");
+                "yyyy-MM-dd");
         float day = 0;
         Date date1 = null;
         Date date2 = null;

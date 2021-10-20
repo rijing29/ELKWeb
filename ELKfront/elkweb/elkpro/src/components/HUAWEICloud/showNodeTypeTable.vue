@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        节点报表导出
+                        节点效率查询
                     </div>
                 </el-col>
             </el-row>

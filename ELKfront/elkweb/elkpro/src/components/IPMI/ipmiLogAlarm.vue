@@ -10,7 +10,7 @@
             </el-row>
             <el-row>
                 <!--————表格区域 begin————-->
-                <el-col :span="24">
+                <el-col :span="24" class="area">
                     <el-row>
                         <el-col :span="24" class="border_top">
                             <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">一周内信息 (点击查看详细信息)</div>
@@ -134,14 +134,9 @@ export default {
 }
 
 .area {
-    width: 600px;
-    height: 500px;
-    background: #ffffff;
-    background: url("../../assets/bg_data.png");
-    background-size: 100% 100%;
-    padding: 40px;
-    margin-left: 60px;
-
+    width: 80%;
+    margin-left: 9%;
+    margin-top: 2%;
 }
 
 .title {

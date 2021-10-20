@@ -1,8 +1,11 @@
 package com.elk.elkweb.controller;
 
 import com.elk.elkweb.entity.IMCAlarm;
+import com.elk.elkweb.entity.IMCAlarm;
 import com.elk.elkweb.service.IMCService;
 import com.elk.elkweb.service.IPMIService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,10 +44,18 @@ public class ELKIMCController {
      * */
     @RequestMapping(value = "/getIMCInfo",produces = "application/json;charset=utf-8" )
     @ResponseBody
-    public List<IMCAlarm> getIMCInfo(@Param("ip")String ip,@Param("filtration")String filtration) throws ParseException {
+    public PageInfo<IMCAlarm> getIMCInfo(@Param("ip")String ip,
+                                     @Param("filtration")String filtration,
+                                     @Param("pageNum")String pageNum,
+                                     @Param("pageSize")String pageSize) throws ParseException {
+        Integer pnum = Integer.valueOf(pageNum);
+        Integer psize = Integer.valueOf(pageSize);
+        PageHelper.startPage(pnum, psize);//1,20
         List<IMCAlarm> imcInfo = imcService.getIMCInfo(ip, filtration);
+        PageInfo<IMCAlarm> pageInfoUser = new PageInfo<IMCAlarm>(imcInfo);
+        pageInfoUser.setList(imcInfo);
         System.out.println(imcInfo);
-        return imcInfo;
+        return pageInfoUser;
     }
 
 
