@@ -110,8 +110,8 @@
         <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
         <!--        <table tableName="VIEWCOUNTAPPWELL" domainObjectName="ViewCountAPPWell" enableCountByExample="false" enableUpdateByExample="false"-->
         <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-        <!--        <table tableName="VIEWCOUNT" domainObjectName="ViewCount" enableCountByExample="false" enableUpdateByExample="false"-->
-        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+                <table tableName="VIEWCOUNT" domainObjectName="ViewCount" enableCountByExample="false" enableUpdateByExample="false"
+                       enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
     </context>
 </generatorConfiguration>
 

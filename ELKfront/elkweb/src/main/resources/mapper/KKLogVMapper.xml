@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="KK_LOG_V" >
+<mapper namespace="com.elk.elkweb.mapper.KKLogMaper" >
   <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.KKLogV" >
     <result column="XM" property="xm" jdbcType="VARCHAR" />
     <result column="USERNAME" property="username" jdbcType="VARCHAR" />
@@ -44,4 +44,7 @@
       </if>
     </trim>
   </insert>
+  <select id="getKKLog" resultMap="BaseResultMap">
+    select * from KK_LOG_V where rownum<![CDATA[<=]]>60
+  </select>
 </mapper>

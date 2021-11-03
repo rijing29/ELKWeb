@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="VIEWCOUNT" >
+<mapper namespace="com.elk.elkweb.mapper.ViewCountMapper" >
   <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.ViewCount" >
     <result column="ID" property="id" jdbcType="DECIMAL" />
     <result column="MODULENAME" property="modulename" jdbcType="VARCHAR" />
@@ -83,4 +83,7 @@
       </if>
     </trim>
   </insert>
+  <select id="getViewCount" resultMap="BaseResultMap">
+    select * from VIEWCOUNT where rownum<![CDATA[<=]]>60
+  </select>
 </mapper>
