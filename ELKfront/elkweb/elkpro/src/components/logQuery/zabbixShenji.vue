@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        IPMI日志告警信息
+                        Zabbix审计日志
                     </div>
                 </el-col>
             </el-row>
@@ -21,47 +21,17 @@
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
                                 <el-table :data="tableData"
-                                          height="400"
-                                          style="width: 95%;margin: auto;header-align: center;"
-                                          highlight-current-row
-                                          @current-change="handleCurrentChange">
-                                    <el-table-column prop="time" sortable label="时间"
+                                          height="700"
+                                          style="width: 95%;margin: auto;header-align: center;">
+                                    <el-table-column prop="TIMESTAMP" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
                                                      align="center"></el-table-column>
-                                    <el-table-column prop="ip" sortable label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="info" sortable label="告警信息" align="center"></el-table-column>
+                                    <el-table-column prop="USERNAME" sortable label="用户" align="center"></el-table-column>
+                                    <el-table-column prop="ACTION_NAME" sortable label="SQL操作" align="center"></el-table-column>
+                                    <el-table-column prop="SQL_TEXT" sortable label="SQL语句" align="center"width="400"></el-table-column>
+                                    <el-table-column prop="COMMENT_TEXT" sortable label="认证信息" align="center" width="400"></el-table-column>
                                 </el-table>
                                 <!-- 表格 end-->
-                            </div>
-                        </el-col>
-                    </el-row>
-                    <el-row class="border_bottom">
-                        <el-col>
-                            <div style="height: 50px"></div>
-                        </el-col>
-                    </el-row>
-                </el-col>
-                <!--————表格区域 end————-->
-            </el-row>
-            <el-row>
-                <!--————表格区域 begin————-->
-                <el-col :span="24" v-if="haveData" >
-                    <el-row>
-                        <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">IPMI详细信息</div>
-                        </el-col>
-                    </el-row>
-                    <el-row>
-                        <el-col :span="24" style="padding: 0">
-                            <div class="table-wrapper">
-                                <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;">
-                                    <el-table-column prop="time" sortable label="时间"
-                                                     value-format="yyyy/MM/dd HH:mm:ss"
-                                                     align="center"></el-table-column>
-                                    <el-table-column prop="ip" label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="info" sortable label="告警信息" align="center"></el-table-column>
-                                </el-table>
-                                <!-- 外表格 end-->
                             </div>
                         </el-col>
                     </el-row>
@@ -83,23 +53,18 @@ export default {
     data() {
         return {
             haveData: false,
-            Time: '',//日期选择器
-            date: '',//日期变量
-            expands: [],
-            ip: '',
-            time: '',
             tableData: [],
-            TableData: [],
         }
     },
     created() {//自动渲染数据
-        //this.getIPMIAlarm()
+        this.getZabbixShenji()
     },
     methods: {
 
-        getZabbixShenji() {//IPMILogWarnMapper.xml - ELKIPMIController.java
+        getZabbixShenji() {//zabbixShenji.xml - ELKLogQueryController.java
             var url = "/getZabbixShenji"
             this.$http.get(url).then(res => {
+                console.log(res.data)
                 this.tableData = res.data
             })
         }
@@ -121,8 +86,8 @@ export default {
 }
 
 .area {
-    width: 80%;
-    margin-left: 9%;
+    width: 95%;
+    margin-left: 2%;
     margin-top: 2%;
 }
 
