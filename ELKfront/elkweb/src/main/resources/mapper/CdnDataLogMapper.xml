@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="CDN_DATA_LOG" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.CdnDataLog" >
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+    <result column="MOUDLE_NAME" property="moudleName" jdbcType="VARCHAR" />
+    <result column="DATA_CONTENT" property="dataContent" jdbcType="VARCHAR" />
+    <result column="OPERATE_DATE" property="operateDate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.CdnDataLog" >
+    insert into CDN_DATA_LOG (USER_ID, MOUDLE_NAME, DATA_CONTENT, 
+      OPERATE_DATE)
+    values (#{userId,jdbcType=VARCHAR}, #{moudleName,jdbcType=VARCHAR}, #{dataContent,jdbcType=VARCHAR}, 
+      #{operateDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.CdnDataLog" >
+    insert into CDN_DATA_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="moudleName != null" >
+        MOUDLE_NAME,
+      </if>
+      <if test="dataContent != null" >
+        DATA_CONTENT,
+      </if>
+      <if test="operateDate != null" >
+        OPERATE_DATE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="moudleName != null" >
+        #{moudleName,jdbcType=VARCHAR},
+      </if>
+      <if test="dataContent != null" >
+        #{dataContent,jdbcType=VARCHAR},
+      </if>
+      <if test="operateDate != null" >
+        #{operateDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

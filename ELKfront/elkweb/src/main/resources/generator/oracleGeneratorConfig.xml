@@ -12,7 +12,8 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver" connectionURL="jdbc:oracle:thin:@49.233.40.227:1521:ZABBIX" userId="zabbix" password="zabbix">
+        <jdbcConnection driverClass="oracle.jdbc.driver.OracleDriver"
+                        connectionURL="jdbc:oracle:thin:@49.233.40.227:1521:ZABBIX" userId="zabbix" password="zabbix">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -28,77 +29,89 @@
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <!--分页插件-->
-<!--        <plugins>-->
-<!--            <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
-<!--                &lt;!&ndash; config params as the following &ndash;&gt;-->
-<!--                &lt;!&ndash;<!–分页参数合理化  –>&ndash;&gt;-->
-<!--                <property name="reasonable" value="true"/>-->
-<!--            </plugin>-->
-<!--        </plugins>-->
+        <!--        <plugins>-->
+        <!--            <plugin interceptor="com.github.pagehelper.PageInterceptor">-->
+        <!--                &lt;!&ndash; config params as the following &ndash;&gt;-->
+        <!--                &lt;!&ndash;<!–分页参数合理化  –>&ndash;&gt;-->
+        <!--                <property name="reasonable" value="true"/>-->
+        <!--            </plugin>-->
+        <!--        </plugins>-->
 
         <!--&lt;!&ndash; 生成DAO接口的包名和位置&ndash;&gt;-->
         <!--<javaClientGenerator type="XMLMAPPER" targetPackage="mapper" targetProject="src/main/java">-->
         <!--<property name="enableSubPackages" value="true"/>-->
         <!--</javaClientGenerator>-->
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名-->
-<!--        <table tableName="T_NODE_SOFT_MAP" domainObjectName="NodeSoftMap" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="T_NODE_WORK_DETAIL" domainObjectName="NodeWorkDetail" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="T_FIREWALL_PACKAGE" domainObjectName="FireWallInfo" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="JK_LogAnalyize_UserUsage" domainObjectName="UserUsage" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="JK_LogAnalyize_ModuleUsage" domainObjectName="ModuleUsage" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="FW_IPSALERT" domainObjectName="IPSALERT" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="FW_IPS_ANALYIZE" domainObjectName="IPS_ANALYIZE" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="DOOR_INFO" domainObjectName="DoorInfo" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="DOOR_INFO_FOR_ONEMAN" domainObjectName="DoorInfoOneMan" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="IMC_ALARM" domainObjectName="IMCAlarm" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="IPMI_LOG_info" domainObjectName="IPMILogInfo" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="IPMI_LOG_WARN" domainObjectName="IPMILogWarn" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="MDS_LOG" domainObjectName="MDSLog" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="MDS_LOG_FOR_ONEMAN" domainObjectName="MDSLogOneMan" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="LOG_WIN_SYSTEMLOG_WARNING" domainObjectName="LogWinWarning" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="LOG_WIN_LOGIN" domainObjectName="LogWinLogin" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="Log_Win_Systemlog_JobInc" domainObjectName="LogWinJobInc" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="JK_SERVERRUNNINGDATA" domainObjectName="ServerPublic" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--        enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="JK_LOGANALYIZE_USERUSAGE" domainObjectName="EpySoftWareUsage" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--            <table tableName="MAIL_WEBPAGE_TJ" domainObjectName="EpyNet" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--            <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="EpyCard" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--            <table tableName="MDS_LOG_FOR_DEPARTMENT" domainObjectName="EPYDEPDQMDS" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="FR_UPS_LOAD" domainObjectName="siteUPSLoad" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--        <table tableName="FR_CD_WDSD" domainObjectName="siteCDWDSD" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--            <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="FrontCardDPMInfo" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
-<!--            <table tableName="LOG_LICENCEDATA_HW" domainObjectName="HWLicence" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--            <table tableName="HW_CC_USEAGE" domainObjectName="HWCCUseAge" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--            <table tableName="ZA_HOSTS_ERROR" domainObjectName="ZAHostsError" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
-<!--            <table tableName="Person_Action_log" domainObjectName="PersonActionLog" enableCountByExample="false" enableUpdateByExample="false"-->
-<!--                   enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="T_NODE_SOFT_MAP" domainObjectName="NodeSoftMap" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="T_NODE_WORK_DETAIL" domainObjectName="NodeWorkDetail" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="T_FIREWALL_PACKAGE" domainObjectName="FireWallInfo" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="JK_LogAnalyize_UserUsage" domainObjectName="UserUsage" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="JK_LogAnalyize_ModuleUsage" domainObjectName="ModuleUsage" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="FW_IPSALERT" domainObjectName="IPSALERT" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="FW_IPS_ANALYIZE" domainObjectName="IPS_ANALYIZE" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="DOOR_INFO" domainObjectName="DoorInfo" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="DOOR_INFO_FOR_ONEMAN" domainObjectName="DoorInfoOneMan" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="IMC_ALARM" domainObjectName="IMCAlarm" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="IPMI_LOG_info" domainObjectName="IPMILogInfo" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="IPMI_LOG_WARN" domainObjectName="IPMILogWarn" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="MDS_LOG" domainObjectName="MDSLog" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="MDS_LOG_FOR_ONEMAN" domainObjectName="MDSLogOneMan" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="LOG_WIN_SYSTEMLOG_WARNING" domainObjectName="LogWinWarning" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="LOG_WIN_LOGIN" domainObjectName="LogWinLogin" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="Log_Win_Systemlog_JobInc" domainObjectName="LogWinJobInc" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="JK_SERVERRUNNINGDATA" domainObjectName="ServerPublic" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="JK_LOGANALYIZE_USERUSAGE" domainObjectName="EpySoftWareUsage" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="MAIL_WEBPAGE_TJ" domainObjectName="EpyNet" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="EpyCard" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="MDS_LOG_FOR_DEPARTMENT" domainObjectName="EPYDEPDQMDS" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="FR_UPS_LOAD" domainObjectName="siteUPSLoad" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="FR_CD_WDSD" domainObjectName="siteCDWDSD" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="DOOR_INFO_FOR_DEPARTMENT" domainObjectName="FrontCardDPMInfo" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> -->
+        <!--        <table tableName="LOG_LICENCEDATA_HW" domainObjectName="HWLicence" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="HW_CC_USEAGE" domainObjectName="HWCCUseAge" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="ZA_HOSTS_ERROR" domainObjectName="ZAHostsError" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="Person_Action_log" domainObjectName="PersonActionLog" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="SYS_SRM_LOG" domainObjectName="SysSrmLog" enableCountByExample="false"-->
+        <!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="CDN_DATA_LOG" domainObjectName="CdnDataLog" enableCountByExample="false"-->
+        <!--               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="KK_LOG_V" domainObjectName="KKLogV" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="ZABBIX_SHENJI" domainObjectName="zabbixShenji" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="VIEWCOUNTAPPWELL" domainObjectName="ViewCountAPPWell" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
+        <!--        <table tableName="VIEWCOUNT" domainObjectName="ViewCount" enableCountByExample="false" enableUpdateByExample="false"-->
+        <!--               enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>-->
     </context>
 </generatorConfiguration>
 

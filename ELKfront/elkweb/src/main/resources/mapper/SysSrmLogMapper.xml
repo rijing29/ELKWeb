@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SYS_SRM_LOG" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.SysSrmLog" >
+    <result column="OID" property="oid" jdbcType="OTHER" />
+    <result column="OTYPE" property="otype" jdbcType="OTHER" />
+    <result column="OCCURTIME" property="occurtime" jdbcType="TIMESTAMP" />
+    <result column="MSGTYPE" property="msgtype" jdbcType="OTHER" />
+    <result column="MSGDESC" property="msgdesc" jdbcType="VARCHAR" />
+    <result column="FUNNAME" property="funname" jdbcType="OTHER" />
+    <result column="USERID" property="userid" jdbcType="OTHER" />
+    <result column="USERNAME" property="username" jdbcType="OTHER" />
+    <result column="USERIP" property="userip" jdbcType="OTHER" />
+    <result column="USERPHONE" property="userphone" jdbcType="OTHER" />
+    <result column="USEREMAIL" property="useremail" jdbcType="OTHER" />
+    <result column="SYSTEMID" property="systemid" jdbcType="OTHER" />
+    <result column="SYSTEMNAME" property="systemname" jdbcType="OTHER" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.SysSrmLog" >
+    insert into SYS_SRM_LOG (OID, OTYPE, OCCURTIME, 
+      MSGTYPE, MSGDESC, FUNNAME, 
+      USERID, USERNAME, USERIP, 
+      USERPHONE, USEREMAIL, SYSTEMID, 
+      SYSTEMNAME)
+    values (#{oid,jdbcType=OTHER}, #{otype,jdbcType=OTHER}, #{occurtime,jdbcType=TIMESTAMP}, 
+      #{msgtype,jdbcType=OTHER}, #{msgdesc,jdbcType=VARCHAR}, #{funname,jdbcType=OTHER}, 
+      #{userid,jdbcType=OTHER}, #{username,jdbcType=OTHER}, #{userip,jdbcType=OTHER}, 
+      #{userphone,jdbcType=OTHER}, #{useremail,jdbcType=OTHER}, #{systemid,jdbcType=OTHER}, 
+      #{systemname,jdbcType=OTHER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.SysSrmLog" >
+    insert into SYS_SRM_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        OID,
+      </if>
+      <if test="otype != null" >
+        OTYPE,
+      </if>
+      <if test="occurtime != null" >
+        OCCURTIME,
+      </if>
+      <if test="msgtype != null" >
+        MSGTYPE,
+      </if>
+      <if test="msgdesc != null" >
+        MSGDESC,
+      </if>
+      <if test="funname != null" >
+        FUNNAME,
+      </if>
+      <if test="userid != null" >
+        USERID,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="userip != null" >
+        USERIP,
+      </if>
+      <if test="userphone != null" >
+        USERPHONE,
+      </if>
+      <if test="useremail != null" >
+        USEREMAIL,
+      </if>
+      <if test="systemid != null" >
+        SYSTEMID,
+      </if>
+      <if test="systemname != null" >
+        SYSTEMNAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="oid != null" >
+        #{oid,jdbcType=OTHER},
+      </if>
+      <if test="otype != null" >
+        #{otype,jdbcType=OTHER},
+      </if>
+      <if test="occurtime != null" >
+        #{occurtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="msgtype != null" >
+        #{msgtype,jdbcType=OTHER},
+      </if>
+      <if test="msgdesc != null" >
+        #{msgdesc,jdbcType=VARCHAR},
+      </if>
+      <if test="funname != null" >
+        #{funname,jdbcType=OTHER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=OTHER},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=OTHER},
+      </if>
+      <if test="userip != null" >
+        #{userip,jdbcType=OTHER},
+      </if>
+      <if test="userphone != null" >
+        #{userphone,jdbcType=OTHER},
+      </if>
+      <if test="useremail != null" >
+        #{useremail,jdbcType=OTHER},
+      </if>
+      <if test="systemid != null" >
+        #{systemid,jdbcType=OTHER},
+      </if>
+      <if test="systemname != null" >
+        #{systemname,jdbcType=OTHER},
+      </if>
+    </trim>
+  </insert>
+</mapper>

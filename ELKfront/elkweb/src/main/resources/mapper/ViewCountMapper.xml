@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="VIEWCOUNT" >
+  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.ViewCount" >
+    <result column="ID" property="id" jdbcType="DECIMAL" />
+    <result column="MODULENAME" property="modulename" jdbcType="VARCHAR" />
+    <result column="DEPARTMENT" property="department" jdbcType="VARCHAR" />
+    <result column="USERNAME" property="username" jdbcType="VARCHAR" />
+    <result column="VYEAR" property="vyear" jdbcType="VARCHAR" />
+    <result column="VMONTH" property="vmonth" jdbcType="VARCHAR" />
+    <result column="PHASENAME" property="phasename" jdbcType="VARCHAR" />
+    <result column="WELLNUM" property="wellnum" jdbcType="VARCHAR" />
+    <result column="VDATETIME" property="vdatetime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <insert id="insert" parameterType="com.elk.elkweb.entity.ViewCount" >
+    insert into VIEWCOUNT (ID, MODULENAME, DEPARTMENT, 
+      USERNAME, VYEAR, VMONTH, 
+      PHASENAME, WELLNUM, VDATETIME
+      )
+    values (#{id,jdbcType=DECIMAL}, #{modulename,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, 
+      #{username,jdbcType=VARCHAR}, #{vyear,jdbcType=VARCHAR}, #{vmonth,jdbcType=VARCHAR}, 
+      #{phasename,jdbcType=VARCHAR}, #{wellnum,jdbcType=VARCHAR}, #{vdatetime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.ViewCount" >
+    insert into VIEWCOUNT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="modulename != null" >
+        MODULENAME,
+      </if>
+      <if test="department != null" >
+        DEPARTMENT,
+      </if>
+      <if test="username != null" >
+        USERNAME,
+      </if>
+      <if test="vyear != null" >
+        VYEAR,
+      </if>
+      <if test="vmonth != null" >
+        VMONTH,
+      </if>
+      <if test="phasename != null" >
+        PHASENAME,
+      </if>
+      <if test="wellnum != null" >
+        WELLNUM,
+      </if>
+      <if test="vdatetime != null" >
+        VDATETIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=DECIMAL},
+      </if>
+      <if test="modulename != null" >
+        #{modulename,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null" >
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="vyear != null" >
+        #{vyear,jdbcType=VARCHAR},
+      </if>
+      <if test="vmonth != null" >
+        #{vmonth,jdbcType=VARCHAR},
+      </if>
+      <if test="phasename != null" >
+        #{phasename,jdbcType=VARCHAR},
+      </if>
+      <if test="wellnum != null" >
+        #{wellnum,jdbcType=VARCHAR},
+      </if>
+      <if test="vdatetime != null" >
+        #{vdatetime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
