@@ -19,7 +19,7 @@
                     <el-row>
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
-                                <el-table :data="tableData" style="width: 100%;margin-bottom: 10px;" height="700">
+                                <el-table :data="tableData" style="width: 100%;margin-bottom: 10px;" height="650">
                                     <el-table-column prop="OPERATE_DATE" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
                                                      align="center"></el-table-column>
@@ -84,7 +84,6 @@ export default {
 .area {
     width: 95%;
     margin-left: 2%;
-    margin-top: 2%;
 }
 
 .title {

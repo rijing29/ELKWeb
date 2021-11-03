@@ -13,7 +13,7 @@
                 <el-col :span="24" class="area">
                     <el-row>
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">一周内信息 (点击查看详细信息)</div>
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0"></div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -21,7 +21,7 @@
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
                                 <el-table :data="tableData"
-                                          height="700"
+                                          height="650"
                                           style="width: 95%;margin: auto;header-align: center;">
                                     <el-table-column prop="TIMESTAMP" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
@@ -88,7 +88,6 @@ export default {
 .area {
     width: 95%;
     margin-left: 2%;
-    margin-top: 2%;
 }
 
 .title {

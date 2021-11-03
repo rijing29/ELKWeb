@@ -21,7 +21,7 @@
                             <div class="table-wrapper">
                                 <!-- 表格 begin-->
                                 <el-table :data="tableData"
-                                          height="700"
+                                          height="650"
                                           style="width: 95%;margin: auto;header-align: center;">
                                     <el-table-column prop="OCCURTIME" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
@@ -90,7 +90,6 @@ export default {
 .area {
     width: 95%;
     margin-left: 2%;
-    margin-top: 2%;
 }
 
 .title {
