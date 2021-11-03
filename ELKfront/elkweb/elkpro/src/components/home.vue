@@ -112,6 +112,17 @@
                         <el-menu-item index="/searchZabbixAgent">故障Zabbix Agent查询</el-menu-item>
                         <el-menu-item index="/searchWinlogbeats">故障Winlogbeats查询</el-menu-item>
                     </el-submenu>
+                    <el-submenu index="8">
+                        <template slot="title">
+                            <i class="el-icon-s-release icon_color"></i>
+                            <span slot="title">服务器日志查询</span>
+                        </template>
+                        <el-menu-item index="/zabbixShenji">Zabbix审计日志</el-menu-item>
+                        <el-menu-item index="/productionManagement">生产管理软件日志</el-menu-item>
+                        <el-menu-item index="/CGGDSystem">成果归档系统日志</el-menu-item>
+                        <el-menu-item index="/damageWarning">套管损坏预警日志</el-menu-item>
+                        <el-menu-item index="/softSystem">软件系统日志</el-menu-item>
+                    </el-submenu>
                     <el-menu-item index="/siteDeviceInfo">
                         <i class="el-icon-s-data icon_color"></i>
                         <span slot="title">场地设备监控信息</span>

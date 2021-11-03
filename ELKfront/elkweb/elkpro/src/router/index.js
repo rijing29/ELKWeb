@@ -36,6 +36,11 @@ import siteDeviceInfo from "../components/siteDevice/siteDeviceInfo";
 import searchZabbixAgent from "@/components/TroubleSearch/searchZabbixAgent";
 import searchWinlogbeats from "@/components/TroubleSearch/searchWinlogbeats";
 import epyBehaviorProfile from "@/components/employee/epyBehaviorProfile";
+import CGGDSystem from "@/components/logQuery/CGGDSystem";
+import damageWarning from "@/components/logQuery/damageWarning";
+import productionManagement from "@/components/logQuery/productionManagement";
+import softSystem from "@/components/logQuery/softSystem";
+import zabbixShenji from "@/components/logQuery/zabbixShenji";
 
 // import searchZabbixAgent from "../components/TroubleSearch/searchZabbixAgent";
 
@@ -81,6 +86,11 @@ const routes = [
             {path: '/searchZabbixAgent',name:'searchZabbixAgent',component: searchZabbixAgent},
             {path: '/searchWinlogbeats',name:'searchWinlogbeats',component: searchWinlogbeats},
             {path: '/softOfUser',name:'softOfUser',component: softOfUser},
+            {path: '/CGGDSystem',name:'CGGDSystem',component: CGGDSystem},
+            {path: '/damageWarning',name:'damageWarning',component: damageWarning},
+            {path: '/productionManagement',name:'productionManagement',component: productionManagement},
+            {path: '/softSystem',name:'softSystem',component: softSystem},
+            {path: '/zabbixShenji',name:'zabbixShenji',component: zabbixShenji},
         ]
     },
 ]
