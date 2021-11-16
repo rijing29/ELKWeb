@@ -96,14 +96,14 @@ export default {
         this.getViewCountApp()
     },
     methods: {
-        getViewCount() {
+        getViewCount() {//ViewCountMapper.xml - ServerLogController.java
             var url = "/getViewCount"
             this.$http.get(url).then(res => {
                 console.log(res.data)
                 this.tableData = res.data
             })
         },
-        getViewCountApp() {
+        getViewCountApp() {//ViewCountAppMapper.xml - ServerLogController.java
             var url = "/getViewCountApp"
             this.$http.get(url).then(res => {
                 console.log(res.data)

@@ -195,7 +195,7 @@ export default {
         this.getStorage()
     },
     methods:{
-        getStorage(){
+        getStorage(){//serverPublicMapper.xml - ELKServerController.java
             var url="/getStorage"
             this.$http.get(url).then(res=> {
                 this.tableData=res.data

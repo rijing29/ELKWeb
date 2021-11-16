@@ -63,7 +63,7 @@ export default {
     },
     methods: {
         //单位刷卡信息统计
-        getCardDEP(){
+        getCardDEP(){//EpyCardMapper.xml
           var url="/getCardDEP"
           this.$http.get(url).then(res=>{
             console.log(res)

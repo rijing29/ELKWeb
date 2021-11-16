@@ -228,7 +228,7 @@ export default {
             this.stopTime = val;
         },
         /*————日期选择器 end————*/
-        getFrequency() {
+        getFrequency() {//UserUseageMapper.xml - ELKSLAController.java
             var url = "/getSumTime"
             var params = {
                 'startTime': this.startTime,
