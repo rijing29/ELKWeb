@@ -81,6 +81,7 @@ public class ELKSLAController {
     public SLAData getSelectInfo(@Param("startTime") String startTime,
                                   @Param("stopTime") String stopTime) throws ParseException {
         SLAData SLAData = new SLAData();//引入SLAData对象
+        System.out.println(startTime+stopTime);
 //        查询四个下拉框值
         List<Map< String, Object >> softwarename = sLAService.getSoftwareName(startTime,stopTime);
 //        创建四个数组空间

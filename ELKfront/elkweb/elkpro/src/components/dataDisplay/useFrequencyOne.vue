@@ -131,16 +131,12 @@ export default {
         VChart
     },
     name: "useFrequencyOne",
-    created(){
-      this.getSoftwareName();
-      this.getModuleCount();
-      this.getYesterday();
-    },
+
     data() {
         return {
-            startTime: '2021-08-11',//开始时间选择器
-            stopTime: '2021-08-11',//截止时间选择器
-            softwareName: 'GEOEAST-JS',//软件名
+            startTime: '',//开始时间选择器
+            stopTime: '',//截止时间选择器
+            softwareName: '',//软件名
             softwareName_options: [],//下拉框选项
             softwareName_value: '',//下拉框值
             haveData: false,//控制是否显示
@@ -232,11 +228,18 @@ export default {
             },
         }
     },
+    created(){
+        this.getYesterday();
+        this.canClick();
+        this.getSoftwareName();
+        this.getModuleCount();
+    },
     methods: {
         /*————日期选择器 begin————*/
         selectStartTime(val) {
             //开始时间
             this.startTime = val;
+            this.getSoftwareName();
         },
         selectStopTime(val) {
             //截止时间
@@ -259,7 +262,7 @@ export default {
 
         canClick() {
             //控制按钮是否禁用,当下拉框无数据时禁用
-            if (this.softwareName === '') {
+            if (this.softwareName_options.length === 0) {
                 this.disabled_value = true
             } else {
                 this.disabled_value = false
@@ -274,8 +277,9 @@ export default {
             }
             this.$http.get(url, {params}).then(res => {
                 console.log(res.data.option[0], "option")
-                while (this.softwareName_options.length != 0) {
+                while (this.softwareName_options.length !== 0) {
                     this.softwareName_options.pop()
+                    this.softwareName_value=0
                 }
                 var i;
                 for (i = 0; i < res.data.softwarename.length; i++) {
@@ -285,8 +289,11 @@ export default {
                         label: res.data.softwarename[i]
                     })
                 }
+                // this.softwareName_value=res.data.softwarename[0]
+                // this.softwareName=res.data.softwarename[0]
             })
         },
+
         getModuleCount() {
             //渲染数据
             var url = "/getModuleCount"
@@ -304,7 +311,7 @@ export default {
                 this.option.title.text = "各模块使用次数"
                 this.option.title.subtext = "时间：" + this.startTime + "-" + this.stopTime
                 var i;
-                while (this.option.yAxis[0].data.length != 0) {
+                while (this.option.yAxis[0].data.length !== 0) {
                     this.option.yAxis[0].data.pop()
                     this.option.series[0].data.pop()
                 }

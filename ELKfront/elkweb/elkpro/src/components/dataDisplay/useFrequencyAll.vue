@@ -121,11 +121,7 @@ export default {
         VChart
     },
     name: "useFrequencyAll",
-    created(){
-      this.getFrequency();
-      // this.getDate()
-      this.getYesterday()
-    },
+
     data() {
         return {
             startTime:'',
@@ -220,6 +216,10 @@ export default {
                 ]
             },
         }
+    },
+    created(){
+        this.getYesterday()
+        this.getFrequency()
     },
     methods:{
         /*————日期选择器 begin————*/

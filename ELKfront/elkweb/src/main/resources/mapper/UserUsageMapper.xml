@@ -75,7 +75,7 @@
   <!--  查询下拉框值  -->
   <select id="getSoftwareName" resultType="map">
     select softwarename from VENDORNAME_TO_SOFTNAME
-    where VENDORNAME in(select distinct softwarename from JK_LOGANALYIZE_MODULEUSAGE where TIME between to_date(#{startTime},'yyyy-MM-dd') and to_date(#{stopTime},' yyyy-MM-dd'))
+    where VENDORNAME in(select distinct softwarename from JK_LOGANALYIZE_MODULEUSAGE where TIME between to_date(#{startTime},'yyyy/MM/dd') and to_date(#{stopTime},' yyyy/MM/dd'))
   </select>
 
   <!--  某个软件各个模块使用次数  -->
