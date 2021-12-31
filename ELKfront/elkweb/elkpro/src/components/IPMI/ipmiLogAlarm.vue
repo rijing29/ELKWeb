@@ -13,7 +13,9 @@
                 <el-col :span="24" class="area">
                     <el-row>
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">一周内信息 (点击查看详细信息)</div>
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">一周内信息
+                                (点击查看详细信息)
+                            </div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -45,7 +47,7 @@
             </el-row>
             <el-row>
                 <!--————表格区域 begin————-->
-                <el-col :span="24" v-if="haveData" >
+                <el-col :span="24" v-if="haveData">
                     <el-row>
                         <el-col :span="24" class="border_top">
                             <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">IPMI详细信息</div>
@@ -97,7 +99,7 @@ export default {
     },
     methods: {
         handleCurrentChange(val) {
-            this.haveData=true
+            this.haveData = true
             //根据筛选条件选择所有数据
             this.ip = val.ip
             //绑定后台数据传输地址
@@ -196,5 +198,7 @@ export default {
     background-color: #17b3f0 !important;
     background-size: 100% 100%;
     /*opacity: 0.7;*/
-}  /*高亮选中行*/
+}
+
+/*高亮选中行*/
 </style>
