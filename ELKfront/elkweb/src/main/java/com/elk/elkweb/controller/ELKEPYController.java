@@ -23,6 +23,7 @@ public class ELKEPYController {
     @Qualifier("EPYServiceImpl")
     @Autowired
     private EPYService epyService;
+    @Qualifier("EPYDEPServiceImpl")
     @Autowired
     private EPYDEPService epydepService;
     @Autowired
@@ -130,8 +131,8 @@ public class ELKEPYController {
    */
    @RequestMapping(value = "/getCardDEP",produces = "application/json;charset=utf-8" )
    @ResponseBody
-   public List getCardDEP(){
-       List cardDEP = epydepService.getCardDEP();
+   public List getCardDEP(@Param("Time")String Time){
+       List cardDEP = epydepService.getCardDEP(Time);
        return cardDEP;
    }
    /**

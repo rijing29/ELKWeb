@@ -8,10 +8,26 @@
                     </div>
                 </el-col>
             </el-row>
+            <el-row >
+                <el-col :span="24" align="left">
+                    <!--   日期选择     -->
+                    日期：
+                    <el-date-picker
+                            default-value
+                            v-model="Time"
+                            type="date"
+                            placeholder="请选择日期"
+                            format="yyyy/MM/dd"
+                            value-format="yyyy/MM/dd"
+                            style="margin-left: 1%; width: 20%;"
+                            @change="selectTime">
+                    </el-date-picker>
+                </el-col>
+            </el-row>
             <el-row>
                 <!--————表格区域 begin————-->
                 <el-col :span="24">
-                    <el-row >
+                    <el-row>
                         <el-col :span="24" class="border_top">
                             <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">最近一周内信息</div>
                         </el-col>
@@ -20,20 +36,27 @@
                         <el-col :span="24" style="padding: 0">
                             <div class="table-wrapper">
                                 <!-- 外表格 begin-->
-                                <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;":header-cell-style="{color: '#17caf0',fontSize:'16px'}">
+                                <el-table v-if="haveData" :data="tableData"
+                                          style="width: 95%;margin: auto;header-align: center;"
+                                          :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="name" sortable label="单位名称" align="center"></el-table-column>
-                                    <el-table-column prop="counts" sortable label="单位统计涉及人数（人）" align="center"></el-table-column>
-                                    <el-table-column prop="placecount" sortable label="人均刷卡地点（个）" align="center"></el-table-column>
-                                    <el-table-column prop="cq" sortable label="人均出勤率(%)" align="center"></el-table-column>
-                                    <el-table-column prop="jb" sortable label="人均加班率(%)" align="center"></el-table-column>
-                                    <el-table-column prop="zs" sortable label="人均准时率(%)" align="center"></el-table-column>
+                                    <el-table-column prop="counts" sortable label="单位统计涉及人数（人）"
+                                                     align="center"></el-table-column>
+                                    <el-table-column prop="placecount" sortable label="人均刷卡地点（个）"
+                                                     align="center"></el-table-column>
+                                    <el-table-column prop="cq" sortable label="人均出勤率(%)"
+                                                     align="center"></el-table-column>
+                                    <el-table-column prop="jb" sortable label="人均加班率(%)"
+                                                     align="center"></el-table-column>
+                                    <el-table-column prop="zs" sortable label="人均准时率(%)"
+                                                     align="center"></el-table-column>
                                 </el-table>
                                 <!-- 外表格 end-->
                             </div>
                         </el-col>
                     </el-row>
                     <el-row class="border_bottom">
-                        <el-col >
+                        <el-col>
                             <div style="height: 50px"></div>
                         </el-col>
                     </el-row>
@@ -47,28 +70,35 @@
 <script>
 export default {
     name: "epyCardDPM",
-    data(){
-        return{
-            haveData:true,
-            Time:'',//日期选择器
-            date:'',//日期变量
+    data() {
+        return {
+            haveData: true,
+            Time: '',//日期选择器
+            date: '',//日期变量
             expands: [],
-            ip:'',
-            time:'',
-            tableData:[],
+            ip: '',
+            time: '',
+            tableData: [],
         }
     },
-    created(){//自动渲染数据
+    created() {//自动渲染数据
         this.getCardDEP()
     },
     methods: {
-        //单位刷卡信息统计
-        getCardDEP(){//EpyCardMapper.xml
-          var url="/getCardDEP"
-          this.$http.get(url).then(res=>{
-            console.log(res)
-            this.tableData=res.data
-          })
+        //默然展示-单位刷卡信息统计
+        getCardDEP(time) {//EpyCardMapper.xml - ELKEPYController.java
+            var url = "/getCardDEP"
+            var params = {
+                'Time': time,
+            }
+            this.$http.get(url,{params}).then(res => {
+                console.log(res)
+                this.tableData = res.data
+            })
+        },
+        //时间选择展示-单位刷卡信息统计
+        selectTime(){
+            this.getCardDEP(this.Time)
         }
     },
 }
@@ -79,13 +109,15 @@ export default {
     display: flex;
     flex-wrap: nowrap;
 }
+
 .el-main {
     color: #ffffff;
     text-align: center;
     height: 90vh;
     z-index: 1;
 }
-.area{
+
+.area {
     width: 600px;
     height: 500px;
     background: #ffffff;
@@ -95,7 +127,8 @@ export default {
     margin-left: 60px;
 
 }
-.title{
+
+.title {
     width: 243px;
     height: 75px;
     font-size: 18px;
@@ -105,44 +138,54 @@ export default {
     font-weight: bold;
     text-align: center;
 }
-.border_top{
-    background:url("../../assets/border_top2.png");
+
+.border_top {
+    background: url("../../assets/border_top2.png");
     background-size: 100% 100%;
     text-align: left;
 }
-.border_bottom{
-    background:url("../../assets/border_bottom2.png");
+
+.border_bottom {
+    background: url("../../assets/border_bottom2.png");
     background-size: 100% 100%;
 }
-.el-table{
+
+.el-table {
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;
     width: 90%;
 }
+
 .el-pagination {
     /*分页*/
     margin-left: 50%;
 }
+
 /*————表格背景透明 begin————*/
-.table-wrapper /deep/  .el-table,
+.table-wrapper /deep/ .el-table,
 .el-table__expanded-cell {
     background-color: transparent !important;
 }
+
 .table-wrapper /deep/ tr, .table-wrapper /deep/ th, .table-wrapper /deep/ td {
     background: none !important;
     color: #ffffff;
     border-color: #18256f;
 }
+
 .table-wrapper /deep/ .el-table__row {
     background: none !important;
     color: #46d4ff;
 }
+
 /*————表格背景透明 end————*/
-.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row>td {
+.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row > td {
     color: #ffffff;
     background-color: #17b3f0 !important;
     background-size: 100% 100%;
     opacity: 0.7;
-}/*高亮选中行*/
+}
+
+/*高亮选中行*/
 </style>

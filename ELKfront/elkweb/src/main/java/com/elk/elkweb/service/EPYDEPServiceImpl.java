@@ -11,8 +11,8 @@ public class EPYDEPServiceImpl implements EPYDEPService{
     @Autowired
     private EPYDEPMapper epydepMapper;
     //单位刷卡信息
-    public List getCardDEP() {
-        List cardDEP = epydepMapper.getCardDEP();
+    public List getCardDEP(String Time) {
+        List cardDEP = epydepMapper.getCardDEP(Time);
         return cardDEP;
     }
 

@@ -26,7 +26,7 @@ public class ELKIMCController {
 
     /**
      *
-     * 查询IPMI的IP
+     * 查询交换机IP
      *
      * */
     @RequestMapping(value = "/getIMCIP",produces = "application/json;charset=utf-8" )
@@ -39,7 +39,7 @@ public class ELKIMCController {
 
     /**
      *
-     * 查询IPMI的信息
+     * 查询交换机信息的信息
      *
      * */
     @RequestMapping(value = "/getIMCInfo",produces = "application/json;charset=utf-8" )
@@ -61,7 +61,7 @@ public class ELKIMCController {
 
     /**
      *
-     * 默认查询IPMI
+     * 默认查询交换机信息
      *
      * */
     @RequestMapping(value = "/getDefaultIMC",produces = "application/json;charset=utf-8" )

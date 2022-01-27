@@ -66,9 +66,15 @@
         </trim>
     </insert>
     <select id="getCardDEP" resultMap="BaseResultMap" parameterType="com.elk.elkweb.entity.EpyCard">
-        select *
+        select distinct name, counts, placecount, cq, jb, zs, time
         from DOOR_INFO_FOR_DEPARTMENT
-        where time in (select max (time) from DOOR_INFO_FOR_DEPARTMENT)
+        where 1=1
+        <if test="Time != '' and Time!=null">
+            and time=to_date(#{Time},'yyyy-MM-dd')
+        </if>
+        <if test="Time == null">
+            and time in (select max (time) from DOOR_INFO_FOR_DEPARTMENT)
+        </if>
         order by COUNTS desc
     </select>
 

@@ -115,13 +115,13 @@
                     <el-submenu index="8">
                         <template slot="title">
                             <i class="el-icon-s-release icon_color"></i>
-                            <span slot="title">服务器日志查询</span>
+                            <span slot="title">应用日志查询</span>
                         </template>
                         <el-menu-item index="/zabbixShenji">Zabbix审计日志</el-menu-item>
-                        <el-menu-item index="/productionManagement">生产管理软件日志</el-menu-item>
+                        <el-menu-item index="/productionManagement">A2系统日志</el-menu-item>
                         <el-menu-item index="/CGGDSystem">成果归档系统日志</el-menu-item>
                         <el-menu-item index="/damageWarning">套管损坏预警日志</el-menu-item>
-                        <el-menu-item index="/softSystem">软件系统日志</el-menu-item>
+                        <el-menu-item index="/softSystem">探井生产管理系统日志</el-menu-item>
                     </el-submenu>
                     <el-menu-item index="/siteDeviceInfo">
                         <i class="el-icon-s-data icon_color"></i>

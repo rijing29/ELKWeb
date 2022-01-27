@@ -36,7 +36,14 @@ public class ELKServerController {
     @RequestMapping("/getStorageInfo")
     public List<Map< String, Object >> getStorageInfo(@Param("DIRNAME")String DIRNAME){
         List<Map< String, Object >> storageInfo = serverInfoService.getStorageInfo(DIRNAME);
-        storageInfo.forEach(System.out::println);
+        System.out.println(storageInfo+"999");
         return storageInfo;
+    }
+
+    public String CutTime(String s){
+        StringBuilder builder = new StringBuilder(s);
+        builder.replace(10,s.length(),"");
+        String time = builder.toString();
+        return time;
     }
 }

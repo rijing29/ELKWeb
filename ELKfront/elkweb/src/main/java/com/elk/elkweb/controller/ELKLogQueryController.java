@@ -13,8 +13,6 @@ import java.util.Map;
 @RequestMapping("/elk")
 public class ELKLogQueryController {
     /**
-     * DaPingKuoLuo
-     * 2021/11/03
      * 查询zabbix审计日志
      * */
     @Autowired
@@ -27,8 +25,6 @@ public class ELKLogQueryController {
     }
 
     /**
-     * DaPingKuoLuo
-     * 2021/11/03
      * 查询zabbix审计日志
      * */
     @RequestMapping(value = "/getCdnDataLog",produces = "application/json;charset=utf-8" )
@@ -39,8 +35,6 @@ public class ELKLogQueryController {
     }
 
     /**
-     * DaPingKuoLuo
-     * 2021/11/03
      * 查询zabbix审计日志
      * */
     @RequestMapping(value = "/getSysSrmLog",produces = "application/json;charset=utf-8" )
