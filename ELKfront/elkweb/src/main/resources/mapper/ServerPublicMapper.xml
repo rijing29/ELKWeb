@@ -94,7 +94,7 @@
     </select>
 
     <select id="getStorageInfo" resultType="map">
-        select time, use
+        select time, use,info
         from JK_CC_USEAGE
         where DIRNAME=#{DIRNAME,jdbcType=VARCHAR}
           and rownum <![CDATA[<=]]> 15

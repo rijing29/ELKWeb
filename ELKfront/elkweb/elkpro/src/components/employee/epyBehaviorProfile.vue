@@ -135,7 +135,7 @@ export default {
             return moment(date).format("YYYY-MM-DD")
         },
 
-        getDefaultBehavior(){
+        getDefaultBehavior(){//PersonActionLogMapper.xml - ELKEPYController.java
             var url = "/getDefaultBehavior"
             this.$http.get(url).then(res => {
                 console.log(res.data)

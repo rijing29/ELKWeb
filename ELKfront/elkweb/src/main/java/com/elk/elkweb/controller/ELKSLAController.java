@@ -165,6 +165,7 @@ public class ELKSLAController {
 
         double day = calculateTime(startTime,stopTime);
         Double time = day*24*60;
+        System.out.println(sumTime+"uuuuuuuu");
         Double useFrequency = sumTime*60/time;
 //        Integer useFrequency = Integer.valueOf(new Formatter().format("%.0f",useFrequency1).toString()) ;
         return  useFrequency;
@@ -177,7 +178,7 @@ public class ELKSLAController {
      * */
     public static float calculateTime(String starTime,String stopTime){
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd");
+                "yyyy/MM/dd");
         float day = 0;
         Date date1 = null;
         Date date2 = null;

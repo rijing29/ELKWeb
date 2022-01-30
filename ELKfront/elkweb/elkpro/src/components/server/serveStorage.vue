@@ -13,7 +13,7 @@
                 <el-col :span="11" style="margin-top: 8px">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div class="tableSubTitle">各服务器数据</div>
+                            <div class="tableSubTitle">存储分配情况</div>
                         </el-col>
                     </el-row>
                     <el-row>
@@ -92,7 +92,7 @@ export default {
             option:{
                 title: {
                     text: '存储使用情况图',
-                    subtext:'存储目录： /datapool/dqazqm',
+                    // subtext:'存储目录： /datapool/dqazqm',
                     textStyle:{
                         color:"#17caf0"//标题文字颜色
                     },
@@ -212,15 +212,17 @@ export default {
                 }
                 console.log(this.currentRow.DIRNAME, this.currentRow.INFO)
                 this.$http.get(url,{params}).then(res=> {
-                    console.log(res.data[0].TIME,"2222222")
+                    console.log(res.data[0].TIME.substr(0,10),"2222222")
                     while (this.option.series[0].data.length!==0){
                         this.option.series[0].data.pop()
                       this.option.xAxis[0].data.pop()
                     }
+                    console.log(res.data[0].INFO.slice(-1)+"000000")
+                    this.option.yAxis[0].axisLabel.formatter='{value}'+res.data[0].INFO.slice(-1)
                     var i;
                     for(i=0;i<res.data.length;i++){
                         this.option.series[0].data.push(res.data[i].USE)
-                        this.option.xAxis[0].data.push(res.data[0].TIME)
+                        this.option.xAxis[0].data.push(res.data[0].TIME.substr(0,10))
                     }
                 })
             }

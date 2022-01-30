@@ -184,7 +184,7 @@ export default {
         /*————分页控制部分 end————*/
 
         //获取tabledata数据
-        getTableData() {
+        getTableData() {// NodeSoftMapMapper.xml - ELKController.java
             var url = "/queryTable"
             var params = {
                 'pageNum': this.pages[0].currentPage,
@@ -197,7 +197,7 @@ export default {
             })
         },
         //新增
-        add() {
+        add() {// NodeSoftMapMapper.xml - ELKController.java
             console.log(this.nodeType_present)
             console.log(this.softName_present)
             console.log(this.start_present)

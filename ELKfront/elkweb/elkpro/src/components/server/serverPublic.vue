@@ -11,7 +11,7 @@
             <el-row style="margin-top: 3%">
                 <!--————表格区域 begin————-->
                 <el-col :span="12" style="margin-top: 8px">
-                    <el-row >
+                    <el-row>
                         <el-col :span="24" class="border_top">
                             <div class="tableSubTitle">各服务器数据</div>
                         </el-col>
@@ -26,16 +26,19 @@
                                         :data="tableData"
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                                     <el-table-column prop="ip" sortable label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="cpurateforworktime" sortable label="CPU负载（%）" align="center"></el-table-column>
-                                    <el-table-column prop="memrateforworktime" sortable label="内存负载（%）" align="center"></el-table-column>
-                                    <el-table-column prop="netfloatforworktime" sortable label="网络负载（%）" align="center"></el-table-column>
+                                    <el-table-column prop="cpurateforworktime" sortable label="CPU负载（%）"
+                                                     align="center"></el-table-column>
+                                    <el-table-column prop="memrateforworktime" sortable label="内存负载（%）"
+                                                     align="center"></el-table-column>
+                                    <el-table-column prop="netfloatforworktime" sortable label="网络负载（%）"
+                                                     align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
                         </el-col>
                     </el-row>
                     <el-row class="border_bottom">
-                        <el-col >
+                        <el-col>
                             <div style="height: 50px"></div>
                         </el-col>
                     </el-row>
@@ -46,13 +49,34 @@
                     <el-row>
                         <el-col :span="24" class="area" align="center">
                             <!--————柱状图 begin————-->
-                            <v-chart class="echarts" :option="option" />
+                            <v-chart class="echarts" :option="option" @click="handleTooltipClick"/>
                             <!--————柱状图 end————-->
                         </el-col>
                     </el-row>
                 </el-col>
                 <!--————饼状图区域 end————-->
             </el-row>
+            <el-row v-if="echartsClick">
+                <el-col>
+                    <el-row>
+                        <el-col :span="24" class="dividerLine"></el-col>
+                    </el-row>
+                    <el-row>
+                        <el-col :span="24" align="left">
+                            <div class="tag-group" style="padding: 1%">
+                                <span class="tag-group__title" style="margin-right: 2%">{{ tagTitle }}</span>
+                                <el-tag :key="tag"
+                                        effect="plain"
+                                        v-for="tag in ipTags"
+                                        :disable-transitions="false">
+                                    {{ tag }}
+                                </el-tag>
+                            </div>
+                        </el-col>
+                    </el-row>
+                </el-col>
+            </el-row>
+
         </el-main>
     </el-container>
 </template>
@@ -78,16 +102,20 @@ echarts.use(
             PieChart,
             CanvasRenderer,]
 );
-import VChart, { THEME_KEY } from "vue-echarts";
+
+
+import VChart, {THEME_KEY} from "vue-echarts";
+
 export default {
     name: "serverPublic",
     components: {
         VChart
     },
-    data(){
-        return{
+    data() {
+        return {
             haveData: true,
-            date:'',//日期变量
+            val: '',
+            date: '',//日期变量
             pages: [//分页信息
                 {
                     pageSize: 20,
@@ -96,27 +124,40 @@ export default {
                 },
             ],
             //饼图的分类
-            cpu:0,
-            memra:0,
-            highMemra:0,
-            lowMemra:0,
+            cpu: 0,
+            memra: 0,
+            highMemra: 0,
+            lowMemra: 0,
             time: '',//根据此时间查询分析表
             currentRow: null,//存储当前点击行信息
-            tableData:[],//表格数据
+            tableData: [],//表格数据
+            echartsClick: false,//判定饼状图是否点击
+            tagTitle: '',//标签名称
+            ipTags: [],//IP标签
+            tagsData: {
+                cpuData: [],
+                memraData: [],
+                highMemraData: [],
+                lowMemraData: [],
+                testData: [1, 2, 3, 4, 5, 6],
+            },
             /*————饼状图数据 begin————*/
-            option : {
+            option: {
                 title: {
                     text: '负载数据统计',
-                    left:'center',
-                    textStyle:{
-                        color:"#17caf0"//标题文字颜色
+                    left: 'center',
+                    textStyle: {
+                        color: "#17caf0"//标题文字颜色
                     },
-                    subtextStyle:{
-                        color:"#17caf0"//副标题文字颜色
+                    subtextStyle: {
+                        color: "#17caf0"//副标题文字颜色
                     },
                 },
                 tooltip: {
-                    trigger: 'item'
+                    trigger: 'item',
+                    formatter: function (params) {
+                        // console.log(params,"iiiii")
+                    }
                 },
                 legend: {
                     orient: "horizontal",
@@ -130,7 +171,7 @@ export default {
                         data: [],
                         name: '访问来源',
                         type: 'pie',
-                        radius: ['30%','70%'],
+                        radius: ['30%', '70%'],
                         itemStyle: {
                             borderRadius: 10,
                             borderColor: '#ffffff',
@@ -144,7 +185,7 @@ export default {
                             }
                         },
                         label: {
-                            color:'#17caf0',
+                            color: '#17caf0',
                             textBorderWidth: 0,
                             alignTo: 'edge',
                             formatter: '{name|{b}}\n{time|{c} 个}',
@@ -169,24 +210,29 @@ export default {
                 ]
             },
             /*————饼状图数据 end————*/
+
         }
     },
-    created(){//自动渲染数据
+    created() {//自动渲染数据
         // this.getDate()
         // this.getIPSAnalysis()
         this.getPublicServer()
+
     },
-    methods:{
-        getPublicServer(){//serverPublicMapper.xml - ELKServerController.java
-            var url="/getPublicServer"
+
+    methods: {
+        getPublicServer() {//serverPublicMapper.xml - ELKServerController.java
+
+
+            var url = "/getPublicServer"
             //获取到表格的数据
-            var length=0;
-            this.$http.get(url).then(res=>{
-                res.data.forEach(item=>{
-                    if(item.netfloatforworktime>100000)
-                        item.netfloatforworktime=100
+            var length = 0;
+            this.$http.get(url).then(res => {
+                res.data.forEach(item => {
+                    if (item.netfloatforworktime > 100000)
+                        item.netfloatforworktime = 100
                     else
-                        item.netfloatforworktime=item.netfloatforworktime/10000
+                        item.netfloatforworktime = item.netfloatforworktime / 10000
                     length++;
                 })
                 /**
@@ -196,33 +242,27 @@ export default {
                  * 2 高负载均衡
                  * 3 低负载均衡
                  */
-                this.cpu=0;
-                this.memra=0;
-                this.highMemra=0;
-                this.lowMemra=0;
-                console.log(res.data,"pppppppppp")
-                res.data.forEach(item=>{
-                    if(item.cpurateforworktime>=20) {
-                        console.log('cpu22222222')
+                this.cpu = 0;
+                this.memra = 0;
+                this.highMemra = 0;
+                this.lowMemra = 0;
+                res.data.forEach(item => {
+                    if (item.cpurateforworktime >= 20) {
                         this.cpu++;
-                    }
-                    else if(item.cpurateforworktime<20 && item.memrateforworktime>=15) {
-                        console.log('memra44444444444444')
+                        this.tagsData.cpuData.push(item.ip)
+                    } else if (item.cpurateforworktime < 20 && item.memrateforworktime >= 15) {
                         this.memra++;
-                    }
-                    else if(item.cpurateforworktime<20 && item.memrateforworktime<15 && item.totalpjvalue>=8){
-                        console.log('1111111111111')
+                        this.ipTags.push(item.ip)
+                    } else if (item.cpurateforworktime < 20 && item.memrateforworktime < 15 && item.totalpjvalue >= 8) {
                         this.highMemra++;
-                    }
-
-                    else {
-                        console.log('lowMemra3333333333333333')
-                        this.lowMemra = length - this.cpu - this.memra - this.highMemra;
+                        this.tagsData.highMemraData.push(item.ip)
+                    } else {
+                        this.lowMemra++
+                        this.tagsData.lowMemraData.push(item.ip)
                     }
                 })
-                console.log("length:",length,"cpu:"+ this.cpu,"memra:"+this.memra,"highMemra:",this.highMemra,"lowMemra:",this.lowMemra)
-                this.tableData=res.data
-                while(this.option.series[0].data.length!==0){
+                this.tableData = res.data
+                while (this.option.series[0].data.length !== 0) {
                     this.option.series[0].data.pop()
                 }
 
@@ -232,7 +272,29 @@ export default {
                 this.option.series[0].data.push({value: this.highMemra, name: '高负载均衡'})
 
             })
-        }
+        },
+        handleTooltipClick(val) {// 饼状图点击事件
+            if (val.data.name === "CPU负载高") {
+                this.ipTags = this.tagsData.cpuData
+                this.tagTitle = '高CPU负载 IP：'
+                this.echartsClick = true
+            }
+            if (val.data.name === "内存负载高") {
+                this.ipTags = this.tagsData.memraData
+                this.tagTitle = '高内存负载 IP：'
+                this.echartsClick = true
+            }
+            if (val.data.name === "高负载均衡") {
+                this.ipTags = this.tagsData.highMemraData
+                this.tagTitle = '高负载均衡 IP：'
+                this.echartsClick = true
+            }
+            if (val.data.name === "低负载均衡") {
+                this.ipTags = this.tagsData.lowMemraData
+                this.tagTitle = '低负载均衡 IP：'
+                this.echartsClick = true
+            }
+        },
     }
 }
 </script>
@@ -242,13 +304,15 @@ export default {
     display: flex;
     flex-wrap: nowrap;
 }
+
 .el-main {
     color: #ffffff;
     text-align: center;
-    height: 90vh;
+    /*height: 90vh;*/
     z-index: 1;
 }
-.area{
+
+.area {
     width: 95%;
     height: 70vh;
     background: #ffffff;
@@ -258,11 +322,13 @@ export default {
     margin-left: 5%;
 
 }
+
 .span_area {
     /*区域*/
     margin-left: 40px;
 }
-.title{
+
+.title {
     width: 243px;
     height: 75px;
     font-size: 18px;
@@ -272,60 +338,86 @@ export default {
     font-weight: bold;
     text-align: center;
 }
-.tableSubTitle{
+
+.tableSubTitle {
     height: 50px;
     line-height: 70px;
     padding-left: 20px;
     color: #17caf0;
     font-weight: bold;
 }
-.border_top{
-    background:url("../../assets/border_top.png");
+
+.border_top {
+    background: url("../../assets/border_top.png");
     background-size: 100% 100%;
     text-align: left;
 }
-.border_bottom{
-    background:url("../../assets/border_bottom.png");
+
+.border_bottom {
+    background: url("../../assets/border_bottom.png");
     background-size: 100% 100%;
 }
-.border_top2{
-    background:url("../../assets/border_top2.png");
+
+.border_top2 {
+    background: url("../../assets/border_top2.png");
     background-size: 100% 100%;
     text-align: left;
 }
-.border_bottom2{
-    background:url("../../assets/border_bottom2.png");
+
+.border_bottom2 {
+    background: url("../../assets/border_bottom2.png");
     background-size: 100% 100%;
 }
-.el-table{
+
+.el-table {
     header-align: center;
     border-radius: 4px;
     margin: 1% auto 0;
     width: 90%;
 }
+
+.dividerLine {
+    height: 20px;
+    background-color: #d4f5eb;
+    opacity: 0.3;
+    margin-bottom: 10px;
+    border-radius: 3px;
+}
+
+.el-tag + .el-tag {
+    margin-left: 1%;
+    margin-top: 1%;
+}
+
 .el-pagination {
     /*分页*/
     margin-left: 50%;
 }
+
 /*————表格背景透明 begin————*/
-.table-wrapper /deep/  .el-table,
+.table-wrapper /deep/ .el-table,
 .el-table__expanded-cell {
     background-color: transparent !important;
 }
+
 .table-wrapper /deep/ tr, .table-wrapper /deep/ th, .table-wrapper /deep/ td {
     background: none !important;
     color: #ffffff;
     border-color: #18256f;
 }
+
 .table-wrapper /deep/ .el-table__row {
     background: none !important;
     color: #46d4ff;
 }
+
 /*————表格背景透明 end————*/
-.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row>td {
+.table-wrapper /deep/ .el-table--striped .el-table__body tr.el-table__row--striped.current-row td, .table-wrapper /deep/ .el-table__body tr.current-row > td {
     color: #ffffff;
     background-color: #17b3f0 !important;
     background-size: 100% 100%;
     opacity: 0.7;
-}/*高亮选中行*/
+}
+
+/*高亮选中行*/
 </style>

@@ -162,7 +162,7 @@ export default {
         },
     },
     methods: {
-        getSoftName(){
+        getSoftName(){//SoftUserMapper.xml - ElkSoftUserController.java
             var url='/getSoftName'
             this.$http.get(url).then(res =>{
                 console.log(res.data)
@@ -174,7 +174,7 @@ export default {
                 }
             })
         },
-        getSoft_userInfo(){
+        getSoft_userInfo(){//SoftUserMapper.xml - ElkSoftUserController.java
             var url = '/getSoft_userInfo'
             var params = {
                 'softName':this.soft_value

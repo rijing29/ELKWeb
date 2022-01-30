@@ -1,106 +1,117 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.elk.elkweb.mapper.SLAMapper">
-  <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.UserUsage">
-    <result column="SOFTWARENAME" jdbcType="VARCHAR" property="softwarename" />
-    <result column="USERNAME" jdbcType="VARCHAR" property="username" />
-    <result column="MODULENAME" jdbcType="VARCHAR" property="modulename" />
-    <result column="USEMINTUE" jdbcType="DECIMAL" property="usemintue" />
-    <result column="TIME" jdbcType="TIMESTAMP" property="time" />
-  </resultMap>
-  <insert id="insert" parameterType="com.elk.elkweb.entity.UserUsage">
-    insert into JK_LOGANALYIZE_USERUSAGE (SOFTWARENAME, USERNAME, MODULENAME,
-      USEMINTUE, TIME)
-    values (#{softwarename,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{modulename,jdbcType=VARCHAR},
-      #{usemintue,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP})
-  </insert>
-  <insert id="insertSelective" parameterType="com.elk.elkweb.entity.UserUsage">
-    insert into JK_LOGANALYIZE_USERUSAGE
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="softwarename != null">
-        SOFTWARENAME,
-      </if>
-      <if test="username != null">
-        USERNAME,
-      </if>
-      <if test="modulename != null">
-        MODULENAME,
-      </if>
-      <if test="usemintue != null">
-        USEMINTUE,
-      </if>
-      <if test="time != null">
-        TIME,
-      </if>
-    </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides=",">
-      <if test="softwarename != null">
-        #{softwarename,jdbcType=VARCHAR},
-      </if>
-      <if test="username != null">
-        #{username,jdbcType=VARCHAR},
-      </if>
-      <if test="modulename != null">
-        #{modulename,jdbcType=VARCHAR},
-      </if>
-      <if test="usemintue != null">
-        #{usemintue,jdbcType=DECIMAL},
-      </if>
-      <if test="time != null">
-        #{time,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
+    <resultMap id="BaseResultMap" type="com.elk.elkweb.entity.UserUsage">
+        <result column="SOFTWARENAME" jdbcType="VARCHAR" property="softwarename"/>
+        <result column="USERNAME" jdbcType="VARCHAR" property="username"/>
+        <result column="MODULENAME" jdbcType="VARCHAR" property="modulename"/>
+        <result column="USEMINTUE" jdbcType="DECIMAL" property="usemintue"/>
+        <result column="TIME" jdbcType="TIMESTAMP" property="time"/>
+    </resultMap>
+    <insert id="insert" parameterType="com.elk.elkweb.entity.UserUsage">
+        insert into JK_LOGANALYIZE_USERUSAGE (SOFTWARENAME, USERNAME, MODULENAME,
+                                              USEMINTUE, TIME)
+        values (#{softwarename,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{modulename,jdbcType=VARCHAR},
+                #{usemintue,jdbcType=DECIMAL}, #{time,jdbcType=TIMESTAMP})
+    </insert>
+    <insert id="insertSelective" parameterType="com.elk.elkweb.entity.UserUsage">
+        insert into JK_LOGANALYIZE_USERUSAGE
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="softwarename != null">
+                SOFTWARENAME,
+            </if>
+            <if test="username != null">
+                USERNAME,
+            </if>
+            <if test="modulename != null">
+                MODULENAME,
+            </if>
+            <if test="usemintue != null">
+                USEMINTUE,
+            </if>
+            <if test="time != null">
+                TIME,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="softwarename != null">
+                #{softwarename,jdbcType=VARCHAR},
+            </if>
+            <if test="username != null">
+                #{username,jdbcType=VARCHAR},
+            </if>
+            <if test="modulename != null">
+                #{modulename,jdbcType=VARCHAR},
+            </if>
+            <if test="usemintue != null">
+                #{usemintue,jdbcType=DECIMAL},
+            </if>
+            <if test="time != null">
+                #{time,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
 
-<!--  查询全部软件使用频率-->
-  <select id="getAllFrequency" resultType="map">
-    select * from (select softwarename ,count(*) as count
-                   from (select b.softwarename,username,time,count(*) from JK_LOGANALYIZE_USERUSAGE a,VENDORNAME_TO_SOFTNAME b
-                     where a.softwarename=b.VENDORNAME
-                     and TIME between to_date(#{startTime},'yyyy-MM-dd') and to_date(#{stopTime},'yyyy-MM-dd')
-                     group by b.softwarename,username,time) t
-                   group by softwarename)
-    order by count desc
-  </select>
+    <!--  查询全部软件使用频率-->
+    <select id="getAllFrequency" resultType="map">
+        select *
+        from (select softwarename, count(*) as count
+              from (select b.softwarename, username, time, count (*) from JK_LOGANALYIZE_USERUSAGE a, VENDORNAME_TO_SOFTNAME b
+                  where a.softwarename=b.VENDORNAME
+                  and TIME between to_date(#{startTime}, 'yyyy-MM-dd') and to_date(#{stopTime}, 'yyyy-MM-dd')
+                  group by b.softwarename, username, time) t
+              group by softwarename)
+        order by count desc
+    </select>
 
-  <!--  查询全部软件使用时间-->
-  <select id="getSumTime" resultType="map">
-    select * from (select b.softwarename,round(sum(usemintue)/3600,1) as sumTime from JK_LOGANALYIZE_MODULEUSAGE a,VENDORNAME_TO_SOFTNAME b
-                   where a.softwarename=b.VENDORNAME
-                   and TIME between to_date(#{startTime},'yyyy-MM-dd') and to_date(#{stopTime},'yyyy-MM-dd')
-                   group by b.softwarename)
-    order by sumTime desc
-  </select>
+    <!--  查询全部软件使用时间-->
+    <select id="getSumTime" resultType="map">
+        select *
+        from (select b.softwarename, round(sum(usemintue) / 60, 1) as sumTime
+              from JK_LOGANALYIZE_MODULEUSAGE a,
+                   VENDORNAME_TO_SOFTNAME b
+              where a.softwarename = b.VENDORNAME
+                and TIME between to_date(#{startTime}
+                  , 'yyyy/MM/dd')
+                and to_date(#{stopTime}
+                  , 'yyyy/MM/dd')
+              group by b.softwarename)
+        order by sumTime desc
+    </select>
 
-  <!--  查询下拉框值  -->
-  <select id="getSoftwareName" resultType="map">
-    select softwarename from VENDORNAME_TO_SOFTNAME
-    where VENDORNAME in(select distinct softwarename from JK_LOGANALYIZE_MODULEUSAGE where TIME between to_date(#{startTime},'yyyy/MM/dd') and to_date(#{stopTime},' yyyy/MM/dd'))
-  </select>
+    <!--  查询下拉框值  -->
+    <select id="getSoftwareName" resultType="map">
+        select softwarename
+        from VENDORNAME_TO_SOFTNAME
+        where VENDORNAME in (select distinct softwarename
+                             from JK_LOGANALYIZE_MODULEUSAGE)
+    </select>
 
-  <!--  某个软件各个模块使用次数  -->
-  <select id="getModuleCount" resultType="map">
-    select * from (select b.softwarename,modulename,sum(usercount) as count from JK_LOGANALYIZE_MODULEUSAGE a,VENDORNAME_TO_SOFTNAME b
-      where 1=1
-      and a.softwarename=b.VENDORNAME
-      <if test="softwareName != '' and softwareName!=null">
-        and b.softwarename=#{softwareName,jdbcType=VARCHAR}
-      </if>
-      and TIME between to_date(#{startTime},'yyyy-MM-dd') and to_date(#{stopTime},' yyyy-MM-dd')
-      group by b.softwarename,modulename)
-    order by count desc
-  </select>
+    <!--  某个软件各个模块使用次数  -->
+    <select id="getModuleCount" resultType="map">
+        select * from (select b.softwarename,modulename,sum(usercount) as count from JK_LOGANALYIZE_MODULEUSAGE
+        a,VENDORNAME_TO_SOFTNAME b
+        where 1=1
+        and a.softwarename=b.VENDORNAME
+        <if test="softwareName != '' and softwareName!=null">
+            and b.softwarename=#{softwareName,jdbcType=VARCHAR}
+        </if>
+        and TIME between to_date(#{startTime},'yyyy-MM-dd') and to_date(#{stopTime},' yyyy-MM-dd')
+        group by b.softwarename,modulename)
+        order by count desc
+    </select>
 
-  <!--  某个软件各个模块使用时间  -->
-  <select id="getModuleTime" resultType="map">
-    select * from(select b.softwarename,modulename,round(sum(usemintue)/3600,1) as sumTime from JK_LOGANALYIZE_MODULEUSAGE a,VENDORNAME_TO_SOFTNAME b
-      where 1=1
-      and a.softwarename=b.VENDORNAME
-      <if test="softwareName != '' and softwareName!=null">
-        and b.softwarename=#{softwareName,jdbcType=VARCHAR}
-      </if>
-      and TIME between to_date(#{startTime},'yyyy-MM-dd') and to_date(#{stopTime},' yyyy-MM-dd')
-      group by b.softwarename,modulename)
-    order by sumTime desc
-  </select>
+    <!--  某个软件各个模块使用时间  -->
+    <select id="getModuleTime" resultType="map">
+        select * from(select b.softwarename,modulename,round(sum(usemintue)/60,1) as sumTime from
+        JK_LOGANALYIZE_MODULEUSAGE a,VENDORNAME_TO_SOFTNAME b
+        where 1=1
+        and a.softwarename=b.VENDORNAME
+        <if test="softwareName != '' and softwareName!=null">
+            and b.softwarename=#{softwareName,jdbcType=VARCHAR}
+        </if>
+        and TIME between to_date(#{startTime},'yyyy-MM-dd') and to_date(#{stopTime},' yyyy-MM-dd')
+        group by b.softwarename,modulename)
+        order by sumTime desc
+    </select>
 </mapper>

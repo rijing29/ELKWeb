@@ -24,9 +24,7 @@
                                 <!-- 表格 begin-->
                                 <el-table :data="tableData"
                                           height="400"
-                                          style="width: 95%;margin: auto;header-align: center;"
-                                          highlight-current-row
-                                          @current-change="handleCurrentChange">
+                                          style="width: 95%;margin: auto;header-align: center;">
                                     <el-table-column prop="time" sortable label="时间"
                                                      value-format="yyyy/MM/dd HH:mm:ss"
                                                      align="center"></el-table-column>
