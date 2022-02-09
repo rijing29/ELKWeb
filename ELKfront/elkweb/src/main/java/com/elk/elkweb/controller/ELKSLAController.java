@@ -165,6 +165,11 @@ public class ELKSLAController {
 
         double day = calculateTime(startTime,stopTime);
         Double time = day*24*60;
+//        hfajkdhkfhaj
+        if(sumTime>100)
+            sumTime=sumTime/10000;
+        else
+            sumTime=sumTime/100;
         System.out.println(sumTime+"uuuuuuuu");
         Double useFrequency = sumTime*60/time;
 //        Integer useFrequency = Integer.valueOf(new Formatter().format("%.0f",useFrequency1).toString()) ;
