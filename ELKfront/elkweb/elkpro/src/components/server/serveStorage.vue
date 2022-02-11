@@ -27,8 +27,11 @@
                                         :header-cell-style="{color: '#17caf0',fontSize:'16px'}"
                                         highlight-current-row
                                         @current-change="handleCurrentChange">
-                                    <el-table-column prop="DIRNAME" sortable label="存储目录" align="center"></el-table-column>
-                                    <el-table-column prop="INFO" sortable label="使用量" align="center"></el-table-column>
+                                    <el-table-column prop="UNIT" sortable label="单位" align="center"></el-table-column>
+                                    <el-table-column prop="USAGE" sortable label="用途" align="center"></el-table-column>
+                                    <el-table-column prop="USE" sortable label="使用量" align="center"></el-table-column>
+                                    <el-table-column prop="DETAILNAME" sortable label="存储目录" align="center"></el-table-column>
+                                    <el-table-column prop="DISVOLUME" sortable label="分配容量" align="center"></el-table-column>
                                 </el-table>
                                 <!--————表格 end————-->
                             </div>
@@ -208,7 +211,7 @@ export default {
                 var url="/getStorageInfo"
                 var params={
                     'time':this.time,
-                    'DIRNAME':this.currentRow.DIRNAME,
+                    'DIRNAME':this.currentRow.DETAILNAME,
                 }
                 console.log(this.currentRow.DIRNAME, this.currentRow.INFO)
                 this.$http.get(url,{params}).then(res=> {
