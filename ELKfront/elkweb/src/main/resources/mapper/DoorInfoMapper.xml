@@ -68,13 +68,13 @@
         </trim>
     </insert>
 
-    <!--  根据姓名查询员工刷卡信息  -->
+    <!--  根据员工编号查询员工刷卡信息  -->
     <select id="getEpyCardInfo" resultType="map">
         select *
         from (
                  select user_lname, jl_sj, dep_name
                  from DOOR_INFO t
-                 where user_lname like concat(concat('%', #{user_lname,jdbcType=VARCHAR}), '%')
+                 where user_no = #{user_lname,jdbcType=VARCHAR}
                  order by jl_sj desc
              )
         where rownum <![CDATA[<=]]> 30
@@ -87,7 +87,7 @@
         from (
                  select *
                  from DOOR_INFO_FOR_ONEMAN t
-                 where personname like concat(concat('%', #{personname,jdbcType=VARCHAR}), '%')
+                 where userno = #{personname,jdbcType=VARCHAR}
                  order by time desc
              )
         where rownum <![CDATA[<=]]> 1
@@ -106,7 +106,7 @@
                         t.distinctpagecount,
                         t.playtimerateofworktime
         from MAIL_WEBPAGE_TJ t
-        where ip in (select ip from PARAMS_IPANDUSER where users = #{username,jdbcType=VARCHAR})
+        where ip in (select ip from PARAMS_IPANDUSER a,PARAMS_EMPLOYEE_LIST b where a.users=b.employee_name and b.numbers = #{username,jdbcType=VARCHAR})
           and time between (select max (time)-7 from MAIL_WEBPAGE_TJ)
           and (select max (time) from MAIL_WEBPAGE_TJ)
         order by time desc
@@ -117,8 +117,8 @@
         select *
         from (
                  select username, operationtime, description
-                 from MDS_LOG t
-                 where username like concat(concat('%', #{username,jdbcType=VARCHAR}), '%')
+                 from MDS_LOG a,PARAMS_EMPLOYEE_LIST b
+                 where a.username = b.employee_name and b.numbers = #{username,jdbcType=VARCHAR}
                  order by operationtime desc
              )
         where rownum <![CDATA[<=]]> 30
@@ -130,8 +130,8 @@
         select *
         from (
                  select *
-                 from MDS_LOG_FOR_ONEMAN t
-                 where personname like concat(concat('%', #{personname,jdbcType=VARCHAR}), '%')
+                 from MDS_LOG_FOR_ONEMAN a,PARAMS_EMPLOYEE_LIST b
+                 where a.personname = b.employee_name and b.numbers = #{personname,jdbcType=VARCHAR}
                  order by time desc
              )
         where rownum <![CDATA[<=]]> 1
