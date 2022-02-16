@@ -69,20 +69,23 @@
     </insert>
     <select id="showEpySoftWareUsage" parameterType="com.elk.elkweb.entity.EpySoftWareUsage" resultMap="BaseResultMap">
         select *
-        from JK_LOGANALYIZE_USERUSAGE
-        where username like concat(concat('%', #{username,jdbcType=VARCHAR}), '%')
-        and time between (select max(time)-6 from JK_LOGANALYIZE_USERUSAGE) and (select max(time) from JK_LOGANALYIZE_USERUSAGE)
+        from JK_LOGANALYIZE_USERUSAGE a,
+             PARAMS_EMPLOYEE_LIST b
+        where a.username = b.message_id
+          and b.numbers = #{username,jdbcType=VARCHAR}
+          and a.time between (select max(time) - 6 from JK_LOGANALYIZE_USERUSAGE)
+            and (select max(time) from JK_LOGANALYIZE_USERUSAGE)
 
     </select>
     <select id="showEpySoftWareUsageCount" resultType="map" parameterType="com.elk.elkweb.entity.EpySoftWareUsage">
         select *
-        from (select time, SUM (WORKUSEMINTUE)
-              from JK_LOGANALYIZE_USERUSAGE
-              where username like concat(concat('%'
-                  , #{username,jdbcType=VARCHAR})
-                  , '%')
-                and time between (select max (time)-6 from JK_LOGANALYIZE_USERUSAGE)
-                and (select max (time) from JK_LOGANALYIZE_USERUSAGE)
+        from (select a.time, SUM(WORKUSEMINTUE)
+              from JK_LOGANALYIZE_USERUSAGE a,
+                   PARAMS_EMPLOYEE_LIST b
+              where a.username = b.message_id
+                and b.numbers = #{username,jdbcType=VARCHAR}
+                and a.time between (select max(time) - 6 from JK_LOGANALYIZE_USERUSAGE)
+                  and (select max(time) from JK_LOGANALYIZE_USERUSAGE)
               group by time)
         order by time desc
     </select>

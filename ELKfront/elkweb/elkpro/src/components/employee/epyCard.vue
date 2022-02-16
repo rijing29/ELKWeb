@@ -12,7 +12,7 @@
                 <el-col :span="24" align="left">
                     <!--员工查询输入框 -->
                     <span class="span_area">
-                        <el-input v-model="user_lname" placeholder="请输入员工姓名"
+                        <el-input v-model="user_lname" placeholder="请输入员工编号"
                                   style="margin-right: 1%;width: 10%;"></el-input>
                     </span>
                     <!-- 查询按钮 -->
