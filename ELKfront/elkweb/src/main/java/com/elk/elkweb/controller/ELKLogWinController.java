@@ -1,6 +1,7 @@
 package com.elk.elkweb.controller;
 
 import com.elk.elkweb.service.LogWinService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,6 +62,18 @@ public class ELKLogWinController {
     public List<Map< String, Object >> getWinLoad() throws ParseException {
         List<Map< String, Object >> winLoad = logWinService.getWinLoad();
         return winLoad;
+    }
+    
+    /**
+    *@Author:whj
+    *@date:2022-02-1615:38
+    *@Method:根据ip查询所有数据
+    */
+    @RequestMapping(value = "/getWinLogInfo",produces = "application/json;charset=utf-8" )
+    @ResponseBody
+    public List getWinLogInfo(@Param("ip")String ip) throws ParseException {
+        List WinLoglist = logWinService.selectAllInfo(ip);
+        return WinLoglist;
     }
 
 }

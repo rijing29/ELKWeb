@@ -36,4 +36,10 @@ public class LogWinServiceImpl implements LogWinService{
         List<Map<String, Object>> winLoad = logWinMapper.getWinLoad();
         return winLoad;
     }
+
+    @Override
+    public List selectAllInfo(String ip) {
+        List list = logWinMapper.selectAllInfo(ip);
+        return list;
+    }
 }

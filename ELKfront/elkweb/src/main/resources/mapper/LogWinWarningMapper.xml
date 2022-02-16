@@ -94,4 +94,7 @@
                       )
              )
     </select>
+    <select id="selectAllInfo" resultMap="BaseResultMap">
+        select * from LOG_WIN_LOGIN t where ip=#{ip,jdbcType=VARCHAR}
+    </select>
 </mapper>

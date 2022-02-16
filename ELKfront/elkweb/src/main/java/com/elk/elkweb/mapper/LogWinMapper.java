@@ -3,6 +3,7 @@ package com.elk.elkweb.mapper;
 import com.elk.elkweb.entity.LogWinLogin;
 import com.elk.elkweb.entity.LogWinWarning;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,4 +24,7 @@ public interface LogWinMapper {
 
     //    Windows服务器负载统计饼状图
     List<Map< String, Object >> getWinLoad();
+
+    //    查询所有信息
+    List selectAllInfo(@Param("ip") String ip);
 }
