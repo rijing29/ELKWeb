@@ -62,9 +62,8 @@
                                 <el-table-column type="expand">
                                   <template slot-scope="props">
                                     <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
-                                      <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
-                                      <el-table-column prop="warninfo" sortable label="交互类任务（个）" align="center"></el-table-column>
-                                      <el-table-column prop="warntype" sortable label="共享类任务（个）" align="center"></el-table-column>
+                                      <el-table-column prop="ip" sortable label="IP" align="center"></el-table-column>
+                                      <el-table-column prop="time" sortable label="时间" align="center"></el-table-column>
                                     </el-table>
                                   </template>
                                 </el-table-column>
