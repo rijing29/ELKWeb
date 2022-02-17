@@ -46,9 +46,11 @@
     </insert>
     <select id="searchEpyBehavProfile" resultMap="BaseResultMap">
         select *
-        from PERSON_ACTION_LOG
-        where actiontime between to_date(#{startTime}, 'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime}, 'yyyy-MM-dd hh24:mi:ss')
-        and username = #{userName,jdbcType=OTHER}
-        order by actiontime asc
+        from PERSON_ACTION_LOG a,
+             PARAMS_EMPLOYEE_LIST b
+        where a.username = b.employee_name
+          and a.actiontime between to_date(#{startTime}, 'yyyy-MM-dd hh24:mi:ss') and to_date(#{stopTime}, 'yyyy-MM-dd hh24:mi:ss')
+          and b.numbers = #{userName,jdbcType=OTHER}
+        order by a.actiontime asc
     </select>
 </mapper>

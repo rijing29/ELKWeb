@@ -14,7 +14,7 @@
                     <!--员工查询输入框 -->
                     员工姓名：
                     <span class="span_area">
-            <el-input v-model="userName" placeholder="请输入员工姓名" style="margin-right: 1%;width:20%;"></el-input>
+            <el-input v-model="userName" placeholder="请输入员工编号" style="margin-right: 1%;width:20%;"></el-input>
           </span>
                     <!--   日期选择     -->
                     开始日期：
