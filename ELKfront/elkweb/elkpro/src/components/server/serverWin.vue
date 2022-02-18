@@ -53,17 +53,25 @@
                     <el-row>
                         <el-col :span="24" style="padding: 0;">
                             <div class="table-wrapper">
-                                <!--————表格 begin————-->
-                                <el-table
-                                        height="500"
-                                        ref="singleTable"
-                                        :data="tableDataLog"
-                                        :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
-                                    <el-table-column prop="TIME" :formatter="dateForma" sortable label="时间" align="center"></el-table-column>
-                                    <el-table-column prop="IP" sortable label="IP" align="center"></el-table-column>
-                                    <el-table-column prop="WARNINFO" sortable label="提示信息" align="center"></el-table-column>
-                                </el-table>
-                                <!--————表格 end————-->
+
+                              <!--复制-->
+                              <el-table v-if="haveData" :data="tableDataLog" style="width: 95%;margin: auto;header-align: center;"
+                                        @expand-change="explore"
+                                        :row-key='getRowKeys' :expand-row-keys="expands">
+                                <!-- 内部表格开始渲染-->
+                                <el-table-column type="expand">
+                                  <template slot-scope="props">
+                                    <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
+                                      <el-table-column prop="ip" sortable label="IP" align="center"></el-table-column>
+                                      <el-table-column prop="time" sortable label="时间" align="center"></el-table-column>
+                                    </el-table>
+                                  </template>
+                                </el-table-column>
+                                <!--     外部表格的渲染cols是表头数组             -->
+                                <el-table-column v-for="(col,i) in cols" :prop="col.prop" :key="i"  sortable
+                                                 :label="col.label" align="center">
+                                </el-table-column>
+                              </el-table>
                             </div>
                         </el-col>
                     </el-row>
@@ -157,11 +165,15 @@ export default {
                     currentPage: 1,
                 },
             ],
+            cols: [],
             time: '',//根据此时间查询分析表
             currentRow: null,//存储当前点击行信息
             tableDataService:[],//表格数据 负载数据统计
             tableDataLog:[],
             tableDataTask:[],
+          TableData:[],
+          IP:'',
+          expands:[],
             /*————饼状图数据 begin————*/
             option : {
                 title: {
@@ -232,6 +244,7 @@ export default {
     },
     created(){//自动渲染数据
         this.getWinWaring()
+
     },
     methods:{
         dateForma:function(row,column){//表格行格式化时间
@@ -244,14 +257,20 @@ export default {
             this.date=date.toLocaleString()
         },
         getWinWaring(){//渲染数据
+            this.cols.push({prop: 'IP', label: 'IP地址'})
+            this.cols.push({prop: 'TIME', label: '时间'})
+            this.cols.push({prop: 'WARNINFO', label: '告警信息'})
             var url="/getWinWaring"
             this.$http.get(url).then(res=>{//渲染Windows服务器告警表格数据
                 this.tableDataLog=res.data
                 console.log(res.data)
             })
+
+            //加在这里
+
             var url1='/getWinServiceInfo'
             this.$http.get(url1).then(res=>{//渲染Windows服务器日志告警数据
-                this.tableDataService=res.data
+              this.tableDataService=res.data
             })
 
             var url2='/getWinServiceJobInc'
@@ -259,7 +278,6 @@ export default {
                 this.tableDataTask=res.data
                 console.log(res.data)
             })
-
             var url3='/getWinLoad'
             this.$http.get(url3).then(res=>{//渲染Windows服务器负载统计饼状图
                 console.log(res.data[0].ALLCOUNT-res.data[0].HIGHCOUNT,"22222222")
@@ -270,6 +288,36 @@ export default {
                 this.option.series[0].data.push({value:res.data[0].ALLCOUNT-res.data[0].HIGHCOUNT,name:'负载低'})
             })
         },
+      explore(row, expandedRows) {
+        /*————控制表格只能展开一行 begin————*/
+        var that = this
+        if (expandedRows.length) {
+          that.expands = []
+          if (row) {
+            if (row.IP !== null) {
+              that.expands.push(row.IP + row.TIME)
+            } else {
+              that.expands.push(row.IP)
+            }
+          }
+        } else {
+          that.expands = []
+        }
+        /*————控制表格只能展开一行 end————*/
+
+        //绑定后台数据传输地址
+        var url = "/getWinLogInfo"
+        //传递参数
+        this.IP = row.IP
+        console.log("ip是："+this.IP)
+        var params = {
+          'ip': this.IP,
+        }
+        this.$http.get(url, {params}).then(res => {
+          this.TableData = res.data;
+          console.log(res.data, "hhh")
+        })
+      },
     }
 }
 </script>

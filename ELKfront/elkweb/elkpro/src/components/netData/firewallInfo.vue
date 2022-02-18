@@ -84,7 +84,7 @@
                         <el-table v-if="haveData" :data="tableData" style="width: 95%;margin: auto;header-align: center;"
                                   @expand-change="explore"
                                   :row-key='getRowKeys' :expand-row-keys="expands">
-                          <!-- 内嵌表格 begin-->
+                          <!--  内嵌表格 begin-->
                           <el-table-column type="expand">
                                 <template slot-scope="props">
                                     <el-table :data="TableData" style="width: 100%;margin-bottom: 10px;" border>
@@ -371,7 +371,7 @@ export default {
                 this.haveData=true
                 this.tableData = res.data.list;//渲染外表
                 this.pages[0].total = res.data.total//向分页传递总数据
-                console.log("hhhhhh", res.data)
+                console.log("hhhhhh", res.data.list)
             })
         },
         /*————分页控制部分 begin————*/
