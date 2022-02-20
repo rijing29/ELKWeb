@@ -4,7 +4,7 @@
             <el-row>
                 <el-col :span="24" align="left">
                     <div class="title">
-                        单节点利用效率
+                        软件利用效率
                     </div>
                 </el-col>
             </el-row>

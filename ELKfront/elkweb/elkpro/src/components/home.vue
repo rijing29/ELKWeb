@@ -101,7 +101,7 @@
                         <el-submenu index="6-3">
                             <template slot="title">软件/节点报表</template>
                             <el-menu-item index="/showNodeTypeTable">节点效率查询</el-menu-item>
-                            <el-menu-item index="/showSoftNameTable">单节点利用效率</el-menu-item>
+                            <el-menu-item index="/showSoftNameTable">软件利用效率</el-menu-item>
                         </el-submenu>
                     </el-submenu>
                     <el-submenu index="7">

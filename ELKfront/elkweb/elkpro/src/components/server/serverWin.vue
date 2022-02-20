@@ -261,7 +261,7 @@ export default {
             this.cols.push({prop: 'TIME', label: '时间'})
             this.cols.push({prop: 'WARNINFO', label: '告警信息'})
             var url="/getWinWaring"
-            this.$http.get(url).then(res=>{//渲染Windows服务器告警表格数据
+            this.$http.get(url).then(res=>{//渲染Windows服务器日志告警表格数据
                 this.tableDataLog=res.data
                 console.log(res.data)
             })
@@ -269,7 +269,7 @@ export default {
             //加在这里
 
             var url1='/getWinServiceInfo'
-            this.$http.get(url1).then(res=>{//渲染Windows服务器日志告警数据
+            this.$http.get(url1).then(res=>{//渲染Windows服务器提供服务统计
               this.tableDataService=res.data
             })
 
