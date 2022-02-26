@@ -82,7 +82,7 @@
 
   <!--查询-->
   <select id="queryTableData" resultMap="BaseResultMap">
-    select * from T_NODE_SOFT_MAP
+    select concat(node_type,node_id) as node_type, soft_name,work_load from T_NODE_SOFT_MAP t
   </select>
   <!--删除-->
   <delete id="del" parameterType="java.lang.String">
