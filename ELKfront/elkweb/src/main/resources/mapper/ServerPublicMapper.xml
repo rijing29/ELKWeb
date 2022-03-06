@@ -88,8 +88,7 @@
     </select>
 
     <select id="getStorage" resultType="map">
-
-    select DETAILNAME,USAGE,UNIT,DISVOLUME,b.USE from JK_CC_USEAGE_TABLE2 a,JK_CC_USEAGE b where a.DIRNAME=b.DIRNAME
+        select DETAILNAME,USAGE,UNIT,DISVOLUME,b.USE from JK_CC_USEAGE_TABLE2 a,JK_CC_USEAGE b where a.DIRNAME=b.DIRNAME and time=(select max(time)from JK_CC_USEAGE)
     </select>
 
     <select id="getStorageInfo" resultType="map">
