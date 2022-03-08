@@ -208,24 +208,24 @@ export default {
         handleCurrentChange(val) {//表格点击事件
             if(val!==null){
                 this.currentRow = val;
+
                 var url="/getStorageInfo"
                 var params={
-                    'time':this.time,
                     'DIRNAME':this.currentRow.DETAILNAME,
                 }
-                console.log(this.currentRow.DIRNAME, this.currentRow.INFO)
+                console.log(this.currentRow.DETAILNAME,"999999")
                 this.$http.get(url,{params}).then(res=> {
-                    console.log(res.data[0].TIME.substr(0,10),"2222222")
+                    console.log(res.data,"2222222")
                     while (this.option.series[0].data.length!==0){
                         this.option.series[0].data.pop()
-                      this.option.xAxis[0].data.pop()
+                        this.option.xAxis[0].data.pop()
                     }
                     console.log(res.data[0].INFO.slice(-1)+"000000")
                     this.option.yAxis[0].axisLabel.formatter='{value}'+res.data[0].INFO.slice(-1)
                     var i;
-                    for(i=0;i<res.data.length;i++){
+                    for(i=res.data.length-1;i>=0;i--){
                         this.option.series[0].data.push(res.data[i].USE)
-                        this.option.xAxis[0].data.push(res.data[0].TIME.substr(0,10))
+                        this.option.xAxis[0].data.push(res.data[i].TIME.substr(0,10))
                     }
                 })
             }

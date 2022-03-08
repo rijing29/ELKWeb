@@ -88,14 +88,21 @@
     </select>
 
     <select id="getStorage" resultType="map">
-        select DETAILNAME,USAGE,UNIT,DISVOLUME,b.USE from JK_CC_USEAGE_TABLE2 a,JK_CC_USEAGE b where a.DIRNAME=b.DIRNAME and time=(select max(time)from JK_CC_USEAGE)
+        select DETAILNAME, USAGE, UNIT, DISVOLUME, b.USE
+        from JK_CC_USEAGE_TABLE2 a, JK_CC_USEAGE b
+        where a.DIRNAME=b.DIRNAME and time =(select max (time) from JK_CC_USEAGE)
     </select>
 
     <select id="getStorageInfo" resultType="map">
-        select time, use,info
-        from JK_CC_USEAGE
-        where DIRNAME=#{DIRNAME,jdbcType=VARCHAR}
-          and rownum <![CDATA[<=]]> 15
-        order by time desc
+        select *
+        from (
+                 select time, use, info
+                 from JK_CC_USEAGE a, JK_CC_USEAGE_TABLE2 b
+                 where a.DIRNAME=b.DIRNAME
+                   and b.DETAILNAME=#{DIRNAME,jdbcType=VARCHAR}
+                 order by time desc
+             )
+        where rownum <![CDATA[<=]]> 15
+
     </select>
 </mapper>
