@@ -49,7 +49,7 @@
   </select>
   <select id="getEnvironmentInfo" resultType="map">
     (select * from (select placename,wd,sd,time from FR_CD_WDSD t where t.placename = '2楼'  order by time desc) where rownum<![CDATA[<=]]>12)
-    union
+    union all
     (select * from (select placename,wd,sd,time from FR_CD_WDSD t where t.placename = '3楼'  order by time desc) where rownum<![CDATA[<=]]>12)
   </select>
 </mapper>

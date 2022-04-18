@@ -59,7 +59,7 @@
                             <i class="el-icon-s-help icon_color"></i>
                             <span slot="title">网络数据</span>
                         </template>
-                        <el-menu-item index="/firewallInfo">防火墙数据包</el-menu-item>
+<!--                        <el-menu-item index="/firewallInfo">防火墙数据包</el-menu-item>-->
                         <el-menu-item index="/IPS">IPS告警分析</el-menu-item>
                         <el-menu-item index="/IMCAlarm">交换机告警信息</el-menu-item>
                     </el-submenu>
