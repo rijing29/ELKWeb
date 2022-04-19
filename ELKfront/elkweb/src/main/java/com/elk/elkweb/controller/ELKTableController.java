@@ -133,7 +133,7 @@ public class ELKTableController {
         JSONArray jsonArray = new JSONArray();
         for(int i=0;i<nodeInfo.size();i++){
             JSONObject jo=new JSONObject();
-            jo.put("nodeType",nodeInfo.get(i).get("NODE_TYPE").toString());
+            jo.put("nodeType",nodeInfo.get(i).get("NODE_TYPE").toString()+" "+nodeInfo.get(i).get("NODE_ID").toString());
             jo.put("nodeId",nodeInfo.get(i).get("NODE_ID").toString());
             jo.put("time",year+"年"+month+"月");
             jo.put("efficiency",aveNodeType[i]);

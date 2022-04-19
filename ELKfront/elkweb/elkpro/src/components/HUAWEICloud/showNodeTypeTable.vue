@@ -46,8 +46,8 @@
                                 :header-cell-style="{color: '#17caf0',fontSize:'16px'}">
                         <el-table-column prop="nodeType" sortable label="节点名"
                                          align="center"></el-table-column>
-                        <el-table-column prop="nodeId" sortable label="节点编号"
-                                         align="center"></el-table-column>
+<!--                        <el-table-column prop="nodeId" sortable label="节点编号"-->
+<!--                                         align="center"></el-table-column>-->
                         <el-table-column prop="time" sortable label="时间" align="center"></el-table-column>
                         <el-table-column prop="efficiency" sortable label="效率（%）"
                                          align="center"></el-table-column>
@@ -84,8 +84,8 @@ export default {
     return {
       haveData:false,
       fullscreenLoading: false,
-      year: '2021',
-      month: '10',
+      year: '2022',
+      month: '4',
       softName: 'ZHIKONG',
       tableData: [],
       softName_options: [{softName_value: '选项1', label: 'GEOEAST'},
@@ -116,7 +116,8 @@ export default {
         {yearvalue: '选项2', label: '2018'},
         {yearvalue: '选项3', label: '2019'},
         {yearvalue: '选项4', label: '2020'},
-        {yearvalue: '选项5', label: '2021'},],
+        {yearvalue: '选项5', label: '2021'},
+        {yearvalue: '选项5', label: '2022'},],
       yearvalue: ''
     }
   },

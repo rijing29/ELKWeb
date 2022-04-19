@@ -13,9 +13,7 @@
                 <el-col :span="24" class="area">
                     <el-row>
                         <el-col :span="24" class="border_top">
-                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">一周内信息
-                                (点击查看详细信息)
-                            </div>
+                            <div style="height: 50px;line-height: 70px;padding-left: 40px;color: #17caf0">近期IPMI告警信息</div>
                         </el-col>
                     </el-row>
                     <el-row>

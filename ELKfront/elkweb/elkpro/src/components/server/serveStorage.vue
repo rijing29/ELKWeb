@@ -13,7 +13,7 @@
                 <el-col :span="11" style="margin-top: 8px">
                     <el-row >
                         <el-col :span="24" class="border_top">
-                            <div class="tableSubTitle">存储分配情况</div>
+                            <div class="tableSubTitle">存储分配情况（点击查看存储变化）</div>
                         </el-col>
                     </el-row>
                     <el-row>

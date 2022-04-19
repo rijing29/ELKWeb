@@ -539,7 +539,7 @@ export default {
             }
             return fmt
         },
-        getCardDPMInfo(){//获取全院刷卡信息
+        getCardDPMInfo(){//获取全院刷卡信息  FrontCardDPMInfoMapper.xml - ELKFrontController.java
             var url='/getCardDPMInfo'
             this.$http.get(url).then(res => {
                 console.log(res.data,'左上角数据')

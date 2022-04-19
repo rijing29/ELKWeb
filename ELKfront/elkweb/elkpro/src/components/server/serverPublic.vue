@@ -144,7 +144,7 @@ export default {
             /*————饼状图数据 begin————*/
             option: {
                 title: {
-                    text: '负载数据统计',
+                    text: '负载数据统计（点击查看相应IP）',
                     left: 'center',
                     textStyle: {
                         color: "#17caf0"//标题文字颜色
@@ -252,7 +252,7 @@ export default {
                         this.tagsData.cpuData.push(item.ip)
                     } else if (item.cpurateforworktime < 20 && item.memrateforworktime >= 15) {
                         this.memra++;
-                        this.ipTags.push(item.ip)
+                        this.tagsData.memraData.push(item.ip)
                     } else if (item.cpurateforworktime < 20 && item.memrateforworktime < 15 && item.totalpjvalue >= 8) {
                         this.highMemra++;
                         this.tagsData.highMemraData.push(item.ip)
