@@ -117,7 +117,7 @@
                             <i class="el-icon-s-release icon_color"></i>
                             <span slot="title">应用日志查询</span>
                         </template>
-                        <el-menu-item index="/zabbixShenji">Zabbix审计日志</el-menu-item>
+<!--                        <el-menu-item index="/zabbixShenji">Zabbix审计日志</el-menu-item>-->
                         <el-menu-item index="/productionManagement">A2系统日志</el-menu-item>
                         <el-menu-item index="/CGGDSystem">成果归档系统日志</el-menu-item>
                         <el-menu-item index="/damageWarning">套管损坏预警日志</el-menu-item>

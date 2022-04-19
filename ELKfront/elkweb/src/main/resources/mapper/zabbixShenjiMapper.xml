@@ -358,7 +358,7 @@
     <!-- A2生产管理软件日志 -->
     <select id="getSysSrmLog" resultType="map">
         select *
-        from (select * from SYS_SRM_LOG t order by t.occurtime desc)
+        from (select * from SYS_SRM_LOG_bak t order by t.occurtime desc)
         where rownum <![CDATA[<=]]> 60
     </select>
 </mapper>

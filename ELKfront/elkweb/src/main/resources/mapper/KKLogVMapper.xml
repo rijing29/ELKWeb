@@ -46,7 +46,7 @@
     </insert>
     <select id="getKKLog" resultMap="BaseResultMap">
         select *
-        from (select * from KK_LOG_V order by time desc)
+        from (select * from KK_LOG_V_bak order by time desc)
         where rownum<![CDATA[ <=]]> 60
     </select>
 </mapper>
