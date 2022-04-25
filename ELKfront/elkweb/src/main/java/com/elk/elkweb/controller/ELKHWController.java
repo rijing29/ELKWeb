@@ -74,12 +74,13 @@ public class ELKHWController {
         results.setName(gpu);
         return results;
     }
+
+
     /**
      * DaPingKuoLuo
      * 2021/10/11 09:09
      * 获取软件使用率
      */
-
     @RequestMapping(value = "/getSoftWareEfficiency",produces = "application/json;charset=utf-8" )
     @ResponseBody
     public String getSoftWareEfficiency(){
