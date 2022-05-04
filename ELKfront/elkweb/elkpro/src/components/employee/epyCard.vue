@@ -129,7 +129,7 @@ export default {
     },
     data() {
         return {
-            haveData: false,
+            haveData: false,//是否含有数据
             defaultData:true,
             character: '',
             date: '',//日期变量
